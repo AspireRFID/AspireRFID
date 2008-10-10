@@ -1,0 +1,310 @@
+/*
+ * Copyright 2005-2008, Aspire
+ * 
+ * This library is free software; you can redistribute it and/or modify it 
+ * under the terms of the GNU Lesser General Public License as published by 
+ * the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+ * License, or (at your option) any later version. If you do not alter this 
+ * notice, a recipient may use your version of this file under either the 
+ * LGPL version 2.1, or (at his option) any later version.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License 
+ * along with this library; if not, write to the Free Software Foundation, 
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * 
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+ * KIND, either express or implied. See the GNU Lesser General Public 
+ * License for the specific language governing rights and limitations.
+ */
+
+body { 
+	background-color: white;
+	color: black;
+	font-family: Arial, sans-serif;
+	font-size: small;
+	margin: 5px;
+}
+
+.widget-Banner-Separator{
+	color : #FF9000;
+	font-weight: bold;
+	
+}
+
+.clickable{
+	cursor : pointer;
+}
+
+.table-Element-LineOne{
+	background-color : #efefef;
+}
+
+.table-Element-LineTwo{
+	background-color : #F8F8F8;
+}
+
+.table-Header{
+	font-size: 22px;
+	text-align : center;
+	color : black;
+	background :  url('img/degrad_table.png') repeat-x;
+	height : 35px;
+}
+
+.table-NavBar{
+	padding : 3px;
+	border : 1px solid #ccc; 
+	background-color : #E2E2E2;
+}
+
+.table-NavBar .gwt-Image{
+	cursor : pointer;
+}
+
+.warningMessage{
+	color : red;
+}
+
+.widget-AuthWidget{
+	width: 250px;
+	background: #eee;
+	border : 2px solid #ccc;
+	border-right :2px solid #ff9000;  
+}
+
+
+.kikoobox-ok{
+	background : #00bb00;
+	border :1px solid #ccc; 
+	cursor: pointer;
+	font-family: Arial, sans-serif;
+	color : white;
+	font-size: 15px;
+	margin :0px;
+	padding :0px;  
+}
+
+.kikoobox-warning{
+	background : #AFAFAF;
+	border :1px solid black; 
+	cursor: pointer;
+	font-family: Arial, sans-serif;
+	color : white;
+	font-size: 15px;
+	margin :0px;
+	padding :0px;  
+}
+
+.kikoobox-error{
+	background : #bb0000;
+	border :1px solid #ccc; 
+	cursor: pointer;
+	font-family: Arial, sans-serif;
+	color : white;
+	font-size: 15px;
+	margin :0px;
+	padding :0px;  
+}
+
+/* MENU */
+.menu{
+	background : #F8F8F8;
+	margin-left : 0px;
+	margin-right : 8px;
+	cursor: default;
+	border-bottom : 2px solid #ccc;
+}
+
+.menu-entry{
+	padding : 0px;
+	font-family : Verdana;
+	font-size : 11px;
+	color :black;
+}
+
+.menu-entry-over{
+	font-family : Verdana;
+	font-size : 11px;
+	background : #ccc;
+	color : white;
+	cursor : pointer;
+}
+
+.menu-entry-selected{
+	font-family : Verdana;
+	font-size : 11px;
+	background : #111;
+	color : white;
+	cursor : pointer;
+}
+
+.menu-title{
+	margin-top : 10px;
+	font-family : Verdana;
+	font-size : 15px;
+	background :#eee; 
+	width : 100%;
+	padding-right : 5px;
+	border-bottom : 1px solid #ff9000;
+}
+
+.menu-title .gwt-Label{
+	text-align : right;
+}
+
+
+/* LOADING MESSAGE */
+.loading {
+	position:relative;
+    left: 50%; 
+    top: 50%;
+}
+
+/* FIELDSET */
+.fieldset-title{
+	font-family : Verdana;
+	font-size : 20px;
+}
+
+.fieldset-content{
+	padding : 10px;
+	border :1px solid #ccc;
+}
+
+/* LABEL */
+.label-h1 {
+	font-family : Verdana;
+	font-size : 30px;
+}
+
+.label-h2 {
+	font-family : Verdana;
+	font-size : 20px;
+}
+
+/* LIST */
+.list-title{
+	background : #CCC;
+}
+
+.list-rowOne{
+	background : #efefef;
+}
+
+.list-rowTwo{
+	background : #f8f8f8;
+}
+
+.list-row-over{
+	background : #ddd;
+}
+
+a {	
+	color: blue;
+}
+
+a:visited {	
+	color: blue; 
+}
+
+.widget-TagInput{
+	margin-top : 5px;
+	margin-left : 10px;
+	margin-bottom : 10px;
+}
+
+.widget-TagInput-valid{
+	color : green;
+}
+
+.widget-TagInput-notvalid{
+	color : red;
+}
+
+.widget-TempChart{
+	margin : 5px;
+}
+
+.widget-GMap{
+	margin : 5px;
+}
+	
+.widget-ListTagHistory{
+	font-size : 11px;
+	margin : 5px;
+	width : 100%;
+	height : 180px;
+}
+
+.widget-ListTagHistory-title{
+	font-size : 15px;
+	font-weight: bold;
+}
+
+
+
+.widget-Banner{
+	background : #F8F8F8;
+	border-bottom : 2px solid #eee;
+	width : 100%;
+	margin :0px;
+	padding :0px; 
+	margin-bottom : 0px;
+}
+
+.widget-Banner .gwt-Label {
+	font-size : 11px;
+	color : black;
+}
+
+/*=========================
+	Google Map
+  ========================*/
+.widget-GMapLegend{
+	margin-top : 20px;
+	background-color : #F8F8F8;
+	border : 2px solid #ccc;
+}
+
+.widget-GMapLegend .gwt-Label {
+	font-family : Verdana;
+	font-size : 10px;
+}
+
+.widget-GMapLegend-title{
+	font-family : Verdana;
+	font-size : 11px;
+	font-weight: bold;
+}
+
+.widget-GMapMenu .gwt-Button {
+	border : 1px solid #ccc;
+	background-color: white;
+	text-align : left;
+	font-family : Verdana;
+	font-size : 10px;
+	margin : 3px;
+	cursor : pointer;
+	width : 110px;
+}
+
+.widget-GMapMenu .widget-CheckBox {
+	border : 1px solid #ccc;
+	background-color: white;
+	text-align : left;
+	font-family : Verdana;
+	font-size : 10px;
+	margin : 3px;
+	cursor : pointer;
+	width : 150px;
+}
+
+.widget-GMapMenu-Title {
+	font-family : Verdana;
+	font-size : 13px;
+}
+
+.widget-TweakedCheckBox-Label{
+	font-family : Verdana;
+	font-size : 9px;
+}

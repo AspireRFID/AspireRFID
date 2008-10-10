@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:ReportServiceWeb" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:ReportServiceWeb" xmlns:intf="urn:ReportServiceWeb" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Jan 18, 2006 (05:05:47 CET)-->
+
+   <wsdl:message name="pushXmlReportResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="pushXmlReportRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ReportServiceWeb">
+
+      <wsdl:operation name="pushXmlReport" parameterOrder="in0">
+
+         <wsdl:input message="impl:pushXmlReportRequest" name="pushXmlReportRequest"/>
+
+         <wsdl:output message="impl:pushXmlReportResponse" name="pushXmlReportResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ReportServiceWebPortSoapBinding" type="impl:ReportServiceWeb">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="pushXmlReport">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="pushXmlReportRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReportServiceWeb" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="pushXmlReportResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReportServiceWeb" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ReportServiceWebService">
+
+      <wsdl:port binding="impl:ReportServiceWebPortSoapBinding" name="ReportServiceWebPort">
+
+         <wsdlsoap:address location="http://dummy-url"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

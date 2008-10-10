@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright 2005-2008, Aspire
+   
+   This library is free software; you can redistribute it and/or modify it 
+   under the terms of the GNU Lesser General Public License as published by 
+   the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+   License, or (at your option) any later version. If you do not alter this 
+   notice, a recipient may use your version of this file under either the 
+   LGPL version 2.1, or (at his option) any later version.
+   
+   You should have received a copy of the GNU Lesser General Public License 
+   along with this library; if not, write to the Free Software Foundation, 
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+   
+   This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+   KIND, either express or implied. See the GNU Lesser General Public 
+   License for the specific language governing rights and limitations.
+-->
+
+<ipojo>
+	<component
+		classname="org.ow2.aspirerfid.reader.fictive.RfidReaderSimulator"
+		factory="false" immediate="false">
+
+		<provides
+			interface="{org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean}">
+			<property name="Bundle-Description" value="Fictive Reader"
+				type="java.lang.String" />
+			<property name="jmxagent.objectname"
+				value="rfid:type=reader,SymbolicName=Fictive"
+				type="java.lang.String" />
+		</provides>
+
+		<callback transition="INVALIDATE" method="stopReader" />
+
+	</component>
+
+	<instance
+		component="org.ow2.aspirerfid.reader.fictive.RfidReaderSimulator"
+		name="Fictive Reader" />
+</ipojo>

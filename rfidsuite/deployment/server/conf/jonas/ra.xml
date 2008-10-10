@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ JORAM: Java(TM) Open Reliable Asynchronous Messaging
+ Copyright (C) 2004 - Bull SA
+ 
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or any later version.
+  
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+  
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+ USA.
+-->
+<connector
+  xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+  http://java.sun.com/xml/ns/j2ee/connector_1_5.xsd"
+  version="1.5">
+   <description>J2EE 1.4 Resource Adapter for the JORAM JMS messaging platform</description>
+   <display-name>JORAM Resource Adapter</display-name>
+   <vendor-name>ObjectWeb Consortium</vendor-name>
+   <eis-type>Java Message Service v 1.1</eis-type>
+   <resourceadapter-version>1.0</resourceadapter-version>
+   <resourceadapter>
+      <resourceadapter-class>org.objectweb.joram.client.connector.JoramAdapter</resourceadapter-class>
+      <config-property>
+         <config-property-name>CollocatedServer</config-property-name>
+         <config-property-type>java.lang.Boolean</config-property-type>
+         <config-property-value>true</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>PlatformConfigDir</config-property-name>
+         <config-property-type>java.lang.String</config-property-type>
+      </config-property>
+      <config-property>
+         <config-property-name>PersistentPlatform</config-property-name>
+         <config-property-type>java.lang.Boolean</config-property-type>
+         <config-property-value>false</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>ServerId</config-property-name>
+         <config-property-type>java.lang.Short</config-property-type>
+         <config-property-value>0</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>ServerName</config-property-name>
+         <config-property-type>java.lang.String</config-property-type>
+         <config-property-value>s0</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>AdminFile</config-property-name>
+         <config-property-type>java.lang.String</config-property-type>
+         <config-property-value>joram-admin.cfg</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>AdminFileXML</config-property-name>
+         <config-property-type>java.lang.String</config-property-type>
+         <config-property-value>joramAdmin.xml</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>HostName</config-property-name>
+         <config-property-type>java.lang.String</config-property-type>
+         <config-property-value>__RFID_SERVER_IP__</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>ServerPort</config-property-name>
+         <config-property-type>java.lang.Integer</config-property-type>
+         <config-property-value>16010</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>ConnectingTimer</config-property-name>
+         <config-property-type>java.lang.Integer</config-property-type>
+         <config-property-value>0</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>CnxPendingTimer</config-property-name>
+         <config-property-type>java.lang.Integer</config-property-type>
+         <config-property-value>0</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>TxPendingTimer</config-property-name>
+         <config-property-type>java.lang.Integer</config-property-type>
+         <config-property-value>0</config-property-value>
+      </config-property>    
+      <config-property>
+         <config-property-name>queueMessageReadMax</config-property-name>
+         <config-property-type>java.lang.Integer</config-property-type>
+         <config-property-value>2</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>topicAckBufferMax</config-property-name>
+         <config-property-type>java.lang.Integer</config-property-type>
+         <config-property-value>1</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>multiThreadSync</config-property-name>
+         <config-property-type>java.lang.Boolean</config-property-type>
+         <config-property-value>false</config-property-value>
+      </config-property>
+      <config-property>
+         <config-property-name>multiThreadSyncDelay</config-property-name>
+         <config-property-type>java.lang.Integer</config-property-type>
+         <config-property-value>1</config-property-value>
+      </config-property>    
+      <outbound-resourceadapter>
+         <connection-definition>
+            <managedconnectionfactory-class>org.objectweb.joram.client.connector.ManagedQueueConnectionFactoryImpl</managedconnectionfactory-class>
+            <config-property>
+              <config-property-name>UserName</config-property-name>
+              <config-property-type>java.lang.String</config-property-type>
+              <config-property-value>anonymous</config-property-value>
+            </config-property>
+            <config-property>
+              <config-property-name>Password</config-property-name>
+              <config-property-type>java.lang.String</config-property-type>
+              <config-property-value>anonymous</config-property-value>
+            </config-property>
+            <config-property>
+              <config-property-name>Collocated</config-property-name>
+              <config-property-type>java.lang.Boolean</config-property-type>
+              <config-property-value>true</config-property-value>
+            </config-property>
+            <connectionfactory-interface>javax.jms.QueueConnectionFactory</connectionfactory-interface>
+            <connectionfactory-impl-class>org.objectweb.joram.client.connector.OutboundQueueConnectionFactory</connectionfactory-impl-class>
+            <connection-interface>javax.jms.QueueConnection</connection-interface>
+            <connection-impl-class>org.objectweb.joram.client.connector.OutboundQueueConnection</connection-impl-class>
+         </connection-definition>
+         <connection-definition>
+            <managedconnectionfactory-class>org.objectweb.joram.client.connector.ManagedTopicConnectionFactoryImpl</managedconnectionfactory-class>
+            <config-property>
+              <config-property-name>UserName</config-property-name>
+              <config-property-type>java.lang.String</config-property-type>
+              <config-property-value>anonymous</config-property-value>
+            </config-property>
+            <config-property>
+              <config-property-name>Password</config-property-name>
+              <config-property-type>java.lang.String</config-property-type>
+              <config-property-value>anonymous</config-property-value>
+            </config-property>
+            <config-property>
+              <config-property-name>Collocated</config-property-name>
+              <config-property-type>java.lang.Boolean</config-property-type>
+              <config-property-value>true</config-property-value>
+            </config-property>
+            <connectionfactory-interface>javax.jms.TopicConnectionFactory</connectionfactory-interface>
+            <connectionfactory-impl-class>org.objectweb.joram.client.connector.OutboundTopicConnectionFactory</connectionfactory-impl-class>
+            <connection-interface>javax.jms.TopicConnection</connection-interface>
+            <connection-impl-class>org.objectweb.joram.client.connector.OutboundTopicConnection</connection-impl-class>
+         </connection-definition>
+         <connection-definition>
+            <managedconnectionfactory-class>org.objectweb.joram.client.connector.ManagedConnectionFactoryImpl</managedconnectionfactory-class>
+            <config-property>
+              <config-property-name>UserName</config-property-name>
+              <config-property-type>java.lang.String</config-property-type>
+              <config-property-value>anonymous</config-property-value>
+            </config-property>
+            <config-property>
+              <config-property-name>Password</config-property-name>
+              <config-property-type>java.lang.String</config-property-type>
+              <config-property-value>anonymous</config-property-value>
+            </config-property>
+            <config-property>
+              <config-property-name>Collocated</config-property-name>
+              <config-property-type>java.lang.Boolean</config-property-type>
+              <config-property-value>true</config-property-value>
+            </config-property>
+            <connectionfactory-interface>javax.jms.ConnectionFactory</connectionfactory-interface>
+            <connectionfactory-impl-class>org.objectweb.joram.client.connector.OutboundConnectionFactory</connectionfactory-impl-class>
+            <connection-interface>javax.jms.Connection</connection-interface>
+            <connection-impl-class>org.objectweb.joram.client.connector.OutboundConnection</connection-impl-class>
+         </connection-definition>
+         <transaction-support>XATransaction</transaction-support>
+         <reauthentication-support>false</reauthentication-support>
+      </outbound-resourceadapter>
+      <inbound-resourceadapter>
+         <messageadapter>
+            <messagelistener>
+               <messagelistener-type>javax.jms.MessageListener</messagelistener-type>
+               <activationspec>
+                  <activationspec-class>org.objectweb.joram.client.connector.ActivationSpecImpl</activationspec-class>
+                  <required-config-property>
+                     <config-property-name>destinationType</config-property-name>
+                  </required-config-property>
+                  <required-config-property>
+                     <config-property-name>destination</config-property-name>
+                  </required-config-property>
+               </activationspec>
+            </messagelistener>
+         </messageadapter>
+      </inbound-resourceadapter>
+   </resourceadapter>
+</connector>

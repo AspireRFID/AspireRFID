@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright 2005-2008, Aspire
+   
+   This library is free software; you can redistribute it and/or modify it 
+   under the terms of the GNU Lesser General Public License as published by 
+   the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+   License, or (at your option) any later version. If you do not alter this 
+   notice, a recipient may use your version of this file under either the 
+   LGPL version 2.1, or (at his option) any later version.
+   
+   You should have received a copy of the GNU Lesser General Public License 
+   along with this library; if not, write to the Free Software Foundation, 
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+   
+   This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+   KIND, either express or implied. See the GNU Lesser General Public 
+   License for the specific language governing rights and limitations.
+-->
+
+<wsdl:definitions targetNamespace="urn:URLService" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:URLService" xmlns:intf="urn:URLService" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Jan 18, 2006 (05:05:47 CET)-->
+
+   <wsdl:message name="getEPCISServiceURLResponse">
+
+      <wsdl:part name="getEPCISServiceURLReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEPCISServiceURLRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="registerEPCISServiceHistoryRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="registerEPCISServiceHistoryResponse">
+
+      <wsdl:part name="registerEPCISServiceHistoryReturn" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEPCISDescriptionRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEPCISServicesHistoryRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEPCISServicesHistoryResponse">
+
+      <wsdl:part name="getEPCISServicesHistoryReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEPCISDescriptionResponse">
+
+      <wsdl:part name="getEPCISDescriptionReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="URLService">
+
+      <wsdl:operation name="getEPCISServiceURL" parameterOrder="in0">
+
+         <wsdl:input message="impl:getEPCISServiceURLRequest" name="getEPCISServiceURLRequest"/>
+
+         <wsdl:output message="impl:getEPCISServiceURLResponse" name="getEPCISServiceURLResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getEPCISServicesHistory" parameterOrder="in0">
+
+         <wsdl:input message="impl:getEPCISServicesHistoryRequest" name="getEPCISServicesHistoryRequest"/>
+
+         <wsdl:output message="impl:getEPCISServicesHistoryResponse" name="getEPCISServicesHistoryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="registerEPCISServiceHistory" parameterOrder="in0 in1">
+
+         <wsdl:input message="impl:registerEPCISServiceHistoryRequest" name="registerEPCISServiceHistoryRequest"/>
+
+         <wsdl:output message="impl:registerEPCISServiceHistoryResponse" name="registerEPCISServiceHistoryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getEPCISDescription" parameterOrder="in0">
+
+         <wsdl:input message="impl:getEPCISDescriptionRequest" name="getEPCISDescriptionRequest"/>
+
+         <wsdl:output message="impl:getEPCISDescriptionResponse" name="getEPCISDescriptionResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="URLServicePortSoapBinding" type="impl:URLService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getEPCISServiceURL">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getEPCISServiceURLRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:URLService" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getEPCISServiceURLResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:URLService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getEPCISServicesHistory">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getEPCISServicesHistoryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:URLService" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getEPCISServicesHistoryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:URLService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="registerEPCISServiceHistory">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="registerEPCISServiceHistoryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:URLService" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="registerEPCISServiceHistoryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:URLService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getEPCISDescription">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getEPCISDescriptionRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:URLService" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getEPCISDescriptionResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:URLService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="URLServiceService">
+
+      <wsdl:port binding="impl:URLServicePortSoapBinding" name="URLServicePort">
+
+         <wsdlsoap:address location="http://dummy-url"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

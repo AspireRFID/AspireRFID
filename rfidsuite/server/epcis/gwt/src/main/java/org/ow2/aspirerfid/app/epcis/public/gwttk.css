@@ -1,0 +1,426 @@
+/*
+ * Copyright 2005-2008, Aspire
+ * 
+ * This library is free software; you can redistribute it and/or modify it 
+ * under the terms of the GNU Lesser General Public License as published by 
+ * the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+ * License, or (at your option) any later version. If you do not alter this 
+ * notice, a recipient may use your version of this file under either the 
+ * LGPL version 2.1, or (at his option) any later version.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License 
+ * along with this library; if not, write to the Free Software Foundation, 
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * 
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+ * KIND, either express or implied. See the GNU Lesser General Public 
+ * License for the specific language governing rights and limitations.
+ */
+
+/*
+GWT Tk
+*/
+
+.tk-DropDownPanel {
+  
+}
+
+.tk-DropDownPanelHeader {
+  padding: 8px;
+  text-align: center;
+  font-size: smaller;
+  font-weight: bold;
+  background-color: rgb(195, 217, 255);
+  cursor: pointer;
+}
+
+.tk-DropDownPanelContent {
+  padding: 8px;
+  background: white;
+  background-color: white;
+}
+
+.tk-SimpleHyperLink {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tk-GlassPanel {
+  background: black;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+  cursor: not-allowed;
+}
+
+.tk-ModalDialog {
+  border: 2px solid #fff; /*black*/
+  background-color: white;
+  padding: 0px;
+}
+
+.tk-ModalDialog .Caption {
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 90%;
+  font-weight: bold;
+  background-color: #eee; /*rgb(195, 217, 255);*/
+  color : black;
+  border-bottom : 2px solid #ff9000;
+  padding: 3px;
+  margin: 1px;
+  cursor: default;
+}
+
+.tk-ModalDialog-content {
+  vertical-align: middle;
+  text-align: center;
+  padding: 8px;
+}
+
+.tk-ModalDialog-content .gwt-Button {
+  margin-top: 8px;
+}
+
+.tk-AlertDialog-captionIcon {
+  vertical-align: middle;
+}
+
+.tk-AlertDialog-captionLeft, .tk-AlertDialog-captionRight {
+  width: 16px;
+}
+
+.tk-AlertDialog-captionCenter {
+  font-size: 90%;
+  font-weight: bold;
+  padding: 0 8px;
+  text-align: center;
+}
+
+.tk-AlertDialog-buttons {
+  margin: 0 auto;
+}
+
+.tk-AlertDialog-hotKeyChar {
+  text-decoration: underline;
+}
+
+.tk-SideTab {
+  cursor: pointer;
+  padding: 4px 0;
+}
+.tk-SideTab .Content {
+  top: 0px;
+  padding: 7px 4px 0 9px;
+  white-space: nowrap;
+}
+.tk-SideTab.Disabled .Content {
+  color: gray;
+}
+.tk-SideTab .bg {
+  width: 100%; /* gives IE 'layout' for Alpha filter */
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+.tk-SideTab .bg .top {
+  margin-right: 1px;
+  background: url(SideTabSolid_top.gif) no-repeat left top;
+}
+.tk-SideTab .bg .bottom {
+  margin-right: 1px;
+  height: 7px;
+  background: url(SideTabSolid_bottom.gif) no-repeat left top;
+}
+.tk-SideTab.Selected {
+  cursor: default;
+}
+.tk-SideTab.Selected .bg {
+  background: #E8EEF7;
+}
+.tk-SideTab.Selected .bg, .tk-SideTab.Active .bg {
+  opacity: 1.0;
+  filter: alpha(opacity=100);
+}
+
+/* -------------------------------------------------------------------------- */
+
+.DemoTabBar, .DemoTabBar TD {
+/*  background: url(bg-vortex.jpg);*/
+  font-size: smaller; 
+}
+.DemoTabBar {
+  padding: 0 0 0 8px;
+  width: 100%;
+  empty-cells: show;
+}
+.DemoTabBar .preSpacer {
+  height: 1.5em;
+}
+.DemoTabBar .postSpacer {
+  height: 1.5em;
+}
+.DemoTabPanel-tabBar {
+  background: url(SideTabSolid_bg.gif) repeat-y right;
+}
+.DemoTabPanel-tabBody {
+  background-color: #E8EEF7;
+  padding: 8px 0 0 8px;
+  border: solid 1px #87B3FF;
+  border-left: none;
+}
+#main {
+  border: 8px solid white;
+  border-bottom: 0;
+}
+
+.compatMode {
+  font-style: italic;
+  font-size: smaller;
+  text-align: center;
+  padding: 2px;
+}
+
+.description {
+  background-color: white;
+  padding: 8px;
+}
+
+.division {
+  margin: 0 8px 8px 0;
+}
+
+.example {
+  border: solid 1px #87B3FF;
+  padding: 8px;
+}
+
+#dropDown-left .tk-DropDownPanel {
+  border: solid 4px  rgb(195, 217, 255);
+  margin-bottom: 8px;
+}
+
+#dropDown-left .tk-DropDownPanelHeader {
+  text-align: left;
+  padding: 0;
+  white-space: nowrap;
+}
+
+#dropDown-left .tk-DropDownPanel-open .tk-DropDownPanelHeader {
+  border-bottom: solid 4px  rgb(195, 217, 255);
+}
+
+#dropDown-1 .tk-DropDownPanelHeader {
+  padding: 0 8px 0 16px;
+  background-image: url(triangle.gif);
+  background-position: left;
+  background-repeat: no-repeat;
+}
+
+#dropDown-1.tk-DropDownPanel-open .tk-DropDownPanelHeader {
+  background-image: url(opentriangle.gif);
+}
+
+#dropDown-3 {
+  text-align: center;
+}
+
+#dropDown-3 .tk-DropDownPanelHeader  {
+  float: left;
+}
+
+#alert-imageButtons .tk-AlertDialog-buttons img {
+  border: outset gray 1px;
+  margin-top: 4px;
+}
+
+#alert-imageButtons .tk-AlertDialog-buttons img:hover {
+  border-style: inset;
+}
+
+#alert-imageButtons img.tk-AlertDialog-defaultButton {
+  border-color: black;
+}
+
+#dialog-dragstyle.tk-ModalDialog-dragging {
+  filter: alpha(opacity=50);
+  opacity: 0.8;
+}
+
+#dialog-styled.tk-ModalDialog {
+  border: 1px solid black;
+  border-top: none;
+  background-color: rgb(230,230,236);
+  padding: 0px;
+}
+
+#dialog-styled.tk-ModalDialog .Caption {
+  font-family: Trebuchet MS, sans-serif;
+  font-size: 90%;
+  background-image: url("chrome.gif");
+  background-repeat: repeat-x;
+  background-color: rgb(230,230,236);
+  padding: 0px 1px 0px 3px;
+  padding-left: 5px;
+  margin: 0px;
+  cursor: default;
+  height: 26px;
+}
+
+#dialog-styled.tk-ModalDialog .Caption * {
+  text-align: left;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+#dialog-styled.tk-ModalDialog .Caption .gwt-Label {
+  margin-top: 2px;
+}
+
+#dialog-styled .tk-ModalDialog-content
+{
+  width: 16em;
+}
+
+#alert-styled {
+  border: 2px groove blue;
+}
+
+#alert-styled.tk-ModalDialog .Caption {
+  color: black;
+  background: #FFEA80;
+}
+
+#alert-styled .tk-AlertDialog-captionCenter {
+  text-align: right;
+}
+
+#alert-styled .tk-AlertDialog-captionRight {
+  width: 0;
+}
+
+#alert-styled .tk-ModalDialog-content {
+  background: url("bg-vortex.jpg");
+}
+
+#alert-styled .tk-AlertDialog-message {
+  color: white;
+}
+
+#alert-styled-glassPanel {
+  background: yellow url("stripes.gif");
+}
+
+#miscPanel .description {
+  margin-bottom: 8px;
+}
+
+.focus-container {
+  border: 1px dashed gray;
+  margin: 4px;
+  padding: 4px;
+}
+
+#rowPanelPanel .description {
+  margin-bottom: 8px;
+}
+
+#rowPanelPanel #ex1 {
+  background: white;
+  background: #E8EEF7;
+  width: 250px;
+  border: solid black 1px;
+}
+
+#rowPanelPanel .ex1-caption {
+  padding: 4px;
+  background: #C3D9FF;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+#rowPanelPanel .ex1-content {
+  text-align: center;
+  padding: 4px 4px 0px 4px;
+  height: 100px;
+  background: white;
+}
+
+#rowPanelPanel .ex1-content * {
+  margin-bottom: 4px;
+}
+
+#glasspanel-ex-dark {
+  cursor: pointer;
+  background: black;
+  filter: alpha(opacity=20);
+  opacity: 0.2;
+}
+
+#glasspanel-ex-light {
+  cursor: pointer;
+  background: white;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
+
+#glasspanel-ex-opaque {
+  cursor: pointer;
+  background: white;
+  filter: ;
+  opacity: 1.0;
+}
+
+#glasspanel-ex-transparentPNG {
+  background: none;
+  opacity: 1.0;
+  /* load background image with transparency in IE */
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='Gray20.png', sizingMethod='scale');
+}
+
+#glasspanel-ex-transparentPNG .Content {
+  background-image: url('Gray20.png');
+  cursor: pointer;
+  /* suppress background image in IE */
+  filter: alpha(opacity=0);
+}
+
+#glasspanel-ex-tiledBG {
+  cursor: pointer;
+  background: url('bg-vortex.jpg');
+  filter: alpha(opacity=20);
+  opacity: 0.2;
+}
+
+#glasspanel-ex-centeredBG {
+  cursor: pointer;
+  background: url('SeattleDusk.jpg') no-repeat center;
+  filter: ;
+  opacity: 1.0;
+}
+
+#glasspanel-ex-text {
+  cursor: pointer;
+  background: #87B3FF;
+  filter: alpha(opacity=40);
+  opacity: .4;
+}
+
+#glasspanel-ex-text h1 {
+  color: white;
+  font-size: 6em;
+}
+
+#glasspanel-ex-text * {
+  margin: 0;
+}
+
+#glasspanel-ex-ieBodyBlur {
+  cursor: pointer;
+  background: white;
+  filter: alpha(opacity=20);
+  opacity: 0.2;
+}
+
+.glasspanel-ex-ieBodyBlur-BODY {
+  filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=5, MakeShadow=false);
+}

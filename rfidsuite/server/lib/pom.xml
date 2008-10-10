@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2005-2008, Aspire
+   
+   This library is free software; you can redistribute it and/or modify it 
+   under the terms of the GNU Lesser General Public License as published by 
+   the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+   License, or (at your option) any later version. If you do not alter this 
+   notice, a recipient may use your version of this file under either the 
+   LGPL version 2.1, or (at his option) any later version.
+   
+   You should have received a copy of the GNU Lesser General Public License 
+   along with this library; if not, write to the Free Software Foundation, 
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+   
+   This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+   KIND, either express or implied. See the GNU Lesser General Public 
+   License for the specific language governing rights and limitations.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>org.ow2.aspirerfid</groupId>
+		<artifactId>server</artifactId>
+		<version>2.0.0</version>
+	</parent>
+
+	<artifactId>lib-server</artifactId>
+	<version>2.0.0</version>
+	<name>AspireRFID Server Common libs</name>
+
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>pom</packaging>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<configuration>
+							<tasks>
+								<macrodef name="mvn">
+									<attribute name="goal" default="install:install-file" />
+									<attribute name="file" />
+									<attribute name="groupId" />
+									<attribute name="artifactId" />
+									<attribute name="version" />
+									<attribute name="packaging" default="jar" />
+									<sequential>
+										<condition property="mvn" value="mvn.bat">
+											<os family="dos" />
+										</condition>
+										<condition property="mvn" value="mvn">
+											<not>
+												<isset property="mvn" />
+											</not>
+										</condition>
+										<exec executable="${mvn}" failonerror="true">
+											<arg line="@{goal}" />
+											<arg line="-Dfile=@{file}" />
+											<arg line="-DgroupId=@{groupId}" />
+											<arg line="-DartifactId=@{artifactId}" />
+											<arg line="-Dversion=@{version}" />
+											<arg line="-Dpackaging=@{packaging}" />
+										</exec>
+									</sequential>
+								</macrodef>
+
+								<mvn file="${basedir}/client.jar"
+									groupId="client"
+									artifactId="client"
+									version="1.0" />
+									
+								<mvn file="${basedir}/googlemaps_gwt_2_2_1.jar"
+									groupId="gwt"
+									artifactId="googlemaps"
+									version="2.2.1" />
+									
+								<mvn file="${basedir}/gwttk-0.2.3.jar"
+									groupId="gwt"
+									artifactId="gwttk"
+									version="0.2.3" />
+									
+								<mvn file="${basedir}/gwt-widgets-0.1.5.jar"
+									groupId="gwt"
+									artifactId="gwt-widgets"
+									version="0.1.5" />
+									
+								<mvn file="${basedir}/jboss-annotations-ejb3.jar"
+									groupId="jboss-annotations-ejb3"
+									artifactId="jboss-annotations-ejb3"
+									version="1.0" />
+									
+								<mvn file="${basedir}/jboss-jaxws.jar"
+									groupId="jboss-jaxws"
+									artifactId="jboss-jaxws"
+									version="1.0" />
+									
+								<mvn file="${basedir}/jbossws-core.jar"
+									groupId="jbossws-core"
+									artifactId="jbossws-core"
+									version="1.0" />
+									
+								<mvn file="${basedir}/jcommon-1.0.10.jar"
+									groupId="jfree"
+									artifactId="jcommon"
+									version="1.0.10" />
+									
+								<mvn file="${basedir}/jfreechart-1.0.6.jar"
+									groupId="jfree"
+									artifactId="jfreechart"
+									version="1.0.6" />
+									
+								<mvn file="${basedir}/ow_ejb3_core_api.jar"
+									groupId="ow_ejb3_core_api"
+									artifactId="ow_ejb3_core_api"
+									version="1.0" />
+									
+								<mvn file="${basedir}/ow_ejb3_persistence_api.jar"
+									groupId="ow_ejb3_persistence_api"
+									artifactId="ow_ejb3_persistence_api"
+									version="1.0" />
+									
+								<mvn file="${basedir}/simpledatepicker.jar"
+									groupId="gwt"
+									artifactId="simpledatepicker"
+									version="1.0" />
+									
+                <mvn file="${basedir}/joram-client.jar"
+				  groupId="org.objectweb.joram.client"
+                  artifactId="joram-client"
+                  version="4.3.28" />
+
+                <mvn file="${basedir}/joram-shared.jar"
+				  groupId="org.objectweb.joram.shared"
+                  artifactId="joram-shared"
+                  version="4.3.28" />
+
+                <mvn file="${basedir}/jms.jar"
+				  groupId="javax.jms"
+				  artifactId="jms"
+				  version="0.1.0" />
+
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

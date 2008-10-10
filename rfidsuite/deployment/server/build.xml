@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+   RFID Suite
+
+   The "RFID Suite" cannot be copied, modified, distributed IN ANY FORM 
+   without the permission and written consent of the owner 
+   the Universite Joseph Fourier, LIG laboratory, ADELE team (UJF-LIG-ADELE).
+
+   UJF-LIG-ADELE retains all rights over to this program in either the original
+   or modified forms, and no violation, deletion, or change of the copyright
+   notice is allowed.
+
+   Furthermore, UJF-LIG-ADELE will have no liability or responsibility to any
+   user with respect  to loss or damage caused directly or indirectly by this 
+   program.
+
+   Copyright : Universite Joseph Fourier, LIG laboratory, ADELE team, 
+   2005-2008.
+
+   Contact: Didier Donsez mailto:Didier.Donsez@imag.fr
+-->
+
+<project name = "Server deployment" default = "config.jonas" basedir = ".">
+    <!--build.properties hold the properties that can be customized -->
+    <property file = "server.properties"/>
+    <!--some properties are build from environment variables -->
+    <property environment = "myenv"/>
+    <property name = "jonas.root" value = "${myenv.JONAS_ROOT}"/>
+	<property name = "jboss.root" value = "F:\JBoss"/>
+    <!--variable to configurate the server -->
+    <property name = "conf.dir" value = "conf"/>
+    <property file = "${jonas.root}/build-jb.properties"/>
+    <!--Set the uncustomizable properties -->
+    <property name = "generated.dir" value = "generated"/>
+    <!--tache to configurate the server -->
+    <target name = "config.jonas">
+        <mkdir dir = "${generated.dir}"/>
+        <copy todir = "${generated.dir}" file = "${conf.dir}\a3servers.xml"/>
+        <copy todir = "${generated.dir}" file = "${conf.dir}\jonas\carol.properties"/>
+        <copy todir = "${generated.dir}" file = "${conf.dir}\jonas\jonas.properties"/>
+        <copy todir = "${generated.dir}" file = "${conf.dir}\jonas\joramAdmin.xml"/>
+        <copy todir = "${generated.dir}" file = "${conf.dir}\jonas\HSQL_rfid.properties"/>
+        <replace dir = "generated" summary = "yes">
+            <include name = "*.*"/>
+            <replacefilter token = "__RFID_SERVER_IP__" value = "${server.host}"/>
+        </replace>
+        <copy todir = "${jonas.root}/conf">
+            <fileset dir = "generated">
+                <include name = "*.*"/>
+            </fileset>
+        </copy>
+        <mkdir dir = "${generated.dir}/META-INF"/>
+        <copy todir = "${generated.dir}/META-INF" file = "${conf.dir}\jonas\ra.xml"/>
+        <replace dir = "${generated.dir}/META-INF" summary = "yes">
+            <include name = "*.*"/>
+            <replacefilter token = "__RFID_SERVER_IP__" value = "${server.host}"/>
+        </replace>
+        <jar destfile = "${jonas.root}/rars/autoload/joram_for_jonas_ra.rar" basedir = "${generated.dir}" update = "yes">
+            <include name = "**/ra.xml"/>
+        </jar>
+        <delete dir = "${generated.dir}"/>
+    </target>
+    <target name = "config.jboss">
+		<copy todir = "${jboss.root}/server/default/conf" file = "${conf.dir}\a3servers.xml"/>
+        <copy todir = "${jboss.root}/server/default/deploy/jms" file = "${conf.dir}\jboss\joram-jms-ds.xml"/>
+		<copy todir = "${jboss.root}/server/default/deploy" file = "${conf.dir}\jboss\joram.rar"/>
+		<copy todir = "${jboss.root}/server/default/conf" file = "${conf.dir}\jboss\login-config.xml"/>
+		<copy todir = "${jboss.root}/server/default/conf" file = "${conf.dir}\jboss\rfid-users.properties"/>
+		<copy todir = "${jboss.root}/server/default/conf" file = "${conf.dir}\jboss\rfid-roles.properties"/>
+	</target>
+</project>

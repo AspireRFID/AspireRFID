@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="ons.jar/src/main/java"/>
+	<classpathentry kind="src" path="ons.jar/src/main/resources"/>
+	<classpathentry kind="src" path="ons.war/src/main/java"/>
+	<classpathentry kind="src" path="ons.war/src/main/webapp"/>
+	<classpathentry kind="src" path="ons.jar/src/tests/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Jonas"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

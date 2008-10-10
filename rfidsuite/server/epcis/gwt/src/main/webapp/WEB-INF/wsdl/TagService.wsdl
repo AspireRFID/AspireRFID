@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:TagService" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:TagService" xmlns:intf="urn:TagService" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Jan 18, 2006 (05:05:47 CET)-->
+
+   <wsdl:message name="generalTagInformationRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="tagHistoryResponse">
+
+      <wsdl:part name="tagHistoryReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="tagHistoryRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="generalTagInformationResponse">
+
+      <wsdl:part name="generalTagInformationReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="TagService">
+
+      <wsdl:operation name="tagHistory" parameterOrder="in0">
+
+         <wsdl:input message="impl:tagHistoryRequest" name="tagHistoryRequest"/>
+
+         <wsdl:output message="impl:tagHistoryResponse" name="tagHistoryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="generalTagInformation" parameterOrder="in0">
+
+         <wsdl:input message="impl:generalTagInformationRequest" name="generalTagInformationRequest"/>
+
+         <wsdl:output message="impl:generalTagInformationResponse" name="generalTagInformationResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="TagServicePortSoapBinding" type="impl:TagService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="tagHistory">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="tagHistoryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:TagService" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="tagHistoryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:TagService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="generalTagInformation">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="generalTagInformationRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:TagService" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="generalTagInformationResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:TagService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="TagServiceService">
+
+      <wsdl:port binding="impl:TagServicePortSoapBinding" name="TagServicePort">
+
+         <wsdlsoap:address location="http://dummy-url"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<JoramAdmin>
+
+<!--
+<AdminModule>
+  <connect host="localhost"
+           port="16010"
+           name="root"
+           password="root"/>
+</AdminModule>
+-->
+
+<AdminModule>
+  <collocatedConnect name="root" password="root"/>
+</AdminModule>
+
+<ConnectionFactory className="org.objectweb.joram.client.jms.tcp.TcpConnectionFactory">
+  <tcp host="localhost"
+       port="16010"/>
+  <jndi name="JCF"/>
+</ConnectionFactory>
+
+<ConnectionFactory className="org.objectweb.joram.client.jms.tcp.QueueTcpConnectionFactory">
+  <tcp host="localhost"
+       port="16010"/>
+  <jndi name="JQCF"/>
+</ConnectionFactory>
+
+<ConnectionFactory className="org.objectweb.joram.client.jms.tcp.TopicTcpConnectionFactory">
+  <tcp host="__RFID_SERVER_IP__"
+       port="16010"/>
+  <jndi name="JTCF"/>
+</ConnectionFactory>
+
+<User name="anonymous"
+      password="anonymous"
+      serverId="0"/>
+
+<Queue name="sampleQueue">
+  <freeReader/>
+  <freeWriter/>
+  <jndi name="sampleQueue"/>
+</Queue>
+
+<Queue name="simpaReplyQ">
+  <freeReader/>
+  <freeWriter/>
+  <jndi name="simpaReplyQ"/>
+</Queue>
+
+<Topic name="rfidreporttopic">
+  <freeReader/>
+  <freeWriter/>
+  <jndi name="rfidreporttopic"/>
+</Topic>
+
+</JoramAdmin>

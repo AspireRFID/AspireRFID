@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: fornacif
+Built-By: fornacif
+Build-Jdk: 1.5.0_05
+Class-path: ./xbean-2.2.0.jar ./xmlbeans-0.1.0.jar

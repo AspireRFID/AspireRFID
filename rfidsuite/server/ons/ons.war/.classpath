@@ -1,0 +1,12 @@
+<classpath>
+  <classpathentry kind="src" path="src/main/java"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/client/client/1.0/client-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jboss-annotations-ejb3/jboss-annotations-ejb3/1.0/jboss-annotations-ejb3-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jboss-jaxws/jboss-jaxws/1.0/jboss-jaxws-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jbossws-core/jbossws-core/1.0/jbossws-core-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/ow2/aspirerfid/ons.jar/2.0.0/ons.jar-2.0.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/ow_ejb3_core_api/ow_ejb3_core_api/1.0/ow_ejb3_core_api-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/ow_ejb3_persistence_api/ow_ejb3_persistence_api/1.0/ow_ejb3_persistence_api-1.0.jar"/>
+</classpath>

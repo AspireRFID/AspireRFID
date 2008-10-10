@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="edgepremise/adminmbean/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/ale/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/aleimpl/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/aleimpl/src/test"/>
+	<classpathentry kind="src" path="edgepremise/cron/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/eabridge/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/export.event.dispatcher/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/export.event.interface/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/export.event.jms/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/export.event.mail/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/export.event.ws/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/fictivereader/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/gpssimproducer/src/main/java"/>
+	<classpathentry excluding="org/ow2/aspirerfid/common/jmdnsregister/" kind="src" path="edgepremise/jmdnsregister/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/mail.pop.reader/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/mail.server.jes-1.4/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/obrmbean/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/rfidreader/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/tagsysmedio/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/thermometer/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/tiris6350/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/util/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/ws.report/src/main/java"/>
+	<classpathentry kind="src" path="edgepremise/ws.server.xfire/src/main/java"/>
+	<classpathentry kind="lib" path="edgepremise/lib/com.tagsys.jar"/>
+	<classpathentry kind="lib" path="edgepremise/lib/jmdns.jar"/>
+	<classpathentry kind="lib" path="edgepremise/lib/jms.jar"/>
+	<classpathentry kind="lib" path="edgepremise/lib/joram-client.jar"/>
+	<classpathentry kind="lib" path="edgepremise/lib/joram-shared.jar"/>
+	<classpathentry kind="lib" path="edgepremise/lib/jsr173_1.0_api.jar"/>
+	<classpathentry kind="lib" path="edgepremise/lib/jsr173_1.0_ri.jar"/>
+	<classpathentry kind="lib" path="edgepremise/lib/org.apache.felix.ipojo-0.7.3-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="edgepremise/lib/rxtx.jar"/>
+	<classpathentry kind="lib" path="edgepremise/lib/RXTXcomm.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="edgepremise/ws.server.xfire/target-eclipse/classes"/>
+</classpath>
