@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connection-factories>
+    <tx-connection-factory>
+        <jndi-name>JoramConnectionFactory</jndi-name>
+        <xa-transaction/>
+        <track-connection-by-tx/>
+        <rar-name>joram.rar</rar-name>
+        <connection-definition>javax.jms.ConnectionFactory</connection-definition>
+        <config-property name = "UserName" type = "java.lang.String">root</config-property>
+        <config-property name = "Password" type = "java.lang.String">root</config-property>
+    </tx-connection-factory>
+    <tx-connection-factory>
+        <jndi-name>JoramQueueConnectionFactory</jndi-name>
+        <xa-transaction/>
+        <track-connection-by-tx/>
+        <rar-name>joram.rar</rar-name>
+        <connection-definition>javax.jms.QueueConnectionFactory</connection-definition>
+        <config-property name = "UserName" type = "java.lang.String">root</config-property>
+        <config-property name = "Password" type = "java.lang.String">root</config-property>
+    </tx-connection-factory>
+    <tx-connection-factory>
+        <jndi-name>JoramTopicConnectionFactory</jndi-name>
+        <xa-transaction/>
+        <track-connection-by-tx/>
+        <rar-name>joram.rar</rar-name>
+        <connection-definition>javax.jms.TopicConnectionFactory</connection-definition>
+        <config-property name = "UserName" type = "java.lang.String">root</config-property>
+        <config-property name = "Password" type = "java.lang.String">root</config-property>
+    </tx-connection-factory>
+</connection-factories>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>Bluetooth Properties</comment>
+	<entry key="uuid">9ee2b296da2448399658cbc0a7ee69e2</entry>
+	<entry key="serviceName">Echo Server</entry>
+	<entry key="authenticate">false</entry>
+	<entry key="encrypt">false</entry>
+	<entry key="inquiryMode">10390323</entry>
+</properties>

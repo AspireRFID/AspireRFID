@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright 2005-2008, Aspire
+   
+   This library is free software; you can redistribute it and/or modify it 
+   under the terms of the GNU Lesser General Public License as published by 
+   the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+   License, or (at your option) any later version. If you do not alter this 
+   notice, a recipient may use your version of this file under either the 
+   LGPL version 2.1, or (at his option) any later version.
+   
+   You should have received a copy of the GNU Lesser General Public License 
+   along with this library; if not, write to the Free Software Foundation, 
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+   
+   This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+   KIND, either express or implied. See the GNU Lesser General Public 
+   License for the specific language governing rights and limitations.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<parent>
+		<groupId>org.ow2.aspirerfid</groupId>
+		<artifactId>ons</artifactId>
+		<version>2.0.0</version>
+	</parent>
+	
+	<artifactId>ons.war</artifactId>
+	<version>2.0.0</version>
+	<name>AspireRFID ONS - WAR</name>
+
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>war</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>ons.jar</artifactId>
+			<version>2.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>client</groupId>
+			<artifactId>client</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<!-- this is relative to the pom.xml directory -->
+							<directory>
+								/${pom.basedir}/../ons.jar/target/classes/
+							</directory>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>jboss</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>server</name>
+					<value>jboss</value>
+				</property>
+			</activation>
+
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<configuration>
+									<tasks>
+										<delete
+											file="./target/ons.war-0.1.0/WEB-INF/webservices.xml" />
+
+										<jar
+											destfile="./target/${pom.artifactId}-${pom.version}.war"
+											basedir="./target/${pom.artifactId}-${pom.version}"
+											update="no">
+											<include name="**/*.*" />
+										</jar>
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>jonas</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>server</name>
+					<value>jonas</value>
+				</property>
+			</activation>
+
+			<build>
+				<finalName>ons</finalName>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>compile</phase>
+								<id>java2wsdl</id>
+								<configuration>
+									<tasks>
+										<path id="base.classpath">
+											<pathelement
+												location="target/classes" />
+											<fileset
+												dir="${env.JONAS_ROOT}\lib/commons">
+												<include
+													name="j2ee/*.jar" />
+												<include
+													name="jonas/monolog/*ow_util_log*.jar" />
+												<include
+													name="jonas/ow_jonas.jar" />
+											</fileset>
+										</path>
+										<path id="axis.classpath">
+											<path
+												refid="base.classpath" />
+											<fileset
+												dir="${env.JONAS_ROOT}\lib/commons">
+												<include
+													name="jonas/axis/*.jar" />
+												<include
+													name="jonas/jakarta-commons/*commons-discovery*.jar" />
+												<include
+													name="jonas/jakarta-commons/*commons-logging*.jar" />
+											</fileset>
+											<fileset
+												dir="${env.JONAS_ROOT}\lib/tools">
+												<include
+													name="*axis-ant*.jar" />
+											</fileset>
+										</path>
+										<property
+											name="url_service_name" value="URLService" />
+										<taskdef name="axis-java2wsdl"
+											classname="org.apache.axis.tools.ant.wsdl.Java2WsdlAntTask">
+											<classpath
+												refid="axis.classpath" />
+										</taskdef>
+
+										<mkdir
+											dir="src/main/webapp/WEB-INF/wsdl" />
+										<axis-java2wsdl
+											classname="org.ow2.aspirerfid.ons.webservice.jonas.${url_service_name}"
+											location="http://dummy-url"
+											serviceportname="${url_service_name}Port"
+											namespace="urn:${url_service_name}" typeMappingVersion="1.3"
+											output="src/main/webapp/WEB-INF/wsdl/${url_service_name}.wsdl">
+											<classpath
+												refid="base.classpath" />
+										</axis-java2wsdl>
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+
+							<execution>
+								<id>wsgen</id>
+								<phase>package</phase>
+								<configuration>
+									<tasks>
+										<property environment="env" />
+										<property name="jonas.root"
+											value="${env.JONAS_ROOT}" />
+
+										<taskdef name="wsgen"
+											classname="org.objectweb.jonas.ant.WsGenTask"
+											classpath="${env.JONAS_ROOT}\lib\common/ow_jonas_ant.jar" />
+
+										<wsgen srcdir="target"
+											destdir="target" verbose="false" debug="false">
+											<include name="ons.war" />
+										</wsgen>
+
+										<delete file="target/ons.war" />
+										<copy todir="target/">
+											<fileset
+												dir="target/webapps">
+												<include name="ons.war" />
+											</fileset>
+										</copy>
+
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

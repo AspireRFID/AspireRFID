@@ -1,0 +1,30 @@
+<prodList>
+	<prod>
+		<quantity>1</quantity>
+		<name>Broom</name>
+		<ranges>
+			<range>
+				<init>03C50A18</init>
+				<final>05C50A39</final>
+			</range>
+			<range>
+				<init>C90284</init>
+				<final>C90284</final>
+			</range>
+		</ranges>
+	</prod>
+	<prod>
+		<quantity>5</quantity>
+		<name>Milk</name>
+		<ranges>
+			<range>
+				<init>253B</init>
+				<final>4749</final>
+			</range>
+			<range>
+				<init>d0ba</init>
+				<final>f1cd</final>
+			</range>
+		</ranges>
+	</prod>
+</prodList>

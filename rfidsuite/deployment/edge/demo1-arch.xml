@@ -1,0 +1,183 @@
+<?xml version="1.0" standalone="yes"?>
+<!--
+   RFID Suite
+
+   The "RFID Suite" cannot be copied, modified, distributed IN ANY FORM 
+   without the permission and written consent of the owner 
+   the Universite Joseph Fourier, LIG laboratory, ADELE team (UJF-LIG-ADELE).
+
+   UJF-LIG-ADELE retains all rights over to this program in either the original
+   or modified forms, and no violation, deletion, or change of the copyright
+   notice is allowed.
+
+   Furthermore, UJF-LIG-ADELE will have no liability or responsibility to any
+   user with respect  to loss or damage caused directly or indirectly by this 
+   program.
+
+   Copyright : Universite Joseph Fourier, LIG laboratory, ADELE team, 
+   2005-2008.
+
+   Contact: Didier Donsez mailto:Didier.Donsez@imag.fr
+-->
+
+<architecture id='demo1-arch'>
+
+  <node id="rfid.edge1" type="edge" >
+	<reader id="reader.COM1" type="TagSys Lx00 Reader">
+		<configuration>
+			<attribute name="portName" type="java.lang.String">COM1</attribute>
+			<attribute name="baudRate" type="int">38500</attribute>
+			<attribute name="eventTopic" type="java.lang.String">org/epcglobal/ale</attribute>
+		</configuration>
+	</reader>
+	  
+	<bridge id="bridge" type="jms">
+		<configuration>
+			<attribute name="eventAdminTopic" type="java.lang.String">org/epcglobal/ale</attribute>
+			<attribute name="jmsServerAddress" type="java.lang.String">${rfid.premise1.address}</attribute>
+			<attribute name="topic" type="java.lang.String">org/epcglobal/ale</attribute>
+		</configuration>
+	</bridge>
+	
+	<bundle id="RXTX" name="fr.imag.adele.bundle.rxtx"/>
+	<bundle id="RXTXCMD" url="${rfid.repo.url}/rxtxcmd/rxtxcmd.jar"/>
+	
+	<bundle
+		id="beartbeat"
+		url="http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/heartbeat/heartbeat.jar"
+		description="this bundle send alive messages to a server"
+		initialState="ACTIVE">
+		
+		<configuration objectName="org.osgi:type=heartbeat">
+			<attribute name="host" type="java.lang.String">${rfid.server.address}</attribute>
+			<attribute name="port" type="int">2345</attribute>
+			<attribute name="period" type="int">120000</attribute> <!-- millisec -->
+			<attribute name="message" type="java.lang.String">Node rfid.edge1 (${rfid.edge1.address}) is alive</attribute>
+			<operation name="start" >
+				<arg value="0"/>
+			</operation>
+		</configuration>
+	</bundle>
+	<!-- <bundle id="DUMMY"/>  have no url and no name-->
+	
+  </node>
+  
+  <node id="rfid.edge2" type="edge">
+	<reader id="reader.COM1" type="tiris6350">
+		<configuration>
+			<attribute name="portName" type="java.lang.String">COM1</attribute>
+			<attribute name="baudRate" type="int">38500</attribute>
+			<attribute name="eventTopic" type="java.lang.String">org/epcglobal/ale</attribute>
+		</configuration>
+	</reader>
+	<filter id="filter">
+		<configuration>
+		</configuration>
+	</filter>
+	<bridge id="bridge" type="jms">
+		<configuration>
+			<attribute name="jmsServerAddress" type="java.lang.String">${rfid.premise1.address}</attribute>
+			<attribute name="inputTopics" type="java.lang.String">org/epcglobal/*</attribute>
+		</configuration>
+	</bridge>
+	<bridge id="bridge" type="smtp">
+		<configuration>
+			<attribute name="smtpServerAddress" type="java.lang.String">${rfid.premise1.address}</attribute>
+			<attribute name="smtpServerPort" type="int">21</attribute>
+			<attribute name="inputTopics" type="java.lang.String">org/epcglobal/*</attribute>
+		</configuration>
+	</bridge>
+  </node>
+  
+
+  <node id="rfid.edge3" type="edge">
+	<reader id="reader.COM1" type="Fictive">
+		<configuration>
+			<attribute name="eventTopic" type="java.lang.String">org/epcglobal/ale</attribute>
+		</configuration>
+	</reader>
+	<filter id="filter">
+		<configuration>
+			<attribute name="initialFilterUrl" type="java.lang.String">http://${rfid.repo.address}:8080/rfid.demo1/config/rfid.egde3/filter/filter.xml</attribute>
+			<attribute name="inputTopics" type="java.lang.String">org/epcglobal/*</attribute>
+			<attribute name="ouputTopics" type="java.lang.String">org/epcglobal/ale</attribute>
+		</configuration>
+	</filter>
+	<bridge id="bridge" type="jms">
+		<configuration>
+			<attribute name="jmsServerAddress" type="java.lang.String">${rfid.premise2.address}</attribute>
+			<attribute name="inputTopics" type="java.lang.String">org/epcglobal/*</attribute>
+		</configuration>
+	</bridge>
+  </node>
+
+    <node id="rfid.edge4" type="edge">
+    <!-- unmanaged node -->
+    <!-- configuration and starting are done manually by the sys admin -->
+    </node>
+
+    <node id="rfid.edge5" type="edge" subtype="nslu">
+    <!-- unmanaged node -->
+    <!-- configuration and starting are done manually by the sys admin -->
+    </node>
+    
+    <!--
+    <node id="rfid.edge6" type="edge" subtype="tini">
+    </node>
+    -->
+     
+  <node id="rfid.premise1" type="premise">
+	<filter id="filter">
+		<configuration>
+			<attribute name="initialFilterUrl" type="java.lang.String">http://${rfid.repo.address}/rfid.demo1/config/rfid.premise1/filter/filter.xml</attribute>
+			<attribute name="RFIDEventTopic" type="java.lang.String">org/epcglobal/*</attribute>
+			<attribute name="ReportPublishTopic" type="java.lang.String">org/epcglobal/ale</attribute>
+		</configuration>
+	</filter>
+	<bridge id="bridge" type="jms">
+		<configuration>
+			<attribute name="jmsServerAddress" type="java.lang.String">${rfid.server.address}</attribute>
+			<attribute name="inputTopics" type="java.lang.String">org/epcglobal/*</attribute>
+		</configuration>
+	</bridge>
+  </node>
+
+
+  <node id="rfid.premise2" type="premise">
+	<filter id="filter">
+		<configuration>
+			<attribute name="initialFilterUrl" type="java.lang.String">http://${rfid.repo.address}:8080/rfid.demo1/config/rfid.premise2/filter/filter.xml</attribute>
+			<attribute name="RFIDEventTopic" type="java.lang.String">org/epcglobal/*</attribute>
+			<attribute name="ReportPublishTopic" type="java.lang.String">org/epcglobal/ale</attribute>
+		</configuration>
+	</filter>
+	<bridge id="bridge" type="jms">
+		<configuration>
+			<attribute name="jmsServerAddress" type="java.lang.String">${rfid.server.address}</attribute>
+			<attribute name="inputTopics" type="java.lang.String">org/epcglobal/*</attribute>
+		</configuration>
+	</bridge>
+  </node>
+
+
+  <node id="rfid.server" type="server">
+  	<ear url="http://${rfid.repo.address}:8080/rfid.demo1/config/rfid.server/ear/rfid.ear">
+		<configuration>
+			<attribute name="googleMapsKey" type="java.lang.String">qdfqksldfkqjdfkjqsdkdkjfklsdfdk</attribute>
+			<attribute name="cssStyle" type="java.lang.String">/css/rfidow.css</attribute>
+		</configuration>
+	</ear>
+	
+	<!--
+	<configuration>
+		<attribute name="jmsServerAddress" type="java.lang.String">192.168.0.30</attribute>
+		<attribute name="jmsInputTopics" type="java.lang.String">org/epcglobal/ale</attribute>
+	</configuration>
+	-->
+  </node>
+
+
+  <node id="rfid.repo" type="server">
+  </node>
+  
+</architecture>  

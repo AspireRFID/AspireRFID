@@ -1,0 +1,156 @@
+/*
+ * Copyright 2005-2008, Aspire
+ * 
+ * This library is free software; you can redistribute it and/or modify it 
+ * under the terms of the GNU Lesser General Public License as published by 
+ * the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+ * License, or (at your option) any later version. If you do not alter this 
+ * notice, a recipient may use your version of this file under either the 
+ * LGPL version 2.1, or (at his option) any later version.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License 
+ * along with this library; if not, write to the Free Software Foundation, 
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * 
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+ * KIND, either express or implied. See the GNU Lesser General Public 
+ * License for the specific language governing rights and limitations.
+ */
+
+.gwt-TextBox {
+	border: 1px solid #ccc;
+}
+
+.gwt-Button {
+	border: 1px solid #ccc;
+	background: #eee;
+}
+
+.gwt-DialogBox {
+	border: 2px solid #AAAAAA;
+	background-color: white;
+}
+
+.gwt-DialogBox .Caption {
+	background-image: url(gray_gradient.gif);
+	background-repeat: repeat-x;
+	padding: 4px;
+	padding-bottom: 8px;
+	font-weight: bold;
+	cursor: default;
+}
+
+.gwt-MenuBar {
+	background-color: #C3D9FF;
+	cursor: default;
+}
+
+.gwt-MenuItem {
+	font-size: 80%;
+	margin: 1px;
+	cursor: default;
+}
+
+.gwt-MenuItem-selected {
+	background-color: #E8EEF7;
+	cursor: pointer;
+}
+
+.gwt-Tree {
+	
+}
+
+.gwt-Tree .gwt-TreeItem {
+	font-size: 80%;
+	cursor: default;
+}
+
+.gwt-Tree .gwt-TreeItem-selected {
+	background-color: #C3D9FF;
+}
+
+.gwt-StackPanel {
+	background-color: white;
+	border: 1px solid #AAAAAA;
+	width: 15em;
+}
+
+.gwt-StackPanel .gwt-StackPanelItem {
+	background-image: url(blue_gradient.gif);
+	background-repeat: repeat-x;
+	background-color: #EEEEEE;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.gwt-StackPanel .gwt-StackPanelItem-selected {
+	
+}
+
+.gwt-TabPanel {
+	
+}
+
+.gwt-TabPanelBottom {
+	border-left: 1px solid #eee; /*87b3ff*/
+	border-right: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+}
+
+.gwt-TabBar {
+	font-size: smaller;
+}
+
+.gwt-TabBar .gwt-TabBarFirst {
+	height: 100%;
+	border-bottom: 1px solid #eee;
+	border-right: 1px solid #eee;
+	padding-left: 3px;
+}
+
+.gwt-TabBar .gwt-TabBarRest {
+	border-bottom: 1px solid #eee;
+	padding-right: 3px;
+}
+
+.gwt-TabBar .gwt-TabBarItem {
+	background-color: #F8F8F8;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	padding: 2px;
+	cursor: hand;
+	white-space: nowrap;
+	border-right: 1px solid #eee;
+}
+
+.gwt-TabBar .gwt-TabBarItem-selected {
+	font-weight: bold;
+	background-color: #eee; /*e8eef7*/
+	border-top: 2px solid #ff9000;
+	border-right: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	padding: 2px;
+	cursor: default;
+	white-space: nowrap;
+}
+
+.gwt-SuggestBox{
+	border : 1px solid #ccc;
+}
+
+.gwt-SuggestBoxPopup {
+	border: 1px solid #ccc;
+	width : 150px;
+}
+
+.gwt-SuggestBoxPopup .item {
+	background-color: #F8F8F8;
+}
+
+.gwt-SuggestBoxPopup .item-selected {
+	background-color: #eee;
+}
+
+.gwt-PasswordTextBox{
+	border : 1px solid #ccc;
+}

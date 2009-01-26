@@ -1,0 +1,68 @@
+<!--
+   RFID Suite
+
+   The "RFID Suite" cannot be copied, modified, distributed IN ANY FORM 
+   without the permission and written consent of the owner 
+   the Universite Joseph Fourier, LIG laboratory, ADELE team (UJF-LIG-ADELE).
+
+   UJF-LIG-ADELE retains all rights over to this program in either the original
+   or modified forms, and no violation, deletion, or change of the copyright
+   notice is allowed.
+
+   Furthermore, UJF-LIG-ADELE will have no liability or responsibility to any
+   user with respect  to loss or damage caused directly or indirectly by this 
+   program.
+
+   Copyright : Universite Joseph Fourier, LIG laboratory, ADELE team, 
+   2005-2008.
+
+   Contact: Didier Donsez mailto:Didier.Donsez@imag.fr
+-->
+
+<project name="Edge deployment" default="execute.deployment" basedir=".">
+
+	<property name="architecture.xml" value="mydemo.xml"/>
+	<property name="architecture.properties" value="mydemo.properties"/>
+	<property file="${properties}"/>
+	<property name="xslt.classes.dir" value="./xsltclasses"/>
+	<property name="xslt.java.dir" value="./xsltjava"/>
+	<property name="generated.dir" value="generated"/>
+
+	<target name="init">
+		<mkdir dir="${generated.dir}"/>
+		<tstamp>
+			<format property="date" pattern="d-MMMM-yyyy" locale="en"/>
+		</tstamp>
+		<property name="author" value="Didier DONSEZ, François Fornaciari"/>
+
+		<mkdir dir="${xslt.classes.dir}"/>
+		<javac destdir="${xslt.classes.dir}">
+   		 	<src path="${xslt.java.dir}"/>
+				<include name="**/*.java"/>
+		</javac>
+	</target>
+
+	<target name="generate.deployment" depends="init">	
+		<echo>Generation of the deployment plan ...</echo>
+		<xslt in="${architecture.xml}" out="${generated.dir}/build.deploy.xml" style="arch2build.xsl" classpath="${xslt.classes.dir}" >
+			<param name="date" expression="${date}"/>
+			<param name="author" expression="${author}"/>
+			<param name="global.repository.url" expression="${global.repository.url}"/>
+			<outputproperty name="encoding" value="ISO-8859-1"/>
+			<outputproperty name="indent" value="yes"/>
+		</xslt>
+		<copy file="${architecture.properties}" todir="${generated.dir}" overwrite="true" verbose="true"/>
+	</target>
+
+	<target name="execute.deployment" depends="generate.deployment">
+		<echo>Execution of the deployment plan ...</echo>
+		<ant antfile="build.deploy.xml" dir="${generated.dir}" target="main" />
+	</target>
+	
+   	<!-- clean generated files and backup files -->
+	<target name="clean">
+		<delete dir="${generated.dir}"/>
+		<delete dir="${xslt.classes.dir}"/>
+	</target>
+
+</project>

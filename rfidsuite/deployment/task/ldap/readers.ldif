@@ -1,0 +1,41 @@
+dn: cn=TagSys Medio lx00 EventPublisher,cn=bundles,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: TagSys Medio lx00 EventPublisher
+bundleName: TagSys Medio lx00 EventPublisher
+bundleVersion: 0.1.0
+
+dn: cn=RFID tiris 6350 reader,cn=bundles,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: RFID tiris 6350 reader
+bundleName: RFID tiris 6350 reader
+bundleVersion: 0.1.0
+
+dn: cn=tagsys,cn=readers,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: tagsysReader
+objectClass: top
+cn: fictive
+logicalName: tagsys
+baudRate: 38400
+channel: 1
+repeatPeriod: 250
+eventTopic: fr/imag/adele/rfid/DETECTION
+gpsCoordinates: 47.16,2.99
+portName: COM1
+tagType: TAG_ISO15693
+
+dn: cn=tiris,cn=readers,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: tirisReader
+objectClass: top
+cn: fictive
+logicalName: tiris
+baudRate: 57600
+dataBits: 8
+repeatPeriod: 1000
+portName: COM1
+eventTopic: fr/imag/adele/rfid/DETECTION
+gpsCoordinates: 47.16,2.99
+flowControlIn: none
+flowControlOut: none
+stopBits: 1

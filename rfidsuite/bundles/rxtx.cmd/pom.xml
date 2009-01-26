@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright 2005-2008, OW2 Aspire RFID project 
+   
+   This library is free software; you can redistribute it and/or modify it 
+   under the terms of the GNU Lesser General Public License as published by 
+   the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+   License, or (at your option) any later version. If you do not alter this 
+   notice, a recipient may use your version of this file under either the 
+   LGPL version 2.1, or (at his option) any later version.
+   
+   You should have received a copy of the GNU Lesser General Public License 
+   along with this library; if not, write to the Free Software Foundation, 
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+   
+   This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+   KIND, either express or implied. See the GNU Lesser General Public 
+   License for the specific language governing rights and limitations.
+
+   Contact: OW2 Aspire RFID project <X AT Y DOT org> (with X=aspirerfid and Y=ow2)
+
+   LGPL version 2.1 full text http://www.gnu.org/licenses/lgpl-2.1.txt    
+-->
+<project>
+	<properties>
+		<description>shell command to use the RXTX library./</description>
+	</properties>  
+
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>bundle</packaging>
+
+  <name>OW2 :: Aspire RFID :: RXTX Command</name>
+  <description>${description}</description>
+  
+  <groupId>org.ow2.aspirerfid</groupId>
+  <artifactId>org.ow2.aspirerfid.rxtx.cmd</artifactId>
+  <version>0.2.0-SNAPSHOT</version>
+  
+  <dependencies>
+	<dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>osgi_R4_core</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>osgi_R4_compendium</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>org.rxtx</groupId>
+      <artifactId>rxtx</artifactId>
+      <version>2.1.7</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.shell</artifactId>
+      <version>[1.0.0,2.0.0]</version>
+      <scope>provided</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+  
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+      <resource>
+        <directory>src/site</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+
+            <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+            <Bundle-Description>${description}</Bundle-Description>
+ 	    
+            <Export-Package>${pom.artifactId}</Export-Package>
+            <Private-Package>${pom.artifactId}.*,rxtx.*</Private-Package>
+            <Import-Package>*</Import-Package>
+	    
+		    <Bundle-Activator>${pom.artifactId}.impl.Activator</Bundle-Activator>
+	    
+            <Export-Service>org.apache.felix.shell.Command</Export-Service>
+	    
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+

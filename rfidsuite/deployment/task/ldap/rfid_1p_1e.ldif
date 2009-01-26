@@ -1,0 +1,348 @@
+dn: ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: organizationalUnit
+objectClass: top
+ou: rfid
+
+############################ server ############################
+
+dn: cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidServer
+objectClass: top
+cn: server
+ip: 129.88.39.142
+location: F:/JOnAS-4.8.5
+
+############################ premise1 ############################
+
+dn: cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidPremise
+objectClass: top
+cn: premise1
+ip: 129.88.39.142
+obrUrl: http://129.88.39.142:9000/repository/repository.xml
+jmxServicePort: 4001
+
+# premise1 dispatcher configuration
+
+dn: cn=dispatcher,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidDispatcher
+objectClass: top
+cn: dispatcher
+consumerTopic: rfidpremisetopic
+destinationURI: jms:fr.dyade.aaa.jndi2.client.NamingContextFactory/129.88.39.142/16400/129.88.39.142/16010/JTCF/rfidservertopic/root/root
+javaNamingFactoryInitial: fr.dyade.aaa.jndi2.client.NamingContextFactory
+javaNamingFactoryHost: 129.88.39.142
+javaNamingFactoryPort: 16401
+jmsTopicConnectionFactoryBindName: JTCF
+jmsServerPort: 16011
+jmsServerHost: 129.88.39.142
+jmsAdminLogin: root
+jmsAdminPass: root
+
+# premise1 bundles
+
+dn: cn=bundles,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundlesNode
+objectClass: top
+cn: bundles
+
+dn: cn=JmDNS Register,cn=bundles,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: JmDNS Register
+bundleName: JmDNS Register
+bundleVersion: 0.1.0
+
+dn: cn=Joram Server,cn=bundles,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Joram Server
+bundleName: Joram Server
+bundleVersion: 0.0.1
+
+dn: cn=Mail Server,cn=bundles,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Mail Server
+bundleName: Mail Server
+bundleVersion: 0.1.0
+
+dn: cn=Export JMS,cn=bundles,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Export Event JMS
+bundleName: Export Event JMS
+bundleVersion: 0.1.0
+
+dn: cn=Export Event WS,cn=bundles,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Export Event WS
+bundleName: Export Event WS
+bundleVersion: 0.1.0
+
+dn: cn=Export Event Mail,cn=bundles,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Export Event Mail
+bundleName: Export Event Mail
+bundleVersion: 0.1.0
+
+dn: cn=ALE Implementation,cn=bundles,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: ALE Implementation
+bundleName: ALE Implementation
+bundleVersion: 0.1.0
+
+dn: cn=Mail POP3 Reader,cn=bundles,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Mail POP3 Reader
+bundleName: Mail POP3 Reader
+bundleVersion: 0.1.0
+
+dn: cn=XFire,cn=bundles,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: XFire
+bundleName: XFire
+bundleVersion: 0.1.0
+
+dn: cn=Report Service,cn=bundles,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Report Service
+bundleName: Report Service
+bundleVersion: 0.1.0
+
+# premise1 ECSpecs 
+
+dn: cn=ecspecs,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECSpecs
+objectClass: top
+cn: ecspecs
+
+# premise1 ECSpec
+
+dn: cn=ecspec1,cn=ecspecs,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECSpec
+objectClass: top
+cn: ecspec1
+duration: 10000
+eventTopic: fr/imag/adele/rfid/DETECTION
+logicalReaderNames: fictive
+subscriptions: jms:fr.dyade.aaa.jndi2.client.NamingContextFactory/129.88.39.142/16400/129.88.39.142/16010/JTCF/rfidservertopic/root/root
+
+# premise1 ECReports
+
+dn: cn=ecreports,cn=ecspec1,cn=ecspecs,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECReports
+objectClass: top
+cn: ecreports
+
+# premise1 ECReport
+
+dn: cn=ecreport1,cn=ecreports,cn=ecspec1,cn=ecspecs,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECReport
+objectClass: top
+cn: ecreport1
+includeEPC: true
+includeTag: true
+includeRawHex: false
+includeRawDecimal: false
+includeCount: true
+reportSetSpec: CURRENT
+reportIfEmpty: false
+reportOnlyOnChange: true
+includeGPS: true
+includeTemperature: true
+includeReaderName: true
+
+############################ edge1 ############################
+
+dn: cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+objectClass: top
+cn: edge1
+ip: 129.88.39.142
+obrUrl: http://129.88.39.142:9000/repository/repository.xml
+jmxServicePort: 4002
+
+# edge1 bundles
+
+dn: cn=bundles,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundlesNode
+objectClass: top
+cn: bundles
+
+dn: cn=JmDNS Register,cn=bundles,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: JmDNS Register
+bundleName: JmDNS Register
+bundleVersion: 0.1.0
+
+dn: cn=Export Event JMS,cn=bundles,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Export Event JMS
+bundleName: Export Event JMS
+bundleVersion: 0.1.0
+
+dn: cn=Export Event WS,cn=bundles,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Export Event WS
+bundleName: Export Event WS
+bundleVersion: 0.1.0
+
+dn: cn=Export Event Mail,cn=bundles,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Export Event Mail
+bundleName: Export Event Mail
+bundleVersion: 0.1.0
+
+dn: cn=Export Event Dispatcher,cn=bundles,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Export Event Dispatcher
+bundleName: Export Event Dispatcher
+bundleVersion: 0.1.0
+
+dn: cn=ALE Implementation,cn=bundles,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: ALE Implementation
+bundleName: ALE Implementation
+bundleVersion: 0.1.0
+
+dn: cn=Fictive reader,cn=bundles,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Fictive reader
+bundleName: Fictive reader
+bundleVersion: 0.1.0
+
+# edge1 readers 
+
+dn: cn=readers,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+objectClass: top
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+objectClass: top
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 47.16,2.99
+
+# edge1 ECSpecs 
+
+dn: cn=ecspecs,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECSpecs
+objectClass: top
+cn: ecspecs
+
+# edge1 ECSpec
+
+dn: cn=ecspec1,cn=ecspecs,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECSpec
+objectClass: top
+cn: ecspec1
+duration: 10000
+eventTopic: fr/imag/adele/rfid/DETECTION
+logicalReaderNames: fictive
+subscriptions: jms:fr.dyade.aaa.jndi2.client.NamingContextFactory/129.88.39.142/16401/129.88.39.142/16011/JTCF/rfidpremisetopic/root/root
+
+# edge1 ECReports
+
+dn: cn=ecreports,cn=ecspec1,cn=ecspecs,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECReports
+objectClass: top
+cn: ecreports
+
+# edge1 ECReport
+
+dn: cn=ecreport1,cn=ecreports,cn=ecspec1,cn=ecspecs,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECReport
+objectClass: top
+cn: ecreport1
+includeEPC: true
+includeTag: true
+includeRawHex: false
+includeRawDecimal: false
+includeCount: true
+reportSetSpec: CURRENT
+reportIfEmpty: false
+reportOnlyOnChange: true
+includeGPS: true
+includeTemperature: true
+includeReaderName: true
+
+# edge1 ECGroups
+
+dn: cn=ecgroups,cn=ecreport1,cn=ecreports,cn=ecspec1,cn=ecspecs,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECGroups
+objectClass: top
+cn: ecgroups
+
+dn: cn=ecgroup1,cn=ecgroups,cn=ecreport1,cn=ecreports,cn=ecspec1,cn=ecspecs,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECGroup
+objectClass: top
+cn: ecgroup1
+epcPattern: urn:epc:pat:gid-96:*.X.*
+
+# edge1 ECFilters
+
+dn: cn=ecfilters,cn=ecreport1,cn=ecreports,cn=ecspec1,cn=ecspecs,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECFilters
+objectClass: top
+cn: ecfilters
+
+dn: cn=ecfilter1,cn=ecfilters,cn=ecreport1,cn=ecreports,cn=ecspec1,cn=ecspecs,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECFilter
+objectClass: top
+cn: ecfilter1
+epcPattern: urn:epc:pat:gid-96:*.*.*
+isIncludingFilter: true
+
+dn: cn=ecreport2,cn=ecreports,cn=ecspec1,cn=ecspecs,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECReport
+objectClass: top
+cn: ecreport1
+includeEPC: true
+includeTag: true
+includeRawHex: false
+includeRawDecimal: false
+includeCount: true
+reportSetSpec: ADDITIONS
+reportIfEmpty: false
+reportOnlyOnChange: true
+includeGPS: true
+includeTemperature: true
+includeReaderName: true
+
+dn: cn=ecreport3,cn=ecreports,cn=ecspec1,cn=ecspecs,cn=edge1,cn=premise1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECReport
+objectClass: top
+cn: ecreport1
+includeEPC: true
+includeTag: true
+includeRawHex: false
+includeRawDecimal: false
+includeCount: true
+reportSetSpec: DELETIONS
+reportIfEmpty: false
+reportOnlyOnChange: true
+includeGPS: true
+includeTemperature: true
+includeReaderName: true
+
+#Leave at least two empty lines at the end of this file.
+

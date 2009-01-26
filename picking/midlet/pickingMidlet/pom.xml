@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+    Copyright (C) Aspire
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0">
+
+	<parent>
+        <groupId>org.ow2.aspirerfid.nfc</groupId>
+        <artifactId>pickingMidlets</artifactId>
+        <version>2.0.0</version>
+    </parent>
+	
+	<groupId>org.ow2.aspirerfid.nfc</groupId>
+	<artifactId>pickingMidlet</artifactId>
+	<version>2.0.0</version>
+	<name>AspireRFID Picking Midlet</name>
+
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>xparse</groupId>
+			<artifactId>xparse-j</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.ow2.aspirerfid.nfc</groupId>
+			<artifactId>pickingPojo</artifactId>
+			<version>2.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.ow2.aspirerfid</groupId>
+			<artifactId>architecture</artifactId>
+			<version>2.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.nokia</groupId>
+			<artifactId>cldc</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.nokia</groupId>
+			<artifactId>bluetooth</artifactId>
+			<version>1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.nokia</groupId>
+			<artifactId>contactless</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<properties>
+		<me2Version>2.0.1</me2Version><!--me-version-->
+
+		<wtk.home>${env.WTK_HOME}</wtk.home>
+
+		<j2me.midlet.vendor>
+			AspireRFID
+		</j2me.midlet.vendor>
+		<j2me.midlet.name>Picking appl</j2me.midlet.name>
+		<j2me.midlet.version>2.0.0</j2me.midlet.version>
+		<j2me.midlet.configuration>CLDC-1.1</j2me.midlet.configuration>
+		<j2me.midlet.profile>MIDP-2.0</j2me.midlet.profile>
+
+		<wtk.midpapi>${env.WTK_HOME}/lib/cldcapi11.jar</wtk.midpapi>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.3</source>
+					<target>1.1</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.pyx4me</groupId>
+				<artifactId>j2me-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>package</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<wtkHome>${env.WTK_HOME}</wtkHome>
+					<proguardInclude>proguard.conf</proguardInclude>
+					<proguard>true</proguard>
+					<obfuscate>true</obfuscate>
+					<useWtkLibs>false</useWtkLibs>
+					<libs>
+						<!-- ***** ATTENTION: LIBS TAKEN FROM Nokia's NFC 6131 SDK **** -->
+						<lib>${env.WTK_HOME}/lib/ext/cldcapi11.zip</lib>
+						<lib>${env.WTK_HOME}/lib/ext/bluetooth.zip</lib>
+						<lib>${env.WTK_HOME}/lib/ext/nfc.zip</lib>
+					</libs>
+
+					<!-- List of dependencies to avoid the duplicated definition error when installing with maven -->
+					<dependencies>
+						<dependency>
+							<groupId>xparse</groupId>
+							<artifactId>xparse-j</artifactId>
+							<filter>!com/exploringxml/xml/**</filter>
+						</dependency>
+						<dependency>
+							<groupId>org.ow2.aspirerfid.nfc</groupId>
+							<artifactId>pickingPojo</artifactId>
+							<filter>
+								!org/ow2/aspirerfid/nfc/picking/util/**
+							</filter>
+						</dependency>
+						<dependency>
+							<groupId>org.ow2.aspirerfid</groupId>
+							<artifactId>architecture</artifactId>
+							<filter>
+								!org/ow2/aspirerfid/nfc/midlet/generic/**,!org/ow2/aspirerfid/nfc/midlet/generic/ui/**,!org/ow2/aspirerfid/nfc/midlet/message/receive/**,!org/ow2/aspirerfid/nfc/midlet/message/send/**,!org/ow2/aspirerfid/nfc/midlet/reader/**,!org/ow2/aspirerfid/nfc/midlet/reader/rfid/**,!org/ow2/aspirerfid/nfc/midlet/reader/rfid/thread/**,!org/ow2/aspirerfid/nfc/midlet/sendersReceivers/bluetooth/**,!org/ow2/aspirerfid/nfc/midlet/sendersReceivers/bluetooth/states/**,!org/ow2/aspirerfid/nfc/midlet/sendersReceivers/bluetooth/ui/**,!org/ow2/aspirerfid/nfc/midlet/sendersReceivers/**,!org/ow2/aspirerfid/nfc/midlet/sendersReceivers/fictive/**
+							</filter>
+						</dependency>
+						<dependency>
+							<groupId>com.nokia</groupId>
+							<artifactId>cldc</artifactId>
+							<exclude>true</exclude>
+						</dependency>
+						<dependency>
+							<groupId>com.nokia</groupId>
+							<artifactId>bluetooth</artifactId>
+							<exclude>true</exclude>
+						</dependency>
+						<dependency>
+							<groupId>com.nokia</groupId>
+							<artifactId>contactless</artifactId>
+							<exclude>true</exclude>
+						</dependency>
+					</dependencies>
+
+					<!-- List of jars to include in the file to deploy in the phone. -->
+					<assembly>
+						<inclusions>
+							<inclusion>
+								<groupId>xparse</groupId>
+								<artifactId>xparse-j</artifactId>
+							</inclusion>
+							<inclusion>
+								<groupId>
+									org.ow2.aspirerfid
+								</groupId>
+								<artifactId>architecture</artifactId>
+							</inclusion>
+							<inclusion>
+								<groupId>
+									org.ow2.aspirerfid.nfc
+								</groupId>
+								<artifactId>pickingPojo</artifactId>
+							</inclusion>
+						</inclusions>
+					</assembly>
+
+					<!-- JAD file -->
+					<jadAttributes>
+						<MIDlet-Icon>
+							/cart.jpg
+						</MIDlet-Icon>
+						<MIDlet-Vendor>
+							AspireRFID
+						</MIDlet-Vendor>
+						<Created-By>AspireRFID</Created-By>
+						<MIDlet-UUID>
+							7e628dda4afb4f2faa2f132c4f3d33ed
+						</MIDlet-UUID>
+						<!-- This permits to configure a server to connect directly (Bluetooth Address in the server) -->
+						<!-- Delete the XXX in both sides to add this configuration -->
+						<XXXRemoteServer-1>001A6BADEC03</XXXRemoteServer-1>
+						<XXXRemoteServer-2>000272C4F12E</XXXRemoteServer-2>
+						<Local-BTAccessCode>
+							10390323
+						</Local-BTAccessCode>
+						<Server-UUID>
+							ed16b4c78f124c30ad1fa03edbbd068f
+						</Server-UUID>
+						<BT-OneAutomatic>true</BT-OneAutomatic>
+					</jadAttributes>
+					
+					<!-- List of midlets to run -->
+					<midlets>
+						<!-- for each MIDlet entry-point, simply reiterate this section -->
+						<MIDlet>
+							<name>Picking</name>
+							<icon>/cart.jpg</icon>
+							<class>
+								org.ow2.aspirerfid.nfc.picking.midlet.PickingMidlet
+							</class>
+						</MIDlet>
+						<MIDlet>
+							<name>Test Midlet</name>
+							<class>
+								org.ow2.aspirerfid.nfc.picking.tests.TestMidlet
+							</class>
+						</MIDlet>
+						<MIDlet>
+							<name>Hello World</name>
+							<class>
+								org.ow2.aspirerfid.nfc.picking.tests.HelloMidlet
+							</class>
+						</MIDlet>
+					</midlets>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

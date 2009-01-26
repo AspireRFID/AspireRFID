@@ -1,0 +1,35 @@
+TODOLIST Management Console
+
+Add in [Readers>List of tags] InlineLink on Tags
+Add in [Readers>List of tags] columns for type, icon, ... the selection of column could be done with checkboxes and save with the users preferences
+
+* add an "Utilities" item in the side menu
+** Tag translation
+** Barcode generation (barcode4j)
+** Label generation (upload xml,cvs)
+
+* add an "Preferences" item in the side menu
+* 
+
+* add an "About" item in the side menu
+** Copyright and licence
+** Documentation
+
+Convert [Search > Search by temperature] --> [Search > Search by measurement]
+
+Add [Search>search by position] Real or Symbolic
+
+Add [Search>search by content] search by the data read in the tags
+  predefined list NDEF URI, NDEF TEXT, NDEF SmartPoster, NDEF Icon ...
+
+Add a multi-criteria search 
+
+Edit panel for server.properties
+
+
+Add AspireRFID banner when launching EPCIS, ONS, EDGE, ...
+
+Add in [Readers>List of Tags] a Hyperlink on each Tag number in order to navigate directly on the [track on Map]
+
+
+

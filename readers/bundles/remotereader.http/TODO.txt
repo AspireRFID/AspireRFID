@@ -1,0 +1,2 @@
+- Create a superclass "AbstractReader" which implements the RfidReaderMBean
+  

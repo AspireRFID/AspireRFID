@@ -1,0 +1,29 @@
+<assembly>
+  <id></id>
+  <formats>
+    <format>jar</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory></outputDirectory>
+      <outputFileNameMapping></outputFileNameMapping>
+      <unpack>true</unpack>
+      <unpackOptions>
+      <includes>
+      <include>org/ow2/aspirerfid/**</include>
+      <include>schemaorg_apache_xmlbeans/**</include>
+      <include>*.*</include>
+      </includes>
+      </unpackOptions>
+      <useTransitiveDependencies>false</useTransitiveDependencies>
+      <scope>runtime</scope>
+    </dependencySet>
+  </dependencySets>
+  <fileSets>
+    <fileSet>
+      <directory>target/classes</directory>
+      <outputDirectory></outputDirectory>
+    </fileSet>
+  </fileSets>
+</assembly>

@@ -1,0 +1,12 @@
+<classpath>
+  <classpathentry kind="src" path="src/main/java"/>
+  <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/javax/activation/activation/1.1/activation-1.1.jar" sourcepath="M2_REPO/javax/activation/activation/1.1/activation-1.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/jms/jms/0.1.0/jms-0.1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/objectweb/joram/client/joram-client/4.3.28/joram-client-4.3.28.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/objectweb/joram/shared/joram-shared/4.3.28/joram-shared-4.3.28.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/mail/mail/1.4/mail-1.4.jar" sourcepath="M2_REPO/javax/mail/mail/1.4/mail-1.4-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/james/mailet-api/1.0/mailet-api-1.0.jar"/>
+</classpath>

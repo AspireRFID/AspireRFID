@@ -1,0 +1,544 @@
+dn: ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: organizationalUnit
+ou: rfid
+
+############################ edge bundles ############################
+
+dn: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundlesNode
+cn: bundles
+
+dn: cn=JmDNS Register,cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+cn: JmDNS Register
+bundleName: JmDNS Register
+bundleVersion: 0.1.0
+
+dn: cn=Export JMS,cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+cn: Export Event JMS
+bundleName: Export Event JMS
+bundleVersion: 0.1.0
+
+dn: cn=Export Event WS,cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+cn: Export Event WS
+bundleName: Export Event WS
+bundleVersion: 0.1.0
+
+dn: cn=Export Event Mail,cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+objectClass: top
+cn: Export Event Mail
+bundleName: Export Event Mail
+bundleVersion: 0.1.0
+
+dn: cn=Export Event Dispatcher,cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+cn: Export Event Dispatcher
+bundleName: Export Event Dispatcher
+bundleVersion: 0.1.0
+
+dn: cn=ALE Implementation,cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+cn: ALE Implementation
+bundleName: ALE Implementation
+bundleVersion: 0.1.0
+
+dn: cn=Fictive reader,cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidBundle
+cn: Fictive reader
+bundleName: Fictive reader
+bundleVersion: 0.1.0
+
+############################ edge ecspecs ############################
+
+# edge ECSpecs 
+
+dn: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECSpecs
+cn: ecspecs
+
+# edge ECSpec
+
+dn: cn=ecspec,cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECSpec
+cn: ecspec
+duration: 10000
+eventTopic: fr/imag/adele/rfid/DETECTION
+logicalReaderNames: fictive
+subscriptions: jms:fr.dyade.aaa.jndi2.client.NamingContextFactory/129.88.39.142/16400/129.88.39.142/16010/JTCF/rfidservertopic/root/root
+
+# edge ECReports
+
+dn: cn=ecreports,cn=ecspec,cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECReports
+cn: ecreports
+
+# edge ECReport
+
+dn: cn=ecreport,cn=ecreports,cn=ecspec,cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: ECReport
+cn: ecreport
+includeEPC: true
+includeTag: true
+includeRawHex: false
+includeRawDecimal: false
+includeCount: true
+reportSetSpec: CURRENT
+reportIfEmpty: false
+reportOnlyOnChange: true
+includeGPS: true
+includeTemperature: true
+includeReaderName: true
+
+############################ server ############################
+
+dn: cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidServer
+cn: server
+ip: 129.88.39.142
+location: F:/JOnAS-4.8.5
+
+############################ washer ############################
+ 
+dn: cn=washer,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+cn: washer
+ip: 129.88.39.204
+obrUrl: http://129.88.39.189:9000/repository/repository.xml
+jmxServicePort: 4001
+
+# washer bundles
+
+dn: cn=bundles,cn=washer,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: rfidBundlesNode
+cn: bundles
+aliasedObjectName: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+
+# washer readers 
+
+dn: cn=readers,cn=washer,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=washer,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 45.181734,5.719414
+
+# washer ECSpecs 
+
+dn: cn=ecspecs,cn=washer,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: ECSpecs
+cn: ecspecs
+aliasedObjectName: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+
+############################ provider1 ############################
+ 
+dn: cn=provider1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+cn: provider1
+ip: 129.88.39.204
+obrUrl: http://129.88.39.189:9000/repository/repository.xml
+jmxServicePort: 4002
+
+# provider1 bundles
+
+dn: cn=bundles,cn=provider1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: rfidBundlesNode
+cn: bundles
+aliasedObjectName: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+
+# provider1 readers 
+
+dn: cn=readers,cn=provider1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=provider1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 45.192018,5.720315
+
+# provider1 ECSpecs 
+
+dn: cn=ecspecs,cn=provider1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: ECSpecs
+cn: ecspecs
+aliasedObjectName: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+
+############################ provider2 ############################
+ 
+dn: cn=provider2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+cn: provider2
+ip: 129.88.39.204
+obrUrl: http://129.88.39.189:9000/repository/repository.xml
+jmxServicePort: 4003
+
+# provider2 bundles
+
+dn: cn=bundles,cn=provider2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: rfidBundlesNode
+cn: bundles
+aliasedObjectName: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+
+# provider2 readers 
+
+dn: cn=readers,cn=provider2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=provider2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 45.198823,5.747309
+
+# provider2 ECSpecs 
+
+dn: cn=ecspecs,cn=provider2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: ECSpecs
+cn: ecspecs
+aliasedObjectName: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+
+############################ provider3 ############################
+ 
+dn: cn=provider3,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+cn: provider3
+ip: 129.88.39.189
+obrUrl: http://129.88.39.189:9000/repository/repository.xml
+jmxServicePort: 4004
+
+# provider3 bundles
+
+dn: cn=bundles,cn=provider3,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: rfidBundlesNode
+cn: bundles
+aliasedObjectName: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+
+# provider3 readers 
+
+dn: cn=readers,cn=provider3,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=provider3,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 45.194256,5.770783
+
+# provider3 ECSpecs 
+
+dn: cn=ecspecs,cn=provider3,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: ECSpecs
+cn: ecspecs
+aliasedObjectName: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+
+############################ provider4 ############################
+ 
+dn: cn=provider4,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+cn: provider4
+ip: 129.88.39.189
+obrUrl: http://129.88.39.189:9000/repository/repository.xml
+jmxServicePort: 4005
+
+# provider4 bundles
+
+dn: cn=bundles,cn=provider4,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: rfidBundlesNode
+cn: bundles
+aliasedObjectName: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+
+# provider4 readers 
+
+dn: cn=readers,cn=provider4,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=provider4,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 45.181734,5.791383
+
+# provider4 ECSpecs 
+
+dn: cn=ecspecs,cn=provider4,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: ECSpecs
+cn: ecspecs
+aliasedObjectName: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+
+############################ warehouse1 ############################
+ 
+dn: cn=warehouse1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+cn: warehouse1
+ip: 129.88.39.204
+obrUrl: http://129.88.39.189:9000/repository/repository.xml
+jmxServicePort: 4006
+
+# warehouse1 bundles
+
+dn: cn=bundles,cn=warehouse1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: rfidBundlesNode
+cn: bundles
+aliasedObjectName: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+
+# warehouse1 readers 
+
+dn: cn=readers,cn=warehouse1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=warehouse1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 45.158286,5.731215
+
+# warehouse1 ECSpecs 
+
+dn: cn=ecspecs,cn=warehouse1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: ECSpecs
+cn: ecspecs
+aliasedObjectName: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+
+############################ warehouse2 ############################
+ 
+dn: cn=warehouse2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+cn: warehouse2
+ip: 129.88.39.189
+obrUrl: http://129.88.39.189:9000/repository/repository.xml
+jmxServicePort: 4007
+
+# warehouse2 bundles
+
+dn: cn=bundles,cn=warehouse2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: rfidBundlesNode
+cn: bundles
+aliasedObjectName: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+
+# warehouse2 readers 
+
+dn: cn=readers,cn=warehouse2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=warehouse2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 45.153414,5.720229
+
+# warehouse2 ECSpecs 
+
+dn: cn=ecspecs,cn=warehouse2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: ECSpecs
+cn: ecspecs
+aliasedObjectName: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+
+############################ store1 ############################
+ 
+dn: cn=store1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+cn: store1
+ip: 129.88.39.204
+obrUrl: http://129.88.39.189:9000/repository/repository.xml
+jmxServicePort: 4008
+
+# store1 bundles
+
+dn: cn=bundles,cn=store1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: rfidBundlesNode
+cn: bundles
+aliasedObjectName: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+
+# store1 readers 
+
+dn: cn=readers,cn=store1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=store1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 45.154382,5.69315
+
+# store1 ECSpecs 
+
+dn: cn=ecspecs,cn=store1,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: ECSpecs
+cn: ecspecs
+aliasedObjectName: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+
+############################ store2 ############################
+ 
+dn: cn=store2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+cn: store2
+ip: 129.88.39.204
+obrUrl: http://129.88.39.189:9000/repository/repository.xml
+jmxServicePort: 4009
+
+# store2 bundles
+
+dn: cn=bundles,cn=store2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: rfidBundlesNode
+cn: bundles
+aliasedObjectName: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+
+# store2 readers 
+
+dn: cn=readers,cn=store2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=store2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 45.196978,5.724006
+
+# store2 ECSpecs 
+
+dn: cn=ecspecs,cn=store2,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: ECSpecs
+cn: ecspecs
+aliasedObjectName: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+
+############################ store3 ############################
+ 
+dn: cn=store3,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+cn: store3
+ip: 129.88.39.189
+obrUrl: http://129.88.39.189:9000/repository/repository.xml
+jmxServicePort: 4010
+
+# store3 bundles
+
+dn: cn=bundles,cn=store3,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: rfidBundlesNode
+cn: bundles
+aliasedObjectName: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+
+# store3 readers 
+
+dn: cn=readers,cn=store3,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=store3,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 45.192563,5.713449
+
+# store3 ECSpecs 
+
+dn: cn=ecspecs,cn=store3,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: ECSpecs
+cn: ecspecs
+aliasedObjectName: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+
+############################ store4 ############################
+ 
+dn: cn=store4,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidEdge
+cn: store4
+ip: 129.88.39.189
+obrUrl: http://129.88.39.189:9000/repository/repository.xml
+jmxServicePort: 4011
+
+# store4 bundles
+
+dn: cn=bundles,cn=store4,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: rfidBundlesNode
+cn: bundles
+aliasedObjectName: cn=egde_bundles,ou=rfid,dc=adele,dc=imag,dc=fr
+
+# store4 readers 
+
+dn: cn=readers,cn=store4,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: rfidReaders
+cn: readers
+
+dn: cn=fictive,cn=readers,cn=store4,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: fictiveReader
+cn: fictive
+logicalName: fictive
+repeatPeriod: 3000
+eventTopic: fr/imag/adele/rfid/DETECTION
+readerGUId: fictiveGUId
+gpsCoordinates: 45.185304,5.736322
+
+# store4 ECSpecs 
+
+dn: cn=ecspecs,cn=store4,cn=server,ou=rfid,dc=adele,dc=imag,dc=fr
+objectClass: alias
+objectClass: ECSpecs
+cn: ecspecs
+aliasedObjectName: cn=edge_ecspecs,ou=rfid,dc=adele,dc=imag,dc=fr
+
+#Leave at least two empty lines at the end of this file.
+

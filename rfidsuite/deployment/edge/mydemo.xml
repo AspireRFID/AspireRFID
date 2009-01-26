@@ -1,0 +1,53 @@
+<?xml version="1.0" standalone="yes"?>
+<!--
+   RFID Suite
+
+   The "RFID Suite" cannot be copied, modified, distributed IN ANY FORM 
+   without the permission and written consent of the owner 
+   the Universite Joseph Fourier, LIG laboratory, ADELE team (UJF-LIG-ADELE).
+
+   UJF-LIG-ADELE retains all rights over to this program in either the original
+   or modified forms, and no violation, deletion, or change of the copyright
+   notice is allowed.
+
+   Furthermore, UJF-LIG-ADELE will have no liability or responsibility to any
+   user with respect  to loss or damage caused directly or indirectly by this 
+   program.
+
+   Copyright : Universite Joseph Fourier, LIG laboratory, ADELE team, 
+   2005-2008.
+
+   Contact: Didier Donsez mailto:Didier.Donsez@imag.fr
+-->
+
+<architecture id='mydemo'>
+
+  <node id="rfid.repo" type="server">
+  </node>
+
+  <node id="rfid.edge1" type="edge" >
+	<reader id="reader.COM1" type="tiris6350">
+		<configuration>
+			<attribute name="PortName" type="java.lang.String">COM1</attribute>
+			<attribute name="EventTopic" type="java.lang.String">fr/imag/adele/rfid/DETECTION</attribute>
+		</configuration>
+	</reader>
+	  
+	<bridge id="bridge" type="jms">
+		<configuration>
+			<attribute name="eventAdminTopic" type="java.lang.String">org/epcglobal/ale</attribute>
+			<attribute name="jmsServerAddress" type="java.lang.String">${rfid.premise1.address}</attribute>
+			<attribute name="topic" type="java.lang.String">org/epcglobal/ale</attribute>
+		</configuration>
+	</bridge>
+	<filter id="filter">
+		<configuration>
+			<attribute name="RFIDEventTopic" type="java.lang.String">fr/imag/adele/rfid/DETECTION</attribute>
+			<attribute name="ReportPublishTopic" type="java.lang.String">rfidtopic</attribute>
+			<attribute name="EventIsTag" type="java.lang.Boolean">true</attribute>
+			<attribute name="ReportXml" type="java.lang.Boolean">true</attribute>
+		</configuration>
+	</filter>
+  </node>
+
+</architecture>  

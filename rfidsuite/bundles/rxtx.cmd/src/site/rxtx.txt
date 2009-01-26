@@ -1,0 +1,89 @@
+rem this script illustrates the ${pom.name} usage
+
+install rxtx.jar
+start ${pom.build.finalName}
+
+rxtx help
+rxtx list
+
+rxtx buffersize 4096
+
+rxtx binary
+rxtx iowrapper org.ow2.aspirerfid.bundle.rxtx.cmd.HexWrapper
+
+
+wait 10
+
+echo My internal modem
+rxtx ascii
+rxtx open COM3 9600 None None 8 1 None
+rxtx send AT*
+rxtx send this is a ascii text
+rxtx send "this  is  a  ascii  quoted  text"
+rxtx close
+
+wait 10
+
+echo My Garmin GPS Receiver
+rxtx logfile c:\temp\nmealog.txt
+rxtx iowrapper org.ow2.aspirerfid.bundle.rxtx.cmd.AsciiWrapper
+rxtx open COM1 4800 None None 8 1 None
+rxtx send "dummy"
+wait 60 
+rxtx close
+
+wait 10
+
+
+echo my TagIt Reader (serie 6000)
+rxtx open COM1 57600 None None 8 1 None
+
+echo reader version
+rxtx send D5 00 05 04 00 11 8C 66
+
+echo read reader setup
+rxtx send D5 00 05 04 00 13 AC 24
+
+echo reader diagnostic
+rxtx send D5 00 06 04 00 12 01 83 AB
+
+echo tag version
+rxtx send D5 00 07 02 00 03 00 00 DB A3
+
+echo Read Block 2 (non-addressed)
+rxtx send D5 00 08 02 00 01 00 00 01 B0 B9
+
+echo Read multiblock from 1 to 3 (non-addressed)
+rxtx send D5 00 09 03 00 02 00 00 00 03 12 E6
+
+echo Read Block 2 with SID
+rxtx send D5 00 09 03 00 FE 00 00 01 01 B5 E8
+
+echo Read blocks 1 to 3 with SID
+rxtx send D5 00 0A 03 00 FD 00 00 00 03 01 A3 A6
+
+echo Repeat last request
+rxtx send D5 00 05 04 00 01 9E 57
+
+echo Send last response (following Read block 2)
+rxtx send D5 00 05 04 00 02 AE 34
+
+echo Stop continuous
+rxtx send D5 00 05 04 00 04 CE F2
+
+
+echo Reader Version
+rxtx send 01 09 00 00 00 00 F0 F8 07
+echo Rx: 01 0C 00 00 00 00 F0 40 01 07 BB 44
+
+echo Tag Version
+rxtx send 01 09 00 00 00 00 05 0D F2
+echo Rx: 01 12 00 00 00 00 05 C3 69 78 01 01 05 00 08 04 CD 32
+
+echo Read Block 0
+send send 01 0A 00 00 00 00 02 00 09 F6
+echo Rx: 01 0F 00 00 00 00 02 67 45 23 01 00 00 0C F3
+
+rxtx close
+
+
