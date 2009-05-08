@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LogicalReaders xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/resources/LogicalReaders.xsd">
+	<LogicalReader name="SmartLabIntermecLogicalReader">
+		<LRSpec isComposite="false" readerType="org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor">
+			<LRProperty name="Description" value="This Logical Reader consists of read point 1"/>
+			<LRProperty name="ConnectionPoint" value="http://localhost:8000"/>
+			<LRProperty name="NotificationPoint" value="http://localhost:9090"/>
+			<LRProperty name="ReadTimeInterval" value="1500"/>
+			<LRProperty name="AdaptorClass" value="ReaderProtocol"/>
+			<LRProperty name="ImplClass" value="org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor"/>
+			<LRProperty name="PhysicalReaderName" value="IntermecIF5"/>
+			<LRProperty name="PhysicalReaderSource" value="Antenna1"/>
+		</LRSpec>
+	</LogicalReader>
+</LogicalReaders>

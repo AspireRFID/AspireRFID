@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ConnectorEngineService" targetNamespace="http://api.connectors.aspirerfid.ow2.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://api.connectors.aspirerfid.ow2.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://api.connectors.aspirerfid.ow2.org/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://api.connectors.aspirerfid.ow2.org/">
+    <xs:element name="startObservingTransaction" type="tns:startObservingTransaction"/>
+    <xs:element name="startObservingTransactionResponse" type="tns:startObservingTransactionResponse"/>
+    <xs:element name="stopObservingTransaction" type="tns:stopObservingTransaction"/>
+    <xs:element name="stopObservingTransactionResponse" type="tns:stopObservingTransactionResponse"/>
+    <xs:complexType name="startObservingTransaction">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="arg0" type="tns:subscriptionParameters"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="subscriptionParameters">
+        <xs:sequence>
+            <xs:element name="doPoll" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="initialTime" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="queryDayOfMonth" type="xs:string"/>
+            <xs:element minOccurs="0" name="queryDayOfWeek" type="xs:string"/>
+            <xs:element minOccurs="0" name="queryHour" type="xs:string"/>
+            <xs:element minOccurs="0" name="queryMin" type="xs:string"/>
+            <xs:element minOccurs="0" name="queryMonth" type="xs:string"/>
+            <xs:element minOccurs="0" name="querySec" type="xs:string"/>
+            <xs:element minOccurs="0" name="replyEndpoint" type="xs:string"/>
+            <xs:element name="reportIfEmpty" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="subscriptionId" type="xs:string"/>
+            <xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+            <xs:element minOccurs="0" name="transactionType" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="startObservingTransactionResponse">
+        <xs:sequence>
+            <xs:element name="return" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="stopObservingTransaction">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="arg0" type="tns:subscriptionParameters"/>
+            <xs:element name="arg1" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="stopObservingTransactionResponse">
+        <xs:sequence>
+            <xs:element name="return" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="startObservingTransaction">
+    <wsdl:part name="parameters" element="tns:startObservingTransaction">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="stopObservingTransactionResponse">
+    <wsdl:part name="parameters" element="tns:stopObservingTransactionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="stopObservingTransaction">
+    <wsdl:part name="parameters" element="tns:stopObservingTransaction">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="startObservingTransactionResponse">
+    <wsdl:part name="parameters" element="tns:startObservingTransactionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ConnectorEngine">
+    <wsdl:operation name="startObservingTransaction">
+      <wsdl:input name="startObservingTransaction" message="tns:startObservingTransaction">
+    </wsdl:input>
+      <wsdl:output name="startObservingTransactionResponse" message="tns:startObservingTransactionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="stopObservingTransaction">
+      <wsdl:input name="stopObservingTransaction" message="tns:stopObservingTransaction">
+    </wsdl:input>
+      <wsdl:output name="stopObservingTransactionResponse" message="tns:stopObservingTransactionResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ConnectorEngineServiceSoapBinding" type="tns:ConnectorEngine">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="startObservingTransaction">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="startObservingTransaction">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="startObservingTransactionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="stopObservingTransaction">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="stopObservingTransaction">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="stopObservingTransactionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ConnectorEngineService">
+    <wsdl:port name="ConnectorEnginePort" binding="tns:ConnectorEngineServiceSoapBinding">
+      <soap:address location=""/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

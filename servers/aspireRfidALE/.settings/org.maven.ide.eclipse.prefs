@@ -1,0 +1,8 @@
+#Thu Jun 26 15:22:07 EEST 2008
+activeProfiles=
+eclipse.preferences.version=1
+fullBuildGoals=org.apache.maven.plugins\:maven-assembly-plugin\:2.2-beta-2\:assembly process-test-resources
+includeModules=false
+resolveWorkspaceProjects=true
+resourceFilterGoals=process-resources resources\:testResources
+version=1
