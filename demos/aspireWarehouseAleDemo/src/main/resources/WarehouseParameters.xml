@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<parameters>
+	<zoneID>1.145.21.345</zoneID>
+	<warehouseID>1.145.22.23</warehouseID>
+	<warehousemenGroupName>urn:epc:pat:gid-96:82.20.*</warehousemenGroupName>
+	<invoiceGroupName>urn:epc:pat:gid-96:145.12.*</invoiceGroupName>
+	
+	<!-- Merchandise data -->
+	<merchandise>
+		<packetsContent>
+			<packetsGroupName>urn:epc:pat:gid-96:145.56.*</packetsGroupName>
+			<company>ALTERA</company>
+			<description>Altera Microcontroler 8081</description>
+			<measurementID>ITEM</measurementID>
+			<quantity>4</quantity>
+			<expectedQuantity>4</expectedQuantity>
+		</packetsContent>
+		<packetsContent>
+			<packetsGroupName>urn:epc:pat:gid-96:145.87.*</packetsGroupName>
+			<company>ALTERA</company>
+			<description>Altera Microcontroler 6502</description>
+			<measurementID>ITEM</measurementID>
+			<quantity>5</quantity>
+			<expectedQuantity>5</expectedQuantity>
+		</packetsContent>
+	</merchandise>
+</parameters>
