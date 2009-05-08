@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	Copyright © 2008-2010, Aspire 
+	
+	Aspire is free software; you can redistribute it and/or 
+	modify it under  the terms of the GNU Lesser General Public 
+	License version 2.1 as published by the Free Software Foundation (the 
+	"LGPL"). 
+	
+	You should have received a copy of the GNU Lesser General Public 
+	License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software 
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA. 
+	
+	This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
+	OF ANY KIND, either express or implied. See the GNU Lesser General Public 
+	License for the specific language governing rights and limitations. 
+ -->
+ 
+<aspire:RfidSolutionDocument xmlns:ale="urn:epcglobal:ale:xsd:1"
+	xmlns:alelr="urn:epcglobal:alelr:xsd:1" xmlns:aspire="http://aspire.objectweb.org/ideSolution"
+	xmlns:epcglobal="urn:epcglobal:xsd:1" xmlns:epcis="urn:epcglobal:epcis:xsd:1"
+	xmlns:epcismd="urn:epcglobal:epcis-masterdata:xsd:1"
+	xmlns:p="http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://aspire.objectweb.org/ideSolution AspireIdeSolution.xsd ">
+	<FilteringSpecs>
+		<FilteringSpec name="myECSpec">
+			<ECSpec schemaVersion="0.0" creationDate="2001-12-31T12:00:00"
+				includeSpecInReports="false">
+				<logicalReaders>
+					<logicalReader> AccadaSimulatorWithRPProxy </logicalReader>
+				</logicalReaders>
+				<boundarySpec>
+					<repeatPeriod unit="MS">4500</repeatPeriod>
+					<duration unit="MS">4500</duration>
+					<stableSetInterval unit="MS">0</stableSetInterval>
+				</boundarySpec>
+				<reportSpecs>
+					<reportSpec reportOnlyOnChange="false" reportName="deletionsTest"
+						reportIfEmpty="true">
+						<reportSet set="DELETIONS" />
+						<filterSpec>
+							<includePatterns>
+								<includePattern> urn:epc:pat:gid-96:1.5.* </includePattern>
+							</includePatterns>
+							<excludePatterns />
+						</filterSpec>
+						<groupSpec />
+						<output includeTag="true" includeRawHex="true"
+							includeRawDecimal="true" includeEPC="true" includeCount="true" />
+					</reportSpec>
+				</reportSpecs>
+				<extension />
+			</ECSpec>
+		</FilteringSpec>
+	</FilteringSpecs>
+	<LogicalReaders>
+		<LogicalReader name="AccadaSimulatorWithRPProxy">
+			<LRSpec creationDate="2001-12-31T12:00:00" schemaVersion="0.0">
+				<isComposite>false</isComposite>
+				<properties>
+					<property>
+						<name>ReaderType</name>
+						<value>org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor</value>
+					</property>
+					<property>
+						<name>Description</name>
+						<value>This Logical Reader consists of shelf 1,2,3,4 of the
+							physical reader named AccadaRPSimulator</value>
+					</property>
+					<property>
+						<name>PhysicalReaderName</name>
+						<value>AccadaRPSimulator</value>
+					</property>
+					<property>
+						<name>ReadTimeInterval</name>
+						<value>1500</value>
+					</property>
+					<property>
+						<name>PhysicalReaderSource</name>
+						<value>Shelf1,Shelf2,Shelf3,Shelf4</value>
+					</property>
+					<property>
+						<name>NotificationPoint</name>
+						<value>http://localhost:9090</value>
+					</property>
+					<property>
+						<name>ConnectionPoint</name>
+						<value>http://localhost:8000</value>
+					</property>
+				</properties>
+			</LRSpec>
+		</LogicalReader>
+	</LogicalReaders>
+	<PhysicalReaders>
+		<PhysicalReader>
+			<name>SimulatorController</name>
+			<vendor>Accada</vendor>
+			<protocol>proprietary</protocol>
+			<classname>org.ow2.aspirerfid.reader.rp.hal.impl.sim.SimulatorController</classname>
+			<propertyfile>/props/SimulatorController.xml</propertyfile>
+			<readpoints>
+				<readpoint>Shelf1</readpoint>
+				<readpoint>Shelf2</readpoint>
+				<readpoint>Shelf3</readpoint>
+				<readpoint>Shelf4</readpoint>
+			</readpoints>
+		</PhysicalReader>
+	</PhysicalReaders>
+	<ReaderProxies>
+		<ReaderProxy>
+			<host>localhost</host>
+			<jmxConnectionString>service:jmx:rmi:///jndi/rmi://localhost:9995/core</jmxConnectionString>
+			<readerProxyConfiguration name="AccadaRPSimulator"
+				model="ReaderModel" manufacturer="ReaderManufacturer" epc="ReaderEPC"
+				handle="0" role="ReaderRole" manufacturerDescription="ReaderManufacturerDescription">
+				<maxSourceNumber>10</maxSourceNumber>
+				<maxTagSelectorNumber>10</maxTagSelectorNumber>
+				<maxTriggerNumber>10</maxTriggerNumber>
+				<readers>
+					<name>SimulatorController</name>
+				</readers>
+    		<!-- List of all sources -->
+				<currentSource>Shelf1</currentSource>
+				<sources>
+					<source>
+						<name>Shelf1</name>
+						<fixed>true</fixed>
+						<readpoint>Shelf1</readpoint>
+					</source>
+					<source>
+						<name>Shelf2</name>
+						<fixed>true</fixed>
+						<readpoint>Shelf2</readpoint>
+					</source>
+					<source>
+						<name>Shelf3</name>
+						<fixed>true</fixed>
+						<readpoint>Shelf3</readpoint>
+					</source>
+					<source>
+						<name>Shelf4</name>
+						<fixed>true</fixed>
+						<readpoint>Shelf4</readpoint>
+					</source>
+				</sources>
+   <!-- End -->
+
+   <!-- The io trigger classes -->
+				<IOEdgeTriggerPortManager>
+					<port>org.ow2.aspirerfid.reader.rp.impl.core.triggers.KeyIOEdgeTriggerPortManager</port>
+				</IOEdgeTriggerPortManager>
+				<IOValueTriggerPortManager>
+				</IOValueTriggerPortManager>
+   <!-- End -->
+    		<!-- Information about the messaging -->
+				<tcpServerConnection>true</tcpServerConnection>
+				<tcpPort>5566</tcpPort>
+				<httpServerConnection>true</httpServerConnection>
+				<httpPort>8000</httpPort>
+				<notificationListenTimeout>30000</notificationListenTimeout>
+				<threadPoolSize>16</threadPoolSize>
+   <!-- End -->
+
+   <!-- Information about the source defaults -->
+				<isFixed>false</isFixed>
+				<glimpsedTimeout>2000</glimpsedTimeout>
+				<observedThreshold>0</observedThreshold>
+				<observedTimeout>1000</observedTimeout>
+				<lostTimeout>0</lostTimeout>
+				<readCyclesPerTrigger>1</readCyclesPerTrigger>
+				<maxReadDutyCycles>100</maxReadDutyCycles>
+				<readTimeout>0</readTimeout>
+   <!-- End -->
+			</readerProxyConfiguration>
+		</ReaderProxy>
+	</ReaderProxies>
+</aspire:RfidSolutionDocument>

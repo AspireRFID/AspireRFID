@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Copyright (c) 2008-2010, Aspire 
+	
+	Aspire is free software; you can redistribute it and/or 
+	modify it under  the terms of the GNU Lesser General Public 
+	License version 2.1 as published by the Free Software Foundation (the 
+	"LGPL"). 
+	
+	You should have received a copy of the GNU Lesser General Public 
+	License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software 
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA. 
+	
+	This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
+	OF ANY KIND, either express or implied. See the GNU Lesser General Public 
+	License for the specific language governing rights and limitations. 
+	
+	
+	@author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+-->
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.ow2.aspirerfid.ide.aleconfig.application.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Perspective"
+            class="org.ow2.aspirerfid.ide.aleconfig.application.Perspective"
+            id="org.ow2.aspirerfid.ide.aleconfig.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.ow2.aspirerfid.ide.aleconfig.views.LRSpecConfiguratorView"
+            icon="icons/picture-63892.jpg"
+            id="org.ow2.aspirerfid.ide.aleserverconfigurator.views.LRSpecConfiguratorView"
+            name="LRSpecConfiguratorView"
+            restorable="true">
+      </view>
+      <view
+            class="org.ow2.aspirerfid.ide.aleconfig.views.ECSpecConfiguratorView"
+            icon="icons/images.jpg"
+            id="org.ow2.aspirerfid.ide.aleserverconfigurator.views.ECSpecConfiguratorView"
+            name="ECSpecConfiguratorView"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.aleconfig.handlers.OpenECSpecConfiguratorViewHandler"
+            description="Open ECSpec Configurator View"
+            id="org.ow2.aspirerfid.ide.aleserverconfigurator.views.ECSpecConfiguratorView"
+            name="ECSpec Configurator View">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.aleconfig.handlers.OpenLRSpecConfiguratorViewHandler"
+            description="Open LRSpec Configurator View"
+            id="org.ow2.aspirerfid.ide.aleserverconfigurator.views.LRSpecConfiguratorView"
+            name="LRSpec Configurator View">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="org.ow2.aspirerfid.ide.aleserverconfigurator.main.toolbar">
+            <command
+                  commandId="org.ow2.aspirerfid.ide.aleserverconfigurator.views.ECSpecConfiguratorView"
+                  icon="icons/images.jpg"
+                  label="Open ECSpec Configurator"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.ow2.aspirerfid.ide.aleserverconfigurator.views.LRSpecConfiguratorView"
+                  icon="icons/picture-63892.jpg"
+                  label="Open LRSpec Configurator"
+                  style="push">
+            </command>
+         </toolbar>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:org.ow2.aspirerfid.ide.main.windowmenu.showviewmenu">
+         <command
+               commandId="org.ow2.aspirerfid.ide.aleserverconfigurator.views.ECSpecConfiguratorView"
+               icon="icons/images.jpg"
+               label="Open ECSpec Configurator"
+               style="push">
+         </command>
+         <command
+               commandId="org.ow2.aspirerfid.ide.aleserverconfigurator.views.LRSpecConfiguratorView"
+               icon="icons/picture-63892.jpg"
+               label="Open LRSpec Configurator"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.ow2.aspirerfid.ide.aleconfig.preferences.AleServerConfiguratorPreferencePage"
+            id="org.ow2.aspirerfid.ide.aleserverconfigurator.preferences.AleServerConfiguratorPreferencePage"
+            name="Ale Server Configurator">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.ow2.aspirerfid.ide.aleconfig.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>

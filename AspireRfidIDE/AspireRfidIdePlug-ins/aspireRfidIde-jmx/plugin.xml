@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright (c) 2008-2010, Aspire 
+	
+	Aspire is free software; you can redistribute it and/or 
+	modify it under  the terms of the GNU Lesser General Public 
+	License version 2.1 as published by the Free Software Foundation (the 
+	"LGPL"). 
+	
+	You should have received a copy of the GNU Lesser General Public 
+	License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software 
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA. 
+	
+	This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
+	OF ANY KIND, either express or implied. See the GNU Lesser General Public 
+	License for the specific language governing rights and limitations. 
+-->
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.ow2.aspirerfid.ide.jmx.views.ManagementView"
+            icon="icons/img/b_props.png"
+            id="org.ow2.aspirerfid.ide.jmx.views.ManagementView"
+            name="Management"
+            restorable="true">
+      </view>
+      <view
+            class="org.ow2.aspirerfid.ide.jmx.views.ConfigurationView"
+            icon="icons/img/b_engine.png"
+            id="org.ow2.aspirerfid.ide.jmx.views.ConfigurationView"
+            name="Configuration"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.jmx.handlers.OpenManagementViewHandler"
+            description="Open Management Console"
+            id="org.ow2.aspirerfid.ide.jmx.openManagementView.command"
+            name="Management Console">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.jmx.handlers.OpenConfigurationViewHandler"
+            description="Open JMX Configuration Console"
+            id="org.ow2.aspirerfid.ide.jmx.openConfigurationView.command"
+            name="Open JMX Configuration Console">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.ow2.aspirerfid.ide.main.windowmenu.showviewmenu">
+         <command
+               commandId="org.ow2.aspirerfid.ide.jmx.openConfigurationView.command"
+               icon="icons/img/b_engine.png"
+               label="JMX Configuration Console"
+               style="push">
+         </command>
+         <command
+               commandId="org.ow2.aspirerfid.ide.jmx.openManagementView.command"
+               icon="icons/img/b_props.png"
+               label="JMX Management Console"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.ow2.aspirerfid.ide.jmx.preferences.ManagementConsole"
+            id="org.ow2.aspirerfid.ide.jmx.preferences.ManagementConsole"
+            name="Management Console">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.ow2.aspirerfid.ide.jmx.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>

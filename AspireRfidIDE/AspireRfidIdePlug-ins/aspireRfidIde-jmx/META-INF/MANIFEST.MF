@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: AspireRfidIde jmx Plug-in
+Bundle-SymbolicName: org.ow2.aspirerfid.ide.jmx;singleton:=true
+Bundle-Version: 0.1.0
+Bundle-Activator: org.ow2.aspirerfid.ide.jmx.Activator
+Bundle-Vendor: Athens Information Technology
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .,
+ lib/ReaderProtocol-1.0.1.jar
+Import-Package: org.eclipse.ui.forms.widgets

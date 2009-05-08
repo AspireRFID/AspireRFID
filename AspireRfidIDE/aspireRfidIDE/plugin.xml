@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright (c) 2008-2010, Aspire 
+	
+	Aspire is free software; you can redistribute it and/or 
+	modify it under  the terms of the GNU Lesser General Public 
+	License version 2.1 as published by the Free Software Foundation (the 
+	"LGPL"). 
+	
+	You should have received a copy of the GNU Lesser General Public 
+	License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software 
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA. 
+	
+	This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
+	OF ANY KIND, either express or implied. See the GNU Lesser General Public 
+	License for the specific language governing rights and limitations. 
+	
+	
+	@author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+-->
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.ow2.aspirerfid.ide.application.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="RCP Perspective"
+            class="org.ow2.aspirerfid.ide.application.Perspective"
+            id="aspireRfidIDE.perspective">
+      </perspective>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="aspireRfidIDE.application"
+            name="ASPIRE RFID IDE">
+         <property
+               name="windowImages"
+               value="icons/alt_window_16.gif,icons/alt_window_32.gif">
+         </property>
+         <property
+               name="appName"
+               value="ASPIRE RFID IDE">
+         </property>
+      </product>
+   </extension>
+      <extension
+         point="org.eclipse.ui.activities">
+      <activityPatternBinding
+            activityId="activity.eclipseWorkingSets"
+            pattern="org\.eclipse\.ui\.ide/selectWorkingSets">
+      </activityPatternBinding>
+      <activity
+            description="remove unwanted select working sets"
+            id="activity.eclipseWorkingSets"
+            name="Select Working Sets">
+      </activity>
+      <activityPatternBinding
+            activityId="activity.eclipseOpenLocalFile"
+            pattern="org\.eclipse\.ui\.ide/org.eclipse.ui.openLocalFile">
+      </activityPatternBinding>
+      <activity
+            description="remove unwanted open local file"
+            id="activity.eclipseOpenLocalFile"
+            name="Open Local File">
+      </activity>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro">
+      <intro
+            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
+            icon="icons/alt_window_16.gif"
+            id="org.ow2.aspirerfid.ide.intro">
+      </intro>
+      <introProductBinding
+            introId="org.ow2.aspirerfid.ide.intro"
+            productId="aspireRfidIDE.product">
+      </introProductBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro.config">
+      <config
+            introId="org.ow2.aspirerfid.ide.intro"
+            content="introContent.xml"
+            id="aspireRfidIDE.configId">
+         <presentation
+               home-page-id="root">
+            <implementation
+                  kind="html"
+                  os="win32,linux,macosx">
+            </implementation>
+         </presentation>
+      </config>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro.configExtension">
+      <configExtension
+            content="ext.xml"
+            configId="aspireRfidIDE.configId">
+      </configExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.handlers.ExitAspireRfidIdeHandler"
+            id="org.ow2.aspirerfid.ide.exit.command"
+            name="exitAspireRfidIDE">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.handlers.WelcomeAspireRfidIdeHandler"
+            id="org.ow2.aspirerfid.ide.welcome.command"
+            name="welcomeAspireRfidIDE">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.handlers.AboutAspireRfidIdeHandler"
+            id="org.ow2.aspirerfid.ide.about.command"
+            name="aboutAspireRfidIde">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.handlers.DynamicHelpAspireRfidIde"
+            id="org.ow2.aspirerfid.ide.dynamicHelp.command"
+            name="dynamicHelpAspireRfidIde">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.handlers.OpenConsoleViewHandler"
+            id="org.ow2.aspirerfid.ide.openconsole.command"
+            name="Console">
+      </command>
+   </extension>
+   <extension
+         id="org.ow2.aspirerfid.ide.main.menu"
+         name="Aspire Rfid Main Menu"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="org.ow2.aspirerfid.ide.main.filemenu"
+               label="File">
+            <command
+                  commandId="org.ow2.aspirerfid.ide.exit.command"
+                  label="Exit"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="org.ow2.aspirerfid.ide.main.editmenu"
+               label="Edit">
+            <command
+                  commandId="org.eclipse.ui.edit.undo"
+                  id="org.ow2.aspirerfid.ide.main.editmenu.undo"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.edit.redo"
+                  id="org.ow2.aspirerfid.ide.main.editmenu.redo"
+                  style="push">
+            </command>
+            <separator
+                  name="org.ow2.aspirerfid.ide.main.editmenu.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.edit.cut"
+                  id="org.ow2.aspirerfid.ide.main.editmenu.cut"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.edit.copy"
+                  id="org.ow2.aspirerfid.ide.main.editmenu.copy"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.edit.paste"
+                  id="org.ow2.aspirerfid.ide.main.editmenu.paste"
+                  style="push">
+            </command>
+            <separator
+                  name="org.ow2.aspirerfid.ide.main.editmenu.separator2"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.edit.delete"
+                  id="org.eclipse.ui.edit.delete"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.edit.selectAll"
+                  id="org.ow2.aspirerfid.ide.main.editmenu.selectall"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="org.ow2.aspirerfid.ide.main.windowmenu"
+               label="Window">
+            <menu
+                  id="org.ow2.aspirerfid.ide.main.windowmenu.showviewmenu"
+                  label="Show View">
+               <command
+                     commandId="org.ow2.aspirerfid.ide.openconsole.command"
+                     label="Console"
+                     style="push">
+               </command>
+               <separator
+                     name="org.ow2.aspirerfid.ide.main.windowmenu.showview.separator1"
+                     visible="true">
+               </separator>
+               <command
+                     commandId="org.eclipse.ui.views.showView"
+                     label="Other..."
+                     style="push">
+               </command>
+            </menu>
+            <separator
+                  name="org.ow2.aspirerfid.ide.main.windowmenu.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.window.customizePerspective"
+                  label="Customize Perspective..."
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.window.savePerspective"
+                  label="Save Perspective..."
+                  style="push">
+            </command>
+            <separator
+                  name="org.ow2.aspirerfid.ide.main.windowmenu.separator2"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.window.preferences"
+                  label="Preferences"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="org.ow2.aspirerfid.ide.main.helpmenu"
+               label="Help">
+            <command
+                  commandId="org.ow2.aspirerfid.ide.welcome.command"
+                  label="Welcome"
+                  style="push">
+            </command>
+            <separator
+                  name="org.ow2.aspirerfid.ide.main.helpmenu.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.ow2.aspirerfid.ide.dynamicHelp.command"
+                  label="Dynamic Help"
+                  style="push">
+            </command>
+            <separator
+                  name="org.ow2.aspirerfid.ide.main.helpmenu.separator2"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.ow2.aspirerfid.ide.about.command"
+                  label="About Aspire RFID IDE"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="org.ow2.aspirerfid.ide.main.toolbar">
+            <command
+                  commandId="org.ow2.aspirerfid.ide.openconsole.command"
+                  icon="icons/notepad_16.gif"
+                  label="Open Console"
+                  style="push">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+</plugin>

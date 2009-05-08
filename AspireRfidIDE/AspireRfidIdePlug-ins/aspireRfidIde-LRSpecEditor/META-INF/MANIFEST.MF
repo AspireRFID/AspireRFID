@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: LRSpec Editor Plug-in
+Bundle-SymbolicName: org.ow2.aspirerfid.ide.lrspec; singleton:=true
+Bundle-Version: 0.1.0
+Bundle-Activator: org.ow2.aspirerfid.ide.lrspec.Activator
+Bundle-Vendor: Athens Information Technology
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.ow2.aspirerfid.ide.aleconfig;bundle-version="0.1.0";resolution:=optional
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: lib/fc-commons-0.3.0.jar,
+ lib/log4j-1.2.12.jar,
+ .
