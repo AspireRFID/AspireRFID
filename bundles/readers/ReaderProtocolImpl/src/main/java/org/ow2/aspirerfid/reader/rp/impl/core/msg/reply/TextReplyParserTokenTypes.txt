@@ -1,0 +1,22 @@
+// $ANTLR : reply_new.g -> TextReplyParserTokenTypes.txt$
+TextReplyParser    // output token vocab name
+OK="OK"=4
+ERR="ERR"=5
+COMMAND_REPLY_TERMINATOR=6
+LF=7
+EXCLAMATION=8
+COMMA=9
+String_val=10
+INT=11
+STRING=12
+WS=13
+SHARP=14
+DOT=15
+LBRACKET=16
+RBRACKET=17
+ASSIGN=18
+ESCAPE=19
+DIGIT=20
+STRINGCHAR1=21
+STRINGCHAR2=22
+IDENT=23

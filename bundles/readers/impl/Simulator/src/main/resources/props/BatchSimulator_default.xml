@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Properties file for BatchSimulator -->
+<properties>
+
+   <!-- Absolute file path or name of the batch file -->
+   <!-- Value: file URL or name -->
+   <!-- Example: C:\project\props\batchfile.txt -->
+   <!-- Example: /props/batchfile.txt -->
+   <batchfile>/props/batchfile.txt</batchfile>
+
+   <!-- Number of iterations to execute -->
+   <!-- Value: iterations (long) -->
+   <iterations>3</iterations>
+
+</properties>

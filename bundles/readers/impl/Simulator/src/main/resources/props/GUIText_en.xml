@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+
+   <!-- application -->
+   <ApplicationTitle>Accada Reader Simulator</ApplicationTitle>
+
+   <!-- menus -->
+   <FileMenuItem>File</FileMenuItem>
+   <ViewMenuItem>View</ViewMenuItem>
+   <AntennaMenuItem>Antenna</AntennaMenuItem>
+   <TagMenuItem>Tag</TagMenuItem>
+   <HelpMenuItem>Help</HelpMenuItem>
+   <QuitMenuItem>Quit</QuitMenuItem>
+   <RefreshMenuItem>Refresh</RefreshMenuItem>
+   <AddNewAntennaMenuItem>Add new Antenna</AddNewAntennaMenuItem>
+   <AddNewTagMenuItem>Add new Tag</AddNewTagMenuItem>
+   <AboutMenuItem>About</AboutMenuItem>
+   <RemoveAntennaMenuItem>Remove Antenna</RemoveAntennaMenuItem>
+   <MemoryBanksMenuItem>Memory Banks</MemoryBanksMenuItem>
+   <RemoveTagMenuItem>Remove Tag</RemoveTagMenuItem>
+   <RemoveTagsMenuItem>Remove Tags</RemoveTagsMenuItem>
+   <GroupTagsMenuItem>Group Tags</GroupTagsMenuItem>
+   <UngroupTagsMenuItem>Ungroup Tags</UngroupTagsMenuItem>
+   <ArrangeTagsMenuItem>Arrange Tags</ArrangeTagsMenuItem>
+
+   <!-- dialogs -->
+   <AboutDialogTitle>About</AboutDialogTitle>
+   <AboutDialogContent>This is the Accada Reader Simulator that implements the EPCglobal RP and RM Spec. More info at http://www.accada.org.</AboutDialogContent>
+
+   <AddNewAntennaDialogTitle>Add new Antenna</AddNewAntennaDialogTitle>
+   <AntennaIdLabel>Antenna Identification</AntennaIdLabel>
+
+   <RemoveAntennaDialogTitle>Remove Antenna</RemoveAntennaDialogTitle>
+   <RemoveAntennaLabel>Remove Antenna</RemoveAntennaLabel>
+
+   <AddNewTagDialogTitle>Add new Tag</AddNewTagDialogTitle>
+   <TagIdLabel>Tag Identification</TagIdLabel>
+
+   <MemoryBanksDialogTitle>Memory Banks</MemoryBanksDialogTitle>
+   <ReservedMemoryLabel>Reserved Memory</ReservedMemoryLabel>
+   <EPCMemoryLabel>EPC Memory</EPCMemoryLabel>
+   <TIDMemoryLabel>TID Memory</TIDMemoryLabel>
+   <UserMemoryLabel>User Memory</UserMemoryLabel>
+
+   <RemoveTagDialogTitle>Remove Tag</RemoveTagDialogTitle>
+   <RemoveTagsDialogTitle>Remove Tags</RemoveTagsDialogTitle>
+   <RemoveTagLabel>Remove Tag</RemoveTagLabel>
+   <RemoveTagsLabel>Remove the selected Tags ?</RemoveTagsLabel>
+
+   <AddButton>add</AddButton>
+   <OkButton>ok</OkButton>
+   <CancelButton>cancel</CancelButton>
+   <YesButton>yes</YesButton>
+   <NoButton>no</NoButton>
+
+</properties>

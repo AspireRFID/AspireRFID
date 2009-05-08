@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+
+   <!-- application -->
+   <ApplicationTitle>Accada Reader Simulator</ApplicationTitle>
+
+   <!-- menus -->
+   <FileMenuItem>Datei</FileMenuItem>
+   <ViewMenuItem>Ansicht</ViewMenuItem>
+   <AntennaMenuItem>Antenne</AntennaMenuItem>
+   <TagMenuItem>Etikette</TagMenuItem>
+   <HelpMenuItem>Hilfe</HelpMenuItem>
+   <QuitMenuItem>Beenden</QuitMenuItem>
+   <RefreshMenuItem>Aktualisieren</RefreshMenuItem>
+   <AddNewAntennaMenuItem>Neue Antenne hinzufügen</AddNewAntennaMenuItem>
+   <AddNewTagMenuItem>Neue Etikette hinzufügen</AddNewTagMenuItem>
+   <AboutMenuItem>Über</AboutMenuItem>
+   <RemoveAntennaMenuItem>Antenne entfernen</RemoveAntennaMenuItem>
+   <MemoryBanksMenuItem>Speicher-Bänke</MemoryBanksMenuItem>
+   <RemoveTagMenuItem>Etikette entfernen</RemoveTagMenuItem>
+   <RemoveTagsMenuItem>Etiketten entfernen</RemoveTagsMenuItem>
+   <GroupTagsMenuItem>Etiketten gruppieren</GroupTagsMenuItem>
+   <UngroupTagsMenuItem>Etiketten ungruppieren</UngroupTagsMenuItem>
+   <ArrangeTagsMenuItem>Etiketten anordnen</ArrangeTagsMenuItem>
+
+   <!-- dialogs -->
+   <AboutDialogTitle>Über</AboutDialogTitle>
+   <AboutDialogContent>Dies ist der Accada Reader Simulator, der die EPCglobal RP and RM Spezifikation implementiert. Mehr Informationen unter http://www.accada.org.</AboutDialogContent>
+
+   <AddNewAntennaDialogTitle>Neue Antenne hinzufügen</AddNewAntennaDialogTitle>
+   <AntennaIdLabel>Antennen Identifikation</AntennaIdLabel>
+
+   <RemoveAntennaDialogTitle>Antenne entfernen</RemoveAntennaDialogTitle>
+   <RemoveAntennaLabel>Entferne Antenne</RemoveAntennaLabel>
+
+   <AddNewTagDialogTitle>Neue Etikette hinzufügen</AddNewTagDialogTitle>
+   <TagIdLabel>Etiketten Identifikation</TagIdLabel>
+
+   <ChangeMemoryDialogTitle>Speicher ändern</ChangeMemoryDialogTitle>
+   <ReservedMemoryLabel>Reservierter Speicher</ReservedMemoryLabel>
+   <EPCMemoryLabel>EPC-Speicher</EPCMemoryLabel>
+   <TIDMemoryLabel>TID-Speicher</TIDMemoryLabel>
+   <UserMemoryLabel>Benutzer-Speicher</UserMemoryLabel>
+
+   <RemoveTagDialogTitle>Etikette entfernen</RemoveTagDialogTitle>
+   <RemoveTagsDialogTitle>Etiketten entfernen</RemoveTagsDialogTitle>
+   <RemoveTagLabel>Entferne Etikette</RemoveTagLabel>
+   <RemoveTagsLabel>Selektierte Etiketten entfernen ?</RemoveTagsLabel>
+
+   <AddButton>hinzufügen</AddButton>
+   <OkButton>ok</OkButton>
+   <CancelButton>abbrechen</CancelButton>
+   <YesButton>ja</YesButton>
+   <NoButton>nein</NoButton>
+
+</properties>
