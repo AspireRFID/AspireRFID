@@ -223,7 +223,7 @@ public class Report {
 			lastEventCycleTags.put(tag.getTagIDAsPureURI(), tag);
 		}	
 		
-		//Every 10 cycles the last readed tags will be resseted
+		//Every 9000 cycles the last readed tags will be resseted
 		//for the ADDITIONS and DELETIONS function
 		if((currentEventCycle.getRounds()%9000) ==0){
 			lastADDITIONEventCycleTags.clear();

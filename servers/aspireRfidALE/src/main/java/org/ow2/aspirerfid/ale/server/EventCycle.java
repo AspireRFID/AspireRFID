@@ -295,7 +295,7 @@ public class EventCycle implements Runnable, Observer {
 
 
 	/**
-	 * (nkef)This method is used every time tags are readed from the LogicalReader (entry points of tags for the ALE) 
+	 * (nkef)This method is used every time tags are read from the LogicalReader (entry points of tags for the ALE) 
 	 * implementation of the observer interface for tags.
 	 * @param o an observable object that triggered the update
 	 * @param arg the arguments passed by the observable
