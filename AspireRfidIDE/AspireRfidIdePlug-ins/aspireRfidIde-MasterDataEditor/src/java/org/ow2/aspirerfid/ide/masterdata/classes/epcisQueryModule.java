@@ -73,7 +73,7 @@ public class epcisQueryModule {
 		return this.vocabulary;
 	}
 	
-	public List<Object> getEPCTags2(String epc)
+	/*public List<Object> getEPCTags2(String epc)
 	{
 		Object[][] data = {};
 		List<Object> result = new ArrayList<Object>();
@@ -131,7 +131,7 @@ public class epcisQueryModule {
 		}
 		return result;
 	}
-	
+	*/
 	
 	public List<Object> getEPCTags()
 	{
@@ -654,7 +654,7 @@ public class epcisQueryModule {
 	
 	
 	
-	public java.util.TreeMap<Key_Map,String> getTags_Names2(String uri)//List<String> uri)
+/*	public java.util.TreeMap<Key_Map,String> getTags_Names2(String uri)//List<String> uri)
 	{
 		org.fosstrak.epcis.model.ArrayOfString elements = new org.fosstrak.epcis.model.ArrayOfString();
 		org.fosstrak.epcis.model.ArrayOfString vocab = new org.fosstrak.epcis.model.ArrayOfString();
@@ -719,7 +719,7 @@ public class epcisQueryModule {
 		
 	}
 	
-	
+	*/
 	public java.util.TreeMap<Key_Map,String> getTags_Names()
 	{
 		TreeMap<Key_Map,String> info = new java.util.TreeMap<Key_Map,String>();

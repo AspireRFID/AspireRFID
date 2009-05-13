@@ -1517,7 +1517,8 @@ public class MasterDataEditorView extends ViewPart {
 					return;
 				}
 	    		dataManager.setVocabularyId(EpcisConstants.BUSINESS_LOCATION_ID);
-	    		dataManager.changeLocationParent((String)BizLoc_tree_v2.getSelection()[0].getData());
+	    		//dataManager.changeLocationParent((String)BizLoc_tree_v2.getSelection()[0].getData());
+	    		dataManager.moveLocation((String)BizLoc_tree_v2.getSelection()[0].getData());
 	    		
 	    		
 	    	}
@@ -3392,7 +3393,8 @@ public class MasterDataEditorView extends ViewPart {
 	    newButton_3.setText("New Location");
 	    newButton_3.setBounds(398, 380, 91, 25);
 		showTransactionHierarchyNEW();
-		treeTransaction.getItem(0).setExpanded(true);
+		if(treeTransaction.getItemCount() > 0)
+			treeTransaction.getItem(0).setExpanded(true);
 
 
 
@@ -3705,6 +3707,13 @@ public class MasterDataEditorView extends ViewPart {
 
 		java.util.List<String> transactionIDs = dataManager.getElementUris(attributes);
 		attributes.clear();
+		if(transactionIDs == null)
+		{
+			label_4.setVisible(true);
+			label_4.setText("No processes in the DB!");
+			return;
+			
+		}
 		if(transactionIDs.size() == 0)
 		{
 			label_4.setVisible(true);
@@ -3741,6 +3750,8 @@ public class MasterDataEditorView extends ViewPart {
 					attributes.clear();
 					attributes.add("urn:epcglobal:epcis:mda:event_name");
 					String eventName = dataManager.getSpecificAttributeValue(eventUri, attributes);
+					if(eventName == null)
+						continue;
 					TreeItem ev = new TreeItem(eventTree,1);
 					ev.setText(eventName);
 					ev.setData("Event$$"+eventUri);

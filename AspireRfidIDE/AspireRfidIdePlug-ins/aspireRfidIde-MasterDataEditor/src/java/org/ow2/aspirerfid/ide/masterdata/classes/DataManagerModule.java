@@ -519,6 +519,26 @@ public class DataManagerModule {
 		return queryModule.parseNameSpace(uri, separator, position);
 	}
 	
+	
+	public boolean moveLocation(String newParentUri)
+	{
+		String oldUri = (String)oldNode.getData();
+		String id;
+		String [] cleanUri = ((String)oldNode.getData()).split(",");
+		
+		if(cleanUri.length > 1)
+			id = cleanUri[cleanUri.length - 1];
+		else
+			id = cleanUri[0].toString();
+		
+		String alterURI =  oldUri+"#"+newParentUri+","+id;
+		return this.masterDataElementEdit(alterURI, "2");
+		
+		
+	}
+	
+	
+	
 	public boolean changeLocationParent(String newParentId)
 	{
 		queryModule.setVocabulary(this.vocabularyId);
