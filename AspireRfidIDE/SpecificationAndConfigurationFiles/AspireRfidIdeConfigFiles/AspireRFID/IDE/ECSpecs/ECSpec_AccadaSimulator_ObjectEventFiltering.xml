@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:ECSpec includeSpecInReports="false" xmlns:ns2="urn:epcglobal:ale:xsd:1">
+    <logicalReaders>
+        <logicalReader>AccadaSimulatorWithRPProxy</logicalReader>
+    </logicalReaders>
+    <boundarySpec>
+        <repeatPeriod unit="MS">4500</repeatPeriod>
+        <duration unit="MS">4500</duration>
+        <stableSetInterval unit="MS">0</stableSetInterval>
+    </boundarySpec>
+    <reportSpecs>
+    	
+
+        <reportSpec reportOnlyOnChange="false" reportName="bizTransactionIDs_1234" reportIfEmpty="true">
+            <reportSet set="CURRENT"/>
+            <filterSpec>
+                <includePatterns>
+                    <includePattern>urn:epc:pat:gid-96:145.12.*</includePattern>
+                    <includePattern>urn:epc:pat:gid-96:239.30.*</includePattern>
+                </includePatterns>
+                <excludePatterns/>
+            </filterSpec>
+            <groupSpec/>
+            <output includeTag="true" includeRawHex="true" includeRawDecimal="true" includeEPC="true" includeCount="true"/>
+        </reportSpec>
+        
+        
+        
+        <reportSpec reportOnlyOnChange="false" reportName="transactionItems_1234" reportIfEmpty="true">
+            <reportSet set="ADDITIONS"/>
+            <filterSpec>
+                <includePatterns>
+                    <includePattern>urn:epc:pat:gid-96:145.233.*</includePattern><!-- Small Packets Contents 1-->
+                    <includePattern>urn:epc:pat:gid-96:1.3.*</includePattern><!-- Small Packets Contents 2-->
+                    <includePattern>urn:epc:pat:gid-96:1.4.*</includePattern><!-- Small Packets Contents 3-->
+                    <includePattern>urn:epc:pat:gid-96:145.255.*</includePattern><!-- Medium Packets Contents -->
+                </includePatterns>
+                <excludePatterns/>
+            </filterSpec>
+            <groupSpec/>
+            <output includeTag="true" includeRawHex="true" includeRawDecimal="true" includeEPC="true" includeCount="true"/>
+        </reportSpec>
+        
+    </reportSpecs>
+    <extension/>
+</ns2:ECSpec>

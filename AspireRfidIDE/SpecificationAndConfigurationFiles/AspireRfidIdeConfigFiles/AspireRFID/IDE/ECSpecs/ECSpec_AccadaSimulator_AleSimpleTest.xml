@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ale:ECSpec xmlns:ale="urn:epcglobal:ale:xsd:1"
+	xmlns:epcglobal="urn:epcglobal:xsd:1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	schemaVersion="1.0" creationDate="2003-08-06T10:54:06.444-05:00">
+	
+	<logicalReaders>
+		<logicalReader>AccadaSimulatorWithRPProxy</logicalReader>
+	</logicalReaders>
+	
+	<boundarySpec>
+        <repeatPeriod unit="MS">5000</repeatPeriod>
+        <duration unit="MS">4500</duration>
+        <stableSetInterval unit="MS">0</stableSetInterval>          
+	</boundarySpec>
+	
+	<reportSpecs>
+
+	<reportSpec reportName="ObjectEvent" reportIfEmpty="false" reportOnlyOnChange="false" includeSpecInReports="true">
+			<reportSet set="CURRENT" />
+			<groupSpec>
+				<pattern>urn:epc:pat:gid-96:145.56.*</pattern><!-- Small Packets -->
+				<pattern>urn:epc:pat:gid-96:145.87.*</pattern><!-- Medium Packets -->
+				<pattern>urn:epc:pat:gid-96:145.233.*</pattern><!-- Small Packets Contents -->
+				<pattern>urn:epc:pat:gid-96:145.255.*</pattern><!-- Medium Packets Contents -->
+				<pattern>urn:epc:pat:gid-96:82.20.*</pattern><!-- warehousemen -->
+				<pattern>urn:epc:pat:gid-96:145.12.*</pattern><!-- Invoice -->
+			</groupSpec>
+			<output includeRawHex="true" includeRawDecimal="true" includeEPC="true" includeTag="true" includeCount="true" />
+		</reportSpec>
+		
+	</reportSpecs>
+</ale:ECSpec>

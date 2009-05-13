@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:ECSpec includeSpecInReports="false" xmlns:ns2="urn:epcglobal:ale:xsd:1">
+    <logicalReaders>
+        <logicalReader>SmartLabIntermecLogicalReader</logicalReader>
+    </logicalReaders>
+    <boundarySpec>
+        <repeatPeriod unit="MS">4500</repeatPeriod>
+        <duration unit="MS">4500</duration>
+        <stableSetInterval unit="MS">0</stableSetInterval>
+    </boundarySpec>
+    <reportSpecs>
+        <reportSpec reportOnlyOnChange="false" reportName="deletionsTest" reportIfEmpty="true">
+            <reportSet set="DELETIONS"/>
+            <filterSpec>
+                <includePatterns>
+                    <includePattern>urn:epc:pat:gid-96:1.5.*</includePattern>
+                </includePatterns>
+                <excludePatterns/>
+            </filterSpec>
+            <groupSpec/>
+            <output includeTag="true" includeRawHex="true" includeRawDecimal="true" includeEPC="true" includeCount="true"/>
+        </reportSpec>
+    </reportSpecs>
+    <extension/>
+</ns2:ECSpec>

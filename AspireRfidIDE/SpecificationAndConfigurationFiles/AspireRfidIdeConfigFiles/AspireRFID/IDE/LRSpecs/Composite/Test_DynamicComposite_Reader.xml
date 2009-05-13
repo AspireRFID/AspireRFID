@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:LRSpec xmlns:ns2="urn:epcglobal:ale:wsdl:1" xmlns:ns3="urn:epcglobal:ale:xsd:1">
+    <isComposite>true</isComposite>
+    <readers>
+        <reader>DynamicImpinjLlrpReader</reader>
+        <reader>DynamicAccadaSimulatorRpReader</reader>
+        <reader>DynamicIntermecRpReader</reader>
+    </readers>
+    <properties>
+        <property>
+            <name>ReaderType</name>
+            <value>org.ow2.aspirerfid.ale.server.readers.CompositeReader</value>
+        </property>
+        <property>
+            <name>Description</name>
+            <value>All available readers</value>
+        </property>
+    </properties>
+</ns3:LRSpec>

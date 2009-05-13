@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:ECSpec includeSpecInReports="false" xmlns:ns2="urn:epcglobal:ale:xsd:1">
+    <logicalReaders>
+        <logicalReader>SmartLabIntermecLogicalReader</logicalReader>
+    </logicalReaders>
+    <boundarySpec>
+        <repeatPeriod unit="MS">5000</repeatPeriod>
+        <duration unit="MS">4500</duration>
+        <stableSetInterval unit="MS">0</stableSetInterval>
+    </boundarySpec>
+    <reportSpecs>
+    	
+
+        <reportSpec reportOnlyOnChange="false" reportName="bizTransactionIDs_456" reportIfEmpty="true">
+            <reportSet set="CURRENT"/>
+            <filterSpec>
+                <includePatterns>
+                    <includePattern>urn:epc:pat:gid-96:145.12.*</includePattern>
+                </includePatterns>
+                <excludePatterns/>
+            </filterSpec>
+            <groupSpec/>
+            <output includeTag="true" includeRawHex="true" includeRawDecimal="true" includeEPC="true" includeCount="true"/>
+        </reportSpec>
+        
+        
+        
+        <reportSpec reportOnlyOnChange="false" reportName="transactionItems_456" reportIfEmpty="true">
+            <reportSet set="ADDITIONS"/>
+            <filterSpec>
+                <includePatterns>
+                	<includePattern>urn:epc:pat:gid-96:145.233.*</includePattern><!-- Small Packets Contents -->
+                    <includePattern>urn:epc:pat:gid-96:145.255.*</includePattern><!-- Medium Packets Contents -->
+                    <includePattern>urn:epc:pat:gid-96:82.20.*</includePattern><!-- warehousemen -->
+                </includePatterns>
+                <excludePatterns/>
+            </filterSpec>
+            <groupSpec/>
+            <output includeTag="true" includeRawHex="true" includeRawDecimal="true" includeEPC="true" includeCount="true"/>
+        </reportSpec>
+        
+        
+        <reportSpec reportOnlyOnChange="false" reportName="parentObjects_456" reportIfEmpty="true">
+            <reportSet set="CURRENT"/>
+            <filterSpec>
+                <includePatterns>
+                	<includePattern>urn:epc:pat:gid-96:145.56.*</includePattern><!-- Small Packets -->
+                    <includePattern>urn:epc:pat:gid-96:145.87.*</includePattern><!-- Medium Packets -->
+                </includePatterns>
+                <excludePatterns/>
+            </filterSpec>
+            <groupSpec/>
+            <output includeTag="true" includeRawHex="true" includeRawDecimal="true" includeEPC="true" includeCount="true"/>
+        </reportSpec>
+        
+    </reportSpecs>
+    <extension/>
+</ns2:ECSpec>
