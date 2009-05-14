@@ -1,22 +1,21 @@
 /*
- * Copyright © 2008-2010, Aspire 
+ * Copyright (C) 2007 ETH Zurich
  *
- * This file contains the source code of the Accada library by ETH Zurich (www.accada.org),
- * licensed under the terms of the GNU Lesser General Public License version 2.1 in 2007
- * and modified for the needs of the Aspire project.
+ * This file is part of Accada (www.accada.org).
  *
- * Aspire is free software; you can redistribute it and/or 
- * modify it under  the terms of the GNU Lesser General Public 
- * License version 2.1 as published by the Free Software Foundation (the 
- * "LGPL"). 
+ * Accada is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License version 2.1, as published by the Free Software Foundation.
  *
- * You should have received a copy of the GNU Lesser General Public 
- * License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software 
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA. 
+ * Accada is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
- * OF ANY KIND, either express or implied. See the GNU Lesser General Public 
- * License for the specific language governing rights and limitations. 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Accada; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301  USA
  */
 
 package org.ow2.aspirerfid.epcis.repository.query;

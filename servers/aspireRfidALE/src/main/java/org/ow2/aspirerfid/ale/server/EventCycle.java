@@ -546,6 +546,7 @@ public class EventCycle implements Runnable, Observer {
 	}
 
 	/**
+	 * (nkef)
 	 * returns the set of tags from the previous EventCycle run.
 	 * @return a set of tags from the previous EventCycle run
 	 */
@@ -569,6 +570,7 @@ public class EventCycle implements Runnable, Observer {
 		this.acceptTags = acceptTags;
 	}
 	/**
+	 * (nkef)
 	 * for testing only!
 	 * set some tags as last event cycle tags
 	 * for testing only!

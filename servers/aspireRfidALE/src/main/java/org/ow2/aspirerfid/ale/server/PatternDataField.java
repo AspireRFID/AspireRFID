@@ -60,7 +60,7 @@ public class PatternDataField {
 	 * @param usage of the pattern this data field belongs to
 	 * @throws ECSpecValidationException if the data field is invalid
 	 */
-	//changed by nkef@ait.edu.gr
+	//changed by nkef added a third field check
 	public PatternDataField(String stringRepresentation, PatternUsage usage, String thirdField) throws ECSpecValidationExceptionResponse {
 		
 		this.stringRepresentation = stringRepresentation;
