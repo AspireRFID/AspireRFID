@@ -173,6 +173,8 @@ public class ECSpecEditorView extends ViewPart {
 	private ECBoundarySpecExtension ecBoundarySpecExtension;
 	private StartTriggerList startTriggerList;
 	private StopTriggerList stopTriggerList;
+	
+	private static String fileSeparator = System.getProperty("file.separator");
 
 	/** Returns the preference store for this UI plug-in */
 	IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
@@ -1454,7 +1456,7 @@ public class ECSpecEditorView extends ViewPart {
 					// add reader to ecspectree -> ECSpecsNode
 					ecspecNodeChild = new TreeItem(ECSpecsNode, SWT.NULL);
 					ecspecNodeChild.setText(selection.substring(selection
-							.lastIndexOf("\\") + 1));
+							.lastIndexOf(fileSeparator) + 1));
 
 					ecspecSaveButton.setEnabled(false);
 				} catch (IOException e1) { // TODO Auto-generated catch block

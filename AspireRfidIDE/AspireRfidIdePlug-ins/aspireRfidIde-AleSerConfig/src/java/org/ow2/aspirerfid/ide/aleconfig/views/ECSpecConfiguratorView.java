@@ -101,6 +101,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 	private Combo getSubscribersSpecNameCombo;
 	private Composite getSubscribersECSpecComposite;
 	private Group aleMethodGroup;
+	private static String fileSeparator = System.getProperty("file.separator");
 
 	Composite container;
 
@@ -750,11 +751,11 @@ public class ECSpecConfiguratorView extends ViewPart {
 		ecSpecsPath = aleConfigPreferences
 				.getString(PreferenceConstants.P_ECSpecsPATH);
 		try {
-			if (ecSpecsPath.endsWith("\\")) {
+			if (ecSpecsPath.endsWith(fileSeparator)) {
 				ecSpecsPath = aleConfigPreferences
 						.getString(PreferenceConstants.P_ECSpecsPATH);
 			} else {
-				ecSpecsPath = ecSpecsPath + "\\";
+				ecSpecsPath = ecSpecsPath + fileSeparator;
 			}
 
 			inputStream = new FileInputStream(ecSpecsPath + combo.getText());

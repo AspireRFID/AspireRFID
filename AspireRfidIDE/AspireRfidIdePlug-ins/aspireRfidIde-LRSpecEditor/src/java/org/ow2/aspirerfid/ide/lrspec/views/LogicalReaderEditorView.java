@@ -214,6 +214,8 @@ public class LogicalReaderEditorView extends ViewPart {
 	IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
 
 	private LRSpecPreferencePage lrSpecPreferencePage;
+	
+	private static String fileSeparator = System.getProperty("file.separator");
 
 	public LogicalReaderEditorView() {
 		halLrSpecBuilder = new LRSpecBuilder();
@@ -1220,7 +1222,7 @@ public class LogicalReaderEditorView extends ViewPart {
 						// add reader to lrspectree -> HALReadersNode
 						halNodeChild = new TreeItem(HALReadersNode, SWT.NULL);
 						halNodeChild.setText(selection.substring(selection
-								.lastIndexOf("\\") + 1));
+								.lastIndexOf(fileSeparator) + 1));
 
 						HALReaderSaveButton.setEnabled(false);
 
@@ -1321,7 +1323,7 @@ public class LogicalReaderEditorView extends ViewPart {
 					// add reader to lrspectree -> HALReadersNode
 					halNodeChild = new TreeItem(HALReadersNode, SWT.NULL);
 					halNodeChild.setText(selection.substring(selection
-							.lastIndexOf("\\") + 1));
+							.lastIndexOf(fileSeparator) + 1));
 
 					HALReaderSaveButton.setEnabled(false);
 
@@ -1551,7 +1553,7 @@ public class LogicalReaderEditorView extends ViewPart {
 						// add reader to lrspectree -> RPReadersNode
 						rpNodeChild = new TreeItem(RPReadersNode, SWT.NULL);
 						rpNodeChild.setText(selection.substring(selection
-								.lastIndexOf("\\") + 1));
+								.lastIndexOf(fileSeparator) + 1));
 
 						RPReaderSaveButton.setEnabled(false);
 
@@ -1670,7 +1672,7 @@ public class LogicalReaderEditorView extends ViewPart {
 					// add reader to lrspectree -> RPReadersNode
 					rpNodeChild = new TreeItem(RPReadersNode, SWT.NULL);
 					rpNodeChild.setText(selection.substring(selection
-							.lastIndexOf("\\") + 1));
+							.lastIndexOf(fileSeparator) + 1));
 
 					RPReaderSaveButton.setEnabled(false);
 
@@ -2013,7 +2015,7 @@ public class LogicalReaderEditorView extends ViewPart {
 						// add reader to lrspectree -> LLRPReadersNode
 						llrpNodeChild = new TreeItem(LLRPReadersNode, SWT.NULL);
 						llrpNodeChild.setText(selection.substring(selection
-								.lastIndexOf("\\") + 1));
+								.lastIndexOf(fileSeparator) + 1));
 
 						LLRPReaderSaveButton.setEnabled(false);
 
@@ -2156,7 +2158,7 @@ public class LogicalReaderEditorView extends ViewPart {
 					// add reader to lrspectree -> LLRPReadersNode
 					llrpNodeChild = new TreeItem(LLRPReadersNode, SWT.NULL);
 					llrpNodeChild.setText(selection.substring(selection
-							.lastIndexOf("\\") + 1));
+							.lastIndexOf(fileSeparator) + 1));
 
 					LLRPReaderSaveButton.setEnabled(false);
 
@@ -2354,7 +2356,7 @@ public class LogicalReaderEditorView extends ViewPart {
 						compNodeChild = new TreeItem(CompositeReadersNode,
 								SWT.NULL);
 						compNodeChild.setText(selection.substring(selection
-								.lastIndexOf("\\") + 1));
+								.lastIndexOf(fileSeparator) + 1));
 
 						CompReaderSaveButton.setEnabled(false);
 
@@ -2380,7 +2382,7 @@ public class LogicalReaderEditorView extends ViewPart {
 					// add reader to lrspectree -> Composite Readers Node
 					compNodeChild = new TreeItem(CompositeReadersNode, SWT.NULL);
 					compNodeChild.setText(selection.substring(selection
-							.lastIndexOf("\\") + 1));
+							.lastIndexOf(fileSeparator) + 1));
 
 					CompReaderSaveButton.setEnabled(false);
 
