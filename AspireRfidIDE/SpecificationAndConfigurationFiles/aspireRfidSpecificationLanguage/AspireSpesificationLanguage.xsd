@@ -1,134 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="urn:ow2:aspirerfid:apdspec:xsd:1"
-  xmlns:ale="urn:epcglobal:ale:xsd:1" xmlns:alelr="urn:epcglobal:alelr:xsd:1" xmlns:aspirepds="urn:ow2:aspirerfid:apdspec:xsd:1"
-  xmlns:epcismd="urn:epcglobal:epcis-masterdata:xsd:1">
-  
-  <!-- 
-	Copyright © 2008-2010, Aspire 
-	
-	Aspire is free software; you can redistribute it and/or 
-	modify it under  the terms of the GNU Lesser General Public 
-	License version 2.1 as published by the Free Software Foundation (the 
-	"LGPL"). 
-	
-	You should have received a copy of the GNU Lesser General Public 
-	License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software 
-	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA. 
-	
-	This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
-	OF ANY KIND, either express or implied. See the GNU Lesser General Public 
-	License for the specific language governing rights and limitations. 
-	
-	Author: Nikos Kefalakis (nkef@ait.edu.gr)
- --> 
-  
-  
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	targetNamespace="urn:ow2:aspirerfid:apdspec:xsd:1" xmlns:ale="urn:epcglobal:ale:xsd:1" xmlns:alelr="urn:epcglobal:alelr:xsd:1"
+	xmlns:aspirepds="urn:ow2:aspirerfid:apdspec:xsd:1" xmlns:epcismd="urn:epcglobal:epcis-masterdata:xsd:1"
+	xmlns:xpdl="http://www.wfmc.org/2002/XPDL1.0">
 
-  <xs:import namespace="urn:epcglobal:alelr:xsd:1" schemaLocation="epcglobal/EPCglobal-ale-1_1-alelr.xsd"> </xs:import>
-  <xs:import namespace="urn:epcglobal:ale:xsd:1" schemaLocation="epcglobal/EPCglobal-ale-1_1-ale.xsd"> </xs:import>
-  <xs:import namespace="urn:epcglobal:epcis-masterdata:xsd:1" schemaLocation="epcglobal/EPCglobal-epcis-masterdata-1_0.xsd"> </xs:import>
+	<!--
+		Copyright © 2008-2010, Aspire Aspire is free software; you can redistribute it and/or modify it
+		under the terms of the GNU Lesser General Public License version 2.1 as published by the Free
+		Software Foundation (the "LGPL"). You should have received a copy of the GNU Lesser General Public
+		License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software
+		Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. This software is
+		distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+		GNU Lesser General Public License for the specific language governing rights and limitations.
+	-->
+	<!--
+		Author: Nikos Kefalakis (nkef@ait.edu.gr)
+	-->
 
-  <xs:element name="APDSpec" type="aspirepds:APDSpec"/>
-  <xs:element name="CBProc" type="aspirepds:CBProc"/>
-  <xs:element name="EBProc" type="aspirepds:EBProc"/>
 
-  <xs:complexType name="APDSpec">
-    <xs:sequence>
-      <xs:element ref="aspirepds:CBProc"/>
-    </xs:sequence>
-    <xs:attribute name="id" use="required" type="xs:anyURI"/>
-    <xs:attribute name="name" use="required" type="xs:NCName"/>
-  </xs:complexType>
+	<xs:import namespace="urn:epcglobal:alelr:xsd:1" schemaLocation="epcglobal/EPCglobal-ale-1_1-alelr.xsd"></xs:import>
+	<xs:import namespace="urn:epcglobal:ale:xsd:1" schemaLocation="epcglobal/EPCglobal-ale-1_1-ale.xsd"></xs:import>
+	<xs:import namespace="urn:epcglobal:epcis-masterdata:xsd:1" schemaLocation="epcglobal/EPCglobal-epcis-masterdata-1_0.xsd">
+	</xs:import>
 
-  <xs:complexType name="CBProc">
-    <xs:sequence>
-      <xs:element ref="aspirepds:Description"/>
-      <xs:element maxOccurs="unbounded" ref="aspirepds:EBProc"/>
-      <xs:element ref="aspirepds:Transitions"/>
-    </xs:sequence>
-    <xs:attribute name="id" use="required" type="xs:anyURI"/>
-    <xs:attribute name="name" use="required" type="xs:NCName"/>
-  </xs:complexType>
-  
-  <xs:complexType name="EBProc">
-    <xs:sequence>
-      <xs:element ref="aspirepds:Description"/>
-      <xs:element ref="aspirepds:TransitionRestrictions"/>
-      <xs:element ref="aspirepds:ExtendedAttributes"/>
-      <xs:element minOccurs="1" maxOccurs="4" ref="aspirepds:DataFields"/>
-    </xs:sequence>
-    <xs:attribute name="id" type="xs:anyURI"/>
-    <xs:attribute name="name" type="xs:NCName"/>
-  </xs:complexType>
+	<xs:import namespace="http://www.wfmc.org/2002/XPDL1.0" schemaLocation="XPDL.xsd"></xs:import>
+	<xs:element name="APDSpec" type="aspirepds:APDSpec" />
+	<xs:element name="CBProc" type="aspirepds:CBProc" />
+	<xs:element name="EBProc" type="aspirepds:EBProc" />
 
-  <xs:element name="TransitionRestrictions">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="aspirepds:TransitionRestriction"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="TransitionRestriction">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="aspirepds:Join"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Join">
-    <xs:complexType>
-      <xs:attribute name="type" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ExtendedAttributes">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="aspirepds:ExtendedAttribute"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ExtendedAttribute">
-    <xs:complexType>
-      <xs:attribute name="name" use="required" type="xs:NCName"/>
-      <xs:attribute name="value" use="required" type="xs:anyURI"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="DataFields">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="aspirepds:DataField"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="DataField">
-    <xs:complexType>
-      <xs:choice>
-        <xs:element ref="aspirepds:ECSpec"/>
-        <xs:element ref="aspirepds:EPCISMasterDataDocument"/>
-        <xs:element ref="aspirepds:LRSPec"/>
-      </xs:choice>
-      <xs:attribute name="id" use="required" type="xs:anyURI"/>
-      <xs:attribute name="name" use="required" type="xs:NCName"/>
-      <xs:attribute name="type" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ECSpec" type="ale:ECSpec"> </xs:element>
-  <xs:element name="EPCISMasterDataDocument" type="epcismd:EPCISMasterDataDocumentType"> </xs:element>
-  <xs:element name="LRSPec" type="alelr:LRSpec"> </xs:element>
-  <xs:element name="Transitions">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="aspirepds:Transition"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Transition">
-    <xs:complexType>
-      <xs:attribute name="From" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="id" use="required" type="xs:NCName"/>
-      <xs:attribute name="Name" use="required" type="xs:NCName"/>
-      <xs:attribute name="To" use="required" type="xs:NMTOKEN"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="Description" type="xs:string"/>
+	<xs:complexType name="APDSpec">
+		<xs:sequence>
+			<xs:element ref="aspirepds:CBProc" />
+		</xs:sequence>
+		<xs:attribute name="id" use="required" type="xs:anyURI" />
+		<xs:attribute name="name" use="required" type="xs:NCName" />
+	</xs:complexType>
+
+	<xs:complexType name="CBProc">
+		<xs:sequence>
+			<xs:element ref="aspirepds:Description" />
+			<xs:element maxOccurs="unbounded" ref="aspirepds:EBProc" />
+			<xs:element ref="aspirepds:Transitions" />
+		</xs:sequence>
+		<xs:attribute name="id" use="required" type="xs:anyURI" />
+		<xs:attribute name="name" use="required" type="xs:NCName" />
+	</xs:complexType>
+
+	<xs:complexType name="EBProc">
+		<xs:sequence>
+			<xs:element ref="aspirepds:Description" />
+			<xs:element ref="aspirepds:TransitionRestrictions" />
+			<xs:element ref="aspirepds:ExtendedAttributes" />
+			<xs:element minOccurs="1" maxOccurs="4" ref="aspirepds:DataFields" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:anyURI" />
+		<xs:attribute name="name" type="xs:NCName" />
+	</xs:complexType>
+
+	<xs:element name="TransitionRestrictions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="xpdl:TransitionRestriction" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ExtendedAttributes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" ref="aspirepds:ExtendedAttribute" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ExtendedAttribute">
+		<xs:complexType>
+			<xs:attribute name="name" use="required" type="xs:NCName" />
+			<xs:attribute name="value" use="required" type="xs:anyURI" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DataFields">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" ref="aspirepds:DataField" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="DataField">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="aspirepds:ECSpec" />
+				<xs:element ref="aspirepds:EPCISMasterDataDocument" />
+				<xs:element ref="aspirepds:LRSPec" />
+			</xs:choice>
+			<xs:attribute name="id" use="required" type="xs:anyURI" />
+			<xs:attribute name="name" use="required" type="xs:NCName" />
+			<xs:attribute name="type" use="required" type="xs:NCName" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ECSpec" type="ale:ECSpec"></xs:element>
+
+	<xs:element name="EPCISMasterDataDocument" type="epcismd:EPCISMasterDataDocumentType"></xs:element>
+
+	<xs:element name="LRSPec" type="alelr:LRSpec"></xs:element>
+
+
+	<xs:element name="Transitions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="xpdl:Transition" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+
+	<xs:element name="Description" type="xs:string" />
+
 </xs:schema>
