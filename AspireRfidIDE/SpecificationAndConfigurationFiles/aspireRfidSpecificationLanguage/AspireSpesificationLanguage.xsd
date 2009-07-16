@@ -18,12 +18,12 @@
 	-->
 
 
-	<xs:import namespace="urn:epcglobal:alelr:xsd:1" schemaLocation="epcglobal/EPCglobal-ale-1_1-alelr.xsd"></xs:import>
-	<xs:import namespace="urn:epcglobal:ale:xsd:1" schemaLocation="epcglobal/EPCglobal-ale-1_1-ale.xsd"></xs:import>
-	<xs:import namespace="urn:epcglobal:epcis-masterdata:xsd:1" schemaLocation="epcglobal/EPCglobal-epcis-masterdata-1_0.xsd">
+	<xs:import namespace="urn:epcglobal:alelr:xsd:1" schemaLocation="resources/epcglobal/EPCglobal-ale-1_1-alelr.xsd"></xs:import>
+	<xs:import namespace="urn:epcglobal:ale:xsd:1" schemaLocation="resources/epcglobal/EPCglobal-ale-1_1-ale.xsd"></xs:import>
+	<xs:import namespace="urn:epcglobal:epcis-masterdata:xsd:1" schemaLocation="resources/epcglobal/EPCglobal-epcis-masterdata-1_0.xsd">
 	</xs:import>
 
-	<xs:import namespace="http://www.wfmc.org/2002/XPDL1.0" schemaLocation="XPDL.xsd"></xs:import>
+	<xs:import namespace="http://www.wfmc.org/2002/XPDL1.0" schemaLocation="resources/XPDL.xsd"></xs:import>
 	<xs:element name="APDSpec" type="aspirepds:APDSpec" />
 	<xs:element name="CBProc" type="aspirepds:CBProc" />
 	<xs:element name="EBProc" type="aspirepds:EBProc" />
