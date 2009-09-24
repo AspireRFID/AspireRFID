@@ -38,7 +38,7 @@ public class RegistrationManager {
     static
     {
 	logger = Logger.getLogger(RegistrationManager.class);
-	connectorEngineEndpoint = Configurator.getProperty("connectorServer", "http://localhost:8080/Connector-1.0/connector");
+	connectorEngineEndpoint = Configurator.getProperty("connectorServer", "http://localhost:8080/aspireRfidConnectorEngine/connector");
 	
 	JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
 	factory.setServiceClass(ConnectorEngine.class);
