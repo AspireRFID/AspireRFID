@@ -21,9 +21,7 @@
 
 	<xs:import namespace="urn:epcglobal:alelr:xsd:1" schemaLocation="resources/epcglobal/EPCglobal-ale-1_1-alelr.xsd"></xs:import>
 	<xs:import namespace="urn:epcglobal:ale:xsd:1" schemaLocation="resources/epcglobal/EPCglobal-ale-1_1-ale.xsd"></xs:import>
-	<xs:import namespace="urn:epcglobal:epcis-masterdata:xsd:1" schemaLocation="resources/epcglobal/EPCglobal-epcis-masterdata-1_0.xsd">
-	</xs:import>
-
+	<xs:import namespace="urn:epcglobal:epcis-masterdata:xsd:1" schemaLocation="resources/epcglobal/EPCglobal-epcis-masterdata-1_0.xsd"></xs:import>
 	<xs:import namespace="http://www.wfmc.org/2002/XPDL1.0" schemaLocation="resources/XPDL.xsd"></xs:import>
 	<xs:element name="OLCBProc" type="apdl:OLCBProc" />
 	<xs:element name="CLCBProc" type="apdl:CLCBProc" />
@@ -75,12 +73,15 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="ExtendedAttribute">
-		<xs:complexType>
-			<xs:attribute name="name" use="required type="xs:NCName" />
-			<xs:attribute name="value" use="required" type="xs:string" />
-		</xs:complexType>
-	</xs:element>
+   <xs:element name="ExtendedAttribute">
+      <xs:complexType mixed="true">
+         <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+         </xs:choice>
+         <xs:attribute name="Name" type="xs:NMTOKEN" use="required"/>
+         <xs:attribute name="Value" type="xs:string"/>
+      </xs:complexType>
+   </xs:element>
 
 	<xs:element name="DataFields">
 		<xs:complexType>
@@ -93,21 +94,15 @@
 	<xs:element name="DataField">
 		<xs:complexType>
 			<xs:choice>
-				<xs:element ref="apdl:ECSpec" />
-				<xs:element ref="apdl:EPCISMasterDataDocument" />
-				<xs:element ref="apdl:LRSPec" />
+				<xs:element ref="ale:ECSpec" />
+				<xs:element ref="epcismd:EPCISMasterDataDocument" />
+				<xs:element ref="alelr:LRSpec" />
 			</xs:choice>
 			<xs:attribute name="id" use="optional" type="xs:anyURI" />
 			<xs:attribute name="name" use="optional" type="xs:NCName" />
 			<xs:attribute name="type" use="optional" type="xs:NCName" />
 		</xs:complexType>
 	</xs:element>
-
-	<xs:element name="ECSpec" type="ale:ECSpec"></xs:element>
-
-	<xs:element name="EPCISMasterDataDocument" type="epcismd:EPCISMasterDataDocumentType"></xs:element>
-
-	<xs:element name="LRSPec" type="alelr:LRSpec"></xs:element>
 
 
 	<xs:element name="Transitions">

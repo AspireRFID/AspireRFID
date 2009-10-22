@@ -1,0 +1,67 @@
+<jxb:bindings version="1.0" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<jxb:bindings schemaLocation="AspireSpesificationLanguage.xsd" node="/xs:schema">
+
+
+		<jxb:bindings node="//xs:element[@name='TransitionRestrictions']">
+			<jxb:class name="ApdlTransitionRestrictions" />
+			<jxb:property name="ApdlTransitionRestrictions" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:element[@name='ExtendedAttributes']">
+			<jxb:class name="ApdlExtendedAttributes" />
+			<jxb:property name="ApdlExtendedAttributes" />
+		</jxb:bindings>
+		
+		
+		<jxb:bindings node="//xs:element[@name='ExtendedAttribute']">
+			<jxb:class name="ApdlExtendedAttribute" />
+			<jxb:property name="ApdlExtendedAttribute" />
+		</jxb:bindings>
+
+
+		<jxb:bindings node="//xs:element[@name='DataField']">
+			<jxb:class name="ApdlDataField" />
+			<jxb:property name="ApdlDataField" />
+		</jxb:bindings>
+
+
+
+
+		<jxb:bindings node="//xs:element[@name='Transitions']">
+			<jxb:class name="ApdlTransitions" />
+			<jxb:property name="ApdlTransitions" />
+		</jxb:bindings>
+
+
+		<!--
+		<jxb:bindings node="//xs:element[@name='ECSpec']">
+			<jxb:class name="ApdlECSpec" />
+			<jxb:property name="ApdlECSpec" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:element[@name='EPCISMasterDataDocument']">
+			<jxb:class name="EPCISMasterDataDoc" />
+			<jxb:property name="EPCISMasterDataDoc" />
+		</jxb:bindings>
+	
+		<jxb:bindings node="//xs:element[@name='LRSPec']">
+			<jxb:class name="ApdlLRSPec" />
+			<jxb:property name="ApdlLRSPec" />
+		</jxb:bindings>		
+		-->
+		
+				
+		<jxb:bindings node="//xs:element[@name='Description']">
+			<jxb:class name="ApdlDescription" />
+			<jxb:property name="ApdlDescription" />
+		</jxb:bindings>		
+
+
+		<jxb:bindings node="//xs:element[@name='DataFields']">
+			<jxb:class name="ApdlDataFields" />
+			<jxb:property name="ApdlDataFields" />
+		</jxb:bindings>
+
+	</jxb:bindings>
+</jxb:bindings> 
