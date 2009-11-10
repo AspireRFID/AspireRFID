@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<!--
+		Copyright © 2008-2010, Aspire Aspire is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Lesser General Public License version 2.1 as
+		published by the Free Software Foundation (the "LGPL"). You should have received a copy
+		of the GNU Lesser General Public License along with this library in the file
+		COPYING-LGPL-2.1; if not, write to the Free Software Foundation, Inc., 51 Franklin
+		Street, Fifth Floor, Boston, MA 02110-1301 USA. This software is distributed on an "AS
+		IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the GNU Lesser
+		General Public License for the specific language governing rights and limitations.
+
+		Author: Nikos Kefalakis (nkef@ait.edu.gr)
+	-->
+
+<apdl:OLCBProc id="urn:ow2:aspirerfid:aprod:firstopenloopdescribedprocess" name="AcmeSupplyChainManagement" xmlns:ale="urn:epcglobal:ale:xsd:1"
+	xmlns:alelr="urn:epcglobal:alelr:xsd:1" xmlns:apdl="urn:ow2:aspirerfid:apdlspec:xsd:1"
+	xmlns:epcglobal="urn:epcglobal:xsd:1" xmlns:epcis="urn:epcglobal:epcis:xsd:1"
+	xmlns:epcismd="urn:epcglobal:epcis-masterdata:xsd:1" xmlns:p="http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader"
+	xmlns:xpdl="http://www.wfmc.org/2002/XPDL1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:ow2:aspirerfid:apdlspec:xsd:1 ../aspireRfidSpecificationLanguage/AspireSpesificationLanguage.xsd ">
+
+
+
+	<!--
+		Open Loop Composite Business Process (AspireRFID Process Description Language
+		Specification)
+	-->
+
+	<apdl:CLCBProc id="urn:epcglobal:fmcg:bti:acmesupplying" name="CompositeBusinessProcessName">
+		<!--
+			RFID Composite Business Process Specification (the ID will be the Described
+			Transactions's URI)
+		-->
+		<xpdl:Description>Acme Supply Chain</xpdl:Description>
+
+<!-- 
+		<apdl:EBProc Id="CLCBProcEnd" Name="CLCBProcEnd">
+			<xpdl:Description />
+			<xpdl:TransitionRestrictions>
+				<xpdl:TransitionRestriction>
+					<xpdl:Join Type="XOR" />
+				</xpdl:TransitionRestriction>
+			</xpdl:TransitionRestrictions>
+			<xpdl:ExtendedAttributes>
+				<xpdl:ExtendedAttribute Name="XOffset" Value="623" />
+				<xpdl:ExtendedAttribute Name="YOffset" Value="202" />
+			</xpdl:ExtendedAttributes>
+		</apdl:EBProc>
+
+		<apdl:EBProc Id="CLCBProcStart" Name="CLCBProcStart">
+			<xpdl:Description />
+			<xpdl:TransitionRestrictions>
+				<xpdl:TransitionRestriction>
+					<xpdl:Join Type="AND" />
+				</xpdl:TransitionRestriction>
+			</xpdl:TransitionRestrictions>
+			<xpdl:ExtendedAttributes>
+				<xpdl:ExtendedAttribute Name="XOffset" Value="47" />
+				<xpdl:ExtendedAttribute Name="YOffset" Value="196" />
+			</xpdl:ExtendedAttributes>
+		</apdl:EBProc>
+
+ -->
+
+		<apdl:EBProc id="urn:epcglobal:fmcg:bte:acmewarehouse1receive" name="AcmeWarehouse3Ship">
+			<!--
+				Elementary RFID Business Process Specification (the ID will be the Described Event's
+				URI)
+			-->
+			<xpdl:Description>Acme Warehouse 3 Receiving ReadPoint5 Gate3</xpdl:Description>
+			<xpdl:TransitionRestrictions>
+				<xpdl:TransitionRestriction>
+					<xpdl:Join Type="AND" />
+				</xpdl:TransitionRestriction>
+			</xpdl:TransitionRestrictions>
+			<xpdl:ExtendedAttributes>
+				<xpdl:ExtendedAttribute Name="XOffset" Value="204" />
+				<xpdl:ExtendedAttribute Name="YOffset" Value="204" />
+				<xpdl:ExtendedAttribute Name="CellHeight" Value="30" />
+				<xpdl:ExtendedAttribute Name="CellWidth" Value="313" />
+				<xpdl:ExtendedAttribute Name="ECSpecSubscriptionURI" Value="http://localhost:9999" />
+				<xpdl:ExtendedAttribute Name="AleClientEndPoint" Value="http://localhost:8080/aspireRfidALE/services/ALEService" />
+				<xpdl:ExtendedAttribute Name="AleLrClientEndPoint" Value="http://localhost:8080/aspireRfidALE/services/ALELRService" />
+				<xpdl:ExtendedAttribute Name="EpcisClientCaptureEndPoint" Value="http://localhost:8080/aspireRfidEpcisRepository/capture" />
+				<xpdl:ExtendedAttribute Name="EpcisClientQueryEndPoint" Value="http://localhost:8080/aspireRfidALE/services/ALEService" />				
+
+				
+				<!--
+					The DefinedLRSpecNames can be collected from the defined logicalReaders names at the
+					ECSpec
+				-->
+				<!-- The DefinedECSpecName can be collected from the EBProc id -->
+				<!--
+					For the BEG configuration the port can be collected from the "ECSpecSubscriptionURI"
+					value and the event to serve from the EBPSpec id
+				-->
+			</xpdl:ExtendedAttributes>
+			<apdl:DataFields>
+				<apdl:DataField type="EPCISMasterDataDocument" name="RecievingMasterData">
+					<epcismd:EPCISMasterDataDocument>
+						<EPCISBody>
+							<VocabularyList>
+								<Vocabulary type="urn:epcglobal:epcis:vtype:BusinessTransaction">
+									<VocabularyElementList>
+										<VocabularyElement id=" urn:epcglobal:fmcg:bte:acmewarehouse1receive">
+											<attribute id="urn:epcglobal:epcis:mda:event_name"> Warehouse1DocDoorReceive
+								</attribute>
+											<!--
+												For the required ECReportID we will use the EBPSpec id and the information for
+												which kind of reports BEG will use the event type will provide them.
+											-->
+											<attribute id="urn:epcglobal:epcis:mda:event_type"> ObjectEvent
+								</attribute>
+											<attribute id="urn:epcglobal:epcis:mda:business_step">
+												urn:epcglobal:fmcg:bizstep:receiving
+								</attribute>
+											<attribute id="urn:epcglobal:epcis:mda:business_location">
+												urn:epcglobal:fmcg:loc:acme:warehouse1
+								</attribute>
+											<attribute id="urn:epcglobal:epcis:mda:disposition">
+												urn:epcglobal:fmcg:disp:in_progress								</attribute>
+											<attribute id="urn:epcglobal:epcis:mda:read_point">
+												urn:epcglobal:fmcg:loc:rp:warehouse1docdoor 
+								</attribute>
+											<attribute id="urn:epcglobal:epcis:mda:transaction_type">
+												urn:epcglobal:fmcg:btt:receiving 
+								</attribute>
+											<attribute id="urn:epcglobal:epcis:mda:action">OBSERVE
+								</attribute>
+										</VocabularyElement>
+									</VocabularyElementList>
+								</Vocabulary>
+							</VocabularyList>
+						</EPCISBody>
+					</epcismd:EPCISMasterDataDocument>
+				</apdl:DataField>
+
+
+				<apdl:DataField type="ECSpec" name="RecievingECSpec">
+					<ale:ECSpec includeSpecInReports="false">
+						<logicalReaders>
+							<logicalReader>SmartLabImpinjSpeedwayLogicalReader</logicalReader>
+						</logicalReaders>
+						<boundarySpec>
+							<repeatPeriod unit="MS">4500</repeatPeriod>
+							<duration unit="MS">4500</duration>
+							<stableSetInterval unit="MS">0</stableSetInterval>
+						</boundarySpec>
+						<reportSpecs>
+							<!--For the required ECReportID we will use the EBPSpec id -->
+							<reportSpec reportOnlyOnChange="false" reportName="bizTransactionIDs"
+								reportIfEmpty="true">
+								<reportSet set="CURRENT" />
+								<filterSpec>
+									<includePatterns>
+										<includePattern>urn:epc:pat:gid-96:145.12.*</includePattern>
+									</includePatterns>
+									<excludePatterns />
+								</filterSpec>
+								<groupSpec />
+								<output includeTag="true" includeRawHex="true" includeRawDecimal="true"
+									includeEPC="true" includeCount="true" />
+							</reportSpec>
+							<!--For the required ECReportID we will use the EBPSpec id -->
+							<reportSpec reportOnlyOnChange="false" reportName="transactionItems"
+								reportIfEmpty="true">
+								<reportSet set="ADDITIONS" />
+								<filterSpec>
+									<includePatterns>
+										<includePattern>urn:epc:pat:gid-96:145.233.*</includePattern>
+										<includePattern>urn:epc:pat:gid-96:145.255.*</includePattern>
+									</includePatterns>
+									<excludePatterns />
+								</filterSpec>
+								<groupSpec />
+								<output includeTag="true" includeRawHex="true" includeRawDecimal="true"
+									includeEPC="true" includeCount="true" />
+							</reportSpec>
+						</reportSpecs>
+						<extension />
+					</ale:ECSpec>
+				</apdl:DataField>
+
+				<!-- We could have many LRSpecs defining many Logical Readers for one EBProc -->
+				<apdl:DataField type="LRSpec" name="SmartLabImpinjSpeedwayLogicalReader">
+					<alelr:LRSpec>
+						<isComposite>false</isComposite>
+						<readers />
+						<properties>
+							<property>
+								<name>Description</name>
+								<value>This Logical Reader consists of read point 1,2,3</value>
+							</property>
+							<property>
+								<name>ConnectionPointAddress</name>
+								<value>192.168.212.238</value>
+							</property>
+							<property>
+								<name>ConnectionPointPort</name>
+								<value>5084</value>
+							</property>
+							<property>
+								<name>ReadTimeInterval</name>
+								<value>1000</value>
+							</property>
+							<property>
+								<name>PhysicalReaderSource</name>
+								<value>1,2,3</value>
+							</property>
+							<property>
+								<name>RoSpecID</name>
+								<value>1</value>
+							</property>
+							<property>
+								<name>ReaderType</name>
+								<value>org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor</value>
+							</property>
+						</properties>
+					</alelr:LRSpec>
+				</apdl:DataField>
+			</apdl:DataFields>
+
+		</apdl:EBProc>
+
+
+		<xpdl:Transitions>
+			<xpdl:Transition Id="Start_Warehouse3RecievingGate3" Name="Start_Warehouse3RecievingGate3"
+				From="CLCBProcStart" To="urn:epcglobal:fmcg:bte:acmewarehouse3ship" />
+			<xpdl:Transition Id="Warehouse3RecievingGate3_End" Name="Warehouse3RecievingGate3_End"
+				From="urn:epcglobal:fmcg:bte:acmewarehouse3ship" To="CLCBProcEnd" />
+		</xpdl:Transitions>
+	</apdl:CLCBProc>
+
+</apdl:OLCBProc>

@@ -29,8 +29,8 @@
 
 	<xs:complexType name="OLCBProc">
 		<xs:sequence>
-			<xs:element ref="apdl:CLCBProc" />
-			<xs:element ref="apdl:Transitions" />
+			<xs:element maxOccurs="unbounded" ref="apdl:CLCBProc" />
+			<xs:element ref="xpdl:Transitions" />
 		</xs:sequence>
 		<xs:attribute name="id" use="required" type="xs:anyURI" />
 		<xs:attribute name="name" use="required" type="xs:NCName" />
@@ -38,9 +38,9 @@
 
 	<xs:complexType name="CLCBProc">
 		<xs:sequence>
-			<xs:element ref="apdl:Description" />
+			<xs:element ref="xpdl:Description" />
 			<xs:element maxOccurs="unbounded" ref="apdl:EBProc" />
-			<xs:element ref="apdl:Transitions" />
+			<xs:element ref="xpdl:Transitions" />
 		</xs:sequence>
 		<xs:attribute name="id" use="required" type="xs:anyURI" />
 		<xs:attribute name="name" use="required" type="xs:NCName" />
@@ -48,45 +48,19 @@
 
 	<xs:complexType name="EBProc">
 		<xs:sequence>
-			<xs:element ref="apdl:Description" />
-			<xs:element ref="apdl:TransitionRestrictions" />
-			<xs:element ref="apdl:ExtendedAttributes" />
-			<xs:element minOccurs="1" maxOccurs="4" ref="apdl:DataFields" />
+			<xs:element ref="xpdl:Description" />
+			<xs:element ref="xpdl:TransitionRestrictions" />
+			<xs:element ref="xpdl:ExtendedAttributes" />
+			<xs:element ref="apdl:DataFields" />
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:anyURI" />
 		<xs:attribute name="name" type="xs:NCName" />
 	</xs:complexType>
 
-	<xs:element name="TransitionRestrictions">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="xpdl:TransitionRestriction" minOccurs="0" maxOccurs="unbounded" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-
-	<xs:element name="ExtendedAttributes">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element maxOccurs="unbounded" ref="apdl:ExtendedAttribute" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-
-   <xs:element name="ExtendedAttribute">
-      <xs:complexType mixed="true">
-         <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
-         </xs:choice>
-         <xs:attribute name="Name" type="xs:NMTOKEN" use="required"/>
-         <xs:attribute name="Value" type="xs:string"/>
-      </xs:complexType>
-   </xs:element>
-
 	<xs:element name="DataFields">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element maxOccurs="unbounded" ref="apdl:DataField" />
+				<xs:element minOccurs="3" maxOccurs="unbounded" ref="apdl:DataField" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -98,23 +72,9 @@
 				<xs:element ref="epcismd:EPCISMasterDataDocument" />
 				<xs:element ref="alelr:LRSpec" />
 			</xs:choice>
-			<xs:attribute name="id" use="optional" type="xs:anyURI" />
-			<xs:attribute name="name" use="optional" type="xs:NCName" />
-			<xs:attribute name="type" use="optional" type="xs:NCName" />
+			<xs:attribute name="name" use="required" type="xs:NCName" />
+			<xs:attribute name="type" use="required" type="xs:NCName" />
 		</xs:complexType>
 	</xs:element>
-
-
-	<xs:element name="Transitions">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="xpdl:Transition" minOccurs="0" maxOccurs="unbounded" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-
-
-
-	<xs:element name="Description" type="xs:string" />
 
 </xs:schema>
