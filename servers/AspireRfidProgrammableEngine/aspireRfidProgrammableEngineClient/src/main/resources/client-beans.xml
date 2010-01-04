@@ -1,0 +1,30 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<bean id="encodeClient"
+		class="org.ow2.aspirerfid.programmableengine.interfaces.ProgrammableEngineEncoderInterface"
+		factory-bean="encodeClientFactory" factory-method="create" />
+
+	<bean id="encodeClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass"
+			value="org.ow2.aspirerfid.programmableengine.interfaces.ProgrammableEngineEncoderInterface" />
+		<property name="address" value="http://localhost:8080/aspireRfidProgrammableEngine/encoder" />
+	</bean>
+
+
+
+	<bean id="decodeClient"
+		class="org.ow2.aspirerfid.programmableengine.interfaces.ProgrammableEngineDecoderInterface"
+		factory-bean="decodeClientFactory" factory-method="create" />
+
+	<bean id="decodeClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass"
+			value="org.ow2.aspirerfid.programmableengine.interfaces.ProgrammableEngineDecoderInterface" />
+		<property name="address" value="http://localhost:8080/aspireRfidProgrammableEngine/decoder" />
+	</bean>
+
+
+</beans>
