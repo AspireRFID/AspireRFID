@@ -1,0 +1,19 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<bean id="programmableEngineEncoder" class="org.ow2.aspirerfid.programmableengine.encode.ProgrammableEngineEncoderInterfaceImpl" />
+
+	<bean id="programmableEngineDecoder" class="org.ow2.aspirerfid.programmableengine.decode.ProgrammableEngineDecoderInterfaceImpl" />
+
+
+	<jaxws:endpoint id="encoder" implementor="#programmableEngineEncoder" address="/encoder" />
+	<jaxws:endpoint id="decoder" implementor="#programmableEngineDecoder" address="/decoder" />
+
+</beans>
