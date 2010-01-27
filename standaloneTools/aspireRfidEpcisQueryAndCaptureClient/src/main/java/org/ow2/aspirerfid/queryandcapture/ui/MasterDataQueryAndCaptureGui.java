@@ -15,23 +15,23 @@
  * for the specific language governing rights and limitations.
  */
 
-
-
 package org.ow2.aspirerfid.queryandcapture.ui;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.TimeZone;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.fosstrak.epcis.model.ArrayOfString;
-import org.fosstrak.epcis.model.QueryParam;
+import org.ow2.aspirerfid.commons.epcis.model.ArrayOfString;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParam;
 import org.ow2.aspirerfid.queryandcapture.capture.EpcisConstants;
 import org.ow2.aspirerfid.queryandcapture.capture.MasterDataCaptureClient;
 import org.ow2.aspirerfid.queryandcapture.query.MasterDataQueryClient;
@@ -50,11 +50,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-
-
 /**
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- *
+ * 
  */
 public class MasterDataQueryAndCaptureGui {
 
@@ -112,14 +110,12 @@ public class MasterDataQueryAndCaptureGui {
 	 * The endpoint URL for the query service.
 	 */
 	private String queryUrl = "http://localhost:8080/aspireRfidEpcisRepository/query";
-	
-	
+
 	/**
 	 * The endpoint URL for the capture service.
 	 */
 	private String captureUrl = "http://localhost:8080/aspireRfidEpcisRepository/capture";
 
-	
 	/**
 	 * Open the window
 	 */
@@ -270,7 +266,7 @@ public class MasterDataQueryAndCaptureGui {
 		querySubmitButton.addMouseListener(new QuerySubmitButtonMouseListener());
 		querySubmitButton.setBounds(255, 150, 48, 25);
 		querySubmitButton.setText("Submit");
-		
+
 		vocabularyTypeCombo = new Combo(queryInterfaceTestGroup, SWT.NONE);
 		vocabularyTypeCombo.setBounds(95, 63, 315, 25);
 		vocabularyTypeCombo.add(EpcisConstants.READ_POINT_ID);
@@ -288,7 +284,7 @@ public class MasterDataQueryAndCaptureGui {
 		includeChildrenButton = new Button(queryInterfaceTestGroup, SWT.CHECK);
 		includeChildrenButton.setText("Include Children");
 		includeChildrenButton.setBounds(440, 47, 113, 16);
-		
+
 		shell.setTabList(new Control[] { captureServiceUrlText, vLabel_1, label, vLabel, queryServiceUrlText, captureInterfaceTestGroup,
 				queryInterfaceTestGroup });
 
@@ -296,7 +292,6 @@ public class MasterDataQueryAndCaptureGui {
 	}
 
 	private void captureSubmitButtonPressed() {
-
 
 		// SetUp the EPCIS Repository URL
 		captureClient = new MasterDataCaptureClient(captureServiceUrlText.getText());
@@ -313,8 +308,8 @@ public class MasterDataQueryAndCaptureGui {
 				attrEditorMode = "3";
 			}
 
-			simpleMasterDataInsertionSucceeded = captureClient.simpleMasterDataAndAttributeEdit(captureVocabularyTypeCombo.getText(), buissnessStepUriText
-					.getText(), buissnessStepAttributeText.getText(), buissnessStepValueText.getText(), attrEditorMode);
+			simpleMasterDataInsertionSucceeded = captureClient.simpleMasterDataAndAttributeEdit(captureVocabularyTypeCombo.getText(),
+					buissnessStepUriText.getText(), buissnessStepAttributeText.getText(), buissnessStepValueText.getText(), attrEditorMode);
 
 		}
 		else if (alterelementButton.getSelection()) {
@@ -328,8 +323,8 @@ public class MasterDataQueryAndCaptureGui {
 			else if (deleteWdButton.getSelection()) {
 				elementEditorMode = "4";
 			}
-			simpleMasterDataInsertionSucceeded = captureClient.simpleMasterDataEdit(captureVocabularyTypeCombo.getText(),
-					buissnessStepUriText.getText(), elementEditorMode);
+			simpleMasterDataInsertionSucceeded = captureClient.simpleMasterDataEdit(captureVocabularyTypeCombo.getText(), buissnessStepUriText
+					.getText(), elementEditorMode);
 
 		}
 
@@ -398,7 +393,7 @@ public class MasterDataQueryAndCaptureGui {
 			queryClient.addParameter(param4);
 
 			ArrayOfString vocabularyType = new ArrayOfString();
-			
+
 			vocabularyType.getString().add(vocabularyTypeCombo.getText());
 			QueryParam param5 = new QueryParam();
 			param5.setName("vocabularyName");
@@ -406,20 +401,18 @@ public class MasterDataQueryAndCaptureGui {
 			queryClient.addParameter(param5);
 
 			data = queryClient.runMasterDataQuery();
-			
-			if (!data.equals(null))
-			{
+
+			if (!data.equals(null)) {
 				System.out.println("Data retrieved from the query:");
-				for(int i =0 ; i<data.length; i++){
-					for(int j =0 ; j<data[i].length; j++){
-						if(data[i][j]!=null){
+				for (int i = 0; i < data.length; i++) {
+					for (int j = 0; j < data[i].length; j++) {
+						if (data[i][j] != null) {
 							System.out.println(data[i][j]);
 						}
 					}
 				}
 			}
-			
-			
+
 		}
 		catch (ParseException e) {
 			String msg = "Unable to parse a Time value.";
