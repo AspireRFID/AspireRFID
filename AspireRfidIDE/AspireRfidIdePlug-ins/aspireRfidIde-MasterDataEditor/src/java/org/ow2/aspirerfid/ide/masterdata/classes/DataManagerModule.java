@@ -60,6 +60,7 @@ public class DataManagerModule {
 	private EpcisEvent event;
 	private String oldTransactionId;
 	private TreeItem oldNode;
+	private boolean event_movement;
 	List<String> children;
 	String LocDisplayedId;
 	public DataManagerModule()
@@ -98,6 +99,7 @@ public class DataManagerModule {
 	public void setVocabularyId(String id)
 	{
 		this.vocabularyId = id;
+		this.queryModule.setVocabulary(id);
 		if(vocabularyId.equals(EpcisConstants.DISPOSITION_ID))
 			this.info = biz_disposition_info;
 		else if(vocabularyId.equals(EpcisConstants.BUSINESS_STEP_ID))
@@ -223,58 +225,76 @@ public class DataManagerModule {
 		return this.getSpecificAttributeValue(transactionId, attribute);
 		
 	}
-	
+	public String getOldTransactionId()
+	{
+		return oldTransactionId;
+	}
 	public boolean changeTransaction(String newTransaction)
 	{
 		if(event == null)
 			return false;
-		String children = this.getEventsOfTransaction(this.oldTransactionId);
-		StringTokenizer events = new StringTokenizer(children,",");
+		event_movement = false;
+		//String children = this.getEventsOfTransaction(this.oldTransactionId);
+		//StringTokenizer events = new StringTokenizer(children,",");
 		
-		if(children == null || children.equals(""))
-			return false;
+		//if(children == null || children.equals(""))
+		//	return false;
 		
-		List<String>newChildren = new ArrayList<String>();
-		int total = events.countTokens();
-		for(int i = 0; i < total; i++)
-		{
-			String tempChild = events.nextToken();
-			if(!tempChild.equals(event.getUri()))
-					newChildren.add(tempChild);
+		//List<String>newChildren = new ArrayList<String>();
+		//int total = events.countTokens();
+		//for(int i = 0; i < total; i++)
+		//{
+			//String tempChild = events.nextToken();
+			//if(!tempChild.equals(event.getUri()))
+				//	newChildren.add(tempChild);
 				
-		}
-		if(newChildren.size() == 0)
-		{
-			masterDataAttributeEdit(oldTransactionId, "Children", "RandomValue", "3");
+		//}
+		//if(newChildren.size() == 0)
+		//{
+			//masterDataAttributeEdit(oldTransactionId, "Children", "RandomValue", "3");
 			
-		}
-		else
+		//}
+		/*else
 		{
 			StringBuffer newEvents = new StringBuffer();
 			for(int i = 0; i < newChildren.size(); i++)
 				newEvents.append(newChildren.get(i));
 			masterDataAttributeEdit(oldTransactionId, "Children",newEvents.toString(), "2");
 			
-		}
+		}*/
 			
-		children = this.getEventsOfTransaction(newTransaction);
-		StringBuffer newEvents = new StringBuffer();
-		if(children!=null && !children.equals(""))
-			newEvents.append(children+",");
-		newEvents.append(event.getUri());
-		return masterDataAttributeEdit(newTransaction, "Children",newEvents.toString(), "2");
+		//children = this.getEventsOfTransaction(newTransaction);
+		//StringBuffer newEvents = new StringBuffer();
+		//if(children!=null && !children.equals(""))
+			//newEvents.append(children+",");
+		//newEvents.append(event.getUri());
+		
+		String eventId = oldTransactionId.split(",")[2];
+		if(oldTransactionId.equals(newTransaction+","+ eventId))
+			return false;
+		return this.masterDataElementEdit(oldTransactionId + "#"+newTransaction+","+ eventId , "2");
+		//return masterDataAttributeEdit(newTransaction, "Children",newEvents.toString(), "2");
 		
 		
 		
 	}
 	
+	public void clearTransactionSwap()
+	{
+		event_movement = true;
+	}
 	
 	public void storeTransactionSwapInfo(String oldTransactionId, String eventId,TreeItem node)
 	{
 		event = new EpcisEvent(eventId);
 		this.oldTransactionId = oldTransactionId;
 		oldNode = node;
+		event_movement = true;
 		
+	}
+	public boolean changeTransaction()
+	{
+		return event_movement;
 	}
 	
 	public boolean verifySelection(Combo cb, String selection)
@@ -305,39 +325,39 @@ public class DataManagerModule {
 	public boolean deleteEvent(String eventId,String transactionId)
 	{
 		boolean result = false;
-		String events = getEventsOfTransaction(transactionId);
+		//String events = getEventsOfTransaction(transactionId);
 		
-		if(events == null || events.equals(""))
-			return false;
+		//if(events == null || events.equals(""))
+		//	return false;
 		
-		StringTokenizer children = new StringTokenizer(events,",");
-		int total = children.countTokens();
-		List<String> newChildren = new ArrayList<String>();
+		//StringTokenizer children = new StringTokenizer(events,",");
+		//int total = children.countTokens();
+		//List<String> newChildren = new ArrayList<String>();
 		
-		for(int i = 0; i < total; i++)
-		{
-			String tempChild = children.nextToken();
-			if(!tempChild.equals(eventId))
-				newChildren.add(tempChild);
+		//for(int i = 0; i < total; i++)
+		//{
+		//	String tempChild = children.nextToken();
+		//	if(!tempChild.equals(eventId))
+			//	newChildren.add(tempChild);
 			
-		}
+		//}
 		
-		if(newChildren.size() == 0)
-		{
-			result = this.masterDataAttributeEdit(transactionId, "Children", "RandomValue", "3");
-		}
-		else
-		{
-			StringBuffer newEvents = new StringBuffer();
-			for(int i = 0; i < newChildren.size(); i++)
-				newEvents.append(newChildren.get(i));
-			result = this.masterDataAttributeEdit(transactionId, "Children", newEvents.toString(), "2");
+		//if(newChildren.size() == 0)
+		//{
+			//result = this.masterDataAttributeEdit(transactionId, "Children", "RandomValue", "3");
+		//}
+		//else
+		//{
+		//	StringBuffer newEvents = new StringBuffer();
+		//	for(int i = 0; i < newChildren.size(); i++)
+		//		newEvents.append(newChildren.get(i));
+		//	result = this.masterDataAttributeEdit(transactionId, "Children", newEvents.toString(), "2");
 				
 			
-		}
+	//	}
 		
-		if(!result)
-			return false;
+		//if(!result)
+		//	return false;
 		
 		return this.masterDataElementEdit(eventId, "4");
 			
@@ -463,6 +483,7 @@ public class DataManagerModule {
 	public List<Attribute>getAttributes(String uri)
 	{
 		List<Attribute>attributes = new ArrayList<Attribute>();
+		this.queryModule.setVocabulary(this.vocabularyId);
 		attributes = this.queryModule.getElemsAttributes(uri);
 		//List<String>result = new ArrayList<String>();
 		//int total = result.size();
@@ -505,6 +526,7 @@ public class DataManagerModule {
 		
 		if(children.length == 0)
 			return;
+		
 		for(int i = 0; i < children.length; i++)
 		{
 			ids.add((String)children[i].getData());
@@ -520,8 +542,10 @@ public class DataManagerModule {
 	}
 	
 	
-	public boolean moveLocation(String newParentUri)
+	public boolean moveLocation(String newParentUri,TreeItem selection)
 	{
+		if(oldNode == null)
+			return false;
 		String oldUri = (String)oldNode.getData();
 		String id;
 		String [] cleanUri = ((String)oldNode.getData()).split(",");
@@ -529,10 +553,74 @@ public class DataManagerModule {
 		if(cleanUri.length > 1)
 			id = cleanUri[cleanUri.length - 1];
 		else
+			
 			id = cleanUri[0].toString();
 		
 		String alterURI =  oldUri+"#"+newParentUri+","+id;
-		return this.masterDataElementEdit(alterURI, "2");
+		//return this.masterDataElementEdit(alterURI, "2");
+		boolean res =  this.masterDataElementEdit(alterURI, "2");
+		
+		for(int i = 0; i < children.size(); i++)
+		{
+			String oldId = children.get(i);
+			
+			children.set(i,children.get(i).replace(oldUri, newParentUri + "," +id));
+			this.masterDataElementEdit(oldId +"#"+children.get(i), "2");
+			
+		}
+		
+		
+		
+		//if(res)
+			//rearrange(selection,newParentUri+","+id);
+		return res;
+		
+		
+		
+	}
+	
+	public void rearrange(TreeItem newNode,String newUri)
+	{
+		
+	
+		TreeItem temp = new TreeItem(newNode,0);
+		temp.setText(oldNode.getText());
+		temp.setData(newUri);
+		temp.setImage(oldNode.getImage());
+		
+		
+		if(oldNode.getItemCount() > 0)
+		{
+			TreeItem ch = oldNode.getItem(0);
+			
+		}
+		
+		
+		
+		
+		
+		//oldNode.dispose();
+		/*String childUri = newUri;
+		for(int i = 0; i < children.size(); i++){
+			temp = new TreeItem(newNode,0);
+			childUri+=children.get(i);
+			temp.setData(childUri);
+			temp.setText(oldNode.getItem(i).getText());
+			//newNode = oldNode;
+		}
+		oldNode.dispose();*/
+		//TreeItem oldParent = oldNode.getParentItem();
+		//oldParent.clear(oldParent.indexOf(oldNode), true);
+		
+		//TreeItem r = oldParent.getItem(oldParent.indexOf(oldNode));
+		//r.dispose();
+		//System.out.println("R is "+r.getText());
+		//r = null;
+		//oldParent.setExpanded(false);
+		
+		
+		
+		
 		
 		
 	}
@@ -640,7 +728,7 @@ public class DataManagerModule {
 		return this.mdClient.simpleMasterDataEdit(this.vocabularyId, uri, mode);
 	}
 	
-	public boolean modifyEvent(String eventUri, String name, String type,Combo step, Combo location, Combo disposition, String spec, Combo readpoint, String action, Combo transactionType, String reports)
+	public boolean modifyEvent(String eventUri, String name, String type,Combo step, Combo location, Combo disposition,  Combo readpoint, String action, Combo transactionType)//, String reports)
 	{
 		int total = event.getAttributes().size();
 		if(total == 0)
@@ -712,17 +800,7 @@ public class DataManagerModule {
 				
 			}
 
-			else if(event.getAttributes().get(i).getAttribute().endsWith("ecspec_name"))
-			{
-				if(!spec.equals(event.getAttributes().get(i).getValue()))
-				{
-					
-					this.masterDataAttributeEdit(eventUri, queryModule.parseNameSpace(event.getAttributes().get(i).getAttribute(), ":", -1), spec, "2");
-					
-					
-				}
-				
-			}
+			
 				
 			else if(event.getAttributes().get(i).getAttribute().endsWith("read_point"))
 			{
@@ -764,7 +842,7 @@ public class DataManagerModule {
 					
 				}
 			}
-			else if(event.getAttributes().get(i).getAttribute().endsWith("ecreport_names"))
+			/*else if(event.getAttributes().get(i).getAttribute().endsWith("ecreport_names"))
 			{
 				if(!reports.equals(event.getAttributes().get(i).getValue()))
 				{
@@ -773,7 +851,7 @@ public class DataManagerModule {
 					
 					
 				}
-			}
+			}*/
 			
 			
 		}
@@ -787,12 +865,12 @@ public class DataManagerModule {
 	
 	
 	
-	public boolean insertEvent(String transactionUri,String eventUri, String name, String type,Combo step, Combo location, Combo disposition, String spec, Combo readpoint, String action, Combo transactionType, String reports)
+	public boolean insertEvent(String transactionUri,String eventUri, String name, String type,Combo step, Combo location, Combo disposition,  Combo readpoint, String action, Combo transactionType)//, String reports)
 	{
 		if(event != null)	//Modification
-			return modifyEvent(eventUri,name,type,step,location,disposition,spec,readpoint,action,transactionType,reports);
+			return modifyEvent(transactionUri+","+eventUri,name,type,step,location,disposition,readpoint,action,transactionType);//,reports);
 			
-			
+		String id = transactionUri+","+	eventUri;
 			
 		
 		boolean result = false;
@@ -809,30 +887,42 @@ public class DataManagerModule {
 		
 		//restore
 		this.vocabularyId = EpcisConstants.BUSINESS_TRANSACTION_ID;
-		List<String> attr = new ArrayList<String>();
-		attr.add("urn:epcglobal:epcis:mda:Children");
-		String children = this.getSpecificAttributeValue(transactionUri,attr);
-		StringBuffer newChildren = new StringBuffer();
-		if(children!=null)
-			newChildren.append(children+",");
-		newChildren.append(eventUri);
-		result = this.masterDataAttributeEdit(transactionUri, "Children", newChildren.toString(), "2");
-		if(!result)
-			return result;
+		//List<String> attr = new ArrayList<String>();
+		//attr.add("urn:epcglobal:epcis:mda:Children");
+		//String children = this.getSpecificAttributeValue(transactionUri,attr);
+		//StringBuffer newChildren = new StringBuffer();
+		//if(children!=null)
+			//newChildren.append(children+",");
+		//newChildren.append(eventUri);
+		//result = this.masterDataAttributeEdit(transactionUri, "Children", newChildren.toString(), "2");
+		//if(!result)
+			//return result;
 		
-		result = this.masterDataElementEdit(eventUri, "1");
+		result = this.masterDataElementEdit(id, "1");
 		if(!result)
 			return result;
-		result = this.masterDataAttributeEdit(eventUri, "event_name", name, "2");
-		result = this.masterDataAttributeEdit(eventUri, "event_type", type, "2");
-		result = this.masterDataAttributeEdit(eventUri, "business_step", bizStepUri, "2");
-		result = this.masterDataAttributeEdit(eventUri, "business_location", queryModule.parseNameSpace(bizLocationUri, ",", -1), "2");
-		result = this.masterDataAttributeEdit(eventUri, "disposition", bizDispositionUri, "2");
-		result = this.masterDataAttributeEdit(eventUri, "ecspec_name", spec, "2");
-		result = this.masterDataAttributeEdit(eventUri, "read_point", bizReadpointUri, "2");
-		result = this.masterDataAttributeEdit(eventUri, "transaction_type", TransTypeUri, "2");
-		result = this.masterDataAttributeEdit(eventUri, "action", action, "2");	
-		result = this.masterDataAttributeEdit(eventUri, "ecreport_names", reports, "2");	
+		result = this.masterDataAttributeEdit(id, "Name", name, "2");//"event_name", name, "2");
+		result = this.masterDataAttributeEdit(id, "event_type", type, "2");
+		result = this.masterDataAttributeEdit(id, "business_step", bizStepUri, "2");
+		result = this.masterDataAttributeEdit(id, "business_location", queryModule.parseNameSpace(bizLocationUri, ",", -1), "2");
+		result = this.masterDataAttributeEdit(id, "disposition", bizDispositionUri, "2");
+		
+		result = this.masterDataAttributeEdit(id, "read_point", bizReadpointUri, "2");
+		result = this.masterDataAttributeEdit(id, "transaction_type", TransTypeUri, "2");
+		result = this.masterDataAttributeEdit(id, "action", action, "2");	
+		StringBuffer generated_reports = new StringBuffer();
+		
+		generated_reports.append("bizTransactionIDs_"+eventUri+",transactionItems_"+eventUri);
+		if(type.equals("TransactionEvent"))
+		{
+			generated_reports.append(",bizTransactionParentIDs_"+eventUri);
+		}
+		else if(type.equals("AggregationEvent"))
+		{
+			generated_reports.append(",parentObjects_"+eventUri);
+		}
+		
+		result = this.masterDataAttributeEdit(id, "ecreport_names", generated_reports.toString(), "2");	
 		
 		
 		
@@ -842,7 +932,7 @@ public class DataManagerModule {
 	}
 	
 	
-	public boolean getEventInfo(String uri,Text name, Combo type,Combo step, Combo location, Combo disposition, Text spec, Combo readpoint, Combo action, Combo transactionType, org.eclipse.swt.widgets.List reports)
+	public boolean getEventInfo(String uri,Text name, Combo type,Combo step, Combo location, Combo disposition,  Combo readpoint, Combo action, Combo transactionType, org.eclipse.swt.widgets.List reports)
 	{
 		boolean result = false;
 		event = new EpcisEvent(uri);
@@ -855,7 +945,7 @@ public class DataManagerModule {
 		int size = attributes.size();
 		for(int i = 0; i < size; i ++)
 		{
-			if(attributes.get(i).getAttribute().endsWith("event_name"))
+			if(attributes.get(i).getAttribute().endsWith("Name"))//"event_name"))
 				name.setText(attributes.get(i).getValue());
 			else if(attributes.get(i).getAttribute().endsWith("event_type"))
 				type.setText(attributes.get(i).getValue());
@@ -895,8 +985,7 @@ public class DataManagerModule {
 					disposition.setText(disp);
 			}
 
-			else if(attributes.get(i).getAttribute().endsWith("ecspec_name"))
-				spec.setText(attributes.get(i).getValue());
+			
 			else if(attributes.get(i).getAttribute().endsWith("read_point"))
 			{
 				this.setVocabularyId(EpcisConstants.READ_POINT_ID);

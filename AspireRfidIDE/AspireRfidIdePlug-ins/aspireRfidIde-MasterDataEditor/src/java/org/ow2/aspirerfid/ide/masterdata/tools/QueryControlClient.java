@@ -81,7 +81,6 @@ import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
  * 
  * @author Marco Steybe
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- * @author Efstathios Mertikas efme@ait.edu.gr
  *
  */
 public class QueryControlClient implements QueryControlInterface {
@@ -124,16 +123,10 @@ public class QueryControlClient implements QueryControlInterface {
      *            
      */
     public QueryControlClient(final String queryUrl) {
-    	//added by efme@ait.edu.gr
-    	//save the previous ContextClassLoader and restore it afterwards
-    	//so as to prevent class cast exception when another plug-in that uses 
-    	//web services is used also
     	ClassLoader old = Thread.currentThread().getContextClassLoader();
 		ClassLoader newLoader = getClass().getClassLoader();
 		Thread.currentThread().setContextClassLoader(newLoader);
-		
         configureService(queryUrl);
-        
         Thread.currentThread().setContextClassLoader(old);
     }
 

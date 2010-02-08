@@ -171,6 +171,7 @@ public class EditReadPoint extends Dialog {
 		}
 				
 		AssignedRP_list.setData(ids);//Always set to avoid NPE
+		dm.getOrigList().addAll(ids);
 		
 	}
 	/*public void showAllReadpoints()
@@ -312,12 +313,14 @@ public class EditReadPoint extends Dialog {
 	public void doUpdate()
 	{
 		//if(!dm.getOrigList().containsAll((ArrayList<String>)AssignedRP_list.getData())){
+		
 		dm.getnewList().clear();	
 		dm.getnewList().addAll((ArrayList<String>)AssignedRP_list.getData());
 		//}
 		
 		dm.setVocabularyId(EpcisConstants.BUSINESS_LOCATION_ID);
 		this.getParent().close();
+		result = new Boolean(true);
 		return;
 	}
 	

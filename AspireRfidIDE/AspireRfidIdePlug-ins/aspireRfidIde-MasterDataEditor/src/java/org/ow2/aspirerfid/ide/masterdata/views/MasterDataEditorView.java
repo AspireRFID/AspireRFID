@@ -36,10 +36,16 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -75,6 +81,7 @@ import org.ow2.aspirerfid.ide.masterdata.swtdesigner.ResourceManager;
 import org.ow2.aspirerfid.ide.masterdata.swtdesigner.SWTResourceManager;
 import org.ow2.aspirerfid.ide.masterdata.tools.MasterDataCaptureClient;
 import org.ow2.aspirerfid.ide.masterdata.tools.QueryClientGuiHelper;
+//import com.swtdesigner.SWTResourceManager;
 
 
 /**
@@ -93,12 +100,10 @@ public class MasterDataEditorView extends ViewPart {
 	private Text text_4_Value_trans;
 	private Text text_3_attribute;
 	private Table table_1_transactions;
-	private Text text_2;
 	private List listOfReports;
 	private Combo combo_4_TransaType;
 	private Combo combo_3_Action;
 	private Combo combo_2;
-	private Text text_2_ECSpec;
 	private Combo combo_1_Disposition;
 	private Combo combo_1Location;
 	private Combo combo_2_businessStep;
@@ -136,6 +141,9 @@ public class MasterDataEditorView extends ViewPart {
 	private Text BizStepText;
 	private Text bizDispoValue_txt;
 	private Text bizDispo_Attribute_txt;
+	Button attributesButton_2;
+	Button cancelButton;
+	Button saveButton_1;
 	
 	public static final String ID = "org.ow2.aspirerfid.ide.masterdata.views.MasterDataEditorView"; //$NON-NLS-1$
 	private QueryClientGuiHelper client = null;
@@ -162,6 +170,9 @@ public class MasterDataEditorView extends ViewPart {
 	Menu removeAttrTableTransTypeMenu = null;
 	Menu undeprecateMenu = null;
 	Menu BizTransMenu2 = null;
+	Menu BizTransactionMenu = null;
+	Menu BizRootTransactionMenu = null;
+	Menu BizEventMenu = null;
 	Menu removeAttrTableMenuTrans = null;
 
 	Menu removeAttrTableMenuTransactions = null;
@@ -172,13 +183,10 @@ public class MasterDataEditorView extends ViewPart {
 	private Label stepLabel;
 	private Label locationLabel;
 	private Label dispositionLabel_2;
-	private Label specLabel;
 	private Label readerLabel;
 	private Label actionLabel_2;
 	private Label transTypeLabel_1;
 	private Label reportsLabel_1;
-	private Button button_13;
-	private Button button_14;
 	java.util.List<String> LocationList = new ArrayList<String>();
 
 	private static final String DEFAULT_URL = "http://demo.accada.org/EPCIS-Query-v0.2.0";
@@ -207,7 +215,8 @@ public class MasterDataEditorView extends ViewPart {
 	 TreeMap<Key_Map,String> biz_tt_info;
 	 TreeMap<Key_Map,String> nameToUri;
 	 
-	 
+	 String my_state = "idle";
+	 String initialValue = "";
 	 private DataManagerModule dataManager;
 
 	 private boolean transactionBranch = false;
@@ -225,8 +234,8 @@ public class MasterDataEditorView extends ViewPart {
 	 
 	 MenuItem sub_attrs;
 	 public java.util.List<String>ECReportName = new java.util.ArrayList<String>();
-	 
-	 
+	 TreeItem transactionParent = null;
+	 String Transaction_Modified_Id = "";
 	 
 	 StringBuilder bizloc_readpoints = new StringBuilder();
 	 
@@ -285,40 +294,77 @@ public class MasterDataEditorView extends ViewPart {
 	    transactionsTabItem.setControl(scrolledComposite);
 
 	    final Composite composite_2 = new Composite(scrolledComposite, SWT.NONE);
+	    composite_2.addMouseListener(new MouseAdapter() {
+	    	public void mouseDown(final MouseEvent e) {
+	    		label_4.setText("");
+	    	}
+	    });
 
 	    treeTransaction = new Tree(composite_2, SWT.BORDER);
+	    treeTransaction.setToolTipText("Right-click to start creating processes/events!");
 	    treeTransaction.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
+	    		String type;
+	    		label_4.setText("");
+	    		if(treeTransaction.getItemCount() == 0)
+	    			return;
 	    		if(e.button == 3)
 	    		{
-	    		
-	    			BizTransMenu2.setVisible(true);
-	    		
+	    			dataManager.clearTransactionSwap();
+	    			//BizTransMenu2.setVisible(true);
+	    			StringTokenizer elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getData(),"$$");
+	    			
+					/*if(elem.countTokens() != 2)
+					{
+						label_4.setVisible(true);
+						label_4.setText("");
+						return;
+						
+					}*/
+					type = elem.nextToken();
+					if(type.equals("Transaction"))
+					{
+						BizTransactionMenu.setVisible(true);
+					}
+					else if(type.equals("TopLevelTransaction") || type.equals("Root"))
+					{
+						BizRootTransactionMenu.setVisible(true);
+						
+					}
+					else
+					{
+						BizEventMenu.setVisible(true);
+					}
+	    			
 	    		
 	    		}
 	    	}
 	    	public void mouseDoubleClick(final MouseEvent e) 
 	    	{
+	    		if(!dataManager.changeTransaction())
+	    			return;
 	    		label_4.setVisible(false);
 				StringTokenizer elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getData(),"$$");
 				if(elem.countTokens() != 2)
 				{
 					label_4.setVisible(true);
-					label_4.setText("Please click on a Transaction");
+					label_4.setText("Invalid selection!Please double click on an inner Transaction");
 					return;
 					
 				}
 				else if(!elem.nextToken().equals("Transaction"))
 				{
 					label_4.setVisible(true);
-					label_4.setText("Please click on a Transaction");
+					label_4.setText("Invalid selection!Please double click on an inner Transaction");
 					return;
 					
 				}
 				label_4.setVisible(false);
 				String transactionId = elem.nextToken();
 				dataManager.setVocabularyId(EpcisConstants.BUSINESS_TRANSACTION_ID);
+				
 				boolean result = dataManager.changeTransaction(transactionId);
+				
 				
 				if(result)
 				{
@@ -327,14 +373,16 @@ public class MasterDataEditorView extends ViewPart {
 					
 					
 					TreeItem oldNode = dataManager.getOldNode();
-					if(treeTransaction.getSelection()[0].getItemCount() == 0)
-					{
-						TreeItem events = new TreeItem(treeTransaction.getSelection()[0],1);
-						events.setText("Events");
-					}
-					TreeItem newEvent = new TreeItem(treeTransaction.getSelection()[0].getItem(0),0);
+					//if(treeTransaction.getSelection()[0].getItemCount() == 0)
+					//{
+						//TreeItem events = new TreeItem(treeTransaction.getSelection()[0],1);
+						//events.setText("Events");
+					//}
+					TreeItem newEvent = new TreeItem(treeTransaction.getSelection()[0],0);//.getItem(0),0);
+					 
 					newEvent.setText(oldNode.getText());
-					newEvent.setData(oldNode.getData());
+					String eventId = transactionId + "," +dataManager.getOldTransactionId().split(",")[2];
+					newEvent.setData("Event$$"+eventId);
 					newEvent.setImage(oldNode.getImage());
 					oldNode.dispose();
 					newEvent.setExpanded(true);
@@ -342,7 +390,7 @@ public class MasterDataEditorView extends ViewPart {
 				else
 				{
 					label_4.setVisible(true);
-					label_4.setText("Database update failed");
+					label_4.setText("Database has not been update!");
 					
 				}
 	    		
@@ -353,8 +401,11 @@ public class MasterDataEditorView extends ViewPart {
 	    
 	    
 	    BizTransMenu2 = new Menu(composite_2.getShell(), SWT.POP_UP);
-
-	    MenuItem insertTransaction2 = new MenuItem(BizTransMenu2, SWT.CASCADE);
+	    BizTransactionMenu = new Menu(composite_2.getShell(), SWT.POP_UP);
+	    BizEventMenu = new Menu(composite_2.getShell(), SWT.POP_UP);
+	    BizRootTransactionMenu = new Menu(composite_2.getShell(), SWT.POP_UP);
+	    //MenuItem insertTransaction2 = new MenuItem(BizTransMenu2, SWT.CASCADE);
+	    MenuItem insertTransaction2 = new MenuItem(BizRootTransactionMenu, SWT.CASCADE);
 	    		insertTransaction2.setText("Insert Transaction");
 	    		insertTransaction2.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/menu_newprocess.png"));
 	    		insertTransaction2.addSelectionListener(new SelectionAdapter(){
@@ -362,12 +413,23 @@ public class MasterDataEditorView extends ViewPart {
 	    				if(transactionBranch == true)
 	    					return;
 	    				transactionBranch = true;
+	    				attributesButton_2.setEnabled(true);
+	    				cancelButton.setEnabled(true);
+	    				saveButton_1.setEnabled(true);
+	    				//TreeItem newTransaction = new TreeItem(treeTransaction.getSelectionCount() == 0?treeTransaction.getItems()[0]:treeTransaction.getSelection()[0],0);
+	    				StringTokenizer elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getData(),"$$");
+	    				if(elem.nextToken().equals("Root")){
+	    					transactionBranch = false;
+	    					return;
+	    				}
+	    					
 	    				
-	    				TreeItem newTransaction = new TreeItem(treeTransaction.getItems()[0],0);
+	    				TreeItem newTransaction = new TreeItem(treeTransaction.getSelection()[0],0);
 	    				insertNode = newTransaction;
 	    				newTransaction.setText("<New Transaction>");
 	    				newTransaction.setData("Trans Addition");
 	    				newTransaction.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/runprocess.png"));
+	    				transactionParent = treeTransaction.getSelection()[0];
 	    				treeTransaction.setSelection(newTransaction);
 	    				elementDataGroup.setBounds(200, 40, 514, 82);
     					table_1_transactions.setVisible(true);
@@ -379,8 +441,8 @@ public class MasterDataEditorView extends ViewPart {
     					combo_1Location.setVisible(false);
     					dispositionLabel_2.setVisible(false);
     					combo_1_Disposition.setVisible(false);
-    					specLabel.setVisible(false);
-    					text_2_ECSpec.setVisible(false);
+    					
+    					
     					readerLabel.setVisible(false);
     					combo_2.setVisible(false);
     					actionLabel_2.setVisible(false);
@@ -389,9 +451,7 @@ public class MasterDataEditorView extends ViewPart {
     					combo_4_TransaType.setVisible(false);
     					reportsLabel_1.setVisible(false);
     					listOfReports.setVisible(false);
-    					text_2.setVisible(false);
-    					button_13.setVisible(false);
-    					button_14.setVisible(false);
+    					
     					NameTrans.setText("");
     					text_EPCTrans.setText("");
     					text_EPCTrans.setEnabled(true);
@@ -399,18 +459,71 @@ public class MasterDataEditorView extends ViewPart {
     					table_1_transactions.removeAll();
     					text_3_attribute.setText("");
     					text_4_Value_trans.setText("");
+    					my_state = "Edit";
 
 	    			}
 	    });
 
 
-	    MenuItem removeTransaction2 = new MenuItem(BizTransMenu2, SWT.CASCADE);
+	    		MenuItem insertOuterTransaction = new MenuItem(BizRootTransactionMenu, SWT.CASCADE);
+	    		insertOuterTransaction.setText("Insert Top Level Transaction");
+	    		insertOuterTransaction.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/menu_newprocess.png"));
+	    		insertOuterTransaction.addSelectionListener(new SelectionAdapter(){
+	    			public void widgetSelected(final SelectionEvent e){
+	    				if(transactionBranch == true)
+	    					return;
+	    				transactionBranch = true;
+	    				attributesButton_2.setEnabled(true);
+	    				cancelButton.setEnabled(true);
+	    				saveButton_1.setEnabled(true);
+	    				TreeItem newTransaction = new TreeItem(treeTransaction.getItems()[0],0);
+	    				insertNode = newTransaction;
+	    				newTransaction.setText("<New Transaction>");
+	    				newTransaction.setData("Trans Addition");
+	    				newTransaction.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/package_obj.gif"));
+	    				treeTransaction.setSelection(newTransaction);
+	    				elementDataGroup.setBounds(200, 40, 514, 82);
+    					table_1_transactions.setVisible(true);
+    					eventTypeLabel_2.setVisible(false);
+    					combo_1_eventType.setVisible(false);
+    					stepLabel.setVisible(false);
+    					combo_2_businessStep.setVisible(false);
+    					locationLabel.setVisible(false);
+    					combo_1Location.setVisible(false);
+    					dispositionLabel_2.setVisible(false);
+    					combo_1_Disposition.setVisible(false);
+    					
+    					
+    					readerLabel.setVisible(false);
+    					combo_2.setVisible(false);
+    					actionLabel_2.setVisible(false);
+    					combo_3_Action.setVisible(false);
+    					transTypeLabel_1.setVisible(false);
+    					combo_4_TransaType.setVisible(false);
+    					reportsLabel_1.setVisible(false);
+    					listOfReports.setVisible(false);
+    					
+    					NameTrans.setText("");
+    					text_EPCTrans.setText("");
+    					text_EPCTrans.setEnabled(true);
+    					NameTrans.setEnabled(true);
+    					table_1_transactions.removeAll();
+    					text_3_attribute.setText("");
+    					text_4_Value_trans.setText("");
+    					my_state = "Edit";
+
+	    			}
+	    });
+	    //MenuItem removeTransaction2 = new MenuItem(BizTransMenu2, SWT.CASCADE);
+	    		MenuItem removeTransaction2 = new MenuItem(BizTransactionMenu, SWT.CASCADE);
 	    		removeTransaction2.setText("Remove Transaction");
 	    		removeTransaction2.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/menu_delete_e.gif"));
 	    		removeTransaction2.addSelectionListener(new SelectionAdapter(){
 	    			public void widgetSelected(final SelectionEvent e){
-	    				
+	    				attributesButton_2.setEnabled(true);
+	    				cancelButton.setEnabled(false);
     					label_4.setVisible(false);
+    					String type;
 	    				StringTokenizer elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getData(),"$$");
 	    				if(elem.countTokens() != 2)
 	    				{
@@ -419,7 +532,8 @@ public class MasterDataEditorView extends ViewPart {
 	    					return;
 	    					
 	    				}
-	    				else if(!elem.nextToken().equals("Transaction"))
+	    				type = elem.nextToken();
+	    				if(!type.equals("Transaction") && !type.equals("TopLevelTransaction"))
 	    				{
 	    					label_4.setVisible(true);
 	    					label_4.setText("Please click on a Transaction");
@@ -451,6 +565,261 @@ public class MasterDataEditorView extends ViewPart {
 	    });
 
 
+	    		MenuItem removeRootTransaction2 = new MenuItem(BizRootTransactionMenu, SWT.CASCADE);
+	    		removeRootTransaction2.setText("Remove Transaction");
+	    		removeRootTransaction2.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/menu_delete_e.gif"));
+	    		removeRootTransaction2.addSelectionListener(new SelectionAdapter(){
+	    			public void widgetSelected(final SelectionEvent e){
+	    				attributesButton_2.setEnabled(true);
+	    				cancelButton.setEnabled(false);
+    					label_4.setVisible(false);
+    					String type;
+	    				StringTokenizer elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getData(),"$$");
+	    				if(elem.countTokens() != 2)
+	    				{
+	    					label_4.setVisible(true);
+	    					label_4.setText("Please click on a Transaction");
+	    					return;
+	    					
+	    				}
+	    				type = elem.nextToken();
+	    				if(!type.equals("Transaction") && !type.equals("TopLevelTransaction"))
+	    				{
+	    					label_4.setVisible(true);
+	    					label_4.setText("Please click on a Transaction");
+	    					return;
+	    					
+	    				}
+	    				label_4.setVisible(false);
+	    				String transactionId = elem.nextToken();
+	    				dataManager.setVocabularyId(EpcisConstants.BUSINESS_TRANSACTION_ID);
+	    				boolean result = dataManager.deleteTransaction(transactionId);
+	    				if(result)
+	    				{
+	    					treeTransaction.getSelection()[0].dispose();
+	    					label_4.setVisible(true);
+	    					label_4.setText("The transaction was sucesfully removed");
+	    				}
+	    				else
+	    				{
+	    					label_4.setVisible(true);
+	    					label_4.setText("The database update has failed!");
+
+	    				}
+	    				
+	    				
+	    				
+	    				
+	    				
+	    			}
+	    });
+
+	    		MenuItem transaction_modification = new MenuItem(BizTransactionMenu,SWT.CASCADE);
+	    		transaction_modification.setText("Display/Modify Transaction");
+	    		transaction_modification.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/s_reload.png"));
+	    		transaction_modification.addSelectionListener(new SelectionAdapter(){
+	    			public void widgetSelected(final SelectionEvent e){
+	    				
+	    				cancelButton.setEnabled(true);
+	    				saveButton_1.setEnabled(true);
+	    				String uri;
+	    				if(treeTransaction.getSelectionCount() == 0)
+	    					return;
+	    				StringTokenizer elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getData(),"$$");
+	    				if(elem == null || elem.countTokens() != 2)
+	    				{
+	    					label_4.setVisible(true);
+	    					label_4.setText("Please click on a transaction or an event");
+	    					
+	    				}
+	    				dataManager.setVocabularyId(EpcisConstants.BUSINESS_TRANSACTION_ID);
+	    				String type = elem.nextToken();
+	    				if(type.equals("Transaction") || type.equals("TopLevelTransaction"))
+	    				{
+	    					//This is a transaction
+	    					elementDataGroup.setBounds(200, 40, 514, 82);
+	    					text_3_attribute.setEnabled(true);
+	    	    			text_3_attribute.setText("");
+	    	    			text_4_Value_trans.setEnabled(true);
+	    	    			text_4_Value_trans.setText("");
+	    					table_1_transactions.setVisible(true);
+	    					eventTypeLabel_2.setVisible(false);
+	    					combo_1_eventType.setVisible(false);
+	    					stepLabel.setVisible(false);
+	    					combo_2_businessStep.setVisible(false);
+	    					uri = elem.nextToken();
+	    					java.util.List<Attribute> attributes = dataManager.getAttributes(uri);
+	    					dataManager.excludeAttributes(attributes, "Children");
+	    					if(uri.split(",").length == 2)
+	    					{
+	    						/*elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getParentItem().getData(),"$$");
+	    						if(!elem.nextToken().equals("TopLevelTransaction"))
+	    							return;*/
+	    						
+	    						text_EPCTrans.setText(uri.split(",")[1]);
+	    						Transaction_Modified_Id = uri;
+	    					}
+	    					else if(uri.split(",").length == 1)
+	    					{
+	    						text_EPCTrans.setText(uri);
+	    						Transaction_Modified_Id ="";
+	    						
+	    					}
+	    					
+	    					text_EPCTrans.setEnabled(false);
+	    					NameTrans.setText(treeTransaction.getSelection()[0].getText());
+	    					NameTrans.setEnabled(false);
+	    					attributesButton_2.setEnabled(true);
+	    					int total = attributes.size();
+	    					if( total > 0)
+	    					{
+	    						showAttributeTable2(table_1_transactions,attributes);
+	    					
+	    					}
+	    					my_state = "Edit";
+	    				}
+	    				
+	    				
+	    				
+	    			}
+	    		});
+	    		
+	    		MenuItem Roottransaction_modification = new MenuItem(BizRootTransactionMenu,SWT.CASCADE);
+	    		Roottransaction_modification.setText("Display/Modify Root Transaction");
+	    		Roottransaction_modification.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/s_reload.png"));
+	    		Roottransaction_modification.addSelectionListener(new SelectionAdapter(){
+	    			public void widgetSelected(final SelectionEvent e){
+	    				
+	    				cancelButton.setEnabled(true);
+	    				saveButton_1.setEnabled(true);
+	    				String uri;
+	    				if(treeTransaction.getSelectionCount() == 0)
+	    					return;
+	    				StringTokenizer elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getData(),"$$");
+	    				if(elem == null || elem.countTokens() != 2)
+	    				{
+	    					label_4.setVisible(true);
+	    					label_4.setText("Please click on a transaction or an event");
+	    					
+	    				}
+	    				dataManager.setVocabularyId(EpcisConstants.BUSINESS_TRANSACTION_ID);
+	    				String type = elem.nextToken();
+	    				if(type.equals("Transaction") || type.equals("TopLevelTransaction"))
+	    				{
+	    					//This is a transaction
+	    					elementDataGroup.setBounds(200, 40, 514, 82);
+	    					text_3_attribute.setEnabled(true);
+	    	    			text_3_attribute.setText("");
+	    	    			text_4_Value_trans.setEnabled(true);
+	    	    			text_4_Value_trans.setText("");
+	    					table_1_transactions.setVisible(true);
+	    					eventTypeLabel_2.setVisible(false);
+	    					combo_1_eventType.setVisible(false);
+	    					stepLabel.setVisible(false);
+	    					combo_2_businessStep.setVisible(false);
+	    					uri = elem.nextToken();
+	    					java.util.List<Attribute> attributes = dataManager.getAttributes(uri);
+	    					dataManager.excludeAttributes(attributes, "Children");
+	    					if(uri.split(",").length == 2)
+	    					{
+	    						/*elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getParentItem().getData(),"$$");
+	    						if(!elem.nextToken().equals("TopLevelTransaction"))
+	    							return;*/
+	    						
+	    						text_EPCTrans.setText(uri.split(",")[1]);
+	    						Transaction_Modified_Id = uri;
+	    					}
+	    					else if(uri.split(",").length == 1)
+	    					{
+	    						text_EPCTrans.setText(uri);
+	    						Transaction_Modified_Id ="";
+	    						
+	    					}
+	    					
+	    					text_EPCTrans.setEnabled(false);
+	    					NameTrans.setText(treeTransaction.getSelection()[0].getText());
+	    					NameTrans.setEnabled(false);
+	    					attributesButton_2.setEnabled(true);
+	    					int total = attributes.size();
+	    					if( total > 0)
+	    					{
+	    						showAttributeTable2(table_1_transactions,attributes);
+	    					
+	    					}
+	    					my_state = "Edit";
+	    				}
+	    				
+	    				
+	    				
+	    			}
+	    		});	
+	    		
+	    	MenuItem event_modification = new MenuItem(BizEventMenu,SWT.CASCADE);
+	    	event_modification.setText("Display/Modify Event");
+	    	event_modification.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/s_reload.png"));
+	    	event_modification.addSelectionListener(new SelectionAdapter(){
+    			public void widgetSelected(final SelectionEvent e){
+    				String uri;
+    				cancelButton.setEnabled(true);
+    				saveButton_1.setEnabled(true);
+    				if(treeTransaction.getSelectionCount() == 0)
+    					return;
+    				StringTokenizer elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getData(),"$$");
+    				if(elem == null || elem.countTokens() != 2)
+    				{
+    					label_4.setVisible(true);
+    					label_4.setText("Please click on a transaction or an event");
+    					
+    				}
+    				if(!elem.nextToken().equals("Event"))
+    					return;
+    				dataManager.setVocabularyId(EpcisConstants.BUSINESS_TRANSACTION_ID);
+    				String eventId = elem.nextToken();
+					//This is an event
+					table_1_transactions.setVisible(false);
+					elementDataGroup.setBounds(200, 40, 514, 335);
+					
+					eventTypeLabel_2.setVisible(true);
+					combo_1_eventType.setVisible(true);
+					stepLabel.setVisible(true);
+					combo_2_businessStep.setVisible(true);
+					locationLabel.setVisible(true);
+					combo_1Location.setVisible(true);
+					dispositionLabel_2.setVisible(true);
+					combo_1_Disposition.setVisible(true);
+				
+					
+					readerLabel.setVisible(true);
+					combo_2.setVisible(true);
+					actionLabel_2.setVisible(true);
+					combo_3_Action.setVisible(true);
+					transTypeLabel_1.setVisible(true);
+					combo_4_TransaType.setVisible(true);
+					reportsLabel_1.setVisible(true);
+					listOfReports.setVisible(true);
+					listOfReports.removeAll();
+					
+					text_EPCTrans.setText("");
+					NameTrans.setText("");
+					text_EPCTrans.setEnabled(true);
+					NameTrans.setEnabled(true);
+					
+					dataManager.setVocabularyId(EpcisConstants.BUSINESS_TRANSACTION_ID);
+					String report = null;
+					if(eventId.split(",").length == 3)
+						text_EPCTrans.setText(eventId.split(",")[2]);
+					else
+						text_EPCTrans.setText(eventId);
+					
+					dataManager.getEventInfo(eventId, NameTrans, combo_1_eventType, combo_2_businessStep, combo_1Location, combo_1_Disposition, combo_2, combo_3_Action, combo_4_TransaType, listOfReports);
+					attributesButton_2.setEnabled(false);
+					my_state = "Edit";
+					
+    			
+    			}
+	    	});
+    		
+	    		
 	    	MenuItem modEvent2 = new MenuItem(BizTransMenu2, SWT.CASCADE);
 	    		modEvent2.setText("Modify Transaction/Event");
 	    		modEvent2.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/s_reload.png"));
@@ -510,8 +879,8 @@ public class MasterDataEditorView extends ViewPart {
 	    					combo_1Location.setVisible(true);
 	    					dispositionLabel_2.setVisible(true);
 	    					combo_1_Disposition.setVisible(true);
-	    					specLabel.setVisible(true);
-	    					text_2_ECSpec.setVisible(true);
+	    				
+	    					
 	    					readerLabel.setVisible(true);
 	    					combo_2.setVisible(true);
 	    					actionLabel_2.setVisible(true);
@@ -521,9 +890,7 @@ public class MasterDataEditorView extends ViewPart {
 	    					reportsLabel_1.setVisible(true);
 	    					listOfReports.setVisible(true);
 	    					listOfReports.removeAll();
-	    					text_2.setVisible(true);
-	    					button_13.setVisible(true);
-	    					button_14.setVisible(true);
+	    					
 	    					text_EPCTrans.setText("");
 	    					NameTrans.setText("");
 	    					text_EPCTrans.setEnabled(true);
@@ -532,7 +899,7 @@ public class MasterDataEditorView extends ViewPart {
 	    					dataManager.setVocabularyId(EpcisConstants.BUSINESS_TRANSACTION_ID);
 	    					String report = null;
 	    					text_EPCTrans.setText(eventId);
-	    					dataManager.getEventInfo(eventId, NameTrans, combo_1_eventType, combo_2_businessStep, combo_1Location, combo_1_Disposition, text_2_ECSpec, combo_2, combo_3_Action, combo_4_TransaType, listOfReports);
+	    					dataManager.getEventInfo(eventId, NameTrans, combo_1_eventType, combo_2_businessStep, combo_1Location, combo_1_Disposition, combo_2, combo_3_Action, combo_4_TransaType, listOfReports);
 	    					
 
 	    				}
@@ -541,13 +908,15 @@ public class MasterDataEditorView extends ViewPart {
 	    });
 
 
-	    MenuItem remEvent2 = new MenuItem(BizTransMenu2, SWT.CASCADE);
+	    //MenuItem remEvent2 = new MenuItem(BizTransMenu2, SWT.CASCADE);
+	    		MenuItem remEvent2 = new MenuItem(BizEventMenu, SWT.CASCADE);
 	    		remEvent2.setText("Remove Event");
 	    		remEvent2.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/menu_delete_e.gif"));
 	    		remEvent2.addSelectionListener(new SelectionAdapter(){
 	    			public void widgetSelected(final SelectionEvent e){
 	    				
 	    				label_4.setVisible(false);
+	    				cancelButton.setEnabled(false);
 	    				StringTokenizer elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getData(),"$$");
 	    				if(elem.countTokens() != 2)
 	    				{
@@ -575,7 +944,7 @@ public class MasterDataEditorView extends ViewPart {
 	    				if(result)
 	    				{
 	    					label_4.setVisible(true);
-	    					label_4.setText("Event "+eventId+" has been sucesfully removed");
+	    					label_4.setText("Event has been sucesfully removed");
 	    				}
 	    				else
 	    				{
@@ -590,13 +959,16 @@ public class MasterDataEditorView extends ViewPart {
 	    		});
 	    		
 	    		
-	    		 MenuItem changeTransaction = new MenuItem(BizTransMenu2, SWT.CASCADE);
+	    		// MenuItem changeTransaction = new MenuItem(BizTransMenu2, SWT.CASCADE);
+	    		MenuItem changeTransaction = new MenuItem(BizEventMenu, SWT.CASCADE);
 	    		 changeTransaction.setText("Change Transaction");
 	    		 changeTransaction.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/menu_gridsnapnowcentered.png"));
 	    		 changeTransaction.addSelectionListener(new SelectionAdapter(){
 		    			public void widgetSelected(final SelectionEvent e){
 		    				
 		    				label_4.setVisible(false);
+		    				cancelButton.setEnabled(false);
+		    				saveButton_1.setEnabled(false);
 		    				StringTokenizer elem = new StringTokenizer((String)treeTransaction.getSelection()[0].getData(),"$$");
 		    				if(elem.countTokens() != 2)
 		    				{
@@ -613,12 +985,15 @@ public class MasterDataEditorView extends ViewPart {
 		    					
 		    				}
 		    				label_4.setVisible(false);
-		    				String eventId = elem.nextToken();
-		    				StringTokenizer trans = new StringTokenizer((String)treeTransaction.getSelection()[0].getParentItem().getParentItem().getData(),"$$");
-		    				if(trans.countTokens() != 2)
+		    				String transactionId = elem.nextToken();
+		    				//StringTokenizer trans = new StringTokenizer((String)treeTransaction.getSelection()[0].getParentItem().getParentItem().getData(),"$$");
+		    				//if(trans.countTokens() != 2)
+		    					//return;
+		    				//trans.nextToken();//Transaction $$
+		    				//String transactionId = trans.nextToken();
+		    				if(transactionId.split(",").length!=3)
 		    					return;
-		    				trans.nextToken();//Transaction $$
-		    				String transactionId = trans.nextToken();
+		    				String eventId = transactionId.split(",")[2];
 		    				
 		    				 dataManager.storeTransactionSwapInfo(transactionId, eventId,treeTransaction.getSelection()[0]);
 		    				label_4.setVisible(true);
@@ -629,12 +1004,15 @@ public class MasterDataEditorView extends ViewPart {
 		    		});
 
 
-	    MenuItem insEvent2 = new MenuItem(BizTransMenu2, SWT.CASCADE);
+	    //MenuItem insEvent2 = new MenuItem(BizTransMenu2, SWT.CASCADE);
+	    		 MenuItem insEvent2 = new MenuItem(BizTransactionMenu, SWT.CASCADE);
 	    		insEvent2.setText("Insert Event");
 	    		insEvent2.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/b_props.png"));
 	    		insEvent2.addSelectionListener(new SelectionAdapter(){
 	    			public void widgetSelected(final SelectionEvent e){
 	    				label_4.setVisible(false);
+	    				cancelButton.setEnabled(true);
+	    				saveButton_1.setEnabled(true);
 	    				if(treeTransaction.getSelectionCount() == 0)
 	    				{
 	    					label_4.setVisible(true);
@@ -648,22 +1026,26 @@ public class MasterDataEditorView extends ViewPart {
 	    					label_4.setText("Please click on a transaction");
 	    					return;
 	    				}
-	    				String uri;
-	    				if(!elem.nextToken().equals("Transaction"))
+	    				dataManager.clearInternal();
+	    				elem.nextToken();
+	    			
+	    				String uri = elem.nextToken();
+	    				
+	    				if(uri.split(",").length != 2)//!elem.nextToken().equals("Transaction"))
 	    				{
 	    					label_4.setVisible(true);
 	    					label_4.setText("Please click on a transaction");
 	    					return;
 	    				}
-	    				if(treeTransaction.getSelection()[0].getItemCount() == 0)
+	    				/*if(treeTransaction.getSelection()[0].getItemCount() == 0)
 	    				{
 	    					TreeItem ev = new TreeItem(treeTransaction.getSelection()[0],1);
 	    					ev.setText("Events");
-	    				}
+	    				}*/
 	    				if(transactionBranch)
 	    					return;
 	    				transactionBranch = true;
-	    				TreeItem rootevent = treeTransaction.getSelection()[0].getItem(0);
+	    				TreeItem rootevent = treeTransaction.getSelection()[0];//.getItem(0);
 	    				TreeItem newEvent = new TreeItem(rootevent,0);
 	    				newEvent.setText("<New Event>");
 	    				newEvent.setData("Addition");
@@ -684,9 +1066,9 @@ public class MasterDataEditorView extends ViewPart {
     					dispositionLabel_2.setVisible(true);
     					combo_1_Disposition.setVisible(true);
     					combo_1_Disposition.removeAll();
-    					specLabel.setVisible(true);
-    					text_2_ECSpec.setVisible(true);
-    					text_2_ECSpec.setText("");
+    		
+    					
+    					
     					readerLabel.setVisible(true);
     					combo_2.setVisible(true);
     					combo_2.removeAll();
@@ -699,14 +1081,13 @@ public class MasterDataEditorView extends ViewPart {
     					reportsLabel_1.setVisible(true);
     					listOfReports.setVisible(true);
     					listOfReports.removeAll();
-    					text_2.setVisible(true);
-    					text_2.setText("");
-    					button_13.setVisible(true);
-    					button_14.setVisible(true);
+    					
+    					
     					text_EPCTrans.setText("");
     					NameTrans.setText("");
     					text_EPCTrans.setEnabled(true);
     					NameTrans.setEnabled(true);
+    					my_state = "Edit";
 
 
 	    				
@@ -737,6 +1118,28 @@ public class MasterDataEditorView extends ViewPart {
 	    uriLabel_trans.setBounds(10, 29, 28, 15);
 
 	    text_EPCTrans = new Text(elementDataGroup, SWT.BORDER);
+	    text_EPCTrans.addVerifyListener(new VerifyListener() {
+	    	public void verifyText(final VerifyEvent e) {
+	    		if(!my_state.equals("Edit"))
+	    			return;
+	    		if (e.end - e.start == 0) 
+	    		{
+	    			if(e.text.trim().equals(""))
+	    			{
+	    				label_4.setVisible(true);
+	    				label_4.setText("All the fields must be filled");
+	    				e.doit = false;
+	    				return;
+	    			}
+	    			if(e.text.equals(","))
+	    			{
+	    				e.text = ":";
+	    			}
+	    			
+	    		}
+
+	    	}
+	    });
 	    text_EPCTrans.setBounds(80, 25, 130, 25);
 
 	    final Label nameLabel_trans = new Label(elementDataGroup, SWT.NONE);
@@ -747,11 +1150,29 @@ public class MasterDataEditorView extends ViewPart {
 	    NameTrans.setBounds(330, 25, 142, 25);
 
 	    eventTypeLabel_2 = new Label(elementDataGroup, SWT.NONE);
+	    
 	    eventTypeLabel_2.setVisible(false);
 	    eventTypeLabel_2.setText("Type:");
 	    eventTypeLabel_2.setBounds(10, 81, 28, 15);
 
 	    combo_1_eventType = new Combo(elementDataGroup, SWT.NONE);
+	    combo_1_eventType.addModifyListener(new ModifyListener() {
+	    	public void modifyText(final ModifyEvent e) {
+	    		if(!combo_1_eventType.getText().equals(initialValue))
+	    		{
+	    			my_state = "Edit";
+	    			label_4.setText("");
+	    		}
+	    		else
+	    			my_state = "Idle";
+	    			
+	    	}
+	    });
+	    combo_1_eventType.addFocusListener(new FocusAdapter() {
+	    	public void focusGained(final FocusEvent e) {
+	    		initialValue = combo_1_eventType.getText();
+	    	}
+	    });
 	    combo_1_eventType.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 
@@ -775,6 +1196,22 @@ public class MasterDataEditorView extends ViewPart {
 	    stepLabel.setBounds(261, 81, 28, 15);
 
 	    combo_2_businessStep = new Combo(elementDataGroup, SWT.NONE);
+	    combo_2_businessStep.addModifyListener(new ModifyListener() {
+	    	public void modifyText(final ModifyEvent e) {
+	    		if(!combo_2_businessStep.getText().equals(initialValue))
+	    		{
+	    			my_state = "Edit";
+	    			label_4.setText("");
+	    		}
+	    		else
+	    			my_state = "Idle";
+	    	}
+	    });
+	    combo_2_businessStep.addFocusListener(new FocusAdapter() {
+	    	public void focusGained(final FocusEvent e) {
+	    		initialValue = combo_2_businessStep.getText();
+	    	}
+	    });
 	    combo_2_businessStep.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		if(combo_2_businessStep.getItemCount() > 0)
@@ -799,6 +1236,22 @@ public class MasterDataEditorView extends ViewPart {
 	    locationLabel.setBounds(10, 127, 49, 15);
 
 	    combo_1Location = new Combo(elementDataGroup, SWT.NONE);
+	    combo_1Location.addVerifyListener(new VerifyListener() {
+	    	public void verifyText(final VerifyEvent e) {
+	    		if(!combo_1Location.getText().equals(initialValue))
+	    		{
+	    			my_state = "Edit";
+	    			label_4.setText("");
+	    		}
+	    		else
+	    			my_state = "Idle";
+	    	}
+	    });
+	    combo_1Location.addFocusListener(new FocusAdapter() {
+	    	public void focusGained(final FocusEvent e) {
+	    		initialValue = combo_1Location.getText();
+	    	}
+	    });
 	    combo_1Location.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		if(combo_1Location.getItemCount() > 0)
@@ -823,6 +1276,22 @@ public class MasterDataEditorView extends ViewPart {
 	    dispositionLabel_2.setBounds(261, 127, 62, 15);
 
 	    combo_1_Disposition = new Combo(elementDataGroup, SWT.NONE);
+	    combo_1_Disposition.addVerifyListener(new VerifyListener() {
+	    	public void verifyText(final VerifyEvent e) {
+	    		if(!combo_1_Disposition.getText().equals(initialValue))
+	    		{
+	    			my_state = "Edit";
+	    			label_4.setText("");
+	    		}
+	    		else
+	    			my_state = "Idle";
+	    	}
+	    });
+	    combo_1_Disposition.addFocusListener(new FocusAdapter() {
+	    	public void focusGained(final FocusEvent e) {
+	    		initialValue = combo_1_Disposition.getText();
+	    	}
+	    });
 	    combo_1_Disposition.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		if(combo_1_Disposition.getItemCount() > 0)
@@ -841,21 +1310,29 @@ public class MasterDataEditorView extends ViewPart {
 	    combo_1_Disposition.setVisible(false);
 	    combo_1_Disposition.setBounds(330, 123, 142, 23);
 
-	    specLabel = new Label(elementDataGroup, SWT.NONE);
-	    specLabel.setVisible(false);
-	    specLabel.setText("EC Spec:");
-	    specLabel.setBounds(10, 170, 49, 15);
-
-	    text_2_ECSpec = new Text(elementDataGroup, SWT.BORDER);
-	    text_2_ECSpec.setVisible(false);
-	    text_2_ECSpec.setBounds(80, 166, 130, 25);
-
 	    readerLabel = new Label(elementDataGroup, SWT.NONE);
 	    readerLabel.setVisible(false);
 	    readerLabel.setText("Reader:");
 	    readerLabel.setBounds(261, 170, 62, 15);
 
 	    combo_2 = new Combo(elementDataGroup, SWT.NONE);
+	    combo_2.addModifyListener(new ModifyListener() {
+	    	public void modifyText(final ModifyEvent e) {
+	    		if(!combo_2.getText().equals(initialValue))
+	    		{
+	    			my_state = "Edit";
+	    			label_4.setText("");
+	    		}
+	    		else
+	    			my_state = "Idle";
+	    		
+	    	}
+	    });
+	    combo_2.addFocusListener(new FocusAdapter() {
+	    	public void focusGained(final FocusEvent e) {
+	    		initialValue = combo_2.getText();
+	    	}
+	    });
 	    combo_2.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		if(combo_2.getItemCount() > 0)
@@ -877,9 +1354,25 @@ public class MasterDataEditorView extends ViewPart {
 	    actionLabel_2 = new Label(elementDataGroup, SWT.NONE);
 	    actionLabel_2.setVisible(false);
 	    actionLabel_2.setText("Action:");
-	    actionLabel_2.setBounds(10, 215, 49, 15);
+	    actionLabel_2.setBounds(10, 173, 49, 15);
 
 	    combo_3_Action = new Combo(elementDataGroup, SWT.NONE);
+	    combo_3_Action.addVerifyListener(new VerifyListener() {
+	    	public void verifyText(final VerifyEvent e) {
+	    		if(!combo_3_Action.getText().equals(initialValue))
+	    		{
+	    			my_state = "Edit";
+	    			label_4.setText("");
+	    		}
+	    		else
+	    			my_state = "Idle";
+	    	}
+	    });
+	    combo_3_Action.addFocusListener(new FocusAdapter() {
+	    	public void focusGained(final FocusEvent e) {
+	    		initialValue = combo_3_Action.getText();
+	    	}
+	    });
 	    combo_3_Action.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		if(combo_3_Action.getItemCount() > 0)
@@ -890,14 +1383,30 @@ public class MasterDataEditorView extends ViewPart {
 	    	}
 	    });
 	    combo_3_Action.setVisible(false);
-	    combo_3_Action.setBounds(80, 212, 130, 23);
+	    combo_3_Action.setBounds(80, 170, 130, 23);
 
 	    transTypeLabel_1 = new Label(elementDataGroup, SWT.NONE);
 	    transTypeLabel_1.setVisible(false);
 	    transTypeLabel_1.setText("Trans.Type:");
-	    transTypeLabel_1.setBounds(10, 260, 62, 15);
+	    transTypeLabel_1.setBounds(10, 218, 62, 15);
 
 	    combo_4_TransaType = new Combo(elementDataGroup, SWT.NONE);
+	    combo_4_TransaType.addModifyListener(new ModifyListener() {
+	    	public void modifyText(final ModifyEvent e) {
+	    		if(!combo_4_TransaType.getText().equals(initialValue))
+	    		{
+	    			my_state = "Edit";
+	    			label_4.setText("");
+	    		}
+	    		else
+	    			my_state = "Idle";
+	    	}
+	    });
+	    combo_4_TransaType.addFocusListener(new FocusAdapter() {
+	    	public void focusGained(final FocusEvent e) {
+	    		initialValue = combo_4_TransaType.getText();
+	    	}
+	    });
 	    combo_4_TransaType.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		if(combo_4_TransaType.getItemCount() > 0)
@@ -914,53 +1423,17 @@ public class MasterDataEditorView extends ViewPart {
 	    	}
 	    });
 	    combo_4_TransaType.setVisible(false);
-	    combo_4_TransaType.setBounds(80, 257, 130, 23);
+	    combo_4_TransaType.setBounds(80, 215, 130, 23);
 
 	    reportsLabel_1 = new Label(elementDataGroup, SWT.NONE);
 	    reportsLabel_1.setVisible(false);
 	    reportsLabel_1.setText("Reports:");
-	    reportsLabel_1.setBounds(261, 215, 62, 15);
+	    reportsLabel_1.setBounds(10, 259, 62, 15);
 
 	    listOfReports = new List(elementDataGroup, SWT.BORDER);
+	    listOfReports.setEnabled(false);
 	    listOfReports.setVisible(false);
-	    listOfReports.setBounds(330, 206, 142, 68);
-
-	    text_2 = new Text(elementDataGroup, SWT.BORDER);
-	    text_2.setVisible(false);
-	    text_2.setBounds(330, 292, 142, 25);
-
-	    button_13 = new Button(elementDataGroup, SWT.NONE);
-	    button_13.addMouseListener(new MouseAdapter() {
-	    	public void mouseDown(final MouseEvent e) {
-	    		label_4.setVisible(false);
-	    		if(text_2.getText().equals(""))
-	    			return;
-	    		listOfReports.add(text_2.getText());
-	    		text_2.setText("");
-	    	}
-	    });
-	    button_13.setVisible(false);
-	    button_13.setFont(SWTResourceManager.getFont("", 14, SWT.NONE));
-	    button_13.setText("+");
-	    button_13.setBounds(478, 292, 28, 25);
-
-	    button_14 = new Button(elementDataGroup, SWT.NONE);
-	    button_14.addMouseListener(new MouseAdapter() {
-	    	public void mouseDown(final MouseEvent e) {
-	    		label_4.setVisible(false);
-	    		if(listOfReports.getSelectionCount() == 0)
-	    		{
-	    			label_4.setVisible(true);
-	    			label_4.setText("Choose a report to remove");
-	    			return;
-	    		}
-	    		listOfReports.remove(listOfReports.getSelectionIndex());
-	    	}
-	    });
-	    button_14.setVisible(false);
-	    button_14.setFont(SWTResourceManager.getFont("", 14, SWT.NONE));
-	    button_14.setText("-");
-	    button_14.setBounds(478, 255, 28, 25);
+	    listOfReports.setBounds(80, 255, 392, 52);
 
 	    table_1_transactions = new Table(composite_2, SWT.FULL_SELECTION | SWT.BORDER);
 	    table_1_transactions.addMouseListener(new MouseAdapter() {
@@ -975,13 +1448,15 @@ public class MasterDataEditorView extends ViewPart {
 					text_3_attribute.setText(table_1_transactions.getSelection()[0].getText(0));
 					text_3_attribute.setEnabled(false);
 					text_4_Value_trans.setText(table_1_transactions.getSelection()[0].getText(1));
+					saveButton_1.setEnabled(true);
+					
 					
 				}
 	    	}
 	    });
 	    table_1_transactions.setLinesVisible(true);
 	    table_1_transactions.setHeaderVisible(true);
-	    table_1_transactions.setBounds(200, 221, 514, 164);
+	    table_1_transactions.setBounds(200, 223, 514, 162);
 
 	    final TableColumn newColumnTableColumn_8 = new TableColumn(table_1_transactions, SWT.NONE);
 	    newColumnTableColumn_8.setWidth(250);
@@ -993,13 +1468,44 @@ public class MasterDataEditorView extends ViewPart {
 
 	    final Group attributevaluesGroup_2 = new Group(composite_2, SWT.NONE);
 	    attributevaluesGroup_2.setText("Attribute-Values");
-	    attributevaluesGroup_2.setBounds(200, 128, 514, 82);
+	    attributevaluesGroup_2.setBounds(200, 135, 514, 82);
 
 	    final Label attributeLabel_4 = new Label(attributevaluesGroup_2, SWT.NONE);
 	    attributeLabel_4.setText("Attribute:");
 	    attributeLabel_4.setBounds(10, 36, 61, 15);
 
 	    text_3_attribute = new Text(attributevaluesGroup_2, SWT.BORDER);
+	    text_3_attribute.addFocusListener(new FocusAdapter() {
+	    	public void focusGained(final FocusEvent e) {
+	    		label_4.setText("");
+	    	}
+	    });
+	    
+
+	    
+	    text_3_attribute.addModifyListener(new ModifyListener() {
+	    	public void modifyText(final ModifyEvent e) {
+	    		
+	    		if(text_3_attribute.getText().trim().equals(""))
+	    		{
+	    			my_state = "Idle";
+	    			return;
+	    		}
+	    		else
+	    		{
+	    			for(int i = 0; i < table_1_transactions.getItems().length; i++)
+	    			{
+	    				if(table_1_transactions.getItems()[i].getText(0).equals(text_3_attribute.getText())){
+	    					my_state = "Idle";
+	    					return;
+	    				}
+	    					
+	    			}
+	    		}
+	    		my_state = "Edit";
+	    	}
+	    });
+	    
 	    text_3_attribute.setBounds(78, 33, 132, 25);
 
 	    final Label valueLabel_5 = new Label(attributevaluesGroup_2, SWT.NONE);
@@ -1007,6 +1513,34 @@ public class MasterDataEditorView extends ViewPart {
 	    valueLabel_5.setBounds(270, 36, 43, 15);
 
 	    text_4_Value_trans = new Text(attributevaluesGroup_2, SWT.BORDER);
+	    text_4_Value_trans.addFocusListener(new FocusAdapter() {
+	    	public void focusGained(final FocusEvent e) {
+	    		label_4.setText("");
+	    	}
+	    });
+	    text_4_Value_trans.addModifyListener(new ModifyListener() {
+	    	public void modifyText(final ModifyEvent e) {
+	    		
+	    		if(text_4_Value_trans.getText().trim().equals(""))
+	    		{
+	    			my_state = "Idle";
+	    			return;
+	    		}
+	    		else {
+	    			for(int i = 0; i < table_1_transactions.getItems().length; i++)
+	    			{
+	    				if(table_1_transactions.getItems()[i].getText(1).equals(text_4_Value_trans.getText()))
+	    				{
+	    					my_state = "Idle";
+	    					return;
+	    				}
+	    					
+	    			}
+	    		}
+	    		my_state = "Edit";
+	    	}
+	    });
+	  
 	    text_4_Value_trans.setBounds(334, 33, 139, 25);
 	    
 	    removeAttrTableMenuTransactions = new Menu(composite_2.getShell(), SWT.POP_UP);
@@ -1033,7 +1567,8 @@ public class MasterDataEditorView extends ViewPart {
 					
 				}
 				dataManager.setVocabularyId(EpcisConstants.BUSINESS_TRANSACTION_ID);
-				result = dataManager.masterDataAttributeEdit(text_EPCTrans.getText(), text_3_attribute.getText(), text_4_Value_trans.getText(), mode);
+				String id = (Transaction_Modified_Id.equals("")?text_EPCTrans.getText():Transaction_Modified_Id);
+				result = dataManager.masterDataAttributeEdit(id, text_3_attribute.getText(), text_4_Value_trans.getText(), mode);
 				//updateAttrValue(bizDispoTag_txt.getText(),"urn:epcglobal:epcis:vtype:Disposition",bizDispo_Attribute_txt.getText(),bizDispoValue_txt.getText(),"3");
 				if(result)
 				{
@@ -1060,7 +1595,7 @@ public class MasterDataEditorView extends ViewPart {
 		});
 
 	    final Button button_15 = new Button(composite_2, SWT.NONE);
-	    button_15.setToolTipText("Query/Refresh");
+	    button_15.setToolTipText("Start here! Query/Refresh");
 	    button_15.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		showTransactionHierarchyNEW();
@@ -1069,7 +1604,8 @@ public class MasterDataEditorView extends ViewPart {
 	    button_15.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/b_newdb.png"));
 	    button_15.setBounds(25, 390, 48, 25);
 
-	    final Button attributesButton_2 = new Button(composite_2, SWT.NONE);
+	    attributesButton_2 = new Button(composite_2, SWT.NONE);
+	    attributesButton_2.setEnabled(false);
 	    attributesButton_2.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		if(table_1_transactions.isVisible())
@@ -1078,7 +1614,8 @@ public class MasterDataEditorView extends ViewPart {
 	    			text_3_attribute.setText("");
 	    			text_4_Value_trans.setEnabled(true);
 	    			text_4_Value_trans.setText("");
-	    			
+	    			saveButton_1.setEnabled(true);
+	    			//cancelButton.setEnabled(true);
 	    			
 	    		}
 	    		else
@@ -1094,11 +1631,16 @@ public class MasterDataEditorView extends ViewPart {
 	    attributesButton_2.setText("Attribute");
 	    attributesButton_2.setBounds(643, 390, 71, 25);
 
-	    final Button saveButton_1 = new Button(composite_2, SWT.NONE);
+	    saveButton_1 = new Button(composite_2, SWT.NONE);
+	    saveButton_1.setEnabled(false);
 	    saveButton_1.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		label_4.setVisible(false);
 	    		boolean result = false;
+	    		if( !my_state.equals("Edit"))
+	    			return;
+	    		my_state = "Idle"; 
+	    		initialValue = "";
 	    		if(treeTransaction.getItemCount() == 0)
 	    		{
 	    			TreeItem root = new TreeItem(treeTransaction, 1);
@@ -1122,6 +1664,15 @@ public class MasterDataEditorView extends ViewPart {
 	    			{
 	    				//new addition
 	    				String uri = text_EPCTrans.getText();
+	    				if(transactionParent != null)//treeTransaction.getSelectionCount() == 0){
+	    				{
+	    					StringTokenizer parentId = new StringTokenizer((String)transactionParent.getData(),"$$");//(String)treeTransaction.getSelection()[0].getData(),"$$");
+	    					String type = parentId.nextToken();
+	    					if(!type.equals("Root") && type.equals("TopLevelTransaction"))
+	    					{
+	    						uri = parentId.nextToken()+","+uri;
+	    					}
+	    				}
 	    				String name = NameTrans.getText();
 	    				result = dataManager.masterDataElementEdit(uri, "1");
 	    				if(!result)
@@ -1152,11 +1703,17 @@ public class MasterDataEditorView extends ViewPart {
 	    	    		if(treeTransaction.getSelectionCount() == 0)
 	    	    		{
 	    	    			//update tree
-	    	    			insertTransactionNode(treeTransaction.getItem(0),uri,name,"Transaction","icons/fromAgilo/runprocess.png",false);
+	    	    			insertTransactionNode(treeTransaction.getItem(0),uri,name,"Transaction","icons/fromAgilo/package_obj.gif",false);
+	    	    		//	insertTransactionNode(treeTransaction.getItem(0),uri,name,"Transaction","icons/fromAgilo/runprocess.png",false);
 	    	    		}
-	    	    		else
-	    	    			insertTransactionNode(treeTransaction.getSelection()[0],uri,name,"Transaction","icons/fromAgilo/runprocess.png",true);
-	    	    			
+	    	    		else{
+	    	    			if(transactionParent == null)	    	    			
+	    	    				insertTransactionNode(treeTransaction.getSelection()[0],uri,name,"TopLevelTransaction","icons/fromAgilo/package_obj.gif",true);
+	    	    			else
+	    	    				insertTransactionNode(treeTransaction.getSelection()[0],uri,name,"Transaction","icons/fromAgilo/runprocess.png",true);
+	    	    				
+	    	    		}
+	    	    		transactionParent = null;
 	    	    		if(result)
 	    	    		{
 	    	    			label_4.setVisible(true);
@@ -1171,7 +1728,7 @@ public class MasterDataEditorView extends ViewPart {
 	    	    			label_4.setText("Database update failed");
 	    	    			
 	    	    		}
-	    	    			
+	    	    		text_3_attribute.setEnabled(true);	
 
 	    				
 	    			}
@@ -1185,13 +1742,25 @@ public class MasterDataEditorView extends ViewPart {
 	    					{
 	    						return;
 	    					}
+	    					for(int i = 0; i < table_1_transactions.getItems().length; i++)
+	    					{
+	    						if(table_1_transactions.getItem(i).getText(0).equals(text_3_attribute.getText())&&
+	    								table_1_transactions.getItem(i).getText(1).equals(text_4_Value_trans.getText()))
+	    							return;
+	    					}
+	    					
 	    					TableItem row = new TableItem(table_1_transactions,0);
 		    				row.setText(new String[]{text_3_attribute.getText(),text_4_Value_trans.getText()});
 	    					
 	    				}
 	    				else if(table_1_transactions.getSelectionCount() > 0)
 	    					table_1_transactions.getSelection()[0].setText(1, text_4_Value_trans.getText());
-	    				result = dataManager.masterDataAttributeEdit(text_EPCTrans.getText(), text_3_attribute.getText(), text_4_Value_trans.getText(), "2");
+	    				StringTokenizer parentId = new StringTokenizer((String)treeTransaction.getSelection()[0].getParentItem().getData(),"$$");
+	    				if(parentId.nextToken().equals("Root"))
+	    					result = dataManager.masterDataAttributeEdit(text_EPCTrans.getText(), text_3_attribute.getText(), text_4_Value_trans.getText(), "2");
+	    				else
+	    					result = dataManager.masterDataAttributeEdit(parentId.nextToken()+","+text_EPCTrans.getText(), text_3_attribute.getText(), text_4_Value_trans.getText(), "2");
+
 	    				
 	    	    		if(result)
 	    	    		{
@@ -1212,6 +1781,7 @@ public class MasterDataEditorView extends ViewPart {
 	    	    		}
 	    	    		text_3_attribute.setText("");
 	    	    		text_4_Value_trans.setText("");
+	    	    		text_3_attribute.setEnabled(true);
 	    				
 	    			}
 	    			
@@ -1219,8 +1789,8 @@ public class MasterDataEditorView extends ViewPart {
 	    		else//event save
 	    		{
 	    			if(NameTrans.getText().equals("") || text_EPCTrans.getText().equals("")|| combo_1_eventType.getText().equals("") || combo_2_businessStep.getText().equals("")||
-	    					combo_1Location.getText().equals("") || combo_1_Disposition.getText().equals("") || text_2_ECSpec.getText().equals("") || combo_2.getText().equals("") || combo_3_Action.getText().equals("")
-	    					|| combo_4_TransaType.getText().equals("") || listOfReports.getItemCount() == 0)
+	    					combo_1Location.getText().equals("") || combo_1_Disposition.getText().equals("") ||  combo_2.getText().equals("") || combo_3_Action.getText().equals("")
+	    					|| combo_4_TransaType.getText().equals("") )
 	    			{
 	    				label_4.setVisible(true);
 	    				label_4.setText("All the fields must be filled");
@@ -1279,15 +1849,18 @@ public class MasterDataEditorView extends ViewPart {
 	    			
 	    			
 	    			
-	    			StringTokenizer transactionUri = new StringTokenizer((String)treeTransaction.getSelection()[0].getParentItem().getParentItem().getData(),"$$");
+	    			//StringTokenizer transactionUri = new StringTokenizer((String)treeTransaction.getSelection()[0].getParentItem().getParentItem().getData(),"$$");
+	    			StringTokenizer transactionUri = new StringTokenizer((String)treeTransaction.getSelection()[0].getParentItem().getData(),"$$");
 	    			String eventUri = text_EPCTrans.getText();
-	    			if(transactionUri.countTokens() != 2 || !transactionUri.nextToken().equals("Transaction"))
+	    			transactionUri.nextToken();
+	    			String transId = transactionUri.nextToken();
+	    			if(transId.split(",").length!=2)//transactionUri.countTokens() != 2 || !transactionUri.nextToken().equals("Transaction"))
 	    			{
 	    				label_4.setVisible(true);
 	    				label_4.setText("Please click on the transaction");
 	    				return;
 	    			}
-	    			String transId = transactionUri.nextToken();
+	    			
 	    			
 	    			StringBuffer reports = new StringBuffer();
 	    			for(int i = 0; i < listOfReports.getItemCount(); i++)
@@ -1297,9 +1870,9 @@ public class MasterDataEditorView extends ViewPart {
 	    					reports.append(",");
 	    			}
 	    			dataManager.setVocabularyId(EpcisConstants.BUSINESS_TRANSACTION_ID);
-	    			result = dataManager.insertEvent(transId, eventUri, NameTrans.getText(),combo_1_eventType.getText(), combo_2_businessStep, combo_1Location, combo_1_Disposition, text_2_ECSpec.getText(), combo_2, combo_3_Action.getText(), combo_4_TransaType, reports.toString());
+	    			result = dataManager.insertEvent(transId, eventUri, NameTrans.getText(),combo_1_eventType.getText(), combo_2_businessStep, combo_1Location, combo_1_Disposition, combo_2, combo_3_Action.getText(), combo_4_TransaType);//, reports.toString());
 	    			treeTransaction.getSelection()[0].setText(NameTrans.getText());
-	    			treeTransaction.getSelection()[0].setData("Event$$"+eventUri);
+	    			treeTransaction.getSelection()[0].setData("Event$$"+transId+","+eventUri);
 	    			if(result)
 	    			{
 	    				label_4.setVisible(true);
@@ -1308,7 +1881,8 @@ public class MasterDataEditorView extends ViewPart {
 	    			}
 	    		}
 	    		
-	    		
+	    		//saveButton_1.setEnabled(false);
+	    		cancelButton.setEnabled(false);
 	    	}
 	    });
 	    saveButton_1.setText("Save");
@@ -1317,20 +1891,23 @@ public class MasterDataEditorView extends ViewPart {
 	    label_4 = new Label(composite_2, SWT.NONE);
 	    label_4.setVisible(false);
 	    label_4.setForeground(SWTResourceManager.getColor(255, 0, 0));
-	    label_4.setFont(SWTResourceManager.getFont("", 11, SWT.BOLD));
+	    label_4.setFont(SWTResourceManager.getFont("", 10, SWT.BOLD));
 	    label_4.setText("Label");
-	    label_4.setBounds(133, 393, 374, 25);
+	    label_4.setBounds(79, 393, 447, 25);
 
-	    final Button cancelButton = new Button(composite_2, SWT.NONE);
+	     cancelButton = new Button(composite_2, SWT.NONE);
+	    cancelButton.setEnabled(false);
 	    cancelButton.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		transactionBranch = false;
 	    		insertNode.dispose();
 	    		label_4.setVisible(false);
+	    		saveButton_1.setEnabled(false);
+	    		cancelButton.setEnabled(false);
 	    	}
 	    });
 	    cancelButton.setText("Cancel");
-	    cancelButton.setBounds(586, 390, 48, 25);
+	    cancelButton.setBounds(590, 390, 48, 25);
 	    composite_2.setSize(787, 466);
 	    scrolledComposite.setContent(composite_2);
 
@@ -1361,6 +1938,19 @@ public class MasterDataEditorView extends ViewPart {
 	    uriLabel.setBounds(10, 35, 28, 15);
 
 	    BizLoc_v2_text = new Text(elementDataGroup_1, SWT.BORDER);
+	    BizLoc_v2_text.addVerifyListener(new VerifyListener() {
+	    	public void verifyText(final VerifyEvent e) {
+	    		if (e.end - e.start == 0) 
+	    		{
+	    			
+	    			if(e.text.equals(","))
+	    			{
+	    				e.text = ":";
+	    			}
+	    			
+	    		}
+	    	}
+	    });
 	    BizLoc_v2_text.setBounds(54, 32, 184, 25);
 
 	    final Label nameLabel_4 = new Label(elementDataGroup_1, SWT.NONE);
@@ -1512,13 +2102,21 @@ public class MasterDataEditorView extends ViewPart {
 	    	public void mouseDoubleClick(final MouseEvent e) {
 	    		if(BizLoc_tree_v2.getSelection()[0].getData() == null || BizLoc_tree_v2.getSelection()[0].getData().equals(""))
 				{
-					bizLoc_info_label.setText("Please click on a business location");
+					//bizLoc_info_label.setText("Please click on a business location");
 					bizLoc_info_label.setVisible(true);
 					return;
 				}
 	    		dataManager.setVocabularyId(EpcisConstants.BUSINESS_LOCATION_ID);
 	    		//dataManager.changeLocationParent((String)BizLoc_tree_v2.getSelection()[0].getData());
-	    		dataManager.moveLocation((String)BizLoc_tree_v2.getSelection()[0].getData());
+	    		boolean moved = dataManager.moveLocation((String)BizLoc_tree_v2.getSelection()[0].getData(),BizLoc_tree_v2.getSelection()[0]);
+	    		if(moved){
+	    			//dataManager.rearrange(BizLoc_tree_v2.getSelection()[0]);
+	    			populateBizLocTree(BizLoc_tree_v2,"no","icons/house_16.gif");
+	    			BizLoc_tree_v2.getItems()[0].setExpanded(true);
+	    			//BizLoc_tree_v2.getSelection()[0].setExpanded(true);
+		    		//populateBizLocTree(BizLoc_depr_tree_v2,"yes","icons/img/s_cancel.png");
+		    		dataManager.setLocationDisplayedId(null);
+	    		}
 	    		
 	    		
 	    	}
@@ -1885,7 +2483,7 @@ public class MasterDataEditorView extends ViewPart {
 	    	}
 	    });
 	    saveButton_2.setText("Save");
-	    saveButton_2.setBounds(284, 380, 48, 25);
+	    saveButton_2.setBounds(285, 380, 48, 25);
 
 	    final Button cancelButton_1 = new Button(composite_9, SWT.NONE);
 	    cancelButton_1.addMouseListener(new MouseAdapter() {
@@ -1899,7 +2497,7 @@ public class MasterDataEditorView extends ViewPart {
 	    	}
 	    });
 	    cancelButton_1.setText("Cancel");
-	    cancelButton_1.setBounds(344, 380, 48, 25);
+	    cancelButton_1.setBounds(335, 380, 48, 25);
 
 	    final Button attributeButton = new Button(composite_9, SWT.NONE);
 	    attributeButton.addMouseListener(new MouseAdapter() {
@@ -1911,20 +2509,24 @@ public class MasterDataEditorView extends ViewPart {
 	    	}
 	    });
 	    attributeButton.setText("Attribute");
-	    attributeButton.setBounds(673, 380, 59, 25);
+	    attributeButton.setBounds(673, 382, 59, 25);
 
 	    final Button readpointsButton = new Button(composite_9, SWT.NONE);
+	    readpointsButton.setToolTipText("Add Readers");
 	    readpointsButton.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		String location_id = dataManager.getLocationDisplayedId();
 	    		EditReadPoint readers = new EditReadPoint(new Shell(),(location_id == null)? BizLoc_v2_text.getText():location_id,dataManager);
-	    		readers.open();
+	    		Boolean res = (Boolean)readers.open();
+	    		if(dataManager.getOrigList().size() != dataManager.getnewList().size() || !dataManager.getOrigList().containsAll(dataManager.getnewList()))//res && res.booleanValue()){
+	    		{
 	    		bizLoc_info_label.setText("Press save to update database");
 	    		bizLoc_info_label.setVisible(true);
+	    		}
 	    	}
 	    });
-	    readpointsButton.setText("ReadPoints");
-	    readpointsButton.setBounds(596, 381, 71, 25);
+	    readpointsButton.setText("RPs");
+	    readpointsButton.setBounds(619, 382, 48, 25);
 
 	    bizLoc_info_label = new Label(composite_9, SWT.NONE);
 	    bizLoc_info_label.setForeground(SWTResourceManager.getColor(255, 0, 0));
@@ -3360,12 +3962,13 @@ public class MasterDataEditorView extends ViewPart {
 		//initEPC();
 		this.dataManager = new DataManagerModule(preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL),queryUrl);
 
-		populateBizLocTree(BizLoc_tree_v2,"no","icons/house_16.gif");
-		populateBizLocTree(BizLoc_depr_tree_v2,"yes","icons/img/s_cancel.png");
-		BizLoc_tree_v2.getItem(0).setExpanded(true);
-		BizLoc_depr_tree_v2.getItem(0).setExpanded(true);
+	//	populateBizLocTree(BizLoc_tree_v2,"no","icons/house_16.gif");
+	//	populateBizLocTree(BizLoc_depr_tree_v2,"yes","icons/img/s_cancel.png");
+	//	BizLoc_tree_v2.getItem(0).setExpanded(true);
+	//	BizLoc_depr_tree_v2.getItem(0).setExpanded(true);
 
 	    final Button newButton_3 = new Button(composite_9, SWT.NONE);
+	    newButton_3.setToolTipText("Add a location");
 	    newButton_3.addMouseListener(new MouseAdapter() {
 	    	public void mouseDown(final MouseEvent e) {
 	    		if(BizLoc_tree_v2.getSelectionCount() > 0)
@@ -3390,11 +3993,11 @@ public class MasterDataEditorView extends ViewPart {
 				dataManager.setLocationDisplayedId(null);
 	    	}
 	    });
-	    newButton_3.setText("New Location");
-	    newButton_3.setBounds(398, 380, 91, 25);
-		showTransactionHierarchyNEW();
-		if(treeTransaction.getItemCount() > 0)
-			treeTransaction.getItem(0).setExpanded(true);
+	    newButton_3.setText("Location");
+	    newButton_3.setBounds(542, 382, 71, 25);
+	//	showTransactionHierarchyNEW();
+	//	if(treeTransaction.getItemCount() > 0)
+	//		treeTransaction.getItem(0).setExpanded(true);
 
 
 
@@ -3691,10 +4294,205 @@ public class MasterDataEditorView extends ViewPart {
 		
 		
 	}
+	public void place_on_tree(String id, String name, String type)
+	{
+		
+		if(type.equals("TopLevelTransaction"))
+		{
+			TreeItem trans = new TreeItem(treeTransaction.getItems()[0],1);
+			trans.setText(name);
+			trans.setData(type+"$$"+id);
+			trans.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/package_obj.gif"));
+			return;
+			
+		}
+		else if(type.equals("Transaction"))
+		{
+			int transactions = treeTransaction.getItems()[0].getItemCount();
+			String []uris = id.split(",");
+			if(transactions == 0)
+			{
+				TreeItem trans = new TreeItem(treeTransaction.getItems()[0],1);
+				trans.setText(name);
+				trans.setData(type+"$$"+id);
+				trans.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/runprocess.png"));
+				return;
+				
+			}
+			for(int i = 0; i < transactions; i++)
+			{
+				StringTokenizer parts = new StringTokenizer(((String)treeTransaction.getItems()[0].getItem(i).getData()),"$$");//((String)treeTransaction.getItems()[0].getItem(i).getData()).split("$$");
+				parts.nextToken();
+				if(parts.nextToken().equals(uris[0]))
+				{
+					TreeItem trans = new TreeItem(treeTransaction.getItems()[0].getItem(i),1);
+					trans.setText(name);
+					trans.setData(type+"$$"+id);
+					trans.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/runprocess.png"));
+					return;
+					
+				}
+			}
+		}
+		else if(type.equals("Event"))
+		{
+			String[] uris =id.split(",");
+			
+			
+			//String[] parts id= ((String)treeTransaction.getItems()[0].getData()).split("$$");
+			int topLevel = treeTransaction.getItems()[0].getItemCount();
+			for(int i = 0; i < topLevel; i++)
+			{
+				StringTokenizer tokens = new StringTokenizer((String)treeTransaction.getItems()[0].getItem(i).getData(),"$$");
+				tokens.nextToken();//Ignore Transaction and get id after $$
+				String parent_id = tokens.nextToken();
+				//String[] tokens = ((String)treeTransaction.getItems()[0].getItem(i).getData()).split("$$");
+				if(uris[0].equals(parent_id))
+				{
+					int transactions = treeTransaction.getItems()[0].getItem(i).getItemCount();
+					for(int j = 0; j < transactions; j++)
+					{
+						tokens = new StringTokenizer((String)treeTransaction.getItems()[0].getItem(i).getItem(j).getData(),"$$");
+						tokens.nextToken();//Ignore Transaction and get id after $$
+						parent_id  = tokens.nextToken();
+						//tokens = ((String)treeTransaction.getItems()[0].getItem(i).getItem(j).getData()).split("$$");
+						if((uris[0]+","+uris[1]).equals(parent_id))
+						{
+							TreeItem trans = new TreeItem(treeTransaction.getItems()[0].getItem(i).getItem(j),1);
+							trans.setText(name);
+							trans.setData(type+"$$"+id);
+							trans.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/finalNode.gif"));
+							return;
+
+						}
+					}
+				}
+			}
+			
+			
+		}
+		
+		
+	}
 	
+	public void add_to_tree(String id,String type)
+	{
+		//java.util.List<String> name = dataManager.getElementNames(id,null);
+		java.util.List<String>attr = new ArrayList<String>();
+		attr.add("urn:epcglobal:epcis:mda:Name");
+		String name = dataManager.getSpecificAttributeValue(id, attr);
+		place_on_tree(id,name == null?"":name,type);
+		
+	}
 	public void showTransactionHierarchyNEW()
 	{
+		
 		java.util.List<String> attributes = new ArrayList<String>();
+		TreeItem root = null;
+		
+		treeTransaction.removeAll();
+		
+
+		label_4.setVisible(false);
+
+		dataManager.setVocabularyId(EpcisConstants.BUSINESS_TRANSACTION_ID);
+		//attributes.add("urn:epcglobal:epcis:mda:Name");
+
+		java.util.List<String> transactionIDs = dataManager.getElementUris(attributes);
+		attributes.clear();
+		if(transactionIDs == null)
+		{
+			label_4.setVisible(true);
+			label_4.setText("No processes in the DB!");
+			return;
+			
+		}
+		if(transactionIDs.size() == 0)
+		{
+			label_4.setVisible(true);
+			label_4.setText("No processes in the DB!");
+		}
+		if(root == null)
+			root = new TreeItem(treeTransaction, 1);
+		root.setText("Transactions");
+		root.setData("Root");
+		root.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/semBPM.gif"));
+		
+		
+		int total = transactionIDs.size();
+		java.util.List<String> exists_in_tree = new java.util.ArrayList<String>();
+		for(int i = 0; i < total; i++)
+		{
+			//For each uri create the tree by parsing
+			String[] uri_parts = transactionIDs.get(i).split(",");
+			String temp = new String();
+			for(int j = 0; j < uri_parts.length; j++)
+			{
+				temp += uri_parts[j];
+				if(!exists_in_tree.contains(temp))
+				{
+					String type;
+					if(j == 0)
+						type = "TopLevelTransaction";
+					else if(j == 1)
+						type = "Transaction";
+					else
+						type = "Event";
+					add_to_tree(temp,type);
+					exists_in_tree.add(temp);
+					
+					
+				}
+				
+				temp += ",";
+				
+			}
+			
+		}
+		text_EPCTrans.setEnabled(true);
+		text_EPCTrans.setText("");
+		NameTrans.setEnabled(true);
+		NameTrans.setText("");
+		elementDataGroup.setBounds(200, 40, 514, 82);
+		table_1_transactions.removeAll();
+		table_1_transactions.setVisible(true);
+		eventTypeLabel_2.setVisible(false);
+		combo_1_eventType.setVisible(false);
+		stepLabel.setVisible(false);
+		combo_2_businessStep.setVisible(false);
+		combo_2_businessStep.removeAll();
+		locationLabel.setVisible(false);
+		combo_1Location.setVisible(false);
+		combo_1Location.removeAll();
+		dispositionLabel_2.setVisible(false);
+		combo_1_Disposition.setVisible(false);
+		combo_1_Disposition.removeAll();
+
+
+		readerLabel.setVisible(false);
+		combo_2.setVisible(false);
+		combo_2.removeAll();
+		actionLabel_2.setVisible(false);
+		combo_3_Action.setVisible(false);
+		combo_3_Action.removeAll();
+		transTypeLabel_1.setVisible(false);
+		combo_4_TransaType.setVisible(false);
+		combo_4_TransaType.removeAll();
+		reportsLabel_1.setVisible(false);
+		listOfReports.setVisible(false);
+		listOfReports.removeAll();
+		
+		text_3_attribute.setText("");
+		text_3_attribute.setEnabled(true);
+		text_4_Value_trans.setText("");
+		text_4_Value_trans.setEnabled(true);
+		
+		attributesButton_2.setEnabled(false);
+		saveButton_1.setEnabled(false);
+
+
+		
+		/*java.util.List<String> attributes = new ArrayList<String>();
 		TreeItem root = null;
 		
 		treeTransaction.removeAll();
@@ -3781,9 +4579,8 @@ public class MasterDataEditorView extends ViewPart {
 			dispositionLabel_2.setVisible(false);
 			combo_1_Disposition.setVisible(false);
 			combo_1_Disposition.removeAll();
-			specLabel.setVisible(false);
-			text_2_ECSpec.setVisible(false);
-			text_2_ECSpec.setText("");
+
+
 			readerLabel.setVisible(false);
 			combo_2.setVisible(false);
 			combo_2.removeAll();
@@ -3796,15 +4593,13 @@ public class MasterDataEditorView extends ViewPart {
 			reportsLabel_1.setVisible(false);
 			listOfReports.setVisible(false);
 			listOfReports.removeAll();
-			text_2.setVisible(false);
-			text_2.setText("");
-			button_13.setVisible(false);
-			button_14.setVisible(false);
+			
 			text_3_attribute.setText("");
 			text_3_attribute.setEnabled(true);
 			text_4_Value_trans.setText("");
 			text_4_Value_trans.setEnabled(true);
 			
+			attributesButton_2.setEnabled(true);
 
 		}
 		
@@ -3812,7 +4607,7 @@ public class MasterDataEditorView extends ViewPart {
 		
 		
 		
-				
+			*/	
 		
 		
 	}
