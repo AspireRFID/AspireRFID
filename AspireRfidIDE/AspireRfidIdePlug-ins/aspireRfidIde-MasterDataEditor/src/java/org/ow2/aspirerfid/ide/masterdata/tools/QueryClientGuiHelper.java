@@ -40,26 +40,26 @@ import javax.xml.bind.JAXBElement;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.custom.StyledText;
 
-import org.fosstrak.epcis.model.AggregationEventType;
-import org.fosstrak.epcis.model.ArrayOfString;
-import org.fosstrak.epcis.model.BusinessTransactionType;
-import org.fosstrak.epcis.model.EPC;
-import org.fosstrak.epcis.model.EPCISEventType;
-import org.fosstrak.epcis.model.GetSubscriptionIDs;
-import org.fosstrak.epcis.model.ObjectEventType;
-import org.fosstrak.epcis.model.Poll;
-import org.fosstrak.epcis.model.VocabularyType;
-import org.fosstrak.epcis.model.VocabularyElementListType;
-import org.fosstrak.epcis.model.VocabularyListType;
-import org.fosstrak.epcis.model.VocabularyElementType;
-import org.fosstrak.epcis.model.QuantityEventType;
-import org.fosstrak.epcis.model.QueryParam;
-import org.fosstrak.epcis.model.QueryParams;
-import org.fosstrak.epcis.model.QueryResults;
-import org.fosstrak.epcis.model.Subscribe;
-import org.fosstrak.epcis.model.TransactionEventType;
-import org.fosstrak.epcis.model.Unsubscribe;
-import org.fosstrak.epcis.utils.TimeParser;
+import org.ow2.aspirerfid.commons.epcis.model.AggregationEventType;
+import org.ow2.aspirerfid.commons.epcis.model.ArrayOfString;
+import org.ow2.aspirerfid.commons.epcis.model.BusinessTransactionType;
+import org.ow2.aspirerfid.commons.epcglobal.commons.EPC;
+import org.ow2.aspirerfid.commons.epcis.model.EPCISEventType;
+import org.ow2.aspirerfid.commons.epcis.model.GetSubscriptionIDs;
+import org.ow2.aspirerfid.commons.epcis.model.ObjectEventType;
+import org.ow2.aspirerfid.commons.epcis.model.Poll;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementListType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyListType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
+import org.ow2.aspirerfid.commons.epcis.model.QuantityEventType;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParam;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParams;
+import org.ow2.aspirerfid.commons.epcis.model.QueryResults;
+import org.ow2.aspirerfid.commons.epcis.model.Subscribe;
+import org.ow2.aspirerfid.commons.epcis.model.TransactionEventType;
+import org.ow2.aspirerfid.commons.epcis.model.Unsubscribe;
+import org.ow2.aspirerfid.commons.utils.TimeParser;
 import org.ow2.aspirerfid.ide.masterdata.Activator;
 import org.ow2.aspirerfid.ide.masterdata.preferences.PreferenceConstants;
 
@@ -429,8 +429,8 @@ public class QueryClientGuiHelper {
 					int s = vocabularyElement.getAttribute().size();
 					for(int aa1=0; aa1<s; aa1++){
 					   System.out.println("========>Attr: "+vocabularyElement.getAttribute().get(aa1).getId());
-					   for(int aa2=0;aa2<vocabularyElement.getAttribute().get(aa1).getContent().size();aa2++)
-					   System.out.println("=========Value: "+vocabularyElement.getAttribute().get(aa1).getContent().get(aa2).toString());
+					   for(int aa2=0;aa2<vocabularyElement.getAttribute().get(aa1).getAny().size();aa2++)
+					   System.out.println("=========Value: "+vocabularyElement.getAttribute().get(aa1).getAny().get(aa2).toString());
 					}
 				}
 				
@@ -604,8 +604,8 @@ public class QueryClientGuiHelper {
 					for(int aa1=0; aa1<s; aa1++)
 					{
 					   System.out.println("========>Attr: "+vocabularyElement.getAttribute().get(aa1).getId());
-					   for(int aa2=0;aa2<vocabularyElement.getAttribute().get(aa1).getContent().size();aa2++)
-					   System.out.println("=========Value: "+vocabularyElement.getAttribute().get(aa1).getContent().get(aa2).toString());
+					   for(int aa2=0;aa2<vocabularyElement.getAttribute().get(aa1).getAny().size();aa2++)
+					   System.out.println("=========Value: "+vocabularyElement.getAttribute().get(aa1).getAny().get(aa2).toString());
 					}
 				}
 			}

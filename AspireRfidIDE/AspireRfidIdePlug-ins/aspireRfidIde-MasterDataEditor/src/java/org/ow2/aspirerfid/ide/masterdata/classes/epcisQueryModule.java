@@ -18,13 +18,13 @@
 
 package org.ow2.aspirerfid.ide.masterdata.classes;
 
-import org.fosstrak.epcis.model.ArrayOfString;
-import org.fosstrak.epcis.model.Poll;
-import org.fosstrak.epcis.model.QueryParam;
-import org.fosstrak.epcis.model.QueryParams;
-import org.fosstrak.epcis.model.QueryResults;
-import org.fosstrak.epcis.model.VocabularyElementType;
-import org.fosstrak.epcis.model.VocabularyType;
+import org.ow2.aspirerfid.commons.epcis.model.ArrayOfString;
+import org.ow2.aspirerfid.commons.epcis.model.Poll;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParam;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParams;
+import org.ow2.aspirerfid.commons.epcis.model.QueryResults;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyType;
 import org.ow2.aspirerfid.ide.masterdata.classes.*;
 
 import org.ow2.aspirerfid.ide.masterdata.tools.QueryClientGuiHelper;
@@ -32,6 +32,7 @@ import org.ow2.aspirerfid.ide.masterdata.tools.QueryClientGuiHelper;
 import java.util.*;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 
 
 /**
@@ -77,8 +78,8 @@ public class epcisQueryModule {
 	{
 		Object[][] data = {};
 		List<Object> result = new ArrayList<Object>();
-		org.fosstrak.epcis.model.ArrayOfString ls = new org.fosstrak.epcis.model.ArrayOfString();
-		org.fosstrak.epcis.model.ArrayOfString ls2 = new org.fosstrak.epcis.model.ArrayOfString();
+		org.ow2.aspirerfid.commons.epcis.model.ArrayOfString ls = new org.ow2.aspirerfid.commons.epcis.model.ArrayOfString();
+		org.ow2.aspirerfid.commons.epcis.model.ArrayOfString ls2 = new org.ow2.aspirerfid.commons.epcis.model.ArrayOfString();
 		try
 		{
 			client.clearParameters();
@@ -262,13 +263,12 @@ public class epcisQueryModule {
 				if(vocabularyElement.getAttribute().size()>0)
 				{
 				 String attribute =  vocabularyElement.getAttribute().get(0).getId();
-				  String value =	vocabularyElement.getAttribute().get(0).getContent().get(0).toString();
+//				  String value =	vocabularyElement.getAttribute().get(0).getContent().get(0).toString();
+				  String value =	vocabularyElement.getAttribute().get(0).getOtherAttributes().get(new QName("value"));				  
+				  
 				  System.out.println("<Attribute,Value>= <"+attribute+","+value+">");
 				  return value;
 				}
-					
-				
-				
 					
 					
 			}
@@ -362,8 +362,8 @@ public class epcisQueryModule {
 						System.out.println("========>Attr: "+attribute);//vocabularyElement.getAttribute().get(aa1).getId());
 						if(attribute.endsWith("Name"))//equals("Name"))//vocabularyElement.getAttribute().get(aa1).getId().equals("Name"));//"Logical_Name"))
 						{
-							System.out.println(" Name  ="+vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString()+", idx ="+pos);
-							Key_Attribute.setName(vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+							System.out.println(" Name  ="+vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value"))+", idx ="+pos);
+							Key_Attribute.setName(vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 							Key_Attribute.setIdx(pos);
 							
 							info.put(Key_Attribute, Value_Attribute);
@@ -656,9 +656,9 @@ public class epcisQueryModule {
 	
 /*	public java.util.TreeMap<Key_Map,String> getTags_Names2(String uri)//List<String> uri)
 	{
-		org.fosstrak.epcis.model.ArrayOfString elements = new org.fosstrak.epcis.model.ArrayOfString();
-		org.fosstrak.epcis.model.ArrayOfString vocab = new org.fosstrak.epcis.model.ArrayOfString();
-		org.fosstrak.epcis.model.ArrayOfString att = new org.fosstrak.epcis.model.ArrayOfString();
+		org.ow2.aspirerfid.commons.epcis.model.ArrayOfString elements = new org.ow2.aspirerfid.commons.epcis.model.ArrayOfString();
+		org.ow2.aspirerfid.commons.epcis.model.ArrayOfString vocab = new org.ow2.aspirerfid.commons.epcis.model.ArrayOfString();
+		org.ow2.aspirerfid.commons.epcis.model.ArrayOfString att = new org.ow2.aspirerfid.commons.epcis.model.ArrayOfString();
 		vocab.getString().add(this.vocabulary);
 		att.getString().add("urn:epcglobal:epcis:mda:Name");
 		//for(int i = 0; i < uri.size(); i++)
@@ -841,15 +841,15 @@ public class epcisQueryModule {
 						String attribute;// = vocabularyElement.getAttribute().get(aa1).getId();
 						attribute = this.parseNameSpace(vocabularyElement.getAttribute().get(aa1).getId(),":", -1);
 						System.out.println("========>Attr: "+attribute);//vocabularyElement.getAttribute().get(aa1).getId());
-						org.ow2.aspirerfid.ide.masterdata.classes.Attribute attribute2 = new org.ow2.aspirerfid.ide.masterdata.classes.Attribute(attribute,vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+						org.ow2.aspirerfid.ide.masterdata.classes.Attribute attribute2 = new org.ow2.aspirerfid.ide.masterdata.classes.Attribute(attribute,vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 						if(attribute.endsWith("Name"))
 						{
-							UriToName.put(vocabularyElement.getId(), vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
-							temp.setName(vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+							UriToName.put(vocabularyElement.getId(), vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
+							temp.setName(vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 						}
 						//else if (attribute.endsWith("Read Point"))//equalsIgnoreCase("Read Point"))
 						//{
-							//temp.setReadPoint(vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+							//temp.setReadPoint(vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 						//}
 						else
 							temp.addAttribute(attribute2);
@@ -858,7 +858,7 @@ public class epcisQueryModule {
 						//{
 							System.out.println("Attr is Name or"+vocabularyElement.getAttribute().get(aa1).getId());
 							
-							//Key_Attribute.setName(vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+							//Key_Attribute.setName(vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 							//Key_Attribute.setIdx(pos);
 							//pos++;
 							//info.put(Key_Attribute, Value_Attribute);
@@ -940,19 +940,19 @@ public class epcisQueryModule {
 					
 						String attribute = this.parseNameSpace(vocabularyElement.getAttribute().get(aa1).getId(),":",-1);
 						System.out.println("========>Attr: "+attribute);//vocabularyElement.getAttribute().get(aa1).getId());
-						org.ow2.aspirerfid.ide.masterdata.classes.Attribute attribute2 = new org.ow2.aspirerfid.ide.masterdata.classes.Attribute(attribute,vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+						org.ow2.aspirerfid.ide.masterdata.classes.Attribute attribute2 = new org.ow2.aspirerfid.ide.masterdata.classes.Attribute(attribute,vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 						if(attribute.endsWith("Name"))
 						{
-							UriToName.put(vocabularyElement.getId(), vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
-							biz_temp.setName(vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+							UriToName.put(vocabularyElement.getId(), vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
+							biz_temp.setName(vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 						}
 						else if (attribute.endsWith("Read Point"))//equalsIgnoreCase("Read Point"))
 						{
-							biz_temp.setReadPoint(vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+							biz_temp.setReadPoint(vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 						}
 						//else
 							biz_temp.addAttribute(attribute2);
-						if(attribute.equalsIgnoreCase("deprecated") && vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString().equalsIgnoreCase("yes"))
+						if(attribute.equalsIgnoreCase("deprecated") && vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")).equalsIgnoreCase("yes"))
 							inactive = true;
 						
 						
@@ -960,7 +960,7 @@ public class epcisQueryModule {
 						//{
 							System.out.println("Attr is Name or"+vocabularyElement.getAttribute().get(aa1).getId());
 							
-							//Key_Attribute.setName(vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+							//Key_Attribute.setName(vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 							//Key_Attribute.setIdx(pos);
 							//pos++;
 							//info.put(Key_Attribute, Value_Attribute);
@@ -1031,15 +1031,15 @@ public class epcisQueryModule {
 					
 						String attribute = this.parseNameSpace(vocabularyElement.getAttribute().get(aa1).getId(),":",-1);
 						System.out.println("========>Attr: "+attribute);//vocabularyElement.getAttribute().get(aa1).getId());
-						org.ow2.aspirerfid.ide.masterdata.classes.Attribute attribute2 = new org.ow2.aspirerfid.ide.masterdata.classes.Attribute(attribute,vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+						org.ow2.aspirerfid.ide.masterdata.classes.Attribute attribute2 = new org.ow2.aspirerfid.ide.masterdata.classes.Attribute(attribute,vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 						if(attribute.endsWith("Name"))
 						{
-							UriToName.put(vocabularyElement.getId(), vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
-							biz_temp.setName(vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+							UriToName.put(vocabularyElement.getId(), vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
+							biz_temp.setName(vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 						}
 						else if (attribute.endsWith("Read Point"))//equalsIgnoreCase("Read Point"))
 						{
-							biz_temp.setReadPoint(vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+							biz_temp.setReadPoint(vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 						}
 						//else
 							biz_temp.addAttribute(attribute2);
@@ -1048,7 +1048,7 @@ public class epcisQueryModule {
 						//{
 							System.out.println("Attr is Name or"+vocabularyElement.getAttribute().get(aa1).getId());
 							
-							//Key_Attribute.setName(vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+							//Key_Attribute.setName(vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 							//Key_Attribute.setIdx(pos);
 							//pos++;
 							//info.put(Key_Attribute, Value_Attribute);
@@ -1148,7 +1148,7 @@ public class epcisQueryModule {
 					
 						String attribute = vocabularyElement.getAttribute().get(aa1).getId();
 						System.out.println("========>Attr: "+attribute);//vocabularyElement.getAttribute().get(aa1).getId());
-						org.ow2.aspirerfid.ide.masterdata.classes.Attribute attribute2 = new org.ow2.aspirerfid.ide.masterdata.classes.Attribute(attribute,vocabularyElement.getAttribute().get(aa1).getContent().get(0).toString());
+						org.ow2.aspirerfid.ide.masterdata.classes.Attribute attribute2 = new org.ow2.aspirerfid.ide.masterdata.classes.Attribute(attribute,vocabularyElement.getAttribute().get(aa1).getOtherAttributes().get(new QName("value")));
 						
 						attributes.add(attribute2);
 						
@@ -1320,7 +1320,7 @@ public class epcisQueryModule {
 							continue;
 						else
 						{
-							StringTokenizer theReports = new StringTokenizer(elem.getAttribute().get(i).getContent().get(0).toString(),",");
+							StringTokenizer theReports = new StringTokenizer(elem.getAttribute().get(i).getOtherAttributes().get(new QName("value")),",");
 							int tokens = theReports.countTokens();
 							for(int j = 0; j < tokens; j++)
 							{
@@ -1328,7 +1328,7 @@ public class epcisQueryModule {
 							}
 							break;
 						}
-						//String value = elem.getAttribute().get(i).getContent().get(0).toString();
+						//String value = elem.getAttribute().get(i).getOtherAttributes().get(new QName("value"));
 						//result.add(value);
 						
 					}

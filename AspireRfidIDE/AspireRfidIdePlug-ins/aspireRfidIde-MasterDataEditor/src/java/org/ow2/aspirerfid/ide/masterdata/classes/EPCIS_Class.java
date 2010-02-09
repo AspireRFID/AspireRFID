@@ -20,7 +20,7 @@ package org.ow2.aspirerfid.ide.masterdata.classes;
 import java.util.*;
 
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.fosstrak.epcis.model.QueryParam;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParam;
 
 import org.ow2.aspirerfid.ide.masterdata.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.masterdata.Activator;

@@ -65,7 +65,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.part.ViewPart;
-import org.fosstrak.epcis.model.QueryParam;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParam;
 import org.ow2.aspirerfid.ide.masterdata.Activator;
 
 

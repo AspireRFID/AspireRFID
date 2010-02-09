@@ -23,7 +23,7 @@ package org.ow2.aspirerfid.ide.masterdata.tools;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fosstrak.epcis.model.QueryParam;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParam;
 
 /**
  * Implements an example query object for the EPCIS Query Interface Client.

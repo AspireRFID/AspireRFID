@@ -43,27 +43,27 @@ import javax.xml.ws.Service;
 import javax.xml.ws.soap.SOAPBinding;
 
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.fosstrak.epcis.model.EmptyParms;
-import org.fosstrak.epcis.model.GetSubscriptionIDs;
-import org.fosstrak.epcis.model.Poll;
-import org.fosstrak.epcis.model.QueryParams;
-import org.fosstrak.epcis.model.QueryResults;
-import org.fosstrak.epcis.model.Subscribe;
-import org.fosstrak.epcis.model.SubscriptionControls;
-import org.fosstrak.epcis.model.Unsubscribe;
-import org.fosstrak.epcis.soap.DuplicateSubscriptionExceptionResponse;
-import org.fosstrak.epcis.soap.EPCISServicePortType;
-import org.fosstrak.epcis.soap.ImplementationExceptionResponse;
-import org.fosstrak.epcis.soap.InvalidURIExceptionResponse;
-import org.fosstrak.epcis.soap.NoSuchNameExceptionResponse;
-import org.fosstrak.epcis.soap.NoSuchSubscriptionExceptionResponse;
-import org.fosstrak.epcis.soap.QueryParameterExceptionResponse;
-import org.fosstrak.epcis.soap.QueryTooComplexExceptionResponse;
-import org.fosstrak.epcis.soap.QueryTooLargeExceptionResponse;
-import org.fosstrak.epcis.soap.SecurityExceptionResponse;
-import org.fosstrak.epcis.soap.SubscribeNotPermittedExceptionResponse;
-import org.fosstrak.epcis.soap.SubscriptionControlsExceptionResponse;
-import org.fosstrak.epcis.soap.ValidationExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.model.EmptyParms;
+import org.ow2.aspirerfid.commons.epcis.model.GetSubscriptionIDs;
+import org.ow2.aspirerfid.commons.epcis.model.Poll;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParams;
+import org.ow2.aspirerfid.commons.epcis.model.QueryResults;
+import org.ow2.aspirerfid.commons.epcis.model.Subscribe;
+import org.ow2.aspirerfid.commons.epcis.model.SubscriptionControls;
+import org.ow2.aspirerfid.commons.epcis.model.Unsubscribe;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.DuplicateSubscriptionExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.EPCISServicePortType;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.ImplementationExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.InvalidURIExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.NoSuchNameExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.NoSuchSubscriptionExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.QueryParameterExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.QueryTooComplexExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.QueryTooLargeExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.SecurityExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.SubscribeNotPermittedExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.SubscriptionControlsExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.ValidationExceptionResponse;
 import org.ow2.aspirerfid.ide.masterdata.Activator;
 import org.ow2.aspirerfid.ide.masterdata.preferences.PreferenceConstants;
 import org.apache.cxf.Bus;
@@ -260,7 +260,7 @@ public class QueryControlClient implements QueryControlInterface {
     /**
      * {@inheritDoc}
      * 
-     * @see org.fosstrak.epcis.queryclient.QueryControlInterface#poll(org.fosstrak.epcis.model.Poll)
+     * @see org.fosstrak.epcis.queryclient.QueryControlInterface#poll(org.ow2.aspirerfid.commons.epcis.model.Poll)
      */
     public QueryResults poll(final Poll poll) throws ImplementationExceptionResponse, QueryTooComplexExceptionResponse,
             QueryTooLargeExceptionResponse, SecurityExceptionResponse, ValidationExceptionResponse,
@@ -341,7 +341,7 @@ public class QueryControlClient implements QueryControlInterface {
             QueryTooComplexExceptionResponse, QueryTooLargeExceptionResponse, SecurityExceptionResponse,
             ValidationExceptionResponse, NoSuchNameExceptionResponse, QueryParameterExceptionResponse, IOException {
         try {
-            JAXBContext context = JAXBContext.newInstance("org.fosstrak.epcis.model");
+            JAXBContext context = JAXBContext.newInstance("org.ow2.aspirerfid.commons.epcis.model");
             Unmarshaller unmarshaller = context.createUnmarshaller();
             // setting schema to null will turn XML validation off
             // unmarshaller.setSchema(null);
@@ -438,7 +438,7 @@ public class QueryControlClient implements QueryControlInterface {
             NoSuchNameExceptionResponse, SubscriptionControlsExceptionResponse, QueryParameterExceptionResponse,
             IOException {
         try {
-            JAXBContext context = JAXBContext.newInstance("org.fosstrak.epcis.model");
+            JAXBContext context = JAXBContext.newInstance("org.ow2.aspirerfid.commons.epcis.model");
             Unmarshaller unmarshaller = context.createUnmarshaller();
             JAXBElement<Subscribe> elem = (JAXBElement<Subscribe>) unmarshaller.unmarshal(query);
             Subscribe subscribe = elem.getValue();
@@ -478,7 +478,7 @@ public class QueryControlClient implements QueryControlInterface {
     public void unsubscribe(final InputStream unsubscribeIs) throws ImplementationExceptionResponse,
             SecurityExceptionResponse, ValidationExceptionResponse, NoSuchSubscriptionExceptionResponse, IOException {
         try {
-            JAXBContext context = JAXBContext.newInstance("org.fosstrak.epcis.model");
+            JAXBContext context = JAXBContext.newInstance("org.ow2.aspirerfid.commons.epcis.model");
             Unmarshaller unmarshaller = context.createUnmarshaller();
             JAXBElement<Unsubscribe> elem = (JAXBElement<Unsubscribe>) unmarshaller.unmarshal(unsubscribeIs);
             Unsubscribe unsubscribe = elem.getValue();

@@ -22,22 +22,22 @@ package org.ow2.aspirerfid.ide.masterdata.tools;
 
 import java.util.List;
 
-import org.fosstrak.epcis.model.Poll;
-import org.fosstrak.epcis.model.QueryParams;
-import org.fosstrak.epcis.model.QueryResults;
-import org.fosstrak.epcis.model.SubscriptionControls;
-import org.fosstrak.epcis.soap.DuplicateSubscriptionExceptionResponse;
-import org.fosstrak.epcis.soap.ImplementationExceptionResponse;
-import org.fosstrak.epcis.soap.InvalidURIExceptionResponse;
-import org.fosstrak.epcis.soap.NoSuchNameExceptionResponse;
-import org.fosstrak.epcis.soap.NoSuchSubscriptionExceptionResponse;
-import org.fosstrak.epcis.soap.QueryParameterExceptionResponse;
-import org.fosstrak.epcis.soap.QueryTooComplexExceptionResponse;
-import org.fosstrak.epcis.soap.QueryTooLargeExceptionResponse;
-import org.fosstrak.epcis.soap.SecurityExceptionResponse;
-import org.fosstrak.epcis.soap.SubscribeNotPermittedExceptionResponse;
-import org.fosstrak.epcis.soap.SubscriptionControlsExceptionResponse;
-import org.fosstrak.epcis.soap.ValidationExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.model.Poll;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParams;
+import org.ow2.aspirerfid.commons.epcis.model.QueryResults;
+import org.ow2.aspirerfid.commons.epcis.model.SubscriptionControls;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.DuplicateSubscriptionExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.ImplementationExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.InvalidURIExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.NoSuchNameExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.NoSuchSubscriptionExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.QueryParameterExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.QueryTooComplexExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.QueryTooLargeExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.SecurityExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.SubscribeNotPermittedExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.SubscriptionControlsExceptionResponse;
+import org.ow2.aspirerfid.commons.epcis.wsdl.query.ValidationExceptionResponse;
 
 /**
  * @author Marco Steybe
