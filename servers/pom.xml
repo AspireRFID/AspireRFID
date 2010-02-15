@@ -28,7 +28,6 @@
 	<packaging>pom</packaging>
 	
 	<modules>
-    	<module>aspireRfidALE</module>
-    	<module>aspireRfidEpcisRepository</module>
+    	<module>connectors</module>
   	</modules>
 </project>

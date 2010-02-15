@@ -30,6 +30,5 @@
 
   <modules>
     <module>JaxBLib</module>
-    <module>tdt</module>
   </modules>
 </project>

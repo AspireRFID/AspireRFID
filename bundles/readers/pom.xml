@@ -30,7 +30,6 @@
 
   <modules>
     <module>ReaderProtocol</module>
-    <module>ReaderProtocolImpl</module>
     <module>impl</module>
   </modules>
 </project>

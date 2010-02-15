@@ -30,6 +30,6 @@
     <module>bundles</module>
     <module>servers</module>
     <module>demos</module>
-    <module>standaloneTools</module>
+    <module>tools</module>
   </modules>
 </project>
