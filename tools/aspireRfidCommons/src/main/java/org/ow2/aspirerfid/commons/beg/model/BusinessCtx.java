@@ -35,12 +35,26 @@ public class BusinessCtx {
 	private BusinessLocationType bizLocation;
 	private String bizStep;
 	private String disposition;
-	private String ecspecName;
 	private ReadPointType readPoint;
 	private ActionType action;
-	private ArrayList<String> ecReportNames = new ArrayList<String>();
+//	private ArrayList<String> ecReportNames = new ArrayList<String>();
 	private String businessTransactionTypeID;
+	private String businessTransactionID;
 	
+	
+	
+	public String getBusinessTransactionID() {
+		return businessTransactionID;
+	}
+
+
+
+	public void setBusinessTransactionID(String businessTransactionID) {
+		this.businessTransactionID = businessTransactionID;
+	}
+
+
+
 	public String getBusinessTransactionTypeID() {
 		return businessTransactionTypeID;
 	}
@@ -53,19 +67,19 @@ public class BusinessCtx {
 
 
 
-	public ArrayList<String> getEcReportNames() {
-		return ecReportNames;
-	}
-
-	
-	
-	public void setEcReportNames(String stringOfEcReportNames) {
-		String[] arrayOfReportNames = stringOfEcReportNames.split(",");
-		
-		for(int i = 0 ; i<arrayOfReportNames.length; i++){
-			ecReportNames.add(arrayOfReportNames[i].toString());
-		}
-	}
+//	public ArrayList<String> getEcReportNames() {
+//		return ecReportNames;
+//	}
+//
+//	
+//	
+//	public void setEcReportNames(String stringOfEcReportNames) {
+//		String[] arrayOfReportNames = stringOfEcReportNames.split(",");
+//		
+//		for(int i = 0 ; i<arrayOfReportNames.length; i++){
+//			ecReportNames.add(arrayOfReportNames[i].toString());
+//		}
+//	}
 
 	public BusinessCtx(){
 		
@@ -108,14 +122,6 @@ public class BusinessCtx {
 		return this.bizStep;
 	}
 	
-	public void setECSpecName(String ecspecName)
-	{
-		this.ecspecName = ecspecName;
-	}
-	public String getECSpecName()
-	{
-		return this.ecspecName;
-	}
 
 	public void setReadPoint(String readPoint)
 	{
