@@ -15,7 +15,6 @@
  * for the specific language governing rights and limitations.
  */
 
-
 package org.ow2.aspirerfid.beg.capture;
 
 import java.io.BufferedReader;
@@ -42,14 +41,12 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 
-
 import org.ow2.aspirerfid.commons.ale.utils.DeserializerUtil;
 import org.ow2.aspirerfid.commons.ale.model.ale.ECReport;
 import org.ow2.aspirerfid.commons.ale.model.ale.ECReportGroup;
 import org.ow2.aspirerfid.commons.ale.model.ale.ECReportGroupListMember;
 import org.ow2.aspirerfid.commons.ale.model.ale.ECReports;
 import org.ow2.aspirerfid.commons.epcglobal.commons.EPC;
-
 
 import org.ow2.aspirerfid.commons.epcis.model.ActionType;
 import org.ow2.aspirerfid.commons.epcis.model.AggregationEventType;
@@ -70,16 +67,14 @@ import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
 import org.ow2.aspirerfid.beg.capture.CaptureClient;
 import org.ow2.aspirerfid.beg.capture.CaptureReport;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.ow2.aspirerfid.commons.beg.model.BusinessCtx;
 
-
 /**
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- *
+ * 
  */
 public class CaptureReport extends Thread {
 
@@ -97,22 +92,29 @@ public class CaptureReport extends Thread {
 	private String epcisRepository = "";
 
 	private boolean activated = false;
-	
+
 	private String begID = "";
 
 	private BusinessCtx businessCtx = new BusinessCtx();
 
 	private String eventType = "";
 
-	private String bizTransactionID = "";
-	
-	private String oldBizTransactionID = "";
+	// defines if the captured report will be handles or not
+	boolean handleTheReport = false;
+
+	// the retrieved transactionID from the captured report
+	private String bizTransactionCapturedID = "";
+
+	private String oldBizTransactionCapturedID = "";
 
 	private String parentObjectID = "";
 
-	private ArrayList<String> ecreportNames = null;
-	
-	//used for storing all the epcs for a specific transaction ID
+	// The MasterData Vocabularys transaction ID (URI)
+	private String vocabularyTransactionID = "";
+
+	// private ArrayList<String> ecreportNames = null;
+
+	// used for storing all the epcs for a specific transaction ID
 	private ArrayList<String> epcListForTransaction = new ArrayList<String>();
 
 	private List<EPC> epcs = new LinkedList<EPC>();
@@ -130,7 +132,9 @@ public class CaptureReport extends Thread {
 		serverSocket = new ServerSocket(this.port);
 		begID = vocabularyElementType.getId();
 		eventType = businessCtx.getEventType();
-		ecreportNames = businessCtx.getEcReportNames();
+		vocabularyTransactionID = businessCtx.getBusinessTransactionID();
+		// ecreportNames = businessCtx.getEcReportNames();
+
 		activated = true;
 		start(); // Calls run()
 	}
@@ -163,26 +167,46 @@ public class CaptureReport extends Thread {
 				// parse the string
 				ECReports reports = DeserializerUtil.deserializeECReports(parseStream);
 				if (reports != null) {
-					if (eventType.equals("ObjectEvent")) {
-						handleObjectEventReports(reports);
+					List<ECReport> theReports = reports.getReports().getReport();
+					if (theReports != null) {
+						log.debug("Recieved ECRpeport Names:");
+						for (ECReport report : theReports) {
+							log.debug(report.getReportName());
+							if (report.getReportName().split("@")[1].equals(vocabularyTransactionID)) {
+								handleTheReport = true;
+							}
+						}
+						if (handleTheReport) {
+							log.debug("The report will be handled");
+
+							if (eventType.equals("ObjectEvent")) {
+								handleObjectEventReports(theReports);
+							}
+							else if (eventType.equals("AggregationEvent")) {
+								handleAggregationEventReports(theReports);
+							}
+							else if (eventType.equals("QuantityEvent")) {
+								handleQuantityEventReports(theReports);
+							}
+							else if (eventType.equals("TransactionEvent")) {
+								handleTransactionEventReports(theReports);
+							}
+							handleTheReport = false;
+						}
+						else {
+							log.debug("Transaction ID does not mach, the report will not be handled!");
+						}
+
 					}
-					else if (eventType.equals("AggregationEvent")) {
-						handleAggregationEventReports(reports);
-					}
-					else if (eventType.equals("QuantityEvent")) {
-						handleQuantityEventReports(reports);
-					}
-					else if (eventType.equals("TransactionEvent")) {
-						handleTransactionEventReports(reports);
-					}
+
 				}
 			}
 			catch (Exception e) {
-				
+
 				log.debug("ERROR: " + e.getMessage() + "\n");
-				
+
 				e.printStackTrace();
-//				System.exit(2);
+				// System.exit(2);
 			}
 		}
 		try {
@@ -196,16 +220,16 @@ public class CaptureReport extends Thread {
 
 	}
 
-	private void handleTransactionEventReports(ECReports reports) throws IOException, JAXBException {
+	private void handleTransactionEventReports(List<ECReport> theReports) throws IOException, JAXBException {
 		// TODO Auto-generated method stub
 	}
 
-	private void handleQuantityEventReports(ECReports reports) throws IOException, JAXBException {
+	private void handleQuantityEventReports(List<ECReport> theReports) throws IOException, JAXBException {
 		// TODO Auto-generated method stub
 
 	}
 
-	private void handleAggregationEventReports(ECReports reports) throws IOException, JAXBException {
+	private void handleAggregationEventReports(List<ECReport> theReports) throws IOException, JAXBException {
 
 		AggregationEventType aggregationEvent = new AggregationEventType();
 		XMLGregorianCalendar now = getCurrentTime();
@@ -216,94 +240,93 @@ public class CaptureReport extends Thread {
 
 		log.debug("****Handling incomming reports****");
 
-		List<ECReport> theReports = reports.getReports().getReport();
+		// // collect all the tags
+		// List<EPC> epcs = new LinkedList<EPC>();
+		for (ECReport report : theReports) {
+			// log.debug("Report Count: "+report.getGroup().size());
+			log.debug("****Report Name:" + report.getReportName() + "****");
+			if (report.getGroup() != null && report.getReportName().startsWith("bizTransactionIDs")) {// &&
+				// ecreportNames.contains(report.getReportName())
 
-//		// collect all the tags
-//		List<EPC> epcs = new LinkedList<EPC>();
-		if (theReports != null) {
-			for (ECReport report : theReports) {
-				// log.debug("Report Count: "+report.getGroup().size());
-				log.debug("****Report Name:" + report.getReportName() + "****");
-				if (report.getGroup() != null && ecreportNames.contains(report.getReportName())
-						&& report.getReportName().startsWith("bizTransactionIDs")) {
-					for (ECReportGroup group : report.getGroup()) {
-						log.debug("Group Count: " + group.getGroupCount().getCount());
-						log.debug("Group Name: " + group.getGroupName());
-						if (group.getGroupList() != null) {
-							for (ECReportGroupListMember member : group.getGroupList().getMember()) {
-								if (member.getEpc() != null) {
-									log.debug("***Recieved Group Values***");
-									log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
-									{
-										if (!(member.getEpc() == null))
-											// epcs.add(member.getEpc());
-											bizTransactionID = member.getEpc().getValue();
+				for (ECReportGroup group : report.getGroup()) {
+					log.debug("Group Count: " + group.getGroupCount().getCount());
+					log.debug("Group Name: " + group.getGroupName());
+					if (group.getGroupList() != null) {
+						for (ECReportGroupListMember member : group.getGroupList().getMember()) {
+							if (member.getEpc() != null) {
+								log.debug("***Recieved Group Values***");
+								log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
+								{
+									if (!(member.getEpc() == null))
+										// epcs.add(member.getEpc());
+										bizTransactionCapturedID = member.getEpc().getValue();
 
-										log.debug("bizTransactionID EPC Value: " + member.getEpc().getValue());
-										if ((member.getEpc() == null))
-											log.debug("TransactionID EPC Value: null");
-									}
-									log.debug("bizTransactionID RawHex Value: " + member.getRawHex().getValue());
-									log.debug("bizTransactionID Tag Value: " + member.getTag().getValue());
-									// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
+									log.debug("bizTransactionCapturedID EPC Value: " + member.getEpc().getValue());
+									if ((member.getEpc() == null))
+										log.debug("TransactionID EPC Value: null");
 								}
+								log.debug("bizTransactionCapturedID RawHex Value: " + member.getRawHex().getValue());
+								log.debug("bizTransactionCapturedID Tag Value: " + member.getTag().getValue());
+								// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
 							}
 						}
 					}
 				}
-				if (report.getGroup() != null && ecreportNames.contains(report.getReportName()) && report.getReportName().startsWith("parentObjects")) {
-					for (ECReportGroup group : report.getGroup()) {
-						log.debug("Group Count: " + group.getGroupCount().getCount());
-						log.debug("Group Name: " + group.getGroupName());
-						if (group.getGroupList() != null) {
-							for (ECReportGroupListMember member : group.getGroupList().getMember()) {
-								if (member.getEpc() != null) {
-									log.debug("***Recieved Group Values***");
-									log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
-									{
-										if (!(member.getEpc() == null))
-											// epcs.add(member.getEpc());
-											parentObjectID = member.getEpc().getValue();
+			}
+			if (report.getGroup() != null && report.getReportName().startsWith("parentObjects")) {// &&
+				// ecreportNames.contains(report.getReportName())
+				for (ECReportGroup group : report.getGroup()) {
+					log.debug("Group Count: " + group.getGroupCount().getCount());
+					log.debug("Group Name: " + group.getGroupName());
+					if (group.getGroupList() != null) {
+						for (ECReportGroupListMember member : group.getGroupList().getMember()) {
+							if (member.getEpc() != null) {
+								log.debug("***Recieved Group Values***");
+								log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
+								{
+									if (!(member.getEpc() == null))
+										// epcs.add(member.getEpc());
+										parentObjectID = member.getEpc().getValue();
 
-										log.debug("bizTransactionID EPC Value: " + member.getEpc().getValue());
-										if ((member.getEpc() == null))
-											log.debug("TransactionID EPC Value: null");
-									}
-									log.debug("bizTransactionID RawHex Value: " + member.getRawHex().getValue());
-									log.debug("bizTransactionID Tag Value: " + member.getTag().getValue());
-									// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
+									log.debug("bizTransactionCapturedID EPC Value: " + member.getEpc().getValue());
+									if ((member.getEpc() == null))
+										log.debug("TransactionID EPC Value: null");
 								}
+								log.debug("bizTransactionCapturedID RawHex Value: " + member.getRawHex().getValue());
+								log.debug("bizTransactionCapturedID Tag Value: " + member.getTag().getValue());
+								// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
 							}
 						}
 					}
 				}
-				if (report.getGroup() != null && ecreportNames.contains(report.getReportName())
-						&& report.getReportName().startsWith("transactionItems")) {
-					for (ECReportGroup group : report.getGroup()) {
-						log.debug("Group Count: " + group.getGroupCount().getCount());
-						log.debug("Group Name: " + group.getGroupName());
-						if (group.getGroupList() != null) {
-							for (ECReportGroupListMember member : group.getGroupList().getMember()) {
-								if (member.getEpc() != null) {
-									log.debug("***Recieved Group Values***");
-									log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
-									{
-										if (!(member.getEpc() == null))
-											epcs.add(member.getEpc());
-										log.debug("Epc Value: " + member.getEpc().getValue());
-										if ((member.getEpc() == null))
-											log.debug("Epc Value: null");
-									}
-									log.debug("RawHex Value: " + member.getRawHex().getValue());
-									log.debug("Tag Value: " + member.getTag().getValue());
-									// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
+			}
+			if (report.getGroup() != null && report.getReportName().startsWith("transactionItems")) {// &&
+				// ecreportNames.contains(report.getReportName())
+				for (ECReportGroup group : report.getGroup()) {
+					log.debug("Group Count: " + group.getGroupCount().getCount());
+					log.debug("Group Name: " + group.getGroupName());
+					if (group.getGroupList() != null) {
+						for (ECReportGroupListMember member : group.getGroupList().getMember()) {
+							if (member.getEpc() != null) {
+								log.debug("***Recieved Group Values***");
+								log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
+								{
+									if (!(member.getEpc() == null))
+										epcs.add(member.getEpc());
+									log.debug("Epc Value: " + member.getEpc().getValue());
+									if ((member.getEpc() == null))
+										log.debug("Epc Value: null");
 								}
+								log.debug("RawHex Value: " + member.getRawHex().getValue());
+								log.debug("Tag Value: " + member.getTag().getValue());
+								// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
 							}
 						}
 					}
 				}
 			}
 		}
+
 		if (epcs.size() == 0) {
 			log.debug("no epc received - generating no event");
 			return;
@@ -312,8 +335,7 @@ public class CaptureReport extends Thread {
 		aggregationEvent.setEventTime(now);
 		aggregationEvent.setEventTimeZoneOffset(EventTimeZoneOffset(now));
 
-		
-		if (!bizTransactionID.equals("")) {
+		if (!bizTransactionCapturedID.equals("")) {
 			BusinessTransactionListType businessTransactionListType = new BusinessTransactionListType();
 			BusinessTransactionType businessTransactionType = new BusinessTransactionType();
 			if (!businessCtx.getBusinessTransactionTypeID().equals("")) {
@@ -322,17 +344,19 @@ public class CaptureReport extends Thread {
 			else {
 				businessTransactionType.setType("urn:epc:transaction:type:general");
 			}
-			businessTransactionType.setValue(bizTransactionID);
+			businessTransactionType.setValue(bizTransactionCapturedID);
 			businessTransactionListType.getBizTransaction().add(businessTransactionType);
 			aggregationEvent.setBizTransactionList(businessTransactionListType);
-		}else{
+		}
+		else {
 			return;
 		}
-		
+
 		EPCListType epcList = new EPCListType();
 		// add the epcs
 		for (EPC epc : epcs) {
-			//org.ow2.aspirerfid.commons.epcis.model.EPC nepc = new org.ow2.aspirerfid.commons.epcis.model.EPC();
+			// org.ow2.aspirerfid.commons.epcis.model.EPC nepc = new
+			// org.ow2.aspirerfid.commons.epcis.model.EPC();
 			EPC nepc = new EPC();
 			nepc.setValue(epc.getValue());
 			epcList.getEpc().add(nepc);
@@ -379,7 +403,7 @@ public class CaptureReport extends Thread {
 
 	}
 
-	private void handleObjectEventReports(ECReports reports) throws IOException, JAXBException {
+	private void handleObjectEventReports(List<ECReport> theReports) throws IOException, JAXBException {
 		ObjectEventType objEvent = null;
 		XMLGregorianCalendar now = getCurrentTime();
 		EPCISDocumentType epcisDoc = new EPCISDocumentType();
@@ -389,78 +413,72 @@ public class CaptureReport extends Thread {
 
 		log.debug("****Handling incomming reports****");
 
-		List<ECReport> theReports = reports.getReports().getReport();
-		
-
 		// collect the tags transaction ID
-		if (theReports != null) {
-			for (ECReport report : theReports) {
-				// log.debug("Report Count: "+report.getGroup().size());
-				log.debug("****Report Name:" + report.getReportName() + "****");
-				if (report.getGroup() != null && ecreportNames.contains(report.getReportName())
-						&& report.getReportName().startsWith("bizTransactionIDs")) {
-					for (ECReportGroup group : report.getGroup()) {
-						log.debug("Group Count: " + group.getGroupCount().getCount());
-						log.debug("Group Name: " + group.getGroupName());
-						if (group.getGroupList() != null) {
-							for (ECReportGroupListMember member : group.getGroupList().getMember()) {
-								if (member.getEpc() != null) {
-									log.debug("***Recieved Group Values***");
-									log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
-									{
-										if (!(member.getEpc() == null))
-											// epcs.add(member.getEpc());
-											bizTransactionID = member.getEpc().getValue();
+		for (ECReport report : theReports) {
 
-										log.debug("bizTransactionID EPC Value: " + member.getEpc().getValue());
-										if ((member.getEpc() == null))
-											log.debug("TransactionID EPC Value: null");
-									}
-									log.debug("bizTransactionID RawHex Value: " + member.getRawHex().getValue());
-									log.debug("bizTransactionID Tag Value: " + member.getTag().getValue());
-									// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
+			// log.debug("Report Count: "+report.getGroup().size());
+			log.debug("****Report Name:" + report.getReportName() + "****");
+			if (report.getGroup() != null && report.getReportName().startsWith("bizTransactionIDs")) {// &&
+				// ecreportNames.contains(report.getReportName())
+				for (ECReportGroup group : report.getGroup()) {
+					log.debug("Group Count: " + group.getGroupCount().getCount());
+					log.debug("Group Name: " + group.getGroupName());
+					if (group.getGroupList() != null) {
+						for (ECReportGroupListMember member : group.getGroupList().getMember()) {
+							if (member.getEpc() != null) {
+								log.debug("***Recieved Group Values***");
+								log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
+								{
+									if (!(member.getEpc() == null))
+										// epcs.add(member.getEpc());
+										bizTransactionCapturedID = member.getEpc().getValue();
+
+									log.debug("bizTransactionCapturedID EPC Value: " + member.getEpc().getValue());
+									if ((member.getEpc() == null))
+										log.debug("TransactionID EPC Value: null");
 								}
+								log.debug("bizTransactionCapturedID RawHex Value: " + member.getRawHex().getValue());
+								log.debug("bizTransactionCapturedID Tag Value: " + member.getTag().getValue());
+								// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
 							}
 						}
 					}
 				}
-				// collect all the tags
-				if (report.getGroup() != null && ecreportNames.contains(report.getReportName())
-						&& report.getReportName().startsWith("transactionItems")) {
-					for (ECReportGroup group : report.getGroup()) {
-						log.debug("Group Count: " + group.getGroupCount().getCount());
-						log.debug("Group Name: " + group.getGroupName());
-						if (group.getGroupList() != null) {
-							for (ECReportGroupListMember member : group.getGroupList().getMember()) {
-								if (member.getEpc() != null) {
-									log.debug("***Recieved Group Values***");
-									log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
-									{
-										if (!(member.getEpc() == null))
-											epcs.add(member.getEpc());
-										log.debug("Epc Value: " + member.getEpc().getValue());
-										if ((member.getEpc() == null))
-											log.debug("Epc Value: null");
-									}
-									log.debug("RawHex Value: " + member.getRawHex().getValue());
-									log.debug("Tag Value: " + member.getTag().getValue());
-									// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
+			}
+			// collect all the tags
+			if (report.getGroup() != null && report.getReportName().startsWith("transactionItems")) {// &&
+				// ecreportNames.contains(report.getReportName())
+				for (ECReportGroup group : report.getGroup()) {
+					log.debug("Group Count: " + group.getGroupCount().getCount());
+					log.debug("Group Name: " + group.getGroupName());
+					if (group.getGroupList() != null) {
+						for (ECReportGroupListMember member : group.getGroupList().getMember()) {
+							if (member.getEpc() != null) {
+								log.debug("***Recieved Group Values***");
+								log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
+								{
+									if (!(member.getEpc() == null))
+										epcs.add(member.getEpc());
+									log.debug("Epc Value: " + member.getEpc().getValue());
+									if ((member.getEpc() == null))
+										log.debug("Epc Value: null");
 								}
+								log.debug("RawHex Value: " + member.getRawHex().getValue());
+								log.debug("Tag Value: " + member.getTag().getValue());
+								// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
 							}
 						}
 					}
 				}
 			}
 		}
-		
-		
-		if (!oldBizTransactionID.equals(bizTransactionID)){
+
+		if (!oldBizTransactionCapturedID.equals(bizTransactionCapturedID)) {
 			epcListForTransaction.clear();
 		}
-		
-		oldBizTransactionID = bizTransactionID;
-		
-		
+
+		oldBizTransactionCapturedID = bizTransactionCapturedID;
+
 		if (epcs.size() == 0) {
 			log.debug("no epc received - generating no event");
 			return;
@@ -470,9 +488,8 @@ public class CaptureReport extends Thread {
 		objEvent = new ObjectEventType();
 		objEvent.setEventTime(now);
 		objEvent.setEventTimeZoneOffset(EventTimeZoneOffset(now));
-		
-		
-		if (!bizTransactionID.equals("")) {
+
+		if (!bizTransactionCapturedID.equals("")) {
 			BusinessTransactionListType businessTransactionListType = new BusinessTransactionListType();
 			BusinessTransactionType businessTransactionType = new BusinessTransactionType();
 			if (!businessCtx.getBusinessTransactionTypeID().equals("")) {
@@ -481,27 +498,26 @@ public class CaptureReport extends Thread {
 			else {
 				businessTransactionType.setType("urn:epc:transaction:type:general");
 			}
-			businessTransactionType.setValue(bizTransactionID);
+			businessTransactionType.setValue(bizTransactionCapturedID);
 			businessTransactionListType.getBizTransaction().add(businessTransactionType);
 			objEvent.setBizTransactionList(businessTransactionListType);
-		}else{
+		}
+		else {
 			return;
 		}
-		
+
 		// add the epcs
 		for (EPC epc : epcs) {
-//			org.ow2.aspirerfid.commons.epcis.model.EPC nepc = new org.ow2.aspirerfid.commons.epcis.model.EPC();
+			// org.ow2.aspirerfid.commons.epcis.model.EPC nepc = new
+			// org.ow2.aspirerfid.commons.epcis.model.EPC();
 			EPC nepc = new EPC();
 			nepc.setValue(epc.getValue());
 			epcList.getEpc().add(nepc);
 			epcListForTransaction.add(epc.getValue());
 		}
-		
 
-		
 		objEvent.setEpcList(epcList);
-		
-		
+
 		// set action
 		if (!businessCtx.getAction().equals(null))
 			objEvent.setAction(businessCtx.getAction());
@@ -541,9 +557,7 @@ public class CaptureReport extends Thread {
 
 	}
 
-
-
-	private void handleReports(ECReports reports) throws IOException, JAXBException {
+	private void handleReports(List<ECReport> theReports) throws IOException, JAXBException {
 
 		ObjectEventType objEvent = null;
 		AggregationEventType aggregationEvent = null;
@@ -558,68 +572,65 @@ public class CaptureReport extends Thread {
 
 		log.debug("****Handling incomming reports****");
 
-		List<ECReport> theReports = reports.getReports().getReport();
-
 		// collect all the tags
 		List<EPC> epcs = new LinkedList<EPC>();
-		if (theReports != null) {
-			for (ECReport report : theReports) {
-				// log.debug("Report Count: "+report.getGroup().size());
-				log.debug("****Report Name:" + report.getReportName() + "****");
-				if (report.getGroup() != null && ecreportNames.contains(report.getReportName())
-						&& report.getReportName().startsWith("bizTransactionIDs")) {
-					for (ECReportGroup group : report.getGroup()) {
-						log.debug("Group Count: " + group.getGroupCount().getCount());
-						log.debug("Group Name: " + group.getGroupName());
-						if (group.getGroupList() != null) {
-							for (ECReportGroupListMember member : group.getGroupList().getMember()) {
-								if (member.getEpc() != null) {
-									log.debug("***Recieved Group Values***");
-									log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
-									{
-										if (!(member.getEpc() == null))
-											// epcs.add(member.getEpc());
-											bizTransactionID = member.getEpc().getValue();
+		for (ECReport report : theReports) {
+			// log.debug("Report Count: "+report.getGroup().size());
+			log.debug("****Report Name:" + report.getReportName() + "****");
+			if (report.getGroup() != null && report.getReportName().startsWith("bizTransactionIDs")) {// &&
+				// ecreportNames.contains(report.getReportName())
+				for (ECReportGroup group : report.getGroup()) {
+					log.debug("Group Count: " + group.getGroupCount().getCount());
+					log.debug("Group Name: " + group.getGroupName());
+					if (group.getGroupList() != null) {
+						for (ECReportGroupListMember member : group.getGroupList().getMember()) {
+							if (member.getEpc() != null) {
+								log.debug("***Recieved Group Values***");
+								log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
+								{
+									if (!(member.getEpc() == null))
+										// epcs.add(member.getEpc());
+										bizTransactionCapturedID = member.getEpc().getValue();
 
-										log.debug("bizTransactionID EPC Value: " + member.getEpc().getValue());
-										if ((member.getEpc() == null))
-											log.debug("TransactionID EPC Value: null");
-									}
-									log.debug("bizTransactionID RawHex Value: " + member.getRawHex().getValue());
-									log.debug("bizTransactionID Tag Value: " + member.getTag().getValue());
-									// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
+									log.debug("bizTransactionCapturedID EPC Value: " + member.getEpc().getValue());
+									if ((member.getEpc() == null))
+										log.debug("TransactionID EPC Value: null");
 								}
+								log.debug("bizTransactionCapturedID RawHex Value: " + member.getRawHex().getValue());
+								log.debug("bizTransactionCapturedID Tag Value: " + member.getTag().getValue());
+								// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
 							}
 						}
 					}
 				}
-				if (report.getGroup() != null && ecreportNames.contains(report.getReportName())
-						&& report.getReportName().startsWith("transactionItems")) {
-					for (ECReportGroup group : report.getGroup()) {
-						log.debug("Group Count: " + group.getGroupCount().getCount());
-						log.debug("Group Name: " + group.getGroupName());
-						if (group.getGroupList() != null) {
-							for (ECReportGroupListMember member : group.getGroupList().getMember()) {
-								if (member.getEpc() != null) {
-									log.debug("***Recieved Group Values***");
-									log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
-									{
-										if (!(member.getEpc() == null))
-											epcs.add(member.getEpc());
-										log.debug("Epc Value: " + member.getEpc().getValue());
-										if ((member.getEpc() == null))
-											log.debug("Epc Value: null");
-									}
-									log.debug("RawHex Value: " + member.getRawHex().getValue());
-									log.debug("Tag Value: " + member.getTag().getValue());
-									// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
+			}
+			if (report.getGroup() != null && report.getReportName().startsWith("transactionItems")) {// &&
+				// ecreportNames.contains(report.getReportName())
+				for (ECReportGroup group : report.getGroup()) {
+					log.debug("Group Count: " + group.getGroupCount().getCount());
+					log.debug("Group Name: " + group.getGroupName());
+					if (group.getGroupList() != null) {
+						for (ECReportGroupListMember member : group.getGroupList().getMember()) {
+							if (member.getEpc() != null) {
+								log.debug("***Recieved Group Values***");
+								log.debug("RawDecimal Value: " + member.getRawDecimal().getValue());
+								{
+									if (!(member.getEpc() == null))
+										epcs.add(member.getEpc());
+									log.debug("Epc Value: " + member.getEpc().getValue());
+									if ((member.getEpc() == null))
+										log.debug("Epc Value: null");
 								}
+								log.debug("RawHex Value: " + member.getRawHex().getValue());
+								log.debug("Tag Value: " + member.getTag().getValue());
+								// log.debug("Group Value:"+member.getExtension().getFieldList().toString());
 							}
 						}
 					}
 				}
 			}
 		}
+
 		if (epcs.size() == 0) {
 			log.debug("no epc received - generating no event");
 			return;
@@ -634,7 +645,8 @@ public class CaptureReport extends Thread {
 			EPCListType epcList = new EPCListType();
 			// add the epcs
 			for (EPC epc : epcs) {
-//				org.ow2.aspirerfid.commons.epcis.model.EPC nepc = new org.ow2.aspirerfid.commons.epcis.model.EPC();
+				// org.ow2.aspirerfid.commons.epcis.model.EPC nepc = new
+				// org.ow2.aspirerfid.commons.epcis.model.EPC();
 				EPC nepc = new EPC();
 				nepc.setValue(epc.getValue());
 				epcList.getEpc().add(nepc);
@@ -663,7 +675,7 @@ public class CaptureReport extends Thread {
 				objEvent.setBizLocation(businessCtx.getBizLocation());
 			}
 
-			if (!bizTransactionID.equals("")) {
+			if (!bizTransactionCapturedID.equals("")) {
 				BusinessTransactionListType businessTransactionListType = new BusinessTransactionListType();
 				BusinessTransactionType businessTransactionType = new BusinessTransactionType();
 				if (!businessCtx.getBusinessTransactionTypeID().equals("")) {
@@ -672,7 +684,7 @@ public class CaptureReport extends Thread {
 				else {
 					businessTransactionType.setType("urn:epc:transaction:type:general");
 				}
-				businessTransactionType.setValue(bizTransactionID);
+				businessTransactionType.setValue(bizTransactionCapturedID);
 				businessTransactionListType.getBizTransaction().add(businessTransactionType);
 				objEvent.setBizTransactionList(businessTransactionListType);
 			}
@@ -736,6 +748,10 @@ public class CaptureReport extends Thread {
 
 		BusinessCtx businessCtx = new BusinessCtx();
 
+		String[] transactionIdPath = vocabularyElementType.getId().split(",");
+
+		businessCtx.setBusinessTransactionID(transactionIdPath[transactionIdPath.length - 1]);
+
 		for (AttributeType vocElementAttribute : vocabularyElementType.getAttribute()) {
 			if (vocElementAttribute.getId().endsWith("business_location")) {
 				businessCtx.setBizLocation(vocElementAttribute.getOtherAttributes().get(new QName("value")));
@@ -746,9 +762,6 @@ public class CaptureReport extends Thread {
 			else if (vocElementAttribute.getId().endsWith("disposition")) {
 				businessCtx.setDisposition(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 			}
-			else if (vocElementAttribute.getId().endsWith("ecspec_name")) {
-				businessCtx.setECSpecName(vocElementAttribute.getOtherAttributes().get(new QName("value")));
-			}
 			else if (vocElementAttribute.getId().endsWith("read_point")) {
 				businessCtx.setReadPoint(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 			}
@@ -758,9 +771,11 @@ public class CaptureReport extends Thread {
 			else if (vocElementAttribute.getId().endsWith("event_type")) {
 				businessCtx.setEventType(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 			}
-			else if (vocElementAttribute.getId().endsWith("ecreport_names")) {
-				businessCtx.setEcReportNames(vocElementAttribute.getOtherAttributes().get(new QName("value")));
-			}
+			// else if (vocElementAttribute.getId().endsWith("ecreport_names"))
+			// {
+			// businessCtx.setEcReportNames(vocElementAttribute.getOtherAttributes().get(new
+			// QName("value")));
+			// }
 			else if (vocElementAttribute.getId().endsWith("transaction_type")) {
 				businessCtx.setBusinessTransactionTypeID(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 			}
@@ -788,7 +803,7 @@ public class CaptureReport extends Thread {
 	 * @return for which transaction ID is currently generating Events
 	 */
 	public String getBizTransactionID() {
-		return bizTransactionID;
+		return bizTransactionCapturedID;
 	}
 
 	/**
@@ -801,7 +816,7 @@ public class CaptureReport extends Thread {
 	public ServerSocket getServerSocket() {
 		return serverSocket;
 	}
-	
+
 	public ArrayList<String> getEpcListForTransaction() {
 		return epcListForTransaction;
 	}
