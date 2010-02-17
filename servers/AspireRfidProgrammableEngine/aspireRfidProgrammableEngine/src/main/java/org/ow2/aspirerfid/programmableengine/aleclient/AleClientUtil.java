@@ -22,20 +22,23 @@ import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.util.List;
 
-import org.ow2.aspirerfid.programmableengine.ale.utils.SerializerUtil;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.ALEServicePortType;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.ArrayOfString;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.Define;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.DuplicateNameExceptionResponse;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.DuplicateSubscriptionExceptionResponse;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.ECSpecValidationExceptionResponse;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.ImplementationExceptionResponse;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.InvalidURIExceptionResponse;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.NoSuchNameExceptionResponse;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.SecurityExceptionResponse;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.Subscribe;
-import org.ow2.aspirerfid.programmableengine.model.ECReports;
-import org.ow2.aspirerfid.programmableengine.model.ECSpec;
+import org.ow2.aspirerfid.commons.ale.utils.SerializerUtil;
+import org.ow2.aspirerfid.commons.ale.wsdl.ale.ALEServicePortType;
+import org.ow2.aspirerfid.commons.ale.wsdl.ale.ArrayOfString;
+import org.ow2.aspirerfid.commons.ale.wsdl.ale.Define;
+import org.ow2.aspirerfid.commons.ale.wsdl.ale.DuplicateNameExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.wsdl.ale.DuplicateSubscriptionExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.wsdl.ale.ECSpecValidationExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.wsdl.ale.ImplementationExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.wsdl.ale.InvalidURIExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.wsdl.ale.NoSuchNameExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.wsdl.ale.SecurityExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.wsdl.ale.Subscribe;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECReports;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec;
+
+//import org.ow2.aspirerfid.commons.apdl.model.ECReports;
+//import org.ow2.aspirerfid.commons.apdl.model.ECSpec;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.log4j.Logger;
 
@@ -194,7 +197,7 @@ public class AleClientUtil {
 		List<String> ecSpecNames = null;
 
 		try {
-			ecSpecNames = aleProxy.getECSpecNames(new org.ow2.aspirerfid.programmableengine.ale.wsdl.ale.EmptyParms()).getString();
+			ecSpecNames = aleProxy.getECSpecNames(new org.ow2.aspirerfid.commons.ale.wsdl.ale.EmptyParms()).getString();
 		}
 		catch (Exception e) {
 			LOG.error( e.getMessage());

@@ -21,9 +21,9 @@ package org.ow2.aspirerfid.programmableengine.encode;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import org.ow2.aspirerfid.programmableengine.model.ECSpec;
-import org.ow2.aspirerfid.programmableengine.model.EPCISMasterDataDocumentType;
-import org.ow2.aspirerfid.programmableengine.model.LRSpec;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec;
+import org.ow2.aspirerfid.commons.epcis.model.EPCISMasterDataDocumentType;
+import org.ow2.aspirerfid.commons.ale.model.alelr.LRSpec;
 
 /**
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
@@ -42,6 +42,7 @@ public class ProcessedEBProc {
 	private String aleLrClientEndPoint;
 	private String epcisClientCaptureEndPoint;
 	private String epcisClientQueryEndPoint;
+	private String begEngineEndpoint;
 //	private String clCBProcID;
 	
 	
@@ -51,6 +52,12 @@ public class ProcessedEBProc {
 	
 
 
+	public String getBegEngineEndpoint() {
+		return begEngineEndpoint;
+	}
+	public void setBegEngineEndpoint(String begEngineEndpoint) {
+		this.begEngineEndpoint = begEngineEndpoint;
+	}
 	public ECSpec getEcSpec() {
 		return ecSpec;
 	}

@@ -25,14 +25,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import org.ow2.aspirerfid.programmableengine.model.ECBoundarySpec;
-import org.ow2.aspirerfid.programmableengine.model.ECReportSpec;
-import org.ow2.aspirerfid.programmableengine.model.ECSpec;
-import org.ow2.aspirerfid.programmableengine.model.ECSpecExtension;
-import org.ow2.aspirerfid.programmableengine.model.ECSpec.LogicalReaders;
-import org.ow2.aspirerfid.programmableengine.model.ECSpec.ReportSpecs;
-import org.ow2.aspirerfid.programmableengine.ale.utils.DeserializerUtil;
-import org.ow2.aspirerfid.programmableengine.ale.utils.SerializerUtil;
+
+import org.ow2.aspirerfid.commons.ale.model.ale.ECBoundarySpec;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECReportSpec;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpecExtension;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec.LogicalReaders;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec.ReportSpecs;
+
+
+import org.ow2.aspirerfid.commons.ale.utils.DeserializerUtil;
+import org.ow2.aspirerfid.commons.ale.utils.SerializerUtil;
 
 /**
  * 

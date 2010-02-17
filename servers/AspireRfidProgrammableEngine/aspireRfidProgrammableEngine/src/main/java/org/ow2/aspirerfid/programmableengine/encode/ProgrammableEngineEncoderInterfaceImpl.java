@@ -20,8 +20,8 @@ package org.ow2.aspirerfid.programmableengine.encode;
 
 import javax.jws.WebService;
 
-import org.ow2.aspirerfid.programmableengine.interfaces.ProgrammableEngineEncoderInterface;
-import org.ow2.aspirerfid.programmableengine.model.OLCBProc;
+import org.ow2.aspirerfid.commons.pe.interfaces.ProgrammableEngineEncoderInterface;
+import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
 
 
 
@@ -29,7 +29,7 @@ import org.ow2.aspirerfid.programmableengine.model.OLCBProc;
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
  */
-@WebService(endpointInterface = "org.ow2.aspirerfid.programmableengine.interfaces.ProgrammableEngineEncoderInterface")                      
+@WebService(endpointInterface = "org.ow2.aspirerfid.commons.pe.interfaces.ProgrammableEngineEncoderInterface")                      
 public class ProgrammableEngineEncoderInterfaceImpl implements ProgrammableEngineEncoderInterface {
 
 

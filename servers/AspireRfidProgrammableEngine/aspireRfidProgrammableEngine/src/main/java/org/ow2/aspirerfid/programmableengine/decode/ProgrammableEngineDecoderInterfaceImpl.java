@@ -23,15 +23,15 @@ import javax.jws.WebService;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.ow2.aspirerfid.programmableengine.interfaces.ProgrammableEngineDecoderInterface;
-import org.ow2.aspirerfid.programmableengine.model.OLCBProc;
+import org.ow2.aspirerfid.commons.pe.interfaces.ProgrammableEngineDecoderInterface;
+import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
 
 
 /**
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
  */
-@WebService(endpointInterface = "org.ow2.aspirerfid.programmableengine.interfaces.ProgrammableEngineDecoderInterface")                      
+@WebService(endpointInterface = "org.ow2.aspirerfid.commons.pe.interfaces.ProgrammableEngineDecoderInterface")                      
 public class ProgrammableEngineDecoderInterfaceImpl implements ProgrammableEngineDecoderInterface {
 
 

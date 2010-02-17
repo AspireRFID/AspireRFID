@@ -26,23 +26,31 @@ import javax.xml.bind.JAXBException;
 import org.apache.log4j.Logger;
 import org.ow2.aspirerfid.programmableengine.aleclient.AleClientUtil;
 import org.ow2.aspirerfid.programmableengine.aleclient.AleLrClientUtil;
+import org.ow2.aspirerfid.programmableengine.begclient.BegEngineClient;
+
 import org.ow2.aspirerfid.programmableengine.epcisclient.EpcisConstants;
 import org.ow2.aspirerfid.programmableengine.epcisclient.MasterDataCaptureClient;
-import org.ow2.aspirerfid.programmableengine.model.ApdlDataField;
-import org.ow2.aspirerfid.programmableengine.model.ApdlDataFields;
-import org.ow2.aspirerfid.programmableengine.model.AttributeType;
-import org.ow2.aspirerfid.programmableengine.model.CLCBProc;
-import org.ow2.aspirerfid.programmableengine.model.EBProc;
-import org.ow2.aspirerfid.programmableengine.model.ECReportSpec;
-import org.ow2.aspirerfid.programmableengine.model.ECSpec;
-import org.ow2.aspirerfid.programmableengine.model.EPCISMasterDataDocumentType;
-import org.ow2.aspirerfid.programmableengine.model.ExtendedAttribute;
-import org.ow2.aspirerfid.programmableengine.model.LRSpec;
-import org.ow2.aspirerfid.programmableengine.model.OLCBProc;
-import org.ow2.aspirerfid.programmableengine.model.VocabularyElementListType;
-import org.ow2.aspirerfid.programmableengine.model.VocabularyElementType;
-import org.ow2.aspirerfid.programmableengine.model.VocabularyType;
-import org.ow2.aspirerfid.programmableengine.model.ECSpec.ReportSpecs;
+import org.ow2.aspirerfid.programmableengine.epcisclient.MasterDataCaptureUtils;
+
+import org.ow2.aspirerfid.commons.epcis.model.AttributeType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementListType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyType;
+import org.ow2.aspirerfid.commons.epcis.model.EPCISMasterDataDocumentType;
+
+import org.ow2.aspirerfid.commons.apdl.model.ApdlDataField;
+import org.ow2.aspirerfid.commons.apdl.model.ApdlDataFields;
+import org.ow2.aspirerfid.commons.apdl.model.CLCBProc;
+import org.ow2.aspirerfid.commons.apdl.model.EBProc;
+import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
+import org.ow2.aspirerfid.commons.xpdl.model.ExtendedAttribute;
+
+import org.ow2.aspirerfid.commons.ale.model.ale.ECReportSpec;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec.ReportSpecs;
+
+import org.ow2.aspirerfid.commons.ale.model.alelr.LRSpec;
+
 import org.w3c.dom.Element;
 
 /**
@@ -96,7 +104,7 @@ public class EncodeImplementation {
 
 		for (CLCBProc clCBProc : clCBProcesses) {
 
-			String clCBProcID = clCBProc.getId();
+
 
 			clCBProc.getDescription();
 			ArrayList<EBProc> ebProcesses = new ArrayList<EBProc>();
@@ -108,17 +116,20 @@ public class EncodeImplementation {
 						ProcessedEBProc processedEBProc = new ProcessedEBProc();
 						processedEBProc = processEBProc(ebProc);
 
-						// SetUp LRSpec
+						// Define LRSpec
 						setUpAleLR(processedEBProc.getAleLrClientEndPoint(), processedEBProc.getLrSpecs());
 
-						// SetUpECSpec
-						setUpAle(processedEBProc.getAleClientEndPoint(), processedEBProc.getId(), processedEBProc.getDefinedECSpecName(),
-								processedEBProc.getEcSpec(), processedEBProc.getEcSpecSubscriptionURI());
+						// DefineECSpec
+						defineECSpec(processedEBProc.getAleClientEndPoint(), processedEBProc.getId(), processedEBProc.getDefinedECSpecName(),processedEBProc.getEcSpec());
 
 						// SetUp MasterData
-						setUpEPCIS(processedEBProc.getEpcisClientCaptureEndPoint(), clCBProcID, processedEBProc.getEpcisMasterDataDocument());
+						setUpEPCIS(processedEBProc.getEpcisClientCaptureEndPoint(), clCBProc, processedEBProc.getEpcisMasterDataDocument());
 
 						//SetUp BEG
+						setUpBEG(processedEBProc.getEpcisMasterDataDocument(), processedEBProc.getBegEngineEndpoint(), processedEBProc.getEpcisClientCaptureEndPoint(),processedEBProc.getEcSpecSubscriptionURI());
+						
+						// SubscribeECSpec
+						subscribeECSpec(processedEBProc.getAleClientEndPoint(),processedEBProc.getDefinedECSpecName(),processedEBProc.getEcSpecSubscriptionURI());
 					}
 				}
 			}
@@ -140,7 +151,7 @@ public class EncodeImplementation {
 		LOG.debug("Logical Reader" + "Was Successfull Set Up!");
 	}
 
-	private void setUpAle(String aleClientEndPoint, String ebProcID, String definedECSpecName, ECSpec ecSpec, String ecSpecSubscriptionURI) {
+	private void defineECSpec(String aleClientEndPoint, String ebProcID, String definedECSpecName, ECSpec ecSpec) {
 		// Concatenate to every ReportSpecName the @ebProcID for BEG use
 		ArrayList<ECReportSpec> reportSpecsList = new ArrayList<ECReportSpec>();
 		reportSpecsList = (ArrayList<ECReportSpec>) ecSpec.getReportSpecs().getReportSpec();
@@ -152,18 +163,27 @@ public class EncodeImplementation {
 		AleClientUtil aleClientUtil = new AleClientUtil();
 		aleClientUtil.initializeAleProxy(aleClientEndPoint);
 		aleClientUtil.defineECSpec(definedECSpecName, ecSpec);
-		aleClientUtil.subscribeECSpec(definedECSpecName, ecSpecSubscriptionURI);
 
 	}
 
-	private void setUpEPCIS(String epcisClientCaptureEndPoint, String clCBProcID, EPCISMasterDataDocumentType epcisMasterDataDocument) {
+	private void subscribeECSpec(String aleClientEndPoint, String definedECSpecName, String ecSpecSubscriptionURI) {
+		AleClientUtil aleClientUtil = new AleClientUtil();
+		aleClientUtil.initializeAleProxy(aleClientEndPoint);
+		aleClientUtil.subscribeECSpec(definedECSpecName, ecSpecSubscriptionURI);
+	}
+
+	private void setUpEPCIS(String epcisClientCaptureEndPoint, CLCBProc clCBProc, EPCISMasterDataDocumentType epcisMasterDataDocument) {
+
+		String clCBProcID = clCBProc.getId();
+		String clCBProcName = clCBProc.getName();
 
 		boolean simpleMasterDataCaptureSucceeded = false;
 
 		MasterDataCaptureClient masterDataCaptureClient = new MasterDataCaptureClient(epcisClientCaptureEndPoint);
 
 		// Save openLoopCBProcID
-		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(EpcisConstants.BUSINESS_TRANSACTION_ID, openLoopCBProcID);
+		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataAndAttributeInsertOrAlter(EpcisConstants.BUSINESS_TRANSACTION_ID,
+				openLoopCBProcID, "Name", openLoopCBPro.getName());
 		if (simpleMasterDataCaptureSucceeded) {
 			LOG.debug("Master Data " + openLoopCBProcID + " saccesfuly saved!");
 			simpleMasterDataCaptureSucceeded = false;
@@ -173,8 +193,8 @@ public class EncodeImplementation {
 		}
 
 		// Save clCBProcID
-		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(EpcisConstants.BUSINESS_TRANSACTION_ID, openLoopCBProcID
-				+ "," + clCBProcID);
+		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataAndAttributeInsertOrAlter(EpcisConstants.BUSINESS_TRANSACTION_ID,
+				openLoopCBProcID + "," + clCBProcID, "Name", clCBProcName);
 		if (simpleMasterDataCaptureSucceeded) {
 			LOG.debug("Master Data " + openLoopCBProcID + "," + clCBProcID + " saccesfuly saved!");
 			simpleMasterDataCaptureSucceeded = false;
@@ -183,8 +203,28 @@ public class EncodeImplementation {
 			LOG.debug("The Master Data " + openLoopCBProcID + "," + clCBProcID + " could NOT be captured!");
 		}
 
-		// ==== Save the Individual Attributes to their relative Vocabularies=====
+		// ==== Save the Individual Attributes to their relative
+		// Vocabularies=====
 
+		MasterDataCaptureUtils masterDataCaptureUtils = new MasterDataCaptureUtils();
+
+		masterDataCaptureUtils.saveIndividualAttr(epcisMasterDataDocument, masterDataCaptureClient);
+
+		// ===========================================================================
+
+		// Save the hole Transaction Event from the given
+		// epcisMasterDataDocument
+		masterDataCaptureUtils.saveTransactionEvent(epcisMasterDataDocument, masterDataCaptureClient, openLoopCBProcID + "," + clCBProcID);
+
+	}
+
+	private void setUpBEG(EPCISMasterDataDocumentType epcisMasterDataDocument,String begEngineEndpoint, String repositoryCaptureURL, String ecSpecSubscriptionURI) {
+
+		String[] ecSpecSubscriptionURISplited = ecSpecSubscriptionURI.split(":");
+		String begListeningPort = ecSpecSubscriptionURISplited[ecSpecSubscriptionURISplited.length-1];
+		
+		BegEngineClient begEngineClient = new BegEngineClient(begEngineEndpoint);
+		
 		ArrayList<VocabularyType> vocabularyTypeList = (ArrayList<VocabularyType>) epcisMasterDataDocument.getEPCISBody().getVocabularyList()
 				.getVocabulary();
 
@@ -196,93 +236,10 @@ public class EncodeImplementation {
 
 			for (VocabularyElementType vocabularyElementType : vocabularyElementTypeList) {
 
-				ArrayList<AttributeType> attributeTypeList = (ArrayList<AttributeType>) vocabularyElementType.getAttribute();
-
-				for (AttributeType attributeType : attributeTypeList) {
-
-					// Save the business_step if it doesn't already exists
-					if (attributeType.getId().equals("urn:epcglobal:epcis:mda:business_step")) {
-						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(EpcisConstants.BUSINESS_STEP_ID,attributeType.getAny().get(0).getNodeValue());
-						if (simpleMasterDataCaptureSucceeded) {
-							LOG.debug("Master Data " + attributeType.getAny().get(0).getNodeValue() + " saccesfuly saved!");
-							simpleMasterDataCaptureSucceeded = false;
-						}
-						else {
-							LOG.debug("The Master Data " + attributeType.getAny().get(0).getNodeValue() + " could NOT be captured!");
-						}
-					}else
-					// Save the business_location if it doesn't already exists
-					if (attributeType.getId().equals("urn:epcglobal:epcis:mda:business_location")) {
-
-						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(EpcisConstants.BUSINESS_LOCATION_ID,attributeType.getAny().get(0).getNodeValue());
-						if (simpleMasterDataCaptureSucceeded) {
-							LOG.debug("Master Data " + attributeType.getAny().get(0).getNodeValue() + " saccesfuly saved!");
-							simpleMasterDataCaptureSucceeded = false;
-						}
-						else {
-							LOG.debug("The Master Data " + attributeType.getAny().get(0).getNodeValue() + " could NOT be captured!");
-						}
-					}else
-					// Save the disposition if it doesn't already exists
-					if (attributeType.getId().equals("urn:epcglobal:epcis:mda:disposition")) {
-
-						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(EpcisConstants.DISPOSITION_ID,attributeType.getAny().get(0).getNodeValue());
-						if (simpleMasterDataCaptureSucceeded) {
-							LOG.debug("Master Data " + attributeType.getAny().get(0).getNodeValue() + " saccesfuly saved!");
-							simpleMasterDataCaptureSucceeded = false;
-						}
-						else {
-							LOG.debug("The Master Data " + attributeType.getAny().get(0).getNodeValue() + " could NOT be captured!");
-						}
-					}else
-					// Save the read_point if it doesn't already exists
-					if (attributeType.getId().equals("urn:epcglobal:epcis:mda:read_point")) {
-
-						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(EpcisConstants.READ_POINT_ID,attributeType.getAny().get(0).getNodeValue());
-						if (simpleMasterDataCaptureSucceeded) {
-							LOG.debug("Master Data " + attributeType.getAny().get(0).getNodeValue() + " saccesfuly saved!");
-							simpleMasterDataCaptureSucceeded = false;
-						}
-						else {
-							LOG.debug("The Master Data " + attributeType.getAny().get(0).getNodeValue() + " could NOT be captured!");
-						}						
-						
-					}else
-					// Save the transaction_type if it doesn't already exists
-					if (attributeType.getId().equals("urn:epcglobal:epcis:mda:transaction_type")) {
-
-						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(EpcisConstants.BUSINESS_TRANSACTION_TYPE_ID,attributeType.getAny().get(0).getNodeValue());
-						if (simpleMasterDataCaptureSucceeded) {
-							LOG.debug("Master Data " + attributeType.getAny().get(0).getNodeValue() + " saccesfuly saved!");
-							simpleMasterDataCaptureSucceeded = false;
-						}
-						else {
-							LOG.debug("The Master Data " + attributeType.getAny().get(0).getNodeValue() + " could NOT be captured!");
-						}						
-					}
-				}
+				begEngineClient.startBegForEvent(vocabularyElementType, repositoryCaptureURL, begListeningPort);
 			}
-		}
 
-		// ===========================================================================
-
-		// Save the hole Transaction Event from the given
-		// epcisMasterDataDocument
-		try {
-			masterDataCaptureClient.capture(epcisMasterDataDocument);
 		}
-		catch (IOException e) {
-			LOG.error("Master Data Document for " + clCBProcID + " could not be saved!");
-			e.printStackTrace();
-		}
-		catch (JAXBException e) {
-			LOG.error("Master Data Document for " + clCBProcID + " could not be saved!");
-			e.printStackTrace();
-		}
-
-	}
-
-	private void setUpBEG(VocabularyElementType vocabularyElementType, String repositoryCaptureURL, String begListeningPort) {
 
 	}
 
@@ -332,6 +289,9 @@ public class EncodeImplementation {
 			}
 			else if (extendedAttribute.getName().equals("EpcisClientQueryEndPoint")) {
 				processedEBProc.setEpcisClientQueryEndPoint(extendedAttribute.getValue());
+			}
+			else if (extendedAttribute.getName().equals("BegEngineEndpoint")) {
+				processedEBProc.setBegEngineEndpoint(extendedAttribute.getValue());
 			}
 
 		}

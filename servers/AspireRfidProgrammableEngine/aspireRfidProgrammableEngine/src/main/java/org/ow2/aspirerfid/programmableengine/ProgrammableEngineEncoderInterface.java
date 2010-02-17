@@ -15,19 +15,24 @@
  * for the specific language governing rights and limitations.
  */
 
-
 package org.ow2.aspirerfid.programmableengine;
 
 
-import org.ow2.aspirerfid.programmableengine.model.OLCBProc;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+import javax.xml.ws.RequestWrapper;
+import javax.xml.ws.ResponseWrapper;
+
+import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
 
 /**
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
  */
+@WebService(name="ProgrammableEngineEncoderInterface", targetNamespace="http://encode.programmableengine.aspirerfid.ow2.org/")
 public interface ProgrammableEngineEncoderInterface {
 	
-	
-	public Integer encode(OLCBProc openLoopCBProc);
+	public Integer encode(@WebParam(name="openLoopCBProc") OLCBProc openLoopCBProc);
+
 
 }

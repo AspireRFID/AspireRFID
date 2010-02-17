@@ -22,10 +22,11 @@ import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.util.List;
 
-import org.ow2.aspirerfid.programmableengine.ale.utils.SerializerUtil;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.ALELRServicePortType;
-import org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.ValidationExceptionResponse;
-import org.ow2.aspirerfid.programmableengine.model.LRSpec;
+import org.ow2.aspirerfid.commons.ale.utils.SerializerUtil;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ALELRServicePortType;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ValidationExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.model.alelr.LRSpec;
+//import org.ow2.aspirerfid.commons.apdl.model.LRSpec;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.log4j.Logger;
 
@@ -91,22 +92,22 @@ public class AleLrClientUtil {
 		}
 
 
-		org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.Define defineParms = new org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.Define();
+		org.ow2.aspirerfid.commons.ale.wsdl.alelr.Define defineParms = new org.ow2.aspirerfid.commons.ale.wsdl.alelr.Define();
 		defineParms.setName(logicalReadeName);
 		defineParms.setSpec(lrSpec);
 
 		try {
 			lrSpecConfiguratorResult = alelrProxy.define(defineParms);
 			LOG.debug("[LRSpec Define method]: The "+logicalReadeName+" LRSpec was successfully defined!");
-		} catch (org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.SecurityExceptionResponse e1) {
+		} catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 			// TODO Auto-generated catch block
 			LOG.error("[LRSpec Define method]: Security Exception was thrown.");
 			e1.printStackTrace();
-		} catch (org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
+		} catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 			// TODO Auto-generated catch block
 			LOG.error("[LRSpec Define method]: Implementation Exception was thrown.");
 			e1.printStackTrace();
-		} catch (org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.DuplicateNameExceptionResponse e1) {
+		} catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.DuplicateNameExceptionResponse e1) {
 			// TODO Auto-generated catch block
 			LOG.error("[LRSpec Define method]: Duplicate Name Exception was thrown.");
 			e1.printStackTrace();
@@ -128,7 +129,7 @@ public class AleLrClientUtil {
 		List<String> lrSpecNames = null;
 
 		try {
-			lrSpecNames = alelrProxy.getLogicalReaderNames(new org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.EmptyParms()).getString();
+			lrSpecNames = alelrProxy.getLogicalReaderNames(new org.ow2.aspirerfid.commons.ale.wsdl.alelr.EmptyParms()).getString();
 		}
 		catch (Exception e) {
 			LOG.error( e.getMessage());
@@ -148,8 +149,8 @@ public class AleLrClientUtil {
 			LOG.info((String) result);
 
 		}
-		else if (result instanceof org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.ArrayOfString) {
-			org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.ArrayOfString resultStringArray = (org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.ArrayOfString) result;
+		else if (result instanceof org.ow2.aspirerfid.commons.ale.wsdl.alelr.ArrayOfString) {
+			org.ow2.aspirerfid.commons.ale.wsdl.alelr.ArrayOfString resultStringArray = (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ArrayOfString) result;
 			if (resultStringArray.getString().size() == 0) {
 				LOG.info("No data found!");
 			}

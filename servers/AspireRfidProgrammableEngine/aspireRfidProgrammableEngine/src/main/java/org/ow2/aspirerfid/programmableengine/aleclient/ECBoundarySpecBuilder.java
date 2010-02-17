@@ -21,16 +21,24 @@ package org.ow2.aspirerfid.programmableengine.aleclient;
 
 import java.util.List;
 
-import org.ow2.aspirerfid.programmableengine.ale.utils.ECTimeUnit;
-import org.ow2.aspirerfid.programmableengine.model.ECBoundarySpecExtension;
-import org.ow2.aspirerfid.programmableengine.model.ECBoundarySpec;
-import org.ow2.aspirerfid.programmableengine.model.ECTime;
+import org.ow2.aspirerfid.commons.ale.utils.ECTimeUnit;
+//import org.ow2.aspirerfid.commons.apdl.model.ECBoundarySpecExtension;
+//import org.ow2.aspirerfid.commons.apdl.model.ECBoundarySpec;
+//import org.ow2.aspirerfid.commons.apdl.model.ECTime;
+//
+//import org.ow2.aspirerfid.commons.apdl.model.ECBoundarySpecExtension.StartTriggerList;
+//import org.ow2.aspirerfid.commons.apdl.model.ECBoundarySpecExtension.StopTriggerList;
 
-import org.ow2.aspirerfid.programmableengine.model.ECBoundarySpecExtension.StartTriggerList;
-import org.ow2.aspirerfid.programmableengine.model.ECBoundarySpecExtension.StopTriggerList;
+
+import org.ow2.aspirerfid.commons.ale.model.ale.ECBoundarySpecExtension;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECBoundarySpec;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECTime;
+
+import org.ow2.aspirerfid.commons.ale.model.ale.ECBoundarySpecExtension.StartTriggerList;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECBoundarySpecExtension.StopTriggerList;
 
 
-//org.ow2.aspirerfid.programmableengine.ale.wsdl.alelr.
+//org.ow2.aspirerfid.commons.ale.wsdl.alelr.
 
 /**
  * @author Vasso Koletti e-mail: vkol@ait.edu.gr
