@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.w3c.dom.Element;
 
@@ -45,6 +46,7 @@ import org.w3c.dom.Element;
  * 
  * 
  */
+@XmlRootElement(name = "TransactionEvent", namespace = "")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TransactionEventType", namespace = "urn:epcglobal:epcis:xsd:1", propOrder = {
     "bizTransactionList",
