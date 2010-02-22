@@ -26,19 +26,19 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 
 import org.apache.log4j.Logger;
-import org.fosstrak.epcis.model.ArrayOfString;
-import org.fosstrak.epcis.model.Poll;
-import org.fosstrak.epcis.model.QueryParam;
-import org.fosstrak.epcis.model.QueryParams;
-import org.fosstrak.epcis.model.QueryResults;
-import org.fosstrak.epcis.model.QuerySchedule;
-import org.fosstrak.epcis.model.Subscribe;
-import org.fosstrak.epcis.model.SubscriptionControls;
-import org.fosstrak.epcis.queryclient.Query;
-import org.fosstrak.epcis.queryclient.QueryControlClient;
-import org.ow2.aspirerfid.connectors.api.ConnectorEngine;
-import org.ow2.aspirerfid.connectors.api.SubscriptionParameters;
-import org.ow2.aspirerfid.connectors.tools.Configurator;
+import org.ow2.aspirerfid.commons.epcis.model.ArrayOfString;
+import org.ow2.aspirerfid.commons.epcis.model.Poll;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParam;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParams;
+import org.ow2.aspirerfid.commons.epcis.model.QueryResults;
+import org.ow2.aspirerfid.commons.epcis.model.QuerySchedule;
+import org.ow2.aspirerfid.commons.epcis.model.Subscribe;
+import org.ow2.aspirerfid.commons.epcis.model.SubscriptionControls;
+import org.ow2.aspirerfid.connectors.epcis.query.Query;
+import org.ow2.aspirerfid.connectors.epcis.query.QueryControlClient;
+import org.ow2.aspirerfid.commons.connector.interfaces.ConnectorEngine;
+import org.ow2.aspirerfid.commons.connector.model.SubscriptionParameters;
+import org.ow2.aspirerfid.commons.utils.Configurator;
 
 /**
  * This is the entry point of the Connector service. This class implements the
@@ -48,7 +48,7 @@ import org.ow2.aspirerfid.connectors.tools.Configurator;
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
  * 
  */
-@WebService(endpointInterface = "org.ow2.aspirerfid.connectors.api.ConnectorEngine")
+@WebService(endpointInterface = "org.ow2.aspirerfid.commons.connector.interfaces.ConnectorEngine")
 public class ConnectorEngineImpl implements ConnectorEngine {
 
     private static Logger logger;

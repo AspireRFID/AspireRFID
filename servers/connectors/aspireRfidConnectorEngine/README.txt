@@ -1,2 +1,2 @@
-How to use the ASPIRE EPCIS REPOSITORY
+How to use the ASPIRE Connector Engine
 ==============================================

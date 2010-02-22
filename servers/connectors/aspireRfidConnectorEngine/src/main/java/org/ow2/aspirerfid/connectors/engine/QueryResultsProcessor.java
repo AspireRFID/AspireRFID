@@ -25,17 +25,17 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.log4j.Logger;
-import org.fosstrak.epcis.model.AggregationEventType;
-import org.fosstrak.epcis.model.BusinessTransactionType;
-import org.fosstrak.epcis.model.EPC;
-import org.fosstrak.epcis.model.EPCISEventType;
-import org.fosstrak.epcis.model.ObjectEventType;
-import org.fosstrak.epcis.model.QuantityEventType;
-import org.fosstrak.epcis.model.QueryResults;
-import org.fosstrak.epcis.model.TransactionEventType;
-import org.fosstrak.epcis.utils.QueryResultsParser;
-import org.ow2.aspirerfid.connectors.api.Event;
-import org.ow2.aspirerfid.connectors.api.QueryResultsProcessorIfce;
+import org.ow2.aspirerfid.commons.epcis.model.AggregationEventType;
+import org.ow2.aspirerfid.commons.epcis.model.BusinessTransactionType;
+import org.ow2.aspirerfid.commons.epcglobal.commons.EPC;
+import org.ow2.aspirerfid.commons.epcis.model.EPCISEventType;
+import org.ow2.aspirerfid.commons.epcis.model.ObjectEventType;
+import org.ow2.aspirerfid.commons.epcis.model.QuantityEventType;
+import org.ow2.aspirerfid.commons.epcis.model.QueryResults;
+import org.ow2.aspirerfid.commons.epcis.model.TransactionEventType;
+import org.ow2.aspirerfid.commons.epcis.utils.QueryResultsParser;
+import org.ow2.aspirerfid.commons.connector.model.Event;
+import org.ow2.aspirerfid.commons.connector.interfaces.QueryResultsProcessorIfce;
 
 /**
  * This class receives new events from the repository and encapsulates them
@@ -192,7 +192,7 @@ public class QueryResultsProcessor extends Thread implements QueryResultsProcess
     }
 
     /* (non-Javadoc)
-     * @see org.ow2.aspirerfid.connectors.api.QueryResultsProcessorIfce#fetchQueryResult(java.lang.String)
+     * @see org.ow2.aspirerfid.commons.connector.interfaces.QueryResultsProcessorIfce#fetchQueryResult(java.lang.String)
      */
     public void fetchQueryResult(String result) {
 

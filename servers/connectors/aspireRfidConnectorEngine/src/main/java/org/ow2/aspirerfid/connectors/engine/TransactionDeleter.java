@@ -27,16 +27,16 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.log4j.Logger;
-import org.fosstrak.epcis.captureclient.CaptureClient;
-import org.fosstrak.epcis.model.ActionType;
-import org.fosstrak.epcis.model.BusinessTransactionListType;
-import org.fosstrak.epcis.model.BusinessTransactionType;
-import org.fosstrak.epcis.model.EPCISBodyType;
-import org.fosstrak.epcis.model.EPCISDocumentType;
-import org.fosstrak.epcis.model.EventListType;
-import org.fosstrak.epcis.model.TransactionEventType;
-import org.ow2.aspirerfid.connectors.api.SubscriptionParameters;
-import org.ow2.aspirerfid.connectors.tools.Configurator;
+import org.ow2.aspirerfid.connectors.epcis.capture.CaptureClient;
+import org.ow2.aspirerfid.commons.epcis.model.ActionType;
+import org.ow2.aspirerfid.commons.epcis.model.BusinessTransactionListType;
+import org.ow2.aspirerfid.commons.epcis.model.BusinessTransactionType;
+import org.ow2.aspirerfid.commons.epcis.model.EPCISBodyType;
+import org.ow2.aspirerfid.commons.epcis.model.EPCISDocumentType;
+import org.ow2.aspirerfid.commons.epcis.model.EventListType;
+import org.ow2.aspirerfid.commons.epcis.model.TransactionEventType;
+import org.ow2.aspirerfid.commons.connector.model.SubscriptionParameters;
+import org.ow2.aspirerfid.commons.utils.Configurator;
 
 /**
  * Sends a Transaction event to the EPCIS repository with action DELETE for a selected 

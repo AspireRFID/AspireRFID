@@ -32,7 +32,7 @@ import java.net.Socket;
 import java.net.SocketException;
 
 import org.apache.log4j.Logger;
-import org.ow2.aspirerfid.connectors.api.QueryResultsProcessorIfce;
+import org.ow2.aspirerfid.commons.connector.interfaces.QueryResultsProcessorIfce;
 
 /**
  * This class implements a simple web server listening for responses from the

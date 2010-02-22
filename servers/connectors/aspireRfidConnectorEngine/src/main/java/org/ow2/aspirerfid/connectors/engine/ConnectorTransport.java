@@ -20,8 +20,8 @@ package org.ow2.aspirerfid.connectors.engine;
 
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.log4j.Logger;
-import org.ow2.aspirerfid.connectors.api.ConnectorClient;
-import org.ow2.aspirerfid.connectors.api.Event;
+import org.ow2.aspirerfid.commons.connector.interfaces.ConnectorClient;
+import org.ow2.aspirerfid.commons.connector.model.Event;
 
 /**
  * This class handles the operation of sending an event message to the a
