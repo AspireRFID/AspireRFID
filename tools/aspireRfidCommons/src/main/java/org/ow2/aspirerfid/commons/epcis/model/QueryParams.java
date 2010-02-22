@@ -1,6 +1,7 @@
 
 package org.ow2.aspirerfid.commons.epcis.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -31,9 +32,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "QueryParams", propOrder = {
     "param"
 })
-public class QueryParams {
+public class QueryParams implements Serializable{
 
-    protected List<QueryParam> param;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 447402995475733832L;
+	
+	
+	protected List<QueryParam> param;
 
     /**
      * Gets the value of the param property.

@@ -1,6 +1,8 @@
 
 package org.ow2.aspirerfid.commons.epcis.model;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -32,9 +34,15 @@ import javax.xml.bind.annotation.XmlType;
     "name",
     "value"
 })
-public class QueryParam {
+public class QueryParam implements Serializable{
 
-    @XmlElement(required = true)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8984875697080975779L;
+	
+	
+	@XmlElement(required = true)
     protected String name;
     @XmlElement(required = true)
     protected Object value;

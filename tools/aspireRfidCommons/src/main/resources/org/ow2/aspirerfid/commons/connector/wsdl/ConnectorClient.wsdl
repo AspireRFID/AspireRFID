@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ConnectorClientService" targetNamespace="http://api.connectors.aspirerfid.ow2.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://api.connectors.aspirerfid.ow2.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://api.connectors.aspirerfid.ow2.org/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://api.connectors.aspirerfid.ow2.org/">
+    <xs:element name="transactionObserved" type="tns:transactionObserved"/>
+    <xs:element name="transactionObservedResponse" type="tns:transactionObservedResponse"/>
+    <xs:complexType name="transactionObserved">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="arg0" type="tns:event"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="event">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="action" type="xs:string"/>
+            <xs:element minOccurs="0" name="bizLocationId" type="xs:string"/>
+            <xs:element minOccurs="0" name="bizStepId" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="bizTransactionList" nillable="true" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="childEpcs" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="dispositionId" type="xs:string"/>
+            <xs:element minOccurs="0" name="epcClass" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="epcList" nillable="true" type="xs:string"/>
+            <xs:element name="eventTime" type="xs:long"/>
+            <xs:element minOccurs="0" name="parentId" type="xs:string"/>
+            <xs:element name="quantity" type="xs:int"/>
+            <xs:element minOccurs="0" name="readPointId" type="xs:string"/>
+            <xs:element minOccurs="0" name="subscriptionId" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="transactionObservedResponse">
+        <xs:sequence/>
+    </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="transactionObservedResponse">
+    <wsdl:part name="parameters" element="tns:transactionObservedResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="transactionObserved">
+    <wsdl:part name="parameters" element="tns:transactionObserved">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ConnectorClient">
+    <wsdl:operation name="transactionObserved">
+      <wsdl:input name="transactionObserved" message="tns:transactionObserved">
+    </wsdl:input>
+      <wsdl:output name="transactionObservedResponse" message="tns:transactionObservedResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ConnectorClientServiceSoapBinding" type="tns:ConnectorClient">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="transactionObserved">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="transactionObserved">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="transactionObservedResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ConnectorClientService">
+    <wsdl:port name="ConnectorClientPort" binding="tns:ConnectorClientServiceSoapBinding">
+      <soap:address location=""/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
