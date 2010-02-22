@@ -19,9 +19,9 @@ package org.ow2.aspirerfid.connectors.client;
 
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.log4j.Logger;
-import org.ow2.aspirerfid.connectors.api.ConnectorEngine;
-import org.ow2.aspirerfid.connectors.api.SubscriptionParameters;
-import org.ow2.aspirerfid.connectors.tools.Configurator;
+import org.ow2.aspirerfid.commons.connector.interfaces.ConnectorEngine;
+import org.ow2.aspirerfid.commons.connector.model.SubscriptionParameters;
+import org.ow2.aspirerfid.commons.utils.Configurator;
 
 /**
  * This class is used to handle event registration operations

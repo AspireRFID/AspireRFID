@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.ow2.aspirerfid.connectors.tools.Configurator;
+import org.ow2.aspirerfid.commons.utils.Configurator;
 
 /**
  * A servlet to handle simple registration operations via POST or GET requests

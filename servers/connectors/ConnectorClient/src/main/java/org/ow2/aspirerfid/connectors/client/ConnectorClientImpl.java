@@ -21,9 +21,9 @@ import javax.jws.WebService;
 
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 import org.apache.log4j.Logger;
-import org.ow2.aspirerfid.connectors.api.ClientEventHandler;
-import org.ow2.aspirerfid.connectors.api.ConnectorClient;
-import org.ow2.aspirerfid.connectors.api.Event;
+import org.ow2.aspirerfid.commons.connector.interfaces.ClientEventHandler;
+import org.ow2.aspirerfid.commons.connector.interfaces.ConnectorClient;
+import org.ow2.aspirerfid.commons.connector.model.Event;
 
 /**
  * Implements the client part of the Connector component
@@ -32,7 +32,7 @@ import org.ow2.aspirerfid.connectors.api.Event;
  * 
  */
 
-@WebService(endpointInterface = "org.ow2.aspirerfid.connectors.api.ConnectorClient")
+@WebService(endpointInterface = "org.ow2.aspirerfid.commons.connector.interfaces.ConnectorClient")
 public class ConnectorClientImpl implements ConnectorClient {
 
     private static ClientEventHandler client;
@@ -53,7 +53,7 @@ public class ConnectorClientImpl implements ConnectorClient {
      * (non-Javadoc)
      * 
      * @see
-     * org.ow2.aspirerfid.connectors.api.ConnectorClient#transactionObserved
+     * org.ow2.aspirerfid.commons.connector.interfaces.ConnectorClient#transactionObserved
      * (byte [])
      */
     public void transactionObserved(Event event) {
