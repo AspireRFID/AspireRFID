@@ -27,7 +27,7 @@
 		Specification)
 	-->
 
-	<apdl:CLCBProc id="urn:epcglobal:fmcg:bti:acmesupplying" name="CompositeBusinessProcessName">
+	<apdl:CLCBProc id="urn:epcglobal:fmcg:bti:acmesupplying" name="AcmeWarehouseBusinessProcess">
 		<!--
 			RFID Composite Business Process Specification (the ID will be the Described
 			Transactions's URI)
@@ -83,14 +83,11 @@
 				<xpdl:ExtendedAttribute Name="AleClientEndPoint" Value="http://localhost:8080/aspireRfidALE/services/ALEService" />
 				<xpdl:ExtendedAttribute Name="AleLrClientEndPoint" Value="http://localhost:8080/aspireRfidALE/services/ALELRService" />
 				<xpdl:ExtendedAttribute Name="EpcisClientCaptureEndPoint" Value="http://localhost:8080/aspireRfidEpcisRepository/capture" />
-				<xpdl:ExtendedAttribute Name="EpcisClientQueryEndPoint" Value="http://localhost:8080/aspireRfidALE/services/ALEService" />				
+				<xpdl:ExtendedAttribute Name="EpcisClientQueryEndPoint" Value="http://localhost:8080/aspireRfidEpcisRepository/query" />
+				<xpdl:ExtendedAttribute Name="BegEngineEndpoint" Value="http://localhost:8080/aspireRfidBEG/begengine" />				
 
-				
-				<!--
-					The DefinedLRSpecNames can be collected from the defined logicalReaders names at the
-					ECSpec
-				-->
-				<!-- The DefinedECSpecName can be collected from the EBProc id -->
+
+				<!-- The DefinedECSpecName can be collected from the EBProc id-->
 				<!--
 					For the BEG configuration the port can be collected from the "ECSpecSubscriptionURI"
 					value and the event to serve from the EBPSpec id
@@ -103,31 +100,19 @@
 							<VocabularyList>
 								<Vocabulary type="urn:epcglobal:epcis:vtype:BusinessTransaction">
 									<VocabularyElementList>
-										<VocabularyElement id=" urn:epcglobal:fmcg:bte:acmewarehouse1receive">
-											<attribute id="urn:epcglobal:epcis:mda:event_name"> Warehouse1DocDoorReceive
-								</attribute>
+										<VocabularyElement id="urn:epcglobal:fmcg:bte:acmewarehouse1receive">
+											<attribute id="urn:epcglobal:epcis:mda:event_name" value="Warehouse1DocDoorReceive"/>
 											<!--
 												For the required ECReportID we will use the EBPSpec id and the information for
 												which kind of reports BEG will use the event type will provide them.
 											-->
-											<attribute id="urn:epcglobal:epcis:mda:event_type"> ObjectEvent
-								</attribute>
-											<attribute id="urn:epcglobal:epcis:mda:business_step">
-												urn:epcglobal:fmcg:bizstep:receiving
-								</attribute>
-											<attribute id="urn:epcglobal:epcis:mda:business_location">
-												urn:epcglobal:fmcg:loc:acme:warehouse1
-								</attribute>
-											<attribute id="urn:epcglobal:epcis:mda:disposition">
-												urn:epcglobal:fmcg:disp:in_progress								</attribute>
-											<attribute id="urn:epcglobal:epcis:mda:read_point">
-												urn:epcglobal:fmcg:loc:rp:warehouse1docdoor 
-								</attribute>
-											<attribute id="urn:epcglobal:epcis:mda:transaction_type">
-												urn:epcglobal:fmcg:btt:receiving 
-								</attribute>
-											<attribute id="urn:epcglobal:epcis:mda:action">OBSERVE
-								</attribute>
+											<attribute id="urn:epcglobal:epcis:mda:event_type" value="ObjectEvent"/> 
+											<attribute id="urn:epcglobal:epcis:mda:business_step" value="urn:epcglobal:fmcg:bizstep:receiving"/>
+											<attribute id="urn:epcglobal:epcis:mda:business_location" value="urn:epcglobal:fmcg:loc:acme:warehouse1"/>
+											<attribute id="urn:epcglobal:epcis:mda:disposition" value="urn:epcglobal:fmcg:disp:in_progress"/>
+											<attribute id="urn:epcglobal:epcis:mda:read_point" value="urn:epcglobal:fmcg:loc:rp:warehouse1docdoor"/> 
+											<attribute id="urn:epcglobal:epcis:mda:transaction_type" value="urn:epcglobal:fmcg:btt:receiving"/> 
+											<attribute id="urn:epcglobal:epcis:mda:action" value="OBSERVE"/>
 										</VocabularyElement>
 									</VocabularyElementList>
 								</Vocabulary>
@@ -148,7 +133,7 @@
 							<stableSetInterval unit="MS">0</stableSetInterval>
 						</boundarySpec>
 						<reportSpecs>
-							<!--For the required ECReportID we will use the EBPSpec id -->
+							<!--For the required ECReportID we will use the EBPSpec id-->
 							<reportSpec reportOnlyOnChange="false" reportName="bizTransactionIDs"
 								reportIfEmpty="true">
 								<reportSet set="CURRENT" />
@@ -162,7 +147,7 @@
 								<output includeTag="true" includeRawHex="true" includeRawDecimal="true"
 									includeEPC="true" includeCount="true" />
 							</reportSpec>
-							<!--For the required ECReportID we will use the EBPSpec id -->
+							<!--For the required ECReportID we will use the EBPSpec id-->
 							<reportSpec reportOnlyOnChange="false" reportName="transactionItems"
 								reportIfEmpty="true">
 								<reportSet set="ADDITIONS" />
@@ -182,7 +167,7 @@
 					</ale:ECSpec>
 				</apdl:DataField>
 
-				<!-- We could have many LRSpecs defining many Logical Readers for one EBProc -->
+				<!-- We could have many LRSpecs defining many Logical Readers for one EBProc-->
 				<apdl:DataField type="LRSpec" name="SmartLabImpinjSpeedwayLogicalReader">
 					<alelr:LRSpec>
 						<isComposite>false</isComposite>

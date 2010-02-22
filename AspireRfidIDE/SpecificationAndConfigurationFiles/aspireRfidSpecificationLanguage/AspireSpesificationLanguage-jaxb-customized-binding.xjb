@@ -12,6 +12,9 @@
 			<jxb:class name="ApdlDataField" />
 			<jxb:property name="ApdlDataField" />
 		</jxb:bindings>
+		
+		
+		
 
 		<!-- these were used with the old version of APDL
 		
@@ -59,6 +62,56 @@
 
 			
 		-->
-		
+		<jxb:schemaBindings>
+            <jxb:package name="org.ow2.aspirerfid.commons.apdl.model" />
+        </jxb:schemaBindings>
 	</jxb:bindings>
+	
+	<jxb:bindings schemaLocation="resources/epcglobal/EPCglobal-ale-1_1-ale.xsd" node="/xs:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.ow2.aspirerfid.commons.ale.model.ale" />
+        </jxb:schemaBindings>
+    </jxb:bindings>
+    
+    <jxb:bindings schemaLocation="resources/epcglobal/EPCglobal-ale-1_1-alelr.xsd" node="/xs:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.ow2.aspirerfid.commons.ale.model.alelr" />
+        </jxb:schemaBindings>
+    </jxb:bindings>
+	
+	<jxb:bindings schemaLocation="resources/epcglobal/EPCglobal-epcis-1_0.xsd" node="/xs:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.ow2.aspirerfid.commons.epcis.model" />
+        </jxb:schemaBindings>
+    </jxb:bindings>
+    
+    <jxb:bindings schemaLocation="resources/epcglobal/EPCglobal-epcis-masterdata-1_0.xsd" node="/xs:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.ow2.aspirerfid.commons.epcis.model" />
+        </jxb:schemaBindings>
+    </jxb:bindings>     
+    
+    <jxb:bindings schemaLocation="resources/epcglobal/StandardBusinessDocumentHeader.xsd" node="/xs:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.ow2.aspirerfid.commons.epcis.model" />
+        </jxb:schemaBindings>
+    </jxb:bindings>  
+
+    <jxb:bindings schemaLocation="resources/epcglobal/EPCglobal.xsd" node="/xs:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.ow2.aspirerfid.commons.epcis.model" />
+        </jxb:schemaBindings>
+    </jxb:bindings>  
+
+
+
+
+    <jxb:bindings schemaLocation="resources/XPDL.xsd" node="/xs:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.ow2.aspirerfid.commons.xpdl.model" />
+        </jxb:schemaBindings>
+    </jxb:bindings>
+    
+	
+	
 </jxb:bindings> 
