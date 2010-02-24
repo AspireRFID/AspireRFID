@@ -1685,7 +1685,7 @@ public class MasterDataEditorView extends ViewPart {
 	    				result = dataManager.masterDataAttributeEdit(uri, "Name", name, "1");
 	    				//Put name in table
 	    				TableItem nameRow = new TableItem(table_1_transactions,0);
-	    				nameRow.setText(new String[]{"Name",NameTrans.getText()});
+	    				nameRow.setText(new String[]{"event_name",NameTrans.getText()});
 	    				NameTrans.setEnabled(false);
 	    				text_EPCTrans.setEnabled(false);
 	    				if(!text_3_attribute.getText().equals("") && !text_4_Value_trans.getText().equals("") )
@@ -1699,7 +1699,7 @@ public class MasterDataEditorView extends ViewPart {
 		    				text_3_attribute.setText("");
 		    				text_4_Value_trans.setText("");
 	    				}
-	    				
+	    			
 	    	    		if(treeTransaction.getSelectionCount() == 0)
 	    	    		{
 	    	    			//update tree
@@ -4375,6 +4375,18 @@ public class MasterDataEditorView extends ViewPart {
 		
 	}
 	
+	
+	public void add_to_tree_as_event(String id,String type)
+	{
+		//java.util.List<String> name = dataManager.getElementNames(id,null);
+		java.util.List<String>attr = new ArrayList<String>();
+		attr.add("urn:epcglobal:epcis:mda:event_name");
+		String name = dataManager.getSpecificAttributeValue(id, attr);
+		place_on_tree(id,name == null?"":name,type);
+		
+	}
+	
+	
 	public void add_to_tree(String id,String type)
 	{
 		//java.util.List<String> name = dataManager.getElementNames(id,null);
@@ -4432,14 +4444,22 @@ public class MasterDataEditorView extends ViewPart {
 				if(!exists_in_tree.contains(temp))
 				{
 					String type;
-					if(j == 0)
+					if(j == 0){
 						type = "TopLevelTransaction";
-					else if(j == 1)
-						type = "Transaction";
-					else
-						type = "Event";
 					add_to_tree(temp,type);
-					exists_in_tree.add(temp);
+					}
+					else if(j == 1){
+						type = "Transaction";
+					add_to_tree(temp,type);
+					}
+					else{
+						type = "Event";
+						add_to_tree_as_event(temp,type);
+					}
+					
+						
+						
+						exists_in_tree.add(temp);
 					
 					
 				}
@@ -4556,8 +4576,6 @@ public class MasterDataEditorView extends ViewPart {
 					ev.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/fromAgilo/finalNode.gif"));
 					
 				}
-				
-				
 			}
 			
 			

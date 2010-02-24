@@ -60,7 +60,7 @@ public class ProgrammableEngineClientUI {
 
 	protected Shell shell;
 	
-	ProgrammableEngineClient peClient = new ProgrammableEngineClient("http://localhost:8081/aspireRfidProgrammableEngine/");
+	ProgrammableEngineClient peClient = new ProgrammableEngineClient("http://localhost:8080/aspireRfidProgrammableEngine/");
 
 	/**
 	 * Launch the application

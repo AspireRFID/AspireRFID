@@ -46,8 +46,8 @@ public class ProgrammableEngineClient {
 	private String peEncodeEndpoint = null;
 	private String peDecodeEndpoint = null;
 
-	private String DEFAULT_peEncodeEndpoint = "http://localhost:8081/aspireRfidProgrammableEngine/encoder";
-	private String DEFAULT_peDecodeEndpoint = "http://localhost:8081/aspireRfidProgrammableEngine/decoder";
+	private String DEFAULT_peEncodeEndpoint = "http://localhost:8080/aspireRfidProgrammableEngine/encoder";
+	private String DEFAULT_peDecodeEndpoint = "http://localhost:8080/aspireRfidProgrammableEngine/decoder";
 
 	ProgrammableEngineClient(String peEndPoint) {
 
@@ -112,7 +112,7 @@ public class ProgrammableEngineClient {
 		Integer response = encodeClient.encode(openLoopCBProc);
 
 		LOG.debug("Encode Response ID: " + response);
-
+		
 		return response.intValue();
 	}
 

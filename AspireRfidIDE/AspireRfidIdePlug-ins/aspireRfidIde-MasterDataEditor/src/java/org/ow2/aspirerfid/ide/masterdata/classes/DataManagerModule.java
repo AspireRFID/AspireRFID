@@ -901,7 +901,7 @@ public class DataManagerModule {
 		result = this.masterDataElementEdit(id, "1");
 		if(!result)
 			return result;
-		result = this.masterDataAttributeEdit(id, "Name", name, "2");//"event_name", name, "2");
+		result = this.masterDataAttributeEdit(id, "event_name", name, "2");//"event_name", name, "2");
 		result = this.masterDataAttributeEdit(id, "event_type", type, "2");
 		result = this.masterDataAttributeEdit(id, "business_step", bizStepUri, "2");
 		result = this.masterDataAttributeEdit(id, "business_location", queryModule.parseNameSpace(bizLocationUri, ",", -1), "2");
@@ -912,14 +912,14 @@ public class DataManagerModule {
 		result = this.masterDataAttributeEdit(id, "action", action, "2");	
 		StringBuffer generated_reports = new StringBuffer();
 		
-		generated_reports.append("bizTransactionIDs_"+eventUri+",transactionItems_"+eventUri);
+		generated_reports.append("bizTransactionIDs@"+eventUri+",transactionItems@"+eventUri);
 		if(type.equals("TransactionEvent"))
 		{
-			generated_reports.append(",bizTransactionParentIDs_"+eventUri);
+			generated_reports.append(",bizTransactionParentIDs@"+eventUri);
 		}
 		else if(type.equals("AggregationEvent"))
 		{
-			generated_reports.append(",parentObjects_"+eventUri);
+			generated_reports.append(",parentObjects@"+eventUri);
 		}
 		
 		result = this.masterDataAttributeEdit(id, "ecreport_names", generated_reports.toString(), "2");	
@@ -945,7 +945,7 @@ public class DataManagerModule {
 		int size = attributes.size();
 		for(int i = 0; i < size; i ++)
 		{
-			if(attributes.get(i).getAttribute().endsWith("Name"))//"event_name"))
+			if(attributes.get(i).getAttribute().endsWith("event_name"))//"event_name"))
 				name.setText(attributes.get(i).getValue());
 			else if(attributes.get(i).getAttribute().endsWith("event_type"))
 				type.setText(attributes.get(i).getValue());
