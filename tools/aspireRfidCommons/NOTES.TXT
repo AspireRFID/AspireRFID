@@ -3,6 +3,7 @@ Important:
 
 1) org.ow2.aspirerfid.commons.epcis.model.ArrayOfStrings, org.ow2.aspirerfid.commons.epcis.model.QueryParam
 and org.ow2.aspirerfid.commons.epcis.model.QueryParams Classes should implement java.io.Serializable
+
 2) "@XmlRootElement" annotation should be added at 4 epcis's common objects (AggregationEvent,
    TransactionEvent,QuantityEvent and ObjectEvent)
        org.ow2.aspirerfid.commons.epcis.model.AggregationEventType
@@ -10,3 +11,25 @@ and org.ow2.aspirerfid.commons.epcis.model.QueryParams Classes should implement 
        org.ow2.aspirerfid.commons.epcis.model.QuantityEventType
        org.ow2.aspirerfid.commons.epcis.model.ObjectEventType
    e.g. @XmlRootElement(name = "ObjectEvent", namespace = "")
+   
+3) Change the 
+
+    static {
+        URL url = null;
+        try {
+            url = new URL("file:xxxxxxxxxxxxxxxxx.wsdl");
+        } catch (MalformedURLException e) {
+            System.err.println("Can not initialize the default wsdl from file:xxxxxxxxxxxxxxxx.wsdl");
+            // e.printStackTrace();
+        }
+        WSDL_LOCATION = url;
+    }
+    
+    at the org.ow2.aspirerfid.commons.ale.wsdl.ale.ALEService,
+    org.ow2.aspirerfid.commons.ale.wsdl.ale.ALELRService
+    and org.ow2.aspirerfid.commons.epcis.wsdl.query.EPCglobalEPCISService
+    with the 
+    
+    static {
+        WSDL_LOCATION = CCCCCCCCCCCCCCCC.class.getResource("/epcglobal/yyyyyyy/xxxxxxxxxxxxxxxxxxxxx.wsdl");
+    }
