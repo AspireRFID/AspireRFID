@@ -13,7 +13,7 @@
 		Author: Nikos Kefalakis (nkef@ait.edu.gr)
 	-->
 
-<apdl:OLCBProc id="urn:ow2:aspirerfid:aprod:firstopenloopdescribedprocess" name="AcmeSupplyChainManagement" xmlns:ale="urn:epcglobal:ale:xsd:1"
+<apdl:OLCBProc id="urn:epcglobal:fmcg:bti:openloopsupplychain" name="AcmeSupplyChainManagement" xmlns:ale="urn:epcglobal:ale:xsd:1"
 	xmlns:alelr="urn:epcglobal:alelr:xsd:1" xmlns:apdl="urn:ow2:aspirerfid:apdlspec:xsd:1"
 	xmlns:epcglobal="urn:epcglobal:xsd:1" xmlns:epcis="urn:epcglobal:epcis:xsd:1"
 	xmlns:epcismd="urn:epcglobal:epcis-masterdata:xsd:1" xmlns:p="http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader"
@@ -63,7 +63,7 @@
 
  -->
 
-		<apdl:EBProc id="urn:epcglobal:fmcg:bte:acmewarehouse1receive" name="AcmeWarehouse3Ship">
+		<apdl:EBProc id="urn:epcglobal:fmcg:bte:acmewarehouse1receive" name="Warehouse1DocDoorReceive">
 			<!--
 				Elementary RFID Business Process Specification (the ID will be the Described Event's
 				URI)
@@ -110,9 +110,9 @@
 											<attribute id="urn:epcglobal:epcis:mda:business_step" value="urn:epcglobal:fmcg:bizstep:receiving"/>
 											<attribute id="urn:epcglobal:epcis:mda:business_location" value="urn:epcglobal:fmcg:loc:acme:warehouse1"/>
 											<attribute id="urn:epcglobal:epcis:mda:disposition" value="urn:epcglobal:fmcg:disp:in_progress"/>
-											<attribute id="urn:epcglobal:epcis:mda:read_point" value="urn:epcglobal:fmcg:loc:rp:warehouse1docdoor"/> 
+											<attribute id="urn:epcglobal:epcis:mda:read_point" value="urn:epcglobal:fmcg:loc:45632.Warehouse1DocDoor"/> 
 											<attribute id="urn:epcglobal:epcis:mda:transaction_type" value="urn:epcglobal:fmcg:btt:receiving"/> 
-											<attribute id="urn:epcglobal:epcis:mda:action" value="OBSERVE"/>
+											<attribute id="urn:epcglobal:epcis:mda:action" value="ADD"/>
 										</VocabularyElement>
 									</VocabularyElementList>
 								</Vocabulary>
@@ -128,8 +128,8 @@
 							<logicalReader>SmartLabImpinjSpeedwayLogicalReader</logicalReader>
 						</logicalReaders>
 						<boundarySpec>
-							<repeatPeriod unit="MS">4500</repeatPeriod>
-							<duration unit="MS">4500</duration>
+							<repeatPeriod unit="MS">5500</repeatPeriod>
+							<duration unit="MS">5500</duration>
 							<stableSetInterval unit="MS">0</stableSetInterval>
 						</boundarySpec>
 						<reportSpecs>
@@ -140,6 +140,7 @@
 								<filterSpec>
 									<includePatterns>
 										<includePattern>urn:epc:pat:gid-96:145.12.*</includePattern>
+										<includePattern>urn:epc:pat:gid-96:239.30.*</includePattern>
 									</includePatterns>
 									<excludePatterns />
 								</filterSpec>
@@ -155,6 +156,8 @@
 									<includePatterns>
 										<includePattern>urn:epc:pat:gid-96:145.233.*</includePattern>
 										<includePattern>urn:epc:pat:gid-96:145.255.*</includePattern>
+										<includePattern>urn:epc:pat:gid-96:1.4.*</includePattern>
+										<includePattern>urn:epc:pat:gid-96:1.3.*</includePattern>
 									</includePatterns>
 									<excludePatterns />
 								</filterSpec>
@@ -187,7 +190,7 @@
 							</property>
 							<property>
 								<name>ReadTimeInterval</name>
-								<value>1000</value>
+								<value>4000</value>
 							</property>
 							<property>
 								<name>PhysicalReaderSource</name>
