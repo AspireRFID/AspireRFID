@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.peconfig.handlers.OpenPeConfigViewHandler"
+            description="Open PE Configurator"
+            id="org.ow2.aspirerfid.ide.peconfig.openPeConfigView.command"
+            name="PE Configurator">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.ow2.aspirerfid.ide.peconfig.openPeConfigView.command"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.ow2.aspirerfid.ide.main.windowmenu.showviewmenu">
+         <command
+               commandId="org.ow2.aspirerfid.ide.peconfig.openPeConfigView.command"
+               icon="icons/fromAgilo/runprocess.png"
+               label="PE Configurator"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="org.ow2.aspirerfid.ide.peconfig.toolbars.peToolbar">
+            <command
+                  commandId="org.ow2.aspirerfid.ide.peconfig.openPeConfigView.command"
+                  icon="icons/fromAgilo/runprocess.png"
+                  tooltip="Open PE Configurator"
+                  id="org.ow2.aspirerfid.ide.peconfig.toolbars.openPeConfigView.command">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="PE Configurator"
+            icon="icons/fromAgilo/runprocess.png"
+            category="org.ow2.aspirerfid.ide.peconfig"
+            class="org.ow2.aspirerfid.ide.peconfig.views.PeConfigView"
+            id="org.ow2.aspirerfid.ide.peconfig.views.PeConfigView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.ow2.aspirerfid.ide.peconfig.preferences.PeConfigPreferencePage"
+            id="org.ow2.aspirerfid.ide.peconfig.preferences.PeConfigPreferencePage"
+            name="PE Config Preferences">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.ow2.aspirerfid.ide.peconfig.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>
