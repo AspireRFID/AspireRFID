@@ -15,7 +15,6 @@
  * for the specific language governing rights and limitations.
  */
 
-
 package org.ow2.aspirerfid.ide.beg.views;
 
 import java.util.ArrayList;
@@ -47,13 +46,13 @@ import org.ow2.aspirerfid.ide.beg.Activator;
 import com.swtdesigner.ResourceManager;
 import com.swtdesigner.SWTResourceManager;
 
-//import org.ow2.aspirerfid.ide.beg.capture.BegConfiguration;
+// import org.ow2.aspirerfid.ide.beg.capture.BegConfiguration;
 import org.ow2.aspirerfid.ide.beg.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.beg.utils.BegEngineClient;
 
 /**
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- *
+ * 
  */
 public class BegConfiguratorView extends ViewPart {
 
@@ -61,15 +60,13 @@ public class BegConfiguratorView extends ViewPart {
 	private Combo availableBusinessEventsCombo;
 	private Text bindingPortText;
 	private Composite container;
-	
+
 	/** Returns the preference store for this UI plug-in */
 	IPreferenceStore begConfigPreferences = Activator.getDefault().getPreferenceStore();
-	
 
 	private ArrayList<VocabularyElementType> recievedVocabularyElementList = new ArrayList<VocabularyElementType>();
 
 	public static final String ID = "org.ow2.aspirerfid.ide.beg.views.BegConfiguratorView"; //$NON-NLS-1$
-
 
 	/**
 	 * Create contents of the view part
@@ -146,15 +143,13 @@ public class BegConfiguratorView extends ViewPart {
 		createActions();
 		initializeToolBar();
 		initializeMenu();
-		
-		
-		//Initialize BegConfiguration once
-		if (PreferenceConstants.begEngineClient==null){
+
+		// Initialize BegConfiguration once
+		if (PreferenceConstants.begEngineClient == null) {
 			PreferenceConstants.begEngineClient = new BegEngineClient(begConfigPreferences.getString(PreferenceConstants.P_BegEngineURL));
 		}
-		
-//		fillStartedBusinessEventsCombo();
-		
+
+		// fillStartedBusinessEventsCombo();
 
 	}
 
@@ -178,22 +173,25 @@ public class BegConfiguratorView extends ViewPart {
 		availableBusinessEventsCombo.removeAll();
 
 		try {
-			vocabularyElementList = PreferenceConstants.begEngineClient.getEventList(begConfigPreferences.getString(PreferenceConstants.P_EpcisRepositoryQueryURL));
+			vocabularyElementList = PreferenceConstants.begEngineClient.getEventList(begConfigPreferences
+					.getString(PreferenceConstants.P_EpcisRepositoryQueryURL));
 
 			if (vocabularyElementList != null && vocabularyElementList.size() > 0) {
 				for (VocabularyElementType vocabularyElement : vocabularyElementList) {
 
-					for (AttributeType vocElementAttribute : vocabularyElement.getAttribute()) {
-						if (vocElementAttribute.getId().endsWith("event_name")) {
-//							availableBusinessEventsCombo.add(vocElementAttribute.getAny().get(0).getAttribute("attribute"));
-							availableBusinessEventsCombo.add(vocElementAttribute.getOtherAttributes().get(new QName("value")));
+					if (vocabularyElement.getId().split(",").length == 3) {
+						for (AttributeType vocElementAttribute : vocabularyElement.getAttribute()) {
+							if (vocElementAttribute.getId().endsWith("event_name")) {
+								// availableBusinessEventsCombo.add(vocElementAttribute.getAny().get(0).getAttribute("attribute"));
+								availableBusinessEventsCombo.add(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 
-							recievedVocabularyElementList.add(vocabularyElement);
+								recievedVocabularyElementList.add(vocabularyElement);
 
+							}
 						}
 					}
 				}
-				if (availableBusinessEventsCombo.getItemCount()>0){
+				if (availableBusinessEventsCombo.getItemCount() > 0) {
 					availableBusinessEventsCombo.select(0);
 				}
 			}
@@ -233,16 +231,20 @@ public class BegConfiguratorView extends ViewPart {
 		// Set the focus
 	}
 
-	//==================================open another view=============================
-//	IHandlerService handlerService = (IHandlerService) getSite().getService(IHandlerService.class);
-//	try {
-//		handlerService.executeCommand("org.ow2.aspirerfid.ide.ecspec.openBegObservationView.command", null);
-//	}
-//	catch (Exception ex) {
-//		throw new RuntimeException("org.ow2.aspirerfid.ide.ecspec.openBegObservationView.command not found");
-//	}
-	//=========================================================================
-	
+	// ==================================open another
+	// view=============================
+	// IHandlerService handlerService = (IHandlerService)
+	// getSite().getService(IHandlerService.class);
+	// try {
+	// handlerService.executeCommand("org.ow2.aspirerfid.ide.ecspec.openBegObservationView.command",
+	// null);
+	// }
+	// catch (Exception ex) {
+	// throw new
+	// RuntimeException("org.ow2.aspirerfid.ide.ecspec.openBegObservationView.command not found");
+	// }
+	// =========================================================================
+
 	private class OpenBegObservationViewButtonMouseListener extends MouseAdapter {
 		public void mouseDown(final MouseEvent e) {
 		}
@@ -262,14 +264,15 @@ public class BegConfiguratorView extends ViewPart {
 				return;
 			}
 
-			boolean saccesful = PreferenceConstants.begEngineClient.startBegForEvent(recievedVocabularyElementList.get(vocabularyElementSelected), begConfigPreferences
-					.getString(PreferenceConstants.P_EpcisRepositoryCaptureURL), bindingPortText.getText());
-			
-			if(saccesful){
-			MessageDialog.openInformation(container.getShell(), "Success!", "Event Capturer Started Successfully!");
-			bindingPortText.setText("");
-			}else{
-				MessageDialog.openError(container.getShell(), "Error!", "Event Capturer Could not be Started!");			
+			boolean saccesful = PreferenceConstants.begEngineClient.startBegForEvent(recievedVocabularyElementList.get(vocabularyElementSelected),
+					begConfigPreferences.getString(PreferenceConstants.P_EpcisRepositoryCaptureURL), bindingPortText.getText());
+
+			if (saccesful) {
+				MessageDialog.openInformation(container.getShell(), "Success!", "Event Capturer Started Successfully!");
+				bindingPortText.setText("");
+			}
+			else {
+				MessageDialog.openError(container.getShell(), "Error!", "Event Capturer Could not be Started!");
 			}
 			fillStartedBusinessEventsCombo();
 		}
@@ -290,11 +293,13 @@ public class BegConfiguratorView extends ViewPart {
 
 		}
 	}
+
 	private class RefreshStartedBusinessEventsButtonMouseListener extends MouseAdapter {
 		public void mouseDown(final MouseEvent e) {
 			fillStartedBusinessEventsCombo();
 		}
 	}
+
 	private class RefreshAvailableBusinessEventsButtonMouseListener extends MouseAdapter {
 		public void mouseDown(final MouseEvent e) {
 			fillAvailableBusinessEventsCombo();

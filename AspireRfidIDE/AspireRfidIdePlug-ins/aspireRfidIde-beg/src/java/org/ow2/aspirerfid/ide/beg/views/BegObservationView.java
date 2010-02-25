@@ -15,7 +15,6 @@
  * for the specific language governing rights and limitations.
  */
 
-
 package org.ow2.aspirerfid.ide.beg.views;
 
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ import com.swtdesigner.SWTResourceManager;
 
 /**
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- *
+ * 
  */
 public class BegObservationView extends ViewPart {
 
@@ -68,7 +67,7 @@ public class BegObservationView extends ViewPart {
 
 	/** Returns the preference store for this UI plug-in */
 	IPreferenceStore begConfigPreferences = Activator.getDefault().getPreferenceStore();
-	
+
 	final IWorkbench workbench = PlatformUI.getWorkbench();
 	Display display = workbench.getDisplay();
 
@@ -132,8 +131,8 @@ public class BegObservationView extends ViewPart {
 		initializeToolBar();
 		initializeMenu();
 
-		//Initialize BegConfiguration once
-		if (PreferenceConstants.begEngineClient==null){
+		// Initialize BegConfiguration once
+		if (PreferenceConstants.begEngineClient == null) {
 			PreferenceConstants.begEngineClient = new BegEngineClient(begConfigPreferences.getString(PreferenceConstants.P_BegEngineURL));
 		}
 
@@ -148,23 +147,25 @@ public class BegObservationView extends ViewPart {
 			}
 		});
 
-		if (!eventStatus.getTransactionID().equals("")) {
-			display.asyncExec(new Runnable() {
-				public void run() {
-					transactionIdObservedText.setText(eventStatus.getTransactionID());
-				}
-			});
-		}
-
-		if (!(eventStatus.getEpcList().size() == 0)) {
-			display.asyncExec(new Runnable() {
-				public void run() {
-					for (String epc : eventStatus.getEpcList()) {
-						TableItem tableItem = new TableItem(tagIdsObservedTable, SWT.NONE);
-						tableItem.setText(epc);
+		if (!(eventStatus.getTransactionID()==null))
+			if (!eventStatus.getTransactionID().equals("")) {
+				display.asyncExec(new Runnable() {
+					public void run() {
+						transactionIdObservedText.setText(eventStatus.getTransactionID());
 					}
+				});
+			}
+		if (!(eventStatus.getEpcList() == null)) {
+				if (!(eventStatus.getEpcList().size() == 0)) {
+					display.asyncExec(new Runnable() {
+						public void run() {
+							for (String epc : eventStatus.getEpcList()) {
+								TableItem tableItem = new TableItem(tagIdsObservedTable, SWT.NONE);
+								tableItem.setText(epc);
+							}
+						}
+					});
 				}
-			});
 		}
 	}
 
@@ -224,7 +225,7 @@ public class BegObservationView extends ViewPart {
 
 	private class RefreshEventsToObserveButtonMouseListener extends MouseAdapter {
 		public void mouseDown(final MouseEvent e) {
-System.out.print(":):):):)");
+			System.out.print(":):):):)");
 			fillStartedBusinessEventsCombo();
 		}
 	}

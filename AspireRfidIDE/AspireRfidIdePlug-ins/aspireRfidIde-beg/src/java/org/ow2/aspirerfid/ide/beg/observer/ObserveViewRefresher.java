@@ -70,8 +70,10 @@ public class ObserveViewRefresher extends Thread {
 
 			BegObservationView begObservationView = getBegObservationView();
 			if (!begObservationView.equals(null))
-				begObservationView.fillObservation(eventStatus);
 
+				
+					begObservationView.fillObservation(eventStatus);
+			
 			try {
 				Thread.sleep(preferences.getInt(PreferenceConstants.P_ObservatorRefreshRate) * 1000);
 			}
