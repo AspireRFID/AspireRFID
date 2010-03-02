@@ -33,6 +33,6 @@
 	<classpathentry kind="lib" path="lib/xml-resolver-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/XmlSchema-1.4.5.jar"/>
 	<classpathentry kind="lib" path="lib/swt.jar"/>
-	<classpathentry kind="lib" path="lib/programmableEngineCommons.jar" sourcepath="/aspireRfidProgrammableEngineCommons"/>
+	<classpathentry kind="lib" path="lib/aspirerfid-commons-1.1.jar" sourcepath="/aspireRfidCommons"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -3,7 +3,6 @@
 
 <product name="ASPIRE RFID IDE" id="aspireRfidIDE.product" application="aspireRfidIDE.application" version="0.1.0" useFeatures="false">
 
-
    <configIni use="default">
    </configIni>
 
@@ -13,14 +12,12 @@
 
    <windowImages i16="icons/alt_window_16.gif" i32="icons/alt_window_32.gif"/>
 
-
    <launcher>
       <solaris/>
       <win useIco="false">
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
    </vm>

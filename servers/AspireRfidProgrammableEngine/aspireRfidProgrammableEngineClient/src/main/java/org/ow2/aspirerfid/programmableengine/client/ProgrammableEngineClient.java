@@ -20,9 +20,9 @@ package org.ow2.aspirerfid.programmableengine.client;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.log4j.Logger;
-import org.ow2.aspirerfid.programmableengine.interfaces.ProgrammableEngineDecoderInterface;
-import org.ow2.aspirerfid.programmableengine.interfaces.ProgrammableEngineEncoderInterface;
-import org.ow2.aspirerfid.programmableengine.model.OLCBProc;
+import org.ow2.aspirerfid.commons.pe.interfaces.ProgrammableEngineDecoderInterface;
+import org.ow2.aspirerfid.commons.pe.interfaces.ProgrammableEngineEncoderInterface;
+import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
 
 /**
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr

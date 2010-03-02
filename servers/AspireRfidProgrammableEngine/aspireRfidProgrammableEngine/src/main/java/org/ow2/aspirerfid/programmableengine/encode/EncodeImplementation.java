@@ -130,6 +130,9 @@ public class EncodeImplementation {
 						
 						// SubscribeECSpec
 						subscribeECSpec(processedEBProc.getAleClientEndPoint(),processedEBProc.getDefinedECSpecName(),processedEBProc.getEcSpecSubscriptionURI());
+					
+						
+						replyID = 400;
 					}
 				}
 			}

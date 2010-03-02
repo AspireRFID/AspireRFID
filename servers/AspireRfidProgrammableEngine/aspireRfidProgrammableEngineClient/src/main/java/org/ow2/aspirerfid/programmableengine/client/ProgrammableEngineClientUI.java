@@ -32,8 +32,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.ow2.aspirerfid.programmableengine.model.OLCBProc;
-import org.ow2.aspirerfid.programmableengine.utils.DeserializerUtil;
+import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
+import org.ow2.aspirerfid.commons.apdl.utils.DeserializerUtil;
 
 
 import org.eclipse.swt.graphics.Image;

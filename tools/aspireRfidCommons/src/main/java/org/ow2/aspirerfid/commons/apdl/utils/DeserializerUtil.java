@@ -30,12 +30,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import org.ow2.aspirerfid.commons.apdl.model.*;
+import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
 
 import org.apache.log4j.Logger;
 
 /**
- * This class provides some methods to deserialize ec specifications and reports.
+ * This class provides some methods to deserialize OLCBProc Objects
  * 
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
@@ -54,16 +54,21 @@ public class DeserializerUtil {
 	 * @throws Exception if deserialization fails
 	 */
 	public static OLCBProc deserializeOLCBProc(InputStream inputStream) throws Exception {
-		OLCBProc openLoopCBProc = new OLCBProc();
+//		OLCBProc openLoopCBProc = new OLCBProc();
+		OLCBProc openLoopCBProc = null;
 		try {
+			
+			String JAXB_CONTEXT = "org.ow2.aspirerfid.commons.apdl.model";
+			
 			// initialize jaxb context and unmarshaller
-			JAXBContext context = JAXBContext.newInstance(OLCBProc.class);
+//			JAXBContext context = JAXBContext.newInstance(OLCBProc.class);
+			JAXBContext context = JAXBContext.newInstance(JAXB_CONTEXT);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			unmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
 			
-			JAXBElement<OLCBProc> olcbProcJAXBElement = (JAXBElement<OLCBProc>)unmarshaller.unmarshal(inputStream);
-			
-			openLoopCBProc = olcbProcJAXBElement.getValue();
+//			JAXBElement<OLCBProc> olcbProcJAXBElement = (JAXBElement<OLCBProc>)unmarshaller.unmarshal(inputStream);
+			openLoopCBProc = ((JAXBElement<OLCBProc>)unmarshaller.unmarshal(inputStream)).getValue();
+//			openLoopCBProc = olcbProcJAXBElement.getValue();
 						
 		} catch (JAXBException e) {
 			e.printStackTrace();
