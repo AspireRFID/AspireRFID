@@ -99,13 +99,6 @@ public class ISOTest extends TestCase {
 		
 	}
 	
-	public void testConvertISO15693() {
-       HashMap<String,String> extraparams = new HashMap<String, String>();
-       extraparams.put("dataType","iso");
-       extraparams.put("outputFormat","LEGACY");
-       assertEquals("iso15693;mfgcode=98;serial=104197",engine.convert("E062000000019705", extraparams));
-     }
-
 	public void testConvertISO14443() {
         assertEquals("iso14443double;mfgcode=08;serial=00197","iso14443double;mfgcode=08;serial=00197");
      }
@@ -116,34 +109,5 @@ public class ISOTest extends TestCase {
 
 	public void testConvertMAC() {
         assertEquals("00:1f:3b:bf:6a:e9","00:1f:3b:bf:6a:e9");
-     }
-
-	
-	
-/*
-Here is a small example for ISO 15693 translation :
-
-       AspireTDTEngine engine = new AspireTDTEngine();
-       HashMap<String,String> extraparams = new HashMap<String, String>();
-       extraparams.put("dataType","iso");
-       extraparams.put("outputFormat","LEGACY");
-       String input = new String("E062000000019705");
-       String output = engine.convert("E062000000019705", extraparams);
-       System.out.println("Input in HEXA : "+input);
-       System.out.println(" -> to LEGACY        : "+output);
-
-And here is the result of the example:
-
-       Input in HEXA : E062000000019705
-         -> to LEGACY        : iso15693;mfgcode=98;serial=104197
-
-And other representation of ISO 15693 ID:
-    -> to BINARY        : 1110000001100010000000000000000000000000000000011001011100000101
-    -> to TAG_ENCODING  : urn:iso:tag:15693-64:98.104197
-    -> to PURE_IDENTITY : urn:iso:id:15693:98.104197
-    -> to ONS_HOSTNAME  : 104197.98.15693.onsiso.com  */
-	
-	
-	
-	
+     }	
 }
