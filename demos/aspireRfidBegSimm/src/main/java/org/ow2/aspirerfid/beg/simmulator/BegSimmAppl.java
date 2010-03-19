@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.namespace.QName;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -33,8 +34,10 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.*;
-import org.fosstrak.epcis.model.AttributeType;
-import org.fosstrak.epcis.model.VocabularyElementType;
+import org.ow2.aspirerfid.commons.beg.model.BusinessCtx;
+import org.ow2.aspirerfid.commons.epcis.model.AttributeType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
+import com.swtdesigner.SWTResourceManager;
 
 import org.eclipse.swt.widgets.MessageBox;
 
@@ -93,6 +96,7 @@ public class BegSimmAppl {
 	 */
 	protected void createContents() {
 		shell = new Shell();
+		shell.setImage(SWTResourceManager.getImage(BegSimmAppl.class, "/icons/img/splitNode.gif"));
 		shell.setLayout(new FillLayout());
 		shell.setSize(672, 536);
 		shell.setText("BEG Simmulator");
@@ -124,10 +128,10 @@ public class BegSimmAppl {
 		startCaptureButton.setText("Event Generation");
 
 		final Button refreshAvailableBusinessEventsButton = new Button(startBusinessEventGroup, SWT.NONE);
-		refreshAvailableBusinessEventsButton.addMouseListener(new RefreshAvailableBusinessEventsButtonMouseListener());
 		refreshAvailableBusinessEventsButton.setImage(SWTResourceManager.getImage(BegSimmAppl.class, "/icons/img/s_reload.png"));
+		refreshAvailableBusinessEventsButton.addMouseListener(new RefreshAvailableBusinessEventsButtonMouseListener());
 		refreshAvailableBusinessEventsButton.setBounds(417, 22, 28, 23);
-		refreshAvailableBusinessEventsButton.setText("button");
+		refreshAvailableBusinessEventsButton.setText("Reload");
 
 		eventTypeText = new Text(startBusinessEventGroup, SWT.BORDER);
 		eventTypeText.setBounds(168, 79, 219, 25);
@@ -194,7 +198,7 @@ public class BegSimmAppl {
 					for (AttributeType vocElementAttribute : vocabularyElement.getAttribute()) {
 						if (vocElementAttribute.getId().endsWith("event_name")) {
 
-							availableBusinessEventsCombo.add(vocElementAttribute.getContent().get(0).toString());
+							availableBusinessEventsCombo.add(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 							recievedVocabularyElementList.add(vocabularyElement);
 
 						}

@@ -39,27 +39,31 @@ import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
 
-import org.accada.ale.xsd.epcglobal.EPC;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.fosstrak.epcis.model.ArrayOfString;
-import org.fosstrak.epcis.model.BusinessTransactionType;
-import org.fosstrak.epcis.model.EPCISBodyType;
-import org.fosstrak.epcis.model.EPCISDocumentType;
-import org.fosstrak.epcis.model.EPCListType;
-import org.fosstrak.epcis.model.EventListType;
-import org.fosstrak.epcis.model.ObjectEventType;
-import org.fosstrak.epcis.model.QueryParam;
-import org.fosstrak.epcis.model.VocabularyElementType;
-import org.fosstrak.epcis.model.VocabularyType;
-import org.fosstrak.epcis.model.AttributeType;
-import org.fosstrak.epcis.captureclient.CaptureClient;
-import org.fosstrak.epcis.model.BusinessTransactionListType;
+import org.ow2.aspirerfid.commons.epcis.model.AggregationEventType;
+import org.ow2.aspirerfid.commons.epcis.model.ArrayOfString;
+import org.ow2.aspirerfid.commons.epcis.model.BusinessTransactionType;
+import org.ow2.aspirerfid.commons.epcis.model.EPCISBodyType;
+import org.ow2.aspirerfid.commons.epcis.model.EPCISDocumentType;
+import org.ow2.aspirerfid.commons.epcis.model.EPCListType;
+import org.ow2.aspirerfid.commons.epcis.model.EventListType;
+import org.ow2.aspirerfid.commons.epcis.model.ObjectEventType;
+import org.ow2.aspirerfid.commons.epcis.model.QuantityEventType;
+import org.ow2.aspirerfid.commons.epcis.model.QueryParam;
+import org.ow2.aspirerfid.commons.epcis.model.TransactionEventType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyType;
+import org.ow2.aspirerfid.commons.epcis.model.AttributeType;
+import org.ow2.aspirerfid.commons.epcglobal.commons.EPC;
+import org.ow2.aspirerfid.beg.capture.CaptureClient;
+import org.ow2.aspirerfid.commons.epcis.model.BusinessTransactionListType;
 
-import org.ow2.aspirerfid.beg.simmulator.BusinessCtx;
+import org.ow2.aspirerfid.beg.query.MasterDataQueryClient;
 import org.ow2.aspirerfid.beg.simmulator.EventStatus;
-import org.ow2.aspirerfid.beg.simmulator.MasterDataQueryClient;
+import org.ow2.aspirerfid.commons.beg.model.BusinessCtx;
 import org.apache.commons.configuration.XMLConfiguration;
 
 /**
@@ -246,18 +250,258 @@ public class BegSimmCore {
 		return true;
 	}
 
-	private void handleTransactionEventReports(BusinessCtx businessCtx, ECReportEventData ecReportEventData, CaptureClient captureClient2) {
+	private void handleTransactionEventReports(BusinessCtx businessCtx, ECReportEventData ecReportEventData, CaptureClient captureClient) throws IOException, JAXBException {
 		// TODO Auto-generated method stub
+		List<EPC> epcs = new LinkedList<EPC>();
+
+		TransactionEventType transactionEvent = null;
+		XMLGregorianCalendar now = getCurrentTime();
+		EPCISDocumentType epcisDoc = new EPCISDocumentType();
+		EPCISBodyType epcisBody = new EPCISBodyType();
+		EventListType eventList = new EventListType();
+		EPCListType epcList = new EPCListType();
+
+		// create the ecpis event
+		transactionEvent = new TransactionEventType();
+		transactionEvent.setEventTime(now);
+		transactionEvent.setEventTimeZoneOffset(EventTimeZoneOffset(now));
+
+		if (!ecReportEventData.getBizTransactionID().equals("")) {
+			BusinessTransactionListType businessTransactionListType = new BusinessTransactionListType();
+			BusinessTransactionType businessTransactionType = new BusinessTransactionType();
+			if (!businessCtx.getBusinessTransactionTypeID().equals("")) {
+				businessTransactionType.setType(businessCtx.getBusinessTransactionTypeID());
+			}
+			else {
+				businessTransactionType.setType("urn:epc:transaction:type:general");
+			}
+			businessTransactionType.setValue(ecReportEventData.getBizTransactionID());
+			businessTransactionListType.getBizTransaction().add(businessTransactionType);
+			transactionEvent.setBizTransactionList(businessTransactionListType);
+		}
+		else {
+			return;
+		}
+
+		for (String epc : ecReportEventData.getTransactionItems()) {
+			EPC nepc = new EPC();
+			nepc.setValue(epc);
+			epcList.getEpc().add(nepc);
+		}
+
+		transactionEvent.setEpcList(epcList);
+		transactionEvent.setParentID(ecReportEventData.getBizTransactionParentID());
+
+		// set action
+		if (!businessCtx.getAction().equals(null))
+			transactionEvent.setAction(businessCtx.getAction());
+
+		// set bizStep
+		if (!businessCtx.getBizStep().equals(null) || !businessCtx.getBizStep().equals(""))
+			transactionEvent.setBizStep(businessCtx.getBizStep());
+
+		// set disposition
+		if (!businessCtx.getDisposition().equals(null) || !businessCtx.getDisposition().equals(""))
+			transactionEvent.setDisposition(businessCtx.getDisposition());
+
+		// set readPoint
+		if (!businessCtx.getReadPoint().equals(null)) {
+			transactionEvent.setReadPoint(businessCtx.getReadPoint());
+		}
+
+		// set bizLocation
+		if (!businessCtx.getBizLocation().equals(null)) {
+			transactionEvent.setBizLocation(businessCtx.getBizLocation());
+		}
+
+		eventList.getObjectEventOrAggregationEventOrQuantityEvent().add(transactionEvent);
+
+		epcisBody.setEventList(eventList);
+		epcisDoc.setEPCISBody(epcisBody);
+		epcisDoc.setSchemaVersion(new BigDecimal("1.0"));
+		epcisDoc.setCreationDate(now);
+
+		int httpResponseCode = captureClient.capture(epcisDoc);
+		if (httpResponseCode != 200) {
+			log.debug("The event could NOT be captured!\n");
+		}
+		else if (httpResponseCode == 200) {
+			epcs.clear();
+		}
 
 	}
 
-	private void handleQuantityEventReports(BusinessCtx businessCtx, ECReportEventData ecReportEventData, CaptureClient captureClient2) {
+	private void handleQuantityEventReports(BusinessCtx businessCtx, ECReportEventData ecReportEventData, CaptureClient captureClient) throws IOException, JAXBException {
 		// TODO Auto-generated method stub
+		List<EPC> epcs = new LinkedList<EPC>();
+
+		QuantityEventType quantityEvent = null;
+		XMLGregorianCalendar now = getCurrentTime();
+		EPCISDocumentType epcisDoc = new EPCISDocumentType();
+		EPCISBodyType epcisBody = new EPCISBodyType();
+		EventListType eventList = new EventListType();
+		EPCListType epcList = new EPCListType();
+
+		// create the ecpis event
+		quantityEvent = new QuantityEventType();
+		quantityEvent.setEventTime(now);
+		quantityEvent.setEventTimeZoneOffset(EventTimeZoneOffset(now));
+
+		if (!ecReportEventData.getBizTransactionID().equals("")) {
+			BusinessTransactionListType businessTransactionListType = new BusinessTransactionListType();
+			BusinessTransactionType businessTransactionType = new BusinessTransactionType();
+			if (!businessCtx.getBusinessTransactionTypeID().equals("")) {
+				businessTransactionType.setType(businessCtx.getBusinessTransactionTypeID());
+			}
+			else {
+				businessTransactionType.setType("urn:epc:transaction:type:general");
+			}
+			businessTransactionType.setValue(ecReportEventData.getBizTransactionID());
+			businessTransactionListType.getBizTransaction().add(businessTransactionType);
+			quantityEvent.setBizTransactionList(businessTransactionListType);
+		}
+		else {
+			return;
+		}
+
+		for (String epc : ecReportEventData.getTransactionItems()) {
+			EPC nepc = new EPC();
+			nepc.setValue(epc);
+			epcList.getEpc().add(nepc);
+		}
+
+		String includedEpcItemID = ecReportEventData.getTransactionItems().get(0);
+		String[] splitedEpcID = includedEpcItemID.split("\\.");
+		String epcClass = "";
+		for (int j=0 ; j < (splitedEpcID.length-1); j++){
+			epcClass = epcClass + splitedEpcID[j]+".";
+		}
+		
+		epcClass = epcClass+"*";
+		
+		quantityEvent.setEpcClass(epcClass);
+		quantityEvent.setQuantity(epcList.getEpc().size());
+
+		// set action
+//		if (!businessCtx.getAction().equals(null))
+//			quantityEvent.setAction(businessCtx.getAction());
+
+		// set bizStep
+		if (!businessCtx.getBizStep().equals(null) || !businessCtx.getBizStep().equals(""))
+			quantityEvent.setBizStep(businessCtx.getBizStep());
+
+		// set disposition
+		if (!businessCtx.getDisposition().equals(null) || !businessCtx.getDisposition().equals(""))
+			quantityEvent.setDisposition(businessCtx.getDisposition());
+
+		// set readPoint
+		if (!businessCtx.getReadPoint().equals(null)) {
+			quantityEvent.setReadPoint(businessCtx.getReadPoint());
+		}
+
+		// set bizLocation
+		if (!businessCtx.getBizLocation().equals(null)) {
+			quantityEvent.setBizLocation(businessCtx.getBizLocation());
+		}
+
+		eventList.getObjectEventOrAggregationEventOrQuantityEvent().add(quantityEvent);
+
+		epcisBody.setEventList(eventList);
+		epcisDoc.setEPCISBody(epcisBody);
+		epcisDoc.setSchemaVersion(new BigDecimal("1.0"));
+		epcisDoc.setCreationDate(now);
+
+		int httpResponseCode = captureClient.capture(epcisDoc);
+		if (httpResponseCode != 200) {
+			log.debug("The event could NOT be captured!\n");
+		}
+		else if (httpResponseCode == 200) {
+			epcs.clear();
+		}
 
 	}
 
-	private void handleAggregationEventReports(BusinessCtx businessCtx, ECReportEventData ecReportEventData, CaptureClient captureClient2) {
+	private void handleAggregationEventReports(BusinessCtx businessCtx, ECReportEventData ecReportEventData, CaptureClient captureClient) throws IOException, JAXBException {
 		// TODO Auto-generated method stub
+		List<EPC> epcs = new LinkedList<EPC>();
+
+		
+		
+		AggregationEventType aggregationEventType = null;
+		XMLGregorianCalendar now = getCurrentTime();
+		EPCISDocumentType epcisDoc = new EPCISDocumentType();
+		EPCISBodyType epcisBody = new EPCISBodyType();
+		EventListType eventList = new EventListType();
+		EPCListType epcList = new EPCListType();
+
+		// create the ecpis event
+		aggregationEventType = new AggregationEventType();
+		aggregationEventType.setEventTime(now);
+		aggregationEventType.setEventTimeZoneOffset(EventTimeZoneOffset(now));
+		aggregationEventType.setParentID(ecReportEventData.getParentObject());
+
+		if (!ecReportEventData.getBizTransactionID().equals("")) {
+			BusinessTransactionListType businessTransactionListType = new BusinessTransactionListType();
+			BusinessTransactionType businessTransactionType = new BusinessTransactionType();
+			if (!businessCtx.getBusinessTransactionTypeID().equals("")) {
+				businessTransactionType.setType(businessCtx.getBusinessTransactionTypeID());
+			}
+			else {
+				businessTransactionType.setType("urn:epc:transaction:type:general");
+			}
+			businessTransactionType.setValue(ecReportEventData.getBizTransactionID());
+			businessTransactionListType.getBizTransaction().add(businessTransactionType);
+			aggregationEventType.setBizTransactionList(businessTransactionListType);
+		}
+		else {
+			return;
+		}
+
+		for (String epc : ecReportEventData.getTransactionItems()) {
+			EPC nepc = new EPC();
+			nepc.setValue(epc);
+			epcList.getEpc().add(nepc);
+		}
+
+		aggregationEventType.setChildEPCs(epcList);
+
+		// set action
+		if (!businessCtx.getAction().equals(null))
+			aggregationEventType.setAction(businessCtx.getAction());
+
+		// set bizStep
+		if (!businessCtx.getBizStep().equals(null) || !businessCtx.getBizStep().equals(""))
+			aggregationEventType.setBizStep(businessCtx.getBizStep());
+
+		// set disposition
+		if (!businessCtx.getDisposition().equals(null) || !businessCtx.getDisposition().equals(""))
+			aggregationEventType.setDisposition(businessCtx.getDisposition());
+
+		// set readPoint
+		if (!businessCtx.getReadPoint().equals(null)) {
+			aggregationEventType.setReadPoint(businessCtx.getReadPoint());
+		}
+
+		// set bizLocation
+		if (!businessCtx.getBizLocation().equals(null)) {
+			aggregationEventType.setBizLocation(businessCtx.getBizLocation());
+		}
+
+		eventList.getObjectEventOrAggregationEventOrQuantityEvent().add(aggregationEventType);
+
+		epcisBody.setEventList(eventList);
+		epcisDoc.setEPCISBody(epcisBody);
+		epcisDoc.setSchemaVersion(new BigDecimal("1.0"));
+		epcisDoc.setCreationDate(now);
+
+		int httpResponseCode = captureClient.capture(epcisDoc);
+		if (httpResponseCode != 200) {
+			log.debug("The event could NOT be captured!\n");
+		}
+		else if (httpResponseCode == 200) {
+			epcs.clear();
+		}
+
 
 	}
 
@@ -295,7 +539,7 @@ public class BegSimmCore {
 		}
 
 		for (String epc : ecReportEventData.getTransactionItems()) {
-			org.fosstrak.epcis.model.EPC nepc = new org.fosstrak.epcis.model.EPC();
+			EPC nepc = new EPC();
 			nepc.setValue(epc);
 			epcList.getEpc().add(nepc);
 		}
@@ -388,33 +632,36 @@ public class BegSimmCore {
 
 		BusinessCtx businessCtx = new BusinessCtx();
 
+		String[] transactionIdPath = vocabularyElementType.getId().split(",");
+
+		businessCtx.setBusinessTransactionID(transactionIdPath[transactionIdPath.length - 1]);
+
 		for (AttributeType vocElementAttribute : vocabularyElementType.getAttribute()) {
 			if (vocElementAttribute.getId().endsWith("business_location")) {
-				businessCtx.setBizLocation(vocElementAttribute.getContent().get(0).toString());
+				businessCtx.setBizLocation(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 			}
 			else if (vocElementAttribute.getId().endsWith("business_step")) {
-				businessCtx.setBizStep(vocElementAttribute.getContent().get(0).toString());
+				businessCtx.setBizStep(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 			}
 			else if (vocElementAttribute.getId().endsWith("disposition")) {
-				businessCtx.setDisposition(vocElementAttribute.getContent().get(0).toString());
-			}
-			else if (vocElementAttribute.getId().endsWith("ecspec_name")) {
-				businessCtx.setECSpecName(vocElementAttribute.getContent().get(0).toString());
+				businessCtx.setDisposition(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 			}
 			else if (vocElementAttribute.getId().endsWith("read_point")) {
-				businessCtx.setReadPoint(vocElementAttribute.getContent().get(0).toString());
+				businessCtx.setReadPoint(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 			}
 			else if (vocElementAttribute.getId().endsWith("action")) {
-				businessCtx.setAction(vocElementAttribute.getContent().get(0).toString());
+				businessCtx.setAction(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 			}
 			else if (vocElementAttribute.getId().endsWith("event_type")) {
-				businessCtx.setEventType(vocElementAttribute.getContent().get(0).toString());
+				businessCtx.setEventType(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 			}
-			else if (vocElementAttribute.getId().endsWith("ecreport_names")) {
-				businessCtx.setEcReportNames(vocElementAttribute.getContent().get(0).toString());
-			}
+			// else if (vocElementAttribute.getId().endsWith("ecreport_names"))
+			// {
+			// businessCtx.setEcReportNames(vocElementAttribute.getOtherAttributes().get(new
+			// QName("value")));
+			// }
 			else if (vocElementAttribute.getId().endsWith("transaction_type")) {
-				businessCtx.setBusinessTransactionTypeID(vocElementAttribute.getContent().get(0).toString());
+				businessCtx.setBusinessTransactionTypeID(vocElementAttribute.getOtherAttributes().get(new QName("value")));
 			}
 		}
 
