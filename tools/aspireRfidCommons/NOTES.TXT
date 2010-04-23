@@ -1,5 +1,5 @@
 
-Important:
+Important notes for Auto generated Code:
 
 1) org.ow2.aspirerfid.commons.epcis.model.ArrayOfStrings, org.ow2.aspirerfid.commons.epcis.model.QueryParam
 and org.ow2.aspirerfid.commons.epcis.model.QueryParams Classes should implement java.io.Serializable

@@ -45,7 +45,7 @@ public class Serializer {
 	 * @throws IOException
 	 *             whenever an io problem occurs
 	 */
-	public static void serializeLRSpec(OLCBProc openLoopCBProc, StringWriter writer) throws IOException {
+	public static void serializeOLCBProc(OLCBProc openLoopCBProc, Writer writer) throws IOException {
 
 		ObjectFactory objectFactory = new ObjectFactory();
 		JAXBContext context;
