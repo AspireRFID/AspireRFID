@@ -1,19 +1,23 @@
 /*
- * Copyright © 2008-2010, Aspire
+ * Copyright (C) 2008-2010 Loic Schmidt - INRIA
  * 
- * Aspire is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License version 2.1 as published by
- * the Free Software Foundation (the "LGPL").
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library in the file COPYING-LGPL-2.1; if not, write to the
- * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- * 
- * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
- * KIND, either express or implied. See the GNU Lesser General Public License
- * for the specific language governing rights and limitations.
+ * This file is part of AspireRFID.
+ *
+ * AspireRFID is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License version 2.1, as published by the Free Software Foundation.
+ *
+ * AspireRFID is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with AspireRFID. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
+
+
 
 package org.ow2.aspirerfid.tdt;
 
@@ -26,7 +30,6 @@ import org.fosstrak.tdt.TDTException;
 import javax.xml.bind.JAXBException;
 
 /**
- * @author Loïc Schmidt e-mail: loic.schmidt@lifl.fr
  *
  *	<p>This class provides methods for translating GS1 System codes
  *      between two levels of representation: LEGACY and GS1_AI_ENCODING.

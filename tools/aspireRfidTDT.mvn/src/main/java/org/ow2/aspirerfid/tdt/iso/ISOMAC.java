@@ -1,5 +1,5 @@
 /*
- * Copyright © 2008-2010, Aspire
+ * Copyright (C) 2008-2010, Aspire
  * 
  * Aspire is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License version 2.1 as published by
@@ -20,7 +20,7 @@ package org.ow2.aspirerfid.tdt.iso;
 import org.fosstrak.tdt.TDTException;
 
 /**
- * @author Loïc Schmidt e-mail: loic.schmidt@lifl.fr
+ * @author Loic Schmidt e-mail: loic.schmidt@lifl.fr
  *
  *	<p>This class represents a MAC ADDRESS
  *      

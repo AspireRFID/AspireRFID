@@ -1,18 +1,20 @@
 /*
- * Copyright © 2008-2010, Aspire
+ * Copyright (C) 2008-2010 Loic Schmidt - INRIA
  * 
- * Aspire is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License version 2.1 as published by
- * the Free Software Foundation (the "LGPL").
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library in the file COPYING-LGPL-2.1; if not, write to the
- * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- * 
- * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
- * KIND, either express or implied. See the GNU Lesser General Public License
- * for the specific language governing rights and limitations.
+ * This file is part of AspireRFID.
+ *
+ * AspireRFID is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License version 2.1, as published by the Free Software Foundation.
+ *
+ * AspireRFID is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with AspireRFID. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
 
 
@@ -29,7 +31,7 @@ import org.epcglobalinc.tdt.*;
 import org.fosstrak.tdt.*;
 
 /**
- * @author Loïc Schmidt e-mail: loic.schmidt@lifl.fr
+ * @author Loic Schmidt e-mail: loic.schmidt@lifl.fr
  *
  *	<p>This class provides methods for translating some codes (such as an electronic
  *	product code (EPC) or all GS1 codes) between various levels of representation
@@ -183,6 +185,10 @@ public class AspireTDTEngine {
 			outputData=ISOTDTEngine.convert(inputData, inputParameters);
 		} else if (dataType.equalsIgnoreCase("phonenumber")) {
 			outputData=PhoneNumberTDTEngine.convert(inputData, inputParameters);
+		} else if (dataType.equalsIgnoreCase("GSMA")) {
+			outputData=GSMATDTEngine.convert(inputData, inputParameters);
+		} else if (dataType.equalsIgnoreCase("onewire")) {
+			outputData=OneWireTDTEngine.convert(inputData, inputParameters);
 		} else {
 			// error : no data type specified
 			throw new TDTException("Invalid data type in parameters");

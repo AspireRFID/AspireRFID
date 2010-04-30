@@ -1,20 +1,32 @@
 
 package org.ow2.aspirerfid.tdt;
 
+import org.epcglobalinc.tdt.*;
+import org.fosstrak.tdt.*;
+import java.util.*;
 import java.math.BigInteger;
-import java.util.HashMap;
+import org.ow2.aspirerfid.tdt.*;
+
+
+import com.dalsemi.onewire.utils.CRC8;
+import com.dalsemi.onewire.utils.Convert;
+import com.dalsemi.onewire.utils.Convert.ConvertException;
+
 
 public class TDTFrontEnd { // demonstration front-end application which makes use of the TDT package
 
+
     public static final void main(String args[]) {
 	try {
+
+
 
 		AspireTDTEngine engine = new AspireTDTEngine(); // path to directory containing the subdirectories 'schemes' and 'auxiliary'
 
 		HashMap<String,String> extraparams = new HashMap<String, String>(); // a HashMap providing extra parameters needed in addition to the input value
 
 		/** MANDATORY PARAMETERS FOR TDT **/
-		extraparams.put("dataType","gs1"); // permitted values are 'gs1', 'ISO' or 'phone' (not case sensitive)
+		extraparams.put("dataType","gs1"); // permitted values are 'gs1', 'ISO', 'onewire', 'phone' or 'GSMA' (not case sensitive)
 		extraparams.put("outputFormat","LEGACY");
 		// permitted values are :
 		// for EPC Tags and GS1 Bar Code (EPC TDS Compliant)* : 'LEGACY', 'BINARY', 'TAG_ENCODING', 'PURE_IDENTITY', 'ONS_HOSTNAME' and 'GS1_AI_ENCODING'
@@ -39,30 +51,14 @@ public class TDTFrontEnd { // demonstration front-end application which makes us
 		extraparams.put("countryprefixlength","96"); // the countryprefixlength must be specified as "1", "2" or "3"
 
 
-		
-//	        String inbound = "gtin=00037000302414;serial=33554431";
-//		String inbound = "gtin=03583782350398;serial=00000001";
-//		String inbound = "urn:epc:id:sgtin:00370001.23456.101";
-//		String inbound = "1010100000000000001000001110110001000010000011111110011000110010";
-	//	String inbound = "001100000101010000000010010000100010000000011101100010000100000000000000000011111110011000110010";
-//		String inbound = "001100000101010000000010010000100010000000011101100010000100000000000000000011111110011000110010";
-//		String inbound = "cageordodaac=1D381;serial=16522293";
-//		String inbound = "cageordodaac=2S194;serial=12345678901";
-//		String inbound = "1100000011100101011101111110101000000011100101100010000000000000000000000000000000000000000000";
+
+
+
+/*
+		System.out.println(" ===> TEST EPC/GS1");	
 		extraparams.put("outputFormat","BINARY");
-
-//		extraparams.put("outputFormat","BINARY");
-
-/*		String outbound = engine.convert(inbound, extraparams);
-		System.out.println("Input string " + inbound);
-		System.out.println("Output is "+outbound);
-*/
-	//	String inbound="gtin=03583781545313;serial=00000001";
 		String inbound="00"+(new BigInteger("30395DFA804042C000000003",16)).toString(2);
 		System.out.println("Input string " + inbound);
-	//	inbound="001100000011100101011101111110101000000011100101100001111100000000000000000000000000000000000001";
-	//	System.out.println("Input string " + inbound);
-
 
 
 		String outbound = engine.convert(inbound, extraparams);
@@ -89,22 +85,10 @@ public class TDTFrontEnd { // demonstration front-end application which makes us
 		extraparams.put("outputFormat","GS1_AI_ENCODING");
 		String o6 = engine.convert(outbound, extraparams);
 		System.out.println(" as GS1_AI_ENCODING:  " + o6);
+*/
 
-
-
-//		extraparams.put("outputFormat","LEGACY");
-//		
-		/*TDTEngine EpcTdt= new TDTEngine();
-		HashMap<String,String> inputParameters = new HashMap<String, String>();
-		String outbound=EpcTdt.convert(inbound, inputParameters,LevelTypeList.LEGACY);
-
-		//String outbound = engine.convert(inbound, extraparams);
-		System.out.println(" as LEGACY      :  " + outbound);
-		outbound=EpcTdt.convert(inbound, inputParameters, LevelTypeList.TAG_ENCODING);
-		System.out.println(" as TAG_ENCODING:  " + outbound);*/
-
-
-		System.out.println(" ===> TEST HF");		
+/*
+		System.out.println(" ===> TEST ISO");		
 		testISO("iso15693;mfgcode=98;serial=00104197",engine);
 		testISO("iso14443single;uid0=08;serial=00197",engine);
 		testISO("iso14443double;mfgcode=08;serial=00197",engine);
@@ -116,42 +100,51 @@ public class TDTFrontEnd { // demonstration front-end application which makes us
 		
 		System.out.println(" ===> TEST PN");
 		testPN("+33112345678",engine);
-	}
-	catch (Exception e) { 
+*/
+		System.out.println(" ===> TEST IMEI");
+		testGSMA("352099001761481",engine);
+		testGSMA("9042015602576342",engine);
+
+		System.out.println(" ===> TEST OneWire");
+		testOneWire("2700000095C33108",engine);
+		testOneWire("0831C39500000027",engine);
+
+
+	}catch (Exception e) { 
 	    e.printStackTrace(System.out);
 	}
-    }
+}
    
     private static String testISO(String input, AspireTDTEngine engine){
 
-	System.out.println("Input in LEGACY : "+input);
+		System.out.println("Input in LEGACY : "+input);
 
-	HashMap<String,String> extraparams = new HashMap<String, String>();
+		HashMap<String,String> extraparams = new HashMap<String, String>();
 
-	extraparams.put("dataType","iso");
-	extraparams.put("outputFormat","HEXA");
-	String output = engine.convert(input, extraparams);
-	System.out.println(" -> to HEXA          : "+output);
-	extraparams.put("outputFormat","LEGACY");
-	output = engine.convert(output, extraparams);
-	System.out.println(" -> to LEGACY        : "+output);
-	extraparams.put("outputFormat","BINARY");
-	output = engine.convert(output, extraparams);
-	System.out.println(" -> to BINARY        : "+output);
-	extraparams.put("outputFormat","TAG_ENCODING");
-	output = engine.convert(output, extraparams);
-	System.out.println(" -> to TAG_ENCODING  : "+output);
-	extraparams.put("outputFormat","PURE_IDENTITY");
-	output = engine.convert(output, extraparams);
-	System.out.println(" -> to PURE_IDENTITY : "+output);
-	extraparams.put("outputFormat","ONS_HOSTNAME");
-	output = engine.convert(output, extraparams);
-	System.out.println(" -> to ONS_HOSTNAME  : "+output);
+		extraparams.put("dataType","iso");
+		extraparams.put("outputFormat","HEXA");
+		String output = engine.convert(input, extraparams);
+		System.out.println(" -> to HEXA          : "+output);
+		extraparams.put("outputFormat","LEGACY");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to LEGACY        : "+output);
+		extraparams.put("outputFormat","BINARY");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to BINARY        : "+output);
+		extraparams.put("outputFormat","TAG_ENCODING");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to TAG_ENCODING  : "+output);
+		extraparams.put("outputFormat","PURE_IDENTITY");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to PURE_IDENTITY : "+output);
+		extraparams.put("outputFormat","ONS_HOSTNAME");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to ONS_HOSTNAME  : "+output);
+	
+		return input;
+   }
 
-	return input;
-    }
-
-    private static String testPN(String input, AspireTDTEngine engine){
+	private static String testPN(String input, AspireTDTEngine engine){
 
 		System.out.println("Input in LEGACY : "+input);
 
@@ -178,7 +171,62 @@ public class TDTFrontEnd { // demonstration front-end application which makes us
 		output = engine.convert(output, extraparams);
 		System.out.println(" -> to ONS_HOSTNAME  : "+output);
 
-	return input;
-    }
+		return input;
+	}
+
+	private static String testGSMA(String input,AspireTDTEngine engine) {
+
+
+		System.out.println("Input in DECIMAL : "+input);
+
+		HashMap<String,String> extraparams = new HashMap<String, String>();
+
+		extraparams.put("dataType","GSMA");
+		extraparams.put("outputFormat","LEGACY");
+		String output = engine.convert(input, extraparams);
+		System.out.println(" -> to LEGACY        : "+output);
+		extraparams.put("outputFormat","BINARY");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to BINARY        : "+output);
+		extraparams.put("outputFormat","DECIMAL");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to DECIMAL       : "+output);
+		extraparams.put("outputFormat","TAG_ENCODING");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to TAG_ENCODING  : "+output);
+		extraparams.put("outputFormat","ONS_HOSTNAME");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to ONS_HOSTNAME  : "+output);
+
+		return input;
+	}
+
+	private static String testOneWire(String input,AspireTDTEngine engine) {
+
+
+		System.out.println("Input in HEXA : "+input);
+
+		HashMap<String,String> extraparams = new HashMap<String, String>();
+
+		extraparams.put("dataType","onewire");
+		extraparams.put("outputFormat","LEGACY");
+		String output = engine.convert(input, extraparams);
+		System.out.println(" -> to LEGACY        : "+output);
+		extraparams.put("outputFormat","BINARY");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to BINARY        : "+output);
+		extraparams.put("outputFormat","HEXA");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to HEXA          : "+output);
+		extraparams.put("outputFormat","TAG_ENCODING");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to TAG_ENCODING  : "+output);
+		extraparams.put("outputFormat","ONS_HOSTNAME");
+		output = engine.convert(output, extraparams);
+		System.out.println(" -> to ONS_HOSTNAME  : "+output);
+
+		return input;
+	}
+
 
 }
