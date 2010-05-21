@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<parameters>
+	<invoice>
+		<invoiceGroupName>urn:epc:id:gid:146.55.112</invoiceGroupName>
+		<merchandise>
+			<packetsContent>
+				<packetsGroupName>urn:epc:id:57.88.*</packetsGroupName>
+				<company>Acme</company>
+				<description>Memory 4GB DD3 1033MHz</description>
+				<measurementID>ITEM</measurementID>
+				<expectedQuantity>2</expectedQuantity>
+			</packetsContent>
+			<packetsContent>
+				<packetsGroupName>urn:epc:id:gid:124.50.*</packetsGroupName>
+				<company>Acme</company>
+				<description>CPU Quad Core 2.66GHz</description>
+				<measurementID>ITEM</measurementID>
+				<expectedQuantity>1</expectedQuantity>
+			</packetsContent>
+			<packetsContent>
+				<packetsGroupName>urn:epc:id:gid:91.206.*</packetsGroupName>
+				<company>Acme</company>
+				<description>HDD 500GB 7200rpm SATA2</description>
+				<measurementID>ITEM</measurementID>
+				<expectedQuantity>1</expectedQuantity>
+			</packetsContent>
+		</merchandise>
+	</invoice>
+
+	<!-- <invoice>
+		<invoiceGroupName>urn:epc:id:gid:146.55.113</invoiceGroupName>
+		<merchandise>
+			<packetsContent>
+				<packetsGroupName>urn:epc:id:37.192.*</packetsGroupName>
+				<company>Acme</company>
+				<description>Monitor 19" TFT Black</description>
+				<measurementID>ITEM</measurementID>
+				<expectedQuantity>1</expectedQuantity>
+			</packetsContent>
+			<packetsContent>
+				<packetsGroupName>urn:epc:id:gid:101.224.*</packetsGroupName>
+				<company>Acme</company>
+				<description>Case Midi Tower Black</description>
+				<measurementID>ITEM</measurementID>
+				<expectedQuantity>1</expectedQuantity>
+			</packetsContent>
+			<packetsContent>
+				<packetsGroupName>urn:epc:id:gid:261.197.*</packetsGroupName>
+				<company>Acme</company>
+				<description>Multimedia Keyboard</description>
+				<measurementID>ITEM</measurementID>
+				<expectedQuantity>2</expectedQuantity>
+			</packetsContent>
+		</merchandise>
+	</invoice>-->
+
+</parameters>
