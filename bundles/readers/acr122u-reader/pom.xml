@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ow2.aspirerfid</groupId>
+	<artifactId>acr122u-reader</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+	<name>Aspire ACR122U Reader</name>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>4.2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+			<version>4.2.0</version>
+			<scope>provided</scope>
+		</dependency>		
+		<dependency>
+			<groupId>org.ow2.aspirerfid</groupId>
+			<artifactId>aleserver-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.tikitag</groupId>
+			<artifactId>com.tikitag.client-bundle</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.ow2.aspirerfid</groupId>
+			<artifactId>abstract-reader</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>bundle</type>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<description>Aspire ACR122U Reader</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<!-- best lock down version of the plugin too -->
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-Vendor>OW2 AspireRFID project</Bundle-Vendor>
+						<Bundle-Licence>LGPL v2.1</Bundle-Licence>
+						<Bundle-Copyright>Copyright (c) OW2 AspireRFID (2010). All Rights
+							Reserved.</Bundle-Copyright>
+
+						<DynamicImport-Package>org.apache.commons.lang.builder,
+							org.apache.commons.lang</DynamicImport-Package>
+
+						<Bundle-Activator>org.ow2.aspirerfid.reader.acr122u.bundle.Activator</Bundle-Activator>
+
+						<!-- <_donotcopy>(CVS|.svn|config.properties)</_donotcopy>  -->
+											
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
