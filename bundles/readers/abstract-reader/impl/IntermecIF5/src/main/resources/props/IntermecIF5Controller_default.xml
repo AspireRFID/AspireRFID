@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Properties file for Intermec IF5 reader using a TCP/IP connection -->
+<properties>
+
+	<!-- Address of the reader -->
+	<!-- Value: address (string) -->
+	<address>192.168.212.233</address>
+
+	<!-- The port the reader is listening -->
+	<!-- Value: port number between 0 and 65525 -->
+	<port>2189</port>
+
+	<!-- The communication timeout in milliseconds -->
+	<!-- Value: timeout (integer value) -->
+	<timeout>5000</timeout>
+
+	<!-- End Of Line Chars -->
+	<endOfLineChars>\n</endOfLineChars>
+
+	<!-- The EPC transponder models configuration file -->
+	<!-- <epcTransponderModelsConfig>
+		/props/EPCTransponderModels_default.xml
+		</epcTransponderModelsConfig>
+	-->
+	<epcTransponderModelsConfig>
+		/props/EPCTransponderModels.xml
+	</epcTransponderModelsConfig>
+	<!-- The IdTypes configuration file -->
+	<idTypesConfig>/props/IDTypes_default.xml</idTypesConfig>
+
+
+	<!-- List of readpoints that represent specific antennas
+		The name of the readpoint can be chosen arbitrary but it must be unique.
+		The connector of the readpoint is the number of the channel the antenna is connected to.
+		The connector number is an integer in the range 1 to 4. -->
+	<readpoints>
+		<readpoint>
+			<name>Antenna1</name>
+			<connector>1</connector>
+		</readpoint>
+		<!--
+			<readpoint>
+			<name>Antenna2</name>
+			<connector>2</connector>
+			</readpoint>
+			
+			<readpoint>
+			<name>Antenna3</name>
+			<connector>3</connector>
+			</readpoint>
+		-->
+
+	</readpoints>
+
+</properties>
