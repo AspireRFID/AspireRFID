@@ -1,74 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 	<!--
-		Copyright © 2008-2010, Aspire Aspire is free software; you can redistribute it and/or
-		modify it under the terms of the GNU Lesser General Public License version 2.1 as
-		published by the Free Software Foundation (the "LGPL"). You should have received a copy
-		of the GNU Lesser General Public License along with this library in the file
-		COPYING-LGPL-2.1; if not, write to the Free Software Foundation, Inc., 51 Franklin
-		Street, Fifth Floor, Boston, MA 02110-1301 USA. This software is distributed on an "AS
-		IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the GNU Lesser
-		General Public License for the specific language governing rights and limitations.
+		Copyright © 2008-2010, Aspire Aspire is free software; you can redistribute it and/or modify it
+		under the terms of the GNU Lesser General Public License version 2.1 as published by the Free
+		Software Foundation (the "LGPL"). You should have received a copy of the GNU Lesser General Public
+		License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software
+		Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. This software is
+		distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+		GNU Lesser General Public License for the specific language governing rights and limitations.
 
 		Author: Nikos Kefalakis (nkef@ait.edu.gr)
 	-->
 
-<apdl:OLCBProc id="urn:epcglobal:fmcg:bti:openloopsupplychain" name="AcmeSupplyChainManagement" xmlns:ale="urn:epcglobal:ale:xsd:1"
-	xmlns:alelr="urn:epcglobal:alelr:xsd:1" xmlns:apdl="urn:ow2:aspirerfid:apdlspec:xsd:1"
-	xmlns:epcglobal="urn:epcglobal:xsd:1" xmlns:epcis="urn:epcglobal:epcis:xsd:1"
-	xmlns:epcismd="urn:epcglobal:epcis-masterdata:xsd:1" xmlns:p="http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader"
-	xmlns:xpdl="http://www.wfmc.org/2002/XPDL1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<apdl:OLCBProc id="urn:epcglobal:fmcg:bti:openloopsupplychain" name="AcmeSupplyChainManagement"
+	xmlns:ale="urn:epcglobal:ale:xsd:1" xmlns:alelr="urn:epcglobal:alelr:xsd:1" xmlns:apdl="urn:ow2:aspirerfid:apdlspec:xsd:1"
+	xmlns:epcglobal="urn:epcglobal:xsd:1" xmlns:epcis="urn:epcglobal:epcis:xsd:1" xmlns:epcismd="urn:epcglobal:epcis-masterdata:xsd:1"
+	xmlns:p="http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader" xmlns:xpdl="http://www.wfmc.org/2002/XPDL1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:ow2:aspirerfid:apdlspec:xsd:1 ../aspireRfidSpecificationLanguage/AspireSpesificationLanguage.xsd ">
 
+	<epcismd:EPCISMasterDataDocument>
+		<EPCISBody>
+			<VocabularyList>
+				<Vocabulary type="urn:epcglobal:epcis:vtype:BusinessStep">
+					<VocabularyElementList>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:receiving">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="receiving" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:picking">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Picking" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:shipping">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="shipping" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:shipment">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Shipment" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:production">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Production" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:accepting">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Accepting" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:inspecting">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Inspecting" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:storing">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Storing" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:packing">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Packing" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:loading">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Loading" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:commissioning">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Commissioning" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:decommissioning">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Decommissioning" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:bizstep:destroying">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Destroying" />
+						</VocabularyElement>
+					</VocabularyElementList>
+				</Vocabulary>
+
+				<Vocabulary type="urn:epcglobal:epcis:vtype:Disposition">
+					<VocabularyElementList>
+						<VocabularyElement id="urn:epcglobal:fmcg:disp:active">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Active" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:disp:inactive">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Inactive" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:disp:reserved">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Reserved" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:disp:encoded">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Encoded" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:disp:in_transit">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="In_transit" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:disp:non_sellable">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Non_sellable" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:disp:in_progress">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="In_progress" />
+						</VocabularyElement>
+						<VocabularyElement id="urn:epcglobal:fmcg:disp:sold">
+							<attribute id="urn:epcglobal:epcis:mda:Name" value="Sold" />
+						</VocabularyElement>
+					</VocabularyElementList>
+				</Vocabulary>
+				
+				<Vocabulary type="urn:epcglobal:epcis:vtype:BusinessTransactionType">
+						<VocabularyElementList>
+							<VocabularyElement id="urn:epcglobal:fmcg:btt:shipping">
+								<attribute id="urn:epcglobal:epcis:mda:Name" value="Shipping" />
+							</VocabularyElement>
+							<VocabularyElement id="urn:epcglobal:fmcg:btt:receiving">
+								<attribute id="urn:epcglobal:epcis:mda:Name" value="Receiving" />
+							</VocabularyElement>
+						</VocabularyElementList>
+					</Vocabulary>
+			</VocabularyList>
+		</EPCISBody>
+	</epcismd:EPCISMasterDataDocument>
 
 
 	<!--
-		Open Loop Composite Business Process (AspireRFID Process Description Language
-		Specification)
+		Open Loop Composite Business Process (AspireRFID Process Description Language Specification)
 	-->
 
 	<apdl:CLCBProc id="urn:epcglobal:fmcg:bti:acmesupplying" name="AcmeWarehouseBusinessProcess">
 		<!--
-			RFID Composite Business Process Specification (the ID will be the Described
-			Transactions's URI)
+			RFID Composite Business Process Specification (the ID will be the Described Transactions's URI)
 		-->
 		<xpdl:Description>Acme Supply Chain</xpdl:Description>
 
-<!-- 
-		<apdl:EBProc Id="CLCBProcEnd" Name="CLCBProcEnd">
-			<xpdl:Description />
-			<xpdl:TransitionRestrictions>
-				<xpdl:TransitionRestriction>
-					<xpdl:Join Type="XOR" />
-				</xpdl:TransitionRestriction>
-			</xpdl:TransitionRestrictions>
-			<xpdl:ExtendedAttributes>
-				<xpdl:ExtendedAttribute Name="XOffset" Value="623" />
-				<xpdl:ExtendedAttribute Name="YOffset" Value="202" />
-			</xpdl:ExtendedAttributes>
-		</apdl:EBProc>
 
-		<apdl:EBProc Id="CLCBProcStart" Name="CLCBProcStart">
-			<xpdl:Description />
-			<xpdl:TransitionRestrictions>
-				<xpdl:TransitionRestriction>
-					<xpdl:Join Type="AND" />
-				</xpdl:TransitionRestriction>
-			</xpdl:TransitionRestrictions>
-			<xpdl:ExtendedAttributes>
-				<xpdl:ExtendedAttribute Name="XOffset" Value="47" />
-				<xpdl:ExtendedAttribute Name="YOffset" Value="196" />
-			</xpdl:ExtendedAttributes>
-		</apdl:EBProc>
+		<epcismd:EPCISMasterDataDocument>
+			<EPCISBody>
+				<VocabularyList>
+					<Vocabulary type="urn:epcglobal:epcis:vtype:BusinessLocation">
+						<VocabularyElementList>
+							<VocabularyElement id="urn:epcglobal:fmcg:loc:greece:pireus:mainacme">
+								<attribute id="urn:epcglobal:epcis:mda:Name" value="Acme" />
+								<attribute id="urn:epcglobal:epcis:mda:Address" value="Akadimias 3" />
+								<attribute id="urn:epcglobal:epcis:mda:City" value="Pireus" />
+								<attribute id="urn:epcglobal:epcis:mda:Country" value="Greece" />
+							</VocabularyElement>
 
- -->
+							<VocabularyElement
+								id="urn:epcglobal:fmcg:loc:greece:pireus:mainacme,urn:epcglobal:fmcg:loc:acme:warehouse1">
+								<attribute id="urn:epcglobal:epcis:mda:Name" value="AcmeWarehouse1" />
+								<attribute id="urn:epcglobal:epcis:mda:Read Point" value="urn:epcglobal:fmcg:loc:rp:45632.Warehouse1DocDoor" />
+							</VocabularyElement>
+
+							<VocabularyElement
+								id="urn:epcglobal:fmcg:loc:greece:pireus:mainacme,urn:epcglobal:fmcg:loc:acme:warehouse2">
+								<attribute id="urn:epcglobal:epcis:mda:Name" value="AcmeWarehouse2" />
+								<attribute id="urn:epcglobal:epcis:mda:Read Point" value="urn:epcglobal:fmcg:loc:rp:06141.Warehouse2DocDoor" />
+							</VocabularyElement>
+
+							<VocabularyElement
+								id="urn:epcglobal:fmcg:loc:greece:pireus:mainacme,urn:epcglobal:fmcg:loc:acme:warehouse3">
+								<attribute id="urn:epcglobal:epcis:mda:Name" value="AcmeWarehouse3" />
+								<attribute id="urn:epcglobal:epcis:mda:Read Point" value="urn:epcglobal:fmcg:loc:rp:56712.Warehouse3Docdoor" />
+							</VocabularyElement>
+						</VocabularyElementList>
+					</Vocabulary>
+
+					<Vocabulary type="urn:epcglobal:epcis:vtype:ReadPoint">
+						<VocabularyElementList>
+							<VocabularyElement id="urn:epcglobal:fmcg:loc:rp:45632.Warehouse1DocDoor">
+								<attribute id="urn:epcglobal:epcis:mda:Name" value="Warehouse1DocDoor" />
+							</VocabularyElement>
+
+							<VocabularyElement id="urn:epcglobal:fmcg:loc:rp:06141.Warehouse2DocDoor">
+								<attribute id="urn:epcglobal:epcis:mda:Name" value="Warehouse2DocDoor" />
+							</VocabularyElement>
+
+							<VocabularyElement id="urn:epcglobal:fmcg:loc:rp:56712.Warehouse3Docdoor">
+								<attribute id="urn:epcglobal:epcis:mda:Name" value="Warehouse3DocDoor" />
+							</VocabularyElement>
+						</VocabularyElementList>
+					</Vocabulary>
+
+				</VocabularyList>
+			</EPCISBody>
+		</epcismd:EPCISMasterDataDocument>
 
 		<apdl:EBProc id="urn:epcglobal:fmcg:bte:acmewarehouse1receive" name="Warehouse1DocDoorReceive">
 			<!--
-				Elementary RFID Business Process Specification (the ID will be the Described Event's
-				URI)
+				Elementary RFID Business Process Specification (the ID will be the Described Event's URI)
 			-->
-			<xpdl:Description>Acme Warehouse 3 Receiving ReadPoint5 Gate3</xpdl:Description>
+			<xpdl:Description>Acme Warehouse 3 Receiving ReadPoint5 Gate3
+			</xpdl:Description>
 			<xpdl:TransitionRestrictions>
 				<xpdl:TransitionRestriction>
 					<xpdl:Join Type="AND" />
@@ -80,17 +190,22 @@
 				<xpdl:ExtendedAttribute Name="CellHeight" Value="30" />
 				<xpdl:ExtendedAttribute Name="CellWidth" Value="313" />
 				<xpdl:ExtendedAttribute Name="ECSpecSubscriptionURI" Value="http://localhost:9999" />
-				<xpdl:ExtendedAttribute Name="AleClientEndPoint" Value="http://localhost:8080/aspireRfidALE/services/ALEService" />
-				<xpdl:ExtendedAttribute Name="AleLrClientEndPoint" Value="http://localhost:8080/aspireRfidALE/services/ALELRService" />
-				<xpdl:ExtendedAttribute Name="EpcisClientCaptureEndPoint" Value="http://localhost:8080/aspireRfidEpcisRepository/capture" />
-				<xpdl:ExtendedAttribute Name="EpcisClientQueryEndPoint" Value="http://localhost:8080/aspireRfidEpcisRepository/query" />
-				<xpdl:ExtendedAttribute Name="BegEngineEndpoint" Value="http://localhost:8080/aspireRfidBEG/begengine" />				
+				<xpdl:ExtendedAttribute Name="AleClientEndPoint"
+					Value="http://localhost:8080/aspireRfidALE/services/ALEService" />
+				<xpdl:ExtendedAttribute Name="AleLrClientEndPoint"
+					Value="http://localhost:8080/aspireRfidALE/services/ALELRService" />
+				<xpdl:ExtendedAttribute Name="EpcisClientCaptureEndPoint"
+					Value="http://localhost:8080/aspireRfidEpcisRepository/capture" />
+				<xpdl:ExtendedAttribute Name="EpcisClientQueryEndPoint"
+					Value="http://localhost:8080/aspireRfidEpcisRepository/query" />
+				<xpdl:ExtendedAttribute Name="BegEngineEndpoint"
+					Value="http://localhost:8080/aspireRfidBEG/begengine" />
 
 
 				<!-- The DefinedECSpecName can be collected from the EBProc id-->
 				<!--
-					For the BEG configuration the port can be collected from the "ECSpecSubscriptionURI"
-					value and the event to serve from the EBPSpec id
+					For the BEG configuration the port can be collected from the "ECSpecSubscriptionURI" value and
+					the event to serve from the EBPSpec id
 				-->
 			</xpdl:ExtendedAttributes>
 			<apdl:DataFields>
@@ -101,18 +216,18 @@
 								<Vocabulary type="urn:epcglobal:epcis:vtype:BusinessTransaction">
 									<VocabularyElementList>
 										<VocabularyElement id="urn:epcglobal:fmcg:bte:acmewarehouse1receive">
-											<attribute id="urn:epcglobal:epcis:mda:event_name" value="Warehouse1DocDoorReceive"/>
+											<attribute id="urn:epcglobal:epcis:mda:event_name" value="Warehouse1DocDoorReceive" />
 											<!--
-												For the required ECReportID we will use the EBPSpec id and the information for
-												which kind of reports BEG will use the event type will provide them.
+												For the required ECReportID we will use the EBPSpec id and the information for which
+												kind of reports BEG will use the event type will provide them.
 											-->
-											<attribute id="urn:epcglobal:epcis:mda:event_type" value="ObjectEvent"/> 
-											<attribute id="urn:epcglobal:epcis:mda:business_step" value="urn:epcglobal:fmcg:bizstep:receiving"/>
-											<attribute id="urn:epcglobal:epcis:mda:business_location" value="urn:epcglobal:fmcg:loc:acme:warehouse1"/>
-											<attribute id="urn:epcglobal:epcis:mda:disposition" value="urn:epcglobal:fmcg:disp:in_progress"/>
-											<attribute id="urn:epcglobal:epcis:mda:read_point" value="urn:epcglobal:fmcg:loc:45632.Warehouse1DocDoor"/> 
-											<attribute id="urn:epcglobal:epcis:mda:transaction_type" value="urn:epcglobal:fmcg:btt:receiving"/> 
-											<attribute id="urn:epcglobal:epcis:mda:action" value="ADD"/>
+											<attribute id="urn:epcglobal:epcis:mda:event_type" value="ObjectEvent" />
+											<attribute id="urn:epcglobal:epcis:mda:business_step" value="urn:epcglobal:fmcg:bizstep:receiving" />
+											<attribute id="urn:epcglobal:epcis:mda:business_location" value="urn:epcglobal:fmcg:loc:acme:warehouse1" />
+											<attribute id="urn:epcglobal:epcis:mda:disposition" value="urn:epcglobal:fmcg:disp:in_progress" />
+											<attribute id="urn:epcglobal:epcis:mda:read_point" value="urn:epcglobal:fmcg:loc:45632.Warehouse1DocDoor" />
+											<attribute id="urn:epcglobal:epcis:mda:transaction_type" value="urn:epcglobal:fmcg:btt:receiving" />
+											<attribute id="urn:epcglobal:epcis:mda:action" value="ADD" />
 										</VocabularyElement>
 									</VocabularyElementList>
 								</Vocabulary>
@@ -125,7 +240,8 @@
 				<apdl:DataField type="ECSpec" name="RecievingECSpec">
 					<ale:ECSpec includeSpecInReports="false">
 						<logicalReaders>
-							<logicalReader>SmartLabImpinjSpeedwayLogicalReader</logicalReader>
+							<logicalReader>SmartLabImpinjSpeedwayLogicalReader
+							</logicalReader>
 						</logicalReaders>
 						<boundarySpec>
 							<repeatPeriod unit="MS">5500</repeatPeriod>
@@ -145,8 +261,8 @@
 									<excludePatterns />
 								</filterSpec>
 								<groupSpec />
-								<output includeTag="true" includeRawHex="true" includeRawDecimal="true"
-									includeEPC="true" includeCount="true" />
+								<output includeTag="true" includeRawHex="true" includeRawDecimal="true" includeEPC="true"
+									includeCount="true" />
 							</reportSpec>
 							<!--For the required ECReportID we will use the EBPSpec id-->
 							<reportSpec reportOnlyOnChange="false" reportName="transactionItems"
@@ -162,15 +278,18 @@
 									<excludePatterns />
 								</filterSpec>
 								<groupSpec />
-								<output includeTag="true" includeRawHex="true" includeRawDecimal="true"
-									includeEPC="true" includeCount="true" />
+								<output includeTag="true" includeRawHex="true" includeRawDecimal="true" includeEPC="true"
+									includeCount="true" />
 							</reportSpec>
 						</reportSpecs>
 						<extension />
 					</ale:ECSpec>
 				</apdl:DataField>
 
-				<!-- We could have many LRSpecs defining many Logical Readers for one EBProc-->
+				<!--
+					We could have many LRSpecs defining many Logical Readers for one
+					EBProc
+				-->
 				<apdl:DataField type="LRSpec" name="SmartLabImpinjSpeedwayLogicalReader">
 					<alelr:LRSpec>
 						<isComposite>false</isComposite>
@@ -202,7 +321,8 @@
 							</property>
 							<property>
 								<name>ReaderType</name>
-								<value>org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor</value>
+								<value>org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor
+								</value>
 							</property>
 						</properties>
 					</alelr:LRSpec>

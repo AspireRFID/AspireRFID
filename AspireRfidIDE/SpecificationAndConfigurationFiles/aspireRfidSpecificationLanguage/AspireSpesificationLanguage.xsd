@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-	targetNamespace="urn:ow2:aspirerfid:apdlspec:xsd:1" xmlns:ale="urn:epcglobal:ale:xsd:1"
-	xmlns:alelr="urn:epcglobal:alelr:xsd:1" xmlns:apdl="urn:ow2:aspirerfid:apdlspec:xsd:1"
-	xmlns:epcismd="urn:epcglobal:epcis-masterdata:xsd:1" xmlns:xpdl="http://www.wfmc.org/2002/XPDL1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" targetNamespace="urn:ow2:aspirerfid:apdlspec:xsd:1"
+	xmlns:ale="urn:epcglobal:ale:xsd:1" xmlns:alelr="urn:epcglobal:alelr:xsd:1"
+	xmlns:apdl="urn:ow2:aspirerfid:apdlspec:xsd:1" xmlns:epcismd="urn:epcglobal:epcis-masterdata:xsd:1"
+	xmlns:xpdl="http://www.wfmc.org/2002/XPDL1.0">
 
 	<!--
-		Copyright © 2008-2010, Aspire Aspire is free software; you can redistribute it and/or
-		modify it under the terms of the GNU Lesser General Public License version 2.1 as
-		published by the Free Software Foundation (the "LGPL"). You should have received a copy
-		of the GNU Lesser General Public License along with this library in the file
-		COPYING-LGPL-2.1; if not, write to the Free Software Foundation, Inc., 51 Franklin
-		Street, Fifth Floor, Boston, MA 02110-1301 USA. This software is distributed on an "AS
-		IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the GNU Lesser
-		General Public License for the specific language governing rights and limitations.
+		Copyright © 2008-2010, Aspire Aspire is free software; you can redistribute it
+		and/or modify it under the terms of the GNU Lesser General Public License
+		version 2.1 as published by the Free Software Foundation (the "LGPL"). You
+		should have received a copy of the GNU Lesser General Public License along
+		with this library in the file COPYING-LGPL-2.1; if not, write to the Free
+		Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+		02110-1301 USA. This software is distributed on an "AS IS" basis, WITHOUT
+		WARRANTY OF ANY KIND, either express or implied. See the GNU Lesser General
+		Public License for the specific language governing rights and limitations.
 	-->
 	<!--
 		Author: Nikos Kefalakis (nkef@ait.edu.gr)
 	-->
 
 
-	<xs:import namespace="urn:epcglobal:alelr:xsd:1" schemaLocation="resources/epcglobal/EPCglobal-ale-1_1-alelr.xsd"></xs:import>
+	<xs:import namespace="urn:epcglobal:alelr:xsd:1"
+		schemaLocation="resources/epcglobal/EPCglobal-ale-1_1-alelr.xsd"></xs:import>
 	<xs:import namespace="urn:epcglobal:ale:xsd:1" schemaLocation="resources/epcglobal/EPCglobal-ale-1_1-ale.xsd"></xs:import>
-	<xs:import namespace="urn:epcglobal:epcis-masterdata:xsd:1" schemaLocation="resources/epcglobal/EPCglobal-epcis-masterdata-1_0.xsd"></xs:import>
-	<xs:import namespace="http://www.wfmc.org/2002/XPDL1.0" schemaLocation="resources/XPDL.xsd"></xs:import>
+	<xs:import namespace="urn:epcglobal:epcis-masterdata:xsd:1"
+		schemaLocation="resources/epcglobal/EPCglobal-epcis-masterdata-1_0.xsd"></xs:import>
+	<xs:import namespace="http://www.wfmc.org/2002/XPDL1.0"
+		schemaLocation="resources/XPDL.xsd"></xs:import>
 	<xs:element name="OLCBProc" type="apdl:OLCBProc" />
 	<xs:element name="CLCBProc" type="apdl:CLCBProc" />
 	<xs:element name="EBProc" type="apdl:EBProc" />
 
 	<xs:complexType name="OLCBProc">
 		<xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" ref="epcismd:EPCISMasterDataDocument" />
 			<xs:element maxOccurs="unbounded" ref="apdl:CLCBProc" />
 			<xs:element ref="xpdl:Transitions" />
 		</xs:sequence>
@@ -40,6 +46,7 @@
 		<xs:sequence>
 			<xs:element ref="xpdl:Description" />
 			<xs:element maxOccurs="unbounded" ref="apdl:EBProc" />
+			<xs:element minOccurs="0" maxOccurs="1"	ref="epcismd:EPCISMasterDataDocument" />
 			<xs:element ref="xpdl:Transitions" />
 		</xs:sequence>
 		<xs:attribute name="id" use="required" type="xs:anyURI" />
@@ -68,9 +75,9 @@
 	<xs:element name="DataField">
 		<xs:complexType>
 			<xs:choice>
-				<xs:element ref="ale:ECSpec" />
-				<xs:element ref="epcismd:EPCISMasterDataDocument" />
-				<xs:element ref="alelr:LRSpec" />
+				<xs:element maxOccurs="1" ref="ale:ECSpec" />
+				<xs:element maxOccurs="1" ref="epcismd:EPCISMasterDataDocument" />
+				<xs:element maxOccurs="1" ref="alelr:LRSpec" />
 			</xs:choice>
 			<xs:attribute name="name" use="required" type="xs:NCName" />
 			<xs:attribute name="type" use="required" type="xs:NCName" />
