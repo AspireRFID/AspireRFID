@@ -13,26 +13,30 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class MyTableRenderer extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = 1542304312L;
+	private boolean completeInvoice = false;
 
-	public MyTableRenderer() {
+	public MyTableRenderer(boolean completeInvoice) {
 		setOpaque(true);
+		this.completeInvoice = completeInvoice;
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 
-		//column 9 is the "is Needed" column
-		String s = table.getModel().getValueAt(row, 9).toString();
-
-		if (s.equalsIgnoreCase("false")) {
-			setBackground(Color.RED);
-			setForeground(Color.WHITE);
+		if (completeInvoice) {
+			setBackground(Color.ORANGE);
 		} else {
-			setBackground(Color.GREEN);
-			setForeground(Color.WHITE);
+			//column 9 is the "is Needed" column
+			String s = table.getModel().getValueAt(row, 9).toString();
+	
+			if (s.equalsIgnoreCase("false")) {
+				setBackground(Color.RED);
+				setForeground(Color.WHITE);
+			} else {
+				setBackground(Color.GREEN);
+				setForeground(Color.WHITE);
+			}
 		}
 		
 		return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 	}
-
-
 }

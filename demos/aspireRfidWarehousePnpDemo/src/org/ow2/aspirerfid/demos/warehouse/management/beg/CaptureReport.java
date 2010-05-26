@@ -81,7 +81,7 @@ public class CaptureReport extends Thread {
 	
 	private ArrayList<String> knownTagFamilies;
 	private int itemCount = 0;
-	
+	private boolean completeInvoice = false;
 
 	public CaptureReport(int port, String epcisRepository) {
 
@@ -159,8 +159,22 @@ public class CaptureReport extends Thread {
 		
 		ArrayList<DeliveredItem> deliveredItems = extractItemsFromReports(reports.getReports().getReport());
 		
+		//Verify that we received ALL the items we needed and ONLY them
+		int neededItems = 0;
+		int notNeededItems = 0;
 		for (DeliveredItem deliveredItem : deliveredItems) {
-			WarehouseManagement.updateDeliveryTableModel(deliveredItem);			
+			if (deliveredItem.isNeeded()) {
+				neededItems++;
+			} else {
+				notNeededItems++;
+			}
+		}
+		
+		completeInvoice = ((itemCount + 1) == neededItems && notNeededItems == 0);
+		log.debug("setting completeInvoice to " + completeInvoice + " because (itemCount + 1) is " + (itemCount + 1) + ", needed is " + neededItems + " and not needed is " + notNeededItems);
+		
+		for (DeliveredItem deliveredItem : deliveredItems) {
+			WarehouseManagement.updateDeliveryTableModel(deliveredItem, completeInvoice);			
 		}
 
 		if (deliveredItems.size() == 0) {
@@ -230,8 +244,8 @@ public class CaptureReport extends Thread {
 								//if (tagFamily(packetsGroupName[i]).equals(tagFamily(group.getGroupName()))) {
 								if (!tagFamily(group.getGroupName()).equals(tagFamily(invoiceGroupName))) {
 									log.debug("checking items");
-									//BigInteger quantity = new BigInteger(packetsQuantity.get(i));
-									BigInteger expectedQuantity = new BigInteger(packetsExpectedQuantity.get(i));
+									//BigInteger expectedQuantity = new BigInteger(packetsExpectedQuantity.get(i));
+									BigInteger expectedQuantity = new BigInteger(findExpectedQuantityByTagFamily(tagFamily(group.getGroupName())));
 									BigInteger quantityDelivered = new BigInteger((group.getGroupCount().getCount()) + "");
 									BigInteger quantityRemain = expectedQuantity.subtract(quantityDelivered);//quantity.add(quantityDelivered.negate());
 
@@ -243,8 +257,10 @@ public class CaptureReport extends Thread {
 											deliveredItem = new DeliveredItem();
 											
 											if (knownTagFamilies.contains(tagFamily(member.getTag().getValue()))) {
-												deliveredItem.setCompany(packetsCompany.get(i));
-												deliveredItem.setDescription(packetsDescription.get(i));
+												//deliveredItem.setCompany(packetsCompany.get(i));
+												deliveredItem.setCompany(findCompanyByTagFamily(tagFamily(member.getTag().getValue())));
+												//deliveredItem.setDescription(packetsDescription.get(i));
+												deliveredItem.setDescription(findDescriptionByTagFamily(tagFamily(member.getTag().getValue())));
 												deliveredItem.setExpectedQuantity(expectedQuantity);
 												deliveredItem.setQuantityRemain(quantityRemain);
 											} else {
@@ -352,5 +368,32 @@ public class CaptureReport extends Thread {
 	 */
 	public String tagFamily(String tag) {
 		return tag.substring(tag.lastIndexOf(':') + 1, tag.lastIndexOf('.'));
+	}
+	
+	public String findCompanyByTagFamily(String tagFamily) {
+		for (int i = 0; i < itemCount; i++) {
+			if (tagFamily.equals(tagFamily(packetsGroupName.get(i)))) {
+				return packetsCompany.get(i);
+			}
+		}
+		return "Unknown";
+	}
+	
+	public String findDescriptionByTagFamily(String tagFamily) {
+		for (int i = 0; i < itemCount; i++) {
+			if (tagFamily.equals(tagFamily(packetsGroupName.get(i)))) {
+				return packetsDescription.get(i);
+			}
+		}
+		return "Unknown tag";
+	}
+	
+	public String findExpectedQuantityByTagFamily(String tagFamily) {
+		for (int i = 0; i < itemCount; i++) {
+			if (tagFamily.equals(tagFamily(packetsGroupName.get(i)))) {
+				return packetsExpectedQuantity.get(i);
+			}
+		}
+		return "0";
 	}
 }

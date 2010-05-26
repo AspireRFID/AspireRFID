@@ -218,7 +218,7 @@ public class WarehouseManagement {
 		deliveryTable = new JTable(deliveryTableModel);
 		deliveryTable.setFont(new Font("Arial Narrow", Font.PLAIN, 10));
 		deliveryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		deliveryTable.setDefaultRenderer(Object.class, new MyTableRenderer());
+		deliveryTable.setDefaultRenderer(Object.class, new MyTableRenderer(false));
 		
 		scrollPane.setViewportView(deliveryTable);
 
@@ -354,8 +354,8 @@ public class WarehouseManagement {
 	/**
 	 * @param DeliveredItem deliveredItem
 	 */
-	public static void updateDeliveryTableModel(DeliveredItem deliveredItem) {
-		
+	public static void updateDeliveryTableModel(DeliveredItem deliveredItem, boolean completeInvoice) {
+		deliveryTable.setDefaultRenderer(Object.class, new MyTableRenderer(completeInvoice));
 		boolean included = false;
 
 		for (int i = 0; i < deliveryTableModel.getRowCount(); i++) {
