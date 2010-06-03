@@ -1,0 +1,433 @@
+//	private void createDispositionPart(final Composite parent) {
+//		Composite buttonComposite = new Composite(parent,0);
+//		buttonComposite.setLayout(new GridLayout());
+//		buttonComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//		Group buttonGroup = new Group(buttonComposite, SWT.SHADOW_NONE);
+//		buttonGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+//		buttonGroup.setText("Button");
+//		buttonGroup.setLayout(new GridLayout(3, false));
+//		//add buttons
+//		buttonDispoNew = new Button(buttonGroup, SWT.PUSH);
+//		buttonDispoNew.setText("New");
+//		
+//		buttonDispoDuplicate = new Button(buttonGroup, SWT.PUSH);
+//		buttonDispoDuplicate.setText("Duplicate");
+//		
+//		buttonDispoRemove = new Button(buttonGroup, SWT.PUSH);
+//		buttonDispoRemove.setText("Remove");
+//		
+//		Composite listComposite = new Composite(parent,0);
+//		listComposite.setLayout(new GridLayout());
+//		listComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+//		
+//		Group dispositionGrp = new Group(listComposite, SWT.SHADOW_NONE);
+//		GridData dispositionGd = new GridData(SWT.FILL, SWT.FILL, true, true);
+//		dispositionGd.widthHint = 100;
+//		dispositionGrp.setLayoutData(dispositionGd);
+//		dispositionGrp.setText("Disposition");
+//		dispositionGrp.setLayout(new GridLayout());
+//		
+//		dispoListViewer = new ListViewer(dispositionGrp);
+//		dispoListViewer.getControl().setLayoutData(
+//				new GridData(SWT.FILL, SWT.FILL, true, true));
+//	}
+	
+//	private void createDispositionPartLogic(final Composite parent) {
+//		final MasterDataBuilder mdb = MasterDataBuilder.getInstance();
+//		
+//		buttonDispoNew.addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				DispositionDialog dd = new DispositionDialog(parent.getShell());
+//				dd.setMessage("Input URI and Name");
+//				DispositionItem di = dd.open();
+//				if(di == null) {
+//					return;
+//				}else {
+//					mdb.addDispositionItem(di);
+//					dispoListViewer.refresh(false);
+//					reloadData();
+//				}
+//			}
+//		});
+//		
+//		buttonDispoDuplicate.addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				DispositionItem di = (DispositionItem)((IStructuredSelection)dispoListViewer.getSelection()).getFirstElement();
+//				if(di == null) {
+//					return;
+//				}else {
+//					DispositionItem newDi = di.getClone();
+//					mdb.addDispositionItem(newDi);
+//					dispoListViewer.refresh(false);
+//					reloadData();
+//				}
+//			}
+//		});
+//		
+//		
+//		buttonDispoRemove.addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				DispositionItem di = (DispositionItem)((IStructuredSelection)dispoListViewer.getSelection()).getFirstElement();
+//				if(di == null) {
+//					return;
+//				}else {
+//					mdb.removeDispositionItem(di);
+//					dispoListViewer.refresh(false);
+//					reloadData();
+//				}
+//			}
+//		});
+//		
+//		dispoListViewer.setContentProvider(new IStructuredContentProvider(){
+//			@SuppressWarnings("unchecked")
+//			@Override
+//			public Object[] getElements(Object inputElement) {
+//				return ((ArrayList<DispositionItem>)inputElement).toArray();
+//			}
+//			@Override
+//			public void dispose() {	
+//			}
+//			@Override
+//			public void inputChanged(Viewer viewer, Object oldInput,
+//					Object newInput) {				
+//			}
+//		});
+//		
+//		dispoListViewer.setLabelProvider(new LabelProvider(){
+//			@Override
+//			public String getText(Object element) {
+//				return ((DispositionItem)element).getLabel();
+//			}
+//		});
+//		dispoListViewer.setInput(mdb.getDispositionList());
+//		
+//		dispoListViewer.getControl().addFocusListener(new FocusListener() {
+//
+//			@Override
+//			public void focusGained(FocusEvent e) {
+//				spw.setSelectionProvider(dispoListViewer);
+//			}
+//			@Override
+//			public void focusLost(FocusEvent e) {
+//			}
+//		});
+//		
+//		mdb.addListener(dispoListViewer);
+//		
+//	}
+	
+//		Composite buttonComposite = new Composite(parent,0);
+//		buttonComposite.setLayout(new GridLayout());
+//		buttonComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//		Group buttonGroup = new Group(buttonComposite, SWT.SHADOW_NONE);
+//		buttonGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+//		buttonGroup.setText("Button");
+//		buttonGroup.setLayout(new GridLayout(3, false));
+//		//add buttons
+//		buttonBizNew = new Button(buttonGroup, SWT.PUSH);
+//		buttonBizNew.setText("New");
+//		
+//		buttonBizDuplicate = new Button(buttonGroup, SWT.PUSH);
+//		buttonBizDuplicate.setText("Duplicate");
+//		
+//		buttonBizRemove = new Button(buttonGroup, SWT.PUSH);
+//		buttonBizRemove.setText("Remove");
+//		
+//		Composite listComposite = new Composite(parent,0);
+//		listComposite.setLayout(new GridLayout());
+//		listComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+//		
+//		Group dispositionGrp = new Group(listComposite, SWT.SHADOW_NONE);
+//		GridData dispositionGd = new GridData(SWT.FILL, SWT.FILL, true, true);
+//		dispositionGd.widthHint = 100;
+//		dispositionGrp.setLayoutData(dispositionGd);
+//		dispositionGrp.setText("Business Step");
+//		dispositionGrp.setLayout(new GridLayout());
+//		
+//		bizListViewer = new ListViewer(dispositionGrp);
+//		bizListViewer.getControl().setLayoutData(
+//				new GridData(SWT.FILL, SWT.FILL, true, true));
+
+	//when data reloaded in the views, the combo selection may lost
+	//this function is used to reload selection choices
+	//and keep the old selection if possible
+//	public void reloadData() {
+//		final MasterDataBuilder mdb = MasterDataBuilder.getInstance();
+////		String text = mdb.getAttribute("urn:epcglobal:epcis:mda:event_name");
+////		eventNameText.setText(text);
+////		
+////		text = mdb.getAttribute("urn:epcglobal:epcis:mda:event_type");
+////		eventTypeText.setText(text);
+//		String dispositionComboSelection = dispositionCombo.getText();
+//		String[] selections = mdb.getDispositions();
+//		dispositionCombo.setItems(selections);
+//		if(dispositionComboSelection != null) {
+//			dispositionCombo.select(getIndex(selections, dispositionComboSelection));
+//		}
+//	}
+	
+//	private int getIndex(String[] selections, String selection) {
+//		for(int i = 0; i < selections.length; i++) {
+//			if(selections[i].equals(selection)) {
+//				return i;
+//			}
+//		}
+//		return -1;
+//	}
+//		final MasterDataBuilder mdb = MasterDataBuilder.getInstance();
+//		
+//		buttonBizNew.addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				DispositionDialog dd = new DispositionDialog(parent.getShell());
+//				dd.setMessage("Input URI and Name");
+//				dd.setDefaultURI("urn:epcglobal:fmcg:bizstep:*");
+//				DispositionItem di = dd.open();
+//				if(di == null) {
+//					return;
+//				}else {
+//					mdb.addBizStepItem(di);
+//					bizListViewer.refresh(false);
+//					reloadData();
+//				}
+//			}
+//		});
+//		
+//		buttonBizDuplicate.addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				DispositionItem di = (DispositionItem)((IStructuredSelection)bizListViewer.getSelection()).getFirstElement();
+//				if(di == null) {
+//					return;
+//				}else {
+//					DispositionItem newDi = di.getClone();
+//					mdb.addBizStepItem(newDi);
+//					bizListViewer.refresh(false);
+//					reloadData();
+//				}
+//			}
+//		});
+//		
+//		buttonBizRemove.addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				DispositionItem di = (DispositionItem)((IStructuredSelection)bizListViewer.getSelection()).getFirstElement();
+//				if(di == null) {
+//					return;
+//				}else {
+//					mdb.removeBizStepItem(di);
+//					bizListViewer.refresh(false);
+//					reloadData();
+//				}
+//			}
+//		});
+//		
+//		bizListViewer.setContentProvider(new IStructuredContentProvider(){
+//			@SuppressWarnings("unchecked")
+//			@Override
+//			public Object[] getElements(Object inputElement) {
+//				return ((ArrayList<DispositionItem>)inputElement).toArray();
+//			}
+//			@Override
+//			public void dispose() {	
+//			}
+//			@Override
+//			public void inputChanged(Viewer viewer, Object oldInput,
+//					Object newInput) {				
+//			}
+//		});
+//		
+//		bizListViewer.setLabelProvider(new LabelProvider(){
+//			@Override
+//			public String getText(Object element) {
+//				return ((DispositionItem)element).getLabel();
+//			}
+//		});
+//		bizListViewer.setInput(mdb.getBizStepList());
+//		
+//		bizListViewer.getControl().addFocusListener(new FocusListener() {
+//
+//			@Override
+//			public void focusGained(FocusEvent e) {
+//				spw.setSelectionProvider(bizListViewer);
+//			}
+//			@Override
+//			public void focusLost(FocusEvent e) {
+//			}
+//		});
+//		
+//		mdb.addListener(bizListViewer);
+
+//	private VocabularyElementType createCompanyElement(
+//			HashMap<String, HashMap<String, String>> companyMap) {
+//		String prefix = "urn:epcglobal:epcis:mda:";
+//		VocabularyElementType companyElement = new VocabularyElementType();
+//		if(companyMap.keySet().size() != 1) {
+//			System.out.println("Error Company Map");
+//			return null;
+//		}
+//		
+//		for(String key : companyMap.keySet()) {
+//			MasterDataUtil.setVocabularyElementID(companyElement, key);
+//
+//			HashMap<String, String> attrs = companyMap.get(key);
+//			for(String attr : attrs.keySet()) {
+//				String value = attrs.get(attr);
+//				if(!attr.equals("WarehouseChildren")) {
+//					MasterDataUtil.setVocabularyElementAttribute(companyElement, prefix + attr, value);
+//				}
+//			}
+//		}
+//		return companyElement;
+//	}
+//	
+//	private List<VocabularyElementType> createWarehouseList(
+//			HashMap<String, HashMap<String, String>> warehouseMap) {
+//		String prefix = "urn:epcglobal:epcis:mda:";
+//		ArrayList<VocabularyElementType> warehouseList = new ArrayList<VocabularyElementType>();
+//		VocabularyElementType warehouseElement;
+//		for(String key : warehouseMap.keySet()) {
+//			warehouseElement = new VocabularyElementType();			
+//			MasterDataUtil.setVocabularyElementID(warehouseElement, key);
+//			HashMap<String, String> attrs = warehouseMap.get(key);
+//			for(String attr : attrs.keySet()) {
+//				String value = attrs.get(attr);
+//				if(!attr.equals("WarehouseChildren")) {
+//					MasterDataUtil.setVocabularyElementAttribute(warehouseElement, prefix + attr, value);
+//				}
+//			}			
+//			warehouseList.add(warehouseElement);
+//		}		
+//		return warehouseList;
+//	}
+//	
+//	private List<VocabularyElementType> createReadpointList(
+//			HashMap<String, HashMap<String, String>> warehouseMap,
+//			HashMap<String, HashMap<String, String>> readpointMap) {
+//		String prefix = "urn:epcglobal:epcis:mda:";
+//		ArrayList<VocabularyElementType> readpointList = new ArrayList<VocabularyElementType>();
+//		VocabularyElementType readpointElement;
+//		for(String key : warehouseMap.keySet()) {
+//			HashMap<String, String> attrs = warehouseMap.get(key);
+//			for(String attr : attrs.keySet()) {
+//				String value = attrs.get(attr);
+//				if(attr.equals("ReadPoint")) {
+//					//split value
+//					String[] readpointNames = value.split(",");
+//					//for each value create an read point element
+//					for(int i = 0; i < readpointNames.length; i++) {
+//						readpointElement = new VocabularyElementType();
+//						readpointElement.setId(readpointNames[i]);
+//						readpointList.add(readpointElement);
+//					}
+//				}
+//			}			
+//		}
+//		
+//		//add attributes to each element
+//		for(VocabularyElementType element: readpointList) {
+//			HashMap<String, String> attrs = readpointMap.get(element.getId());
+//			if(attrs != null) {
+//				for(String attr : attrs.keySet()) {
+//					String value = attrs.get(attr);
+//					MasterDataUtil.setVocabularyElementAttribute(element, prefix + attr, value);
+//				}
+//			}
+//		}
+//		
+//		return readpointList;
+//	}
+
+	private void printMap(HashMap<String, HashMap<String, String>>  map) {
+		System.out.println(map.keySet().size());
+		for(String key : map.keySet()) {
+			HashMap<String, String> attrs = map.get(key);
+			System.out.println("Key:" + key);
+			StringBuffer sb = new StringBuffer();
+			for(String temp : attrs.keySet()) {
+				sb.append(temp + "<->" + attrs.get(temp) + "\n");
+			}
+			System.out.println("Attrs:" + sb);
+		}	
+	}
+	
+	//		HashMap<String, HashMap<String, String>>  map = 
+//			MasterDataContentsProvider.getCompanyUriAttributesValues();
+//		
+//		for(String key : map.keySet()) {
+//			System.out.println(key);
+//		}
+//		printMap(map);
+//		System.out.println("------------------");		
+//		map = MasterDataContentsProvider.getWarehouseUriAttributesValues();
+//		printMap(map);
+//		System.out.println("****************");		
+//		map = MasterDataContentsProvider.getReadPointUriAttributesValues();
+//		printMap(map);
+	
+	
+	//		LocationTree th = new LocationTree();
+//		th.setCompanyMap(MasterDataContentsProvider.getCompanyUriAttributesValues());
+//		th.setWarehouseMap(MasterDataContentsProvider.getWarehouseUriAttributesValues());
+//		th.setReadpointMap(MasterDataContentsProvider.getReadPointUriAttributesValues());
+//		th.buildTree();
+//		th.printNode();
+////		System.out.println("\\\\\\\\\\\\\\\\");
+//
+
+//	//get or create vocabulary element in the ebproc level
+//	public static VocabularyElementType getVocabularyElement(EPCISMasterDataDocumentType doc) {
+//		
+//		
+//		EPCISMasterDataBodyType body;
+//		VocabularyListType vocabularyList;
+//		VocabularyType vocabulary;
+//		VocabularyElementListType vocabularyElementList;
+//		VocabularyElementType vocabularyElement;
+//		//chain effect
+//		if((body = doc.getEPCISBody()) == null) {
+//			body = new EPCISMasterDataBodyType();
+//			doc.setEPCISBody(body);		
+//		}
+//		
+//		if((vocabularyList = body.getVocabularyList()) == null) {
+//			vocabularyList = new VocabularyListType();
+//			body.setVocabularyList(vocabularyList);
+//		}
+//		
+//		if(vocabularyList.getVocabulary().size() == 0) {
+//			vocabulary = new VocabularyType();
+//			vocabulary.setType("urn:epcglobal:epcis:vtype:BusinessTransaction");
+//			vocabularyList.getVocabulary().add(vocabulary);
+//		}else {
+//			vocabulary = vocabularyList.getVocabulary().get(0);
+//		}
+//
+//		if((vocabularyElementList = vocabulary.getVocabularyElementList()) == null) {
+//			vocabularyElementList = new VocabularyElementListType();
+//			vocabulary.setVocabularyElementList(vocabularyElementList);			
+//		}
+//		
+//		if(vocabularyElementList.getVocabularyElement().size() == 0) {
+//			vocabularyElement = new VocabularyElementType();			
+//			vocabularyElementList.getVocabularyElement().add(vocabularyElement);
+//		}else {
+//			vocabularyElement = vocabularyElementList.getVocabularyElement().get(0);
+//		}
+//		
+//		return vocabularyElement;
+//	}
+
+
+	public void printEditors() {
+		//IEditorDescriptor id = PlatformUI.getWorkbench().getEditorRegistry().findEditor(ECSpecEditor.ID);
+		IWorkbenchPage page = PlatformUI.getWorkbench().
+		getActiveWorkbenchWindow().getActivePage();
+		IEditorReference[] refs = page.getEditorReferences();
+		for(IEditorReference ref:refs) {
+			System.out.println(ref.getId());
+		}
+	}

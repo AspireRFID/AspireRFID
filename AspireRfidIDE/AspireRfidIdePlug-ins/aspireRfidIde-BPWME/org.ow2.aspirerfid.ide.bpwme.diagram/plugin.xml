@@ -1,0 +1,906 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension point="org.eclipse.team.core.fileTypes" id="repo-ftype">
+      <?gmfgen generated="true"?>
+      <fileTypes type="text" extension="bpwme_diagram"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser" id="resource-factory">
+      <?gmfgen generated="true"?>
+      <parser
+         type="bpwme_diagram"
+         class="org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory">
+      </parser>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors" id="gmf-editor">
+      <?gmfgen generated="true"?>
+      <editor
+         id="org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorID"
+         name="%editorName"
+         icon="icons/obj16/BpwmeDiagramFile.gif"
+         extensions="bpwme_diagram"
+         default="true"
+         class="org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor"
+         matchingStrategy="org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeMatchingStrategy"
+         contributorClass="org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramActionBarContributor">
+      </editor>
+      <!--
+      <editor
+            class="bpwme.diagram.edit.parts.SimpleEditor"
+            id="bpwme.diagram.edit.parts.SimpleEditorID"
+            name="Simple Editor">
+      </editor>
+      -->
+      <editor
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.SimpleEditor"
+            id="bpwme.diagram.simpleditor.SimpleEditor"
+            name="Simple Editor">
+      </editor>      
+      <editor
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.xmleditor.XMLEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            extensions="xml"
+            id="bpwme.diagram.xmleditor.XMLEditor"
+            name="XML Editor">
+      </editor>
+      <editor
+            class="org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor"
+            default="false"
+            id="org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor"
+            name="Master Data Editor">
+      </editor>
+      <editor
+            class="org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor"
+            default="false"
+            id="org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor"
+            name="EC Spec Editor">
+      </editor>
+   </extension>
+   
+   <extension point="org.eclipse.ui.contexts" id="ui-context">
+      <?gmfgen generated="true"?>
+      <context
+         description="%context.description"
+         id="bpwme.diagram.ui.diagramContext"
+         name="%context.name"
+         parentId="org.eclipse.gmf.runtime.diagram.ui.diagramContext">
+      </context>
+   </extension>
+
+   <extension point="org.eclipse.ui.newWizards" id="creation-wizard">
+      <?gmfgen generated="true"?>
+  	  <wizard
+  	     name="%newWizardName"
+  	     icon="icons/obj16/BpwmeDiagramFile.gif"
+  	     category="org.eclipse.ui.Examples"
+  	     class="org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeCreationWizard"
+  	     id="bpwme.diagram.part.BpwmeCreationWizardID">
+  	  	 <description>%newWizardDesc</description>  
+      </wizard>
+   </extension>
+
+      <extension point="org.eclipse.ui.actionSets" id="init-diagram-action">
+      <?gmfgen generated="true"?>
+      <actionSet
+            label="%initDiagramActionLabel"
+            visible="true"
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.InitDiagram">
+         <action
+               label="%initDiagramActionLabel"
+               class="org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeInitDiagramFileAction"
+               menubarPath="file/additions"
+               id="org.ow2.aspirerfid.ide.bpwme.diagram.InitDiagramAction">
+         </action>
+      </actionSet>
+   </extension>
+	
+   <extension point="org.eclipse.gmf.runtime.common.ui.services.action.globalActionHandlerProviders" id="global-actions">
+      <?gmfgen generated="true"?>
+      <GlobalActionHandlerProvider
+         class="org.eclipse.gmf.runtime.diagram.ui.providers.DiagramGlobalActionHandlerProvider"
+         id="BpwmePresentation">
+         <Priority name="Lowest"/>
+         <ViewId id="bpwme.diagram.part.BpwmeDiagramEditorID">
+            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+               <GlobalActionId actionId="delete"/>
+            </ElementType>
+            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart">
+               <GlobalActionId actionId="save"/>
+            </ElementType>
+         </ViewId>
+      </GlobalActionHandlerProvider>
+      <GlobalActionHandlerProvider
+            class="org.eclipse.gmf.runtime.diagram.ui.render.providers.DiagramUIRenderGlobalActionHandlerProvider"
+            id="BpwmeRender">
+         <Priority name="Lowest"/>
+         <ViewId id="bpwme.diagram.part.BpwmeDiagramEditorID">
+            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+               <GlobalActionId actionId="cut"/>
+               <GlobalActionId actionId="copy"/>
+               <GlobalActionId actionId="paste"/>
+            </ElementType>
+         </ViewId>
+      </GlobalActionHandlerProvider>
+   </extension>
+
+
+   <extension point="org.eclipse.core.runtime.preferences" id="prefs">
+      <?gmfgen generated="true"?>
+      <initializer class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DiagramPreferenceInitializer"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.preferencePages" id="prefpages">
+      <?gmfgen generated="true"?>
+      <page
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.general"
+            name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.general"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DiagramGeneralPreferencePage">
+      </page>
+      <page
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.appearance"
+            name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.appearance"
+            category="org.ow2.aspirerfid.ide.bpwme.diagram.general"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DiagramAppearancePreferencePage">
+      </page>
+      <page
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.connections"
+            name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.connections"
+            category="org.ow2.aspirerfid.ide.bpwme.diagram.general"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DiagramConnectionsPreferencePage">
+      </page>
+      <page
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.printing"
+            name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.printing"
+            category="org.ow2.aspirerfid.ide.bpwme.diagram.general"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DiagramPrintingPreferencePage">
+      </page>
+      <page
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.rulersAndGrid"
+            name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.rulersAndGrid"
+            category="org.ow2.aspirerfid.ide.bpwme.diagram.general"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DiagramRulersAndGridPreferencePage">
+      </page>
+   </extension>
+
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor" id="prop-contrib">
+      <?gmfgen generated="true"?>
+      <propertyContributor
+            contributorId="org.ow2.aspirerfid.ide.bpwme.diagram"
+            labelProvider="org.ow2.aspirerfid.ide.bpwme.diagram.sheet.BpwmeSheetLabelProvider">
+         <propertyCategory category="domain"/>
+         <propertyCategory category="visual"/>
+         <propertyCategory category="extra"/>
+      </propertyContributor>
+   </extension>
+
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs" id="proptabs">
+      <?gmfgen generated="true"?>   
+      <propertyTabs contributorId="org.ow2.aspirerfid.ide.bpwme.diagram">
+         <propertyTab
+             category="visual"
+             id="property.tab.AppearancePropertySection"
+             label="%tab.appearance"/>
+          <propertyTab
+             category="visual"
+             id="property.tab.DiagramPropertySection"
+             label="%tab.diagram"/>
+          <propertyTab
+             category="domain"
+             id="property.tab.domain"
+             label="%tab.domain"/>
+      </propertyTabs>
+   </extension>
+
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="propsections">
+      <?gmfgen generated="true"?>   
+      <propertySections contributorId="org.ow2.aspirerfid.ide.bpwme.diagram">
+         <propertySection id="property.section.ConnectorAppearancePropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.ConnectionEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.ConnectionAppearancePropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection>
+         <propertySection id="property.section.ShapeColorAndFontPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.ShapeEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.ShapeColorsAndFontsPropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection> 
+         <propertySection id="property.section.DiagramColorsAndFontsPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.DiagramEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.DiagramColorsAndFontsPropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection>     
+         <propertySection id="property.section.RulerGridPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.DiagramEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.grid.RulerGridPropertySection" 
+            tab="property.tab.DiagramPropertySection">
+         </propertySection>     
+         <propertySection
+            id="property.section.domain" 
+            tab="property.tab.domain"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.sheet.BpwmePropertySection">
+            <input type="org.eclipse.gmf.runtime.notation.View"/>
+            <input type="org.eclipse.gef.EditPart"/>
+         </propertySection>
+      </propertySections>
+   </extension>
+
+   <extension point="org.eclipse.gmf.runtime.diagram.core.viewProviders" id="view-provider">
+      <?gmfgen generated="true"?>
+      <viewProvider class="org.ow2.aspirerfid.ide.bpwme.diagram.providers.BpwmeViewProvider">
+         <Priority name="Lowest"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Diagram" semanticHints="Bpwme"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Node" semanticHints="2001,3001,3002"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Edge" semanticHints="4001"/>
+      </viewProvider>
+   </extension>
+
+   <extension point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders" id="ep-provider">
+      <?gmfgen generated="true"?>
+      <editpartProvider class="org.ow2.aspirerfid.ide.bpwme.diagram.providers.BpwmeEditPartProvider">
+         <Priority name="Lowest"/>
+         <object class="org.eclipse.gmf.runtime.notation.Diagram" id="generated-diagram">
+            <method name="getType()" value="Bpwme"/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-nodes">
+            <method name="getType()" value="2001,3001,3002"/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Edge" id="generated-links">
+            <method name="getType()" value="4001"/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-labels">
+            <method name="getType()" value="5003,5002,5001"/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-compartments">
+            <method name="getType()" value="7001,7002"/>
+         </object>
+         <context views="generated-diagram,generated-nodes,generated-links,generated-labels,generated-compartments"/>
+      </editpartProvider>
+   </extension>
+
+   <extension point="org.eclipse.gmf.runtime.emf.ui.modelingAssistantProviders" id="modelassist-provider">
+      <?gmfgen generated="true"?>
+      <modelingAssistantProvider class="org.ow2.aspirerfid.ide.bpwme.diagram.providers.BpwmeModelingAssistantProvider">
+         <Priority name="Lowest"/>
+         <object class="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart" id="WorkflowMap_1000"/>
+         <object class="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.OLCBProcEditPart" id="OLCBProc_2001"/>
+         <context elements="WorkflowMap_1000,OLCBProc_2001"/>
+      </modelingAssistantProvider>
+   </extension>
+
+   <extension point="org.eclipse.gmf.runtime.common.ui.services.iconProviders" id="icon-provider">
+      <?gmfgen generated="true"?>
+      <IconProvider class="org.ow2.aspirerfid.ide.bpwme.diagram.providers.BpwmeIconProvider">
+         <Priority name="Low"/>
+      </IconProvider>
+   </extension>
+
+   <extension point="org.eclipse.gmf.runtime.common.ui.services.parserProviders" id="parser-provider">
+      <?gmfgen generated="true"?>
+      <ParserProvider class="org.ow2.aspirerfid.ide.bpwme.diagram.providers.BpwmeParserProvider">
+         <Priority name="Lowest"/>
+      </ParserProvider>
+   </extension>
+
+   <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypes" id="element-types">
+      <?gmfgen generated="true"?>
+      <metamodel nsURI="http://aspire.ow2.org/">
+         <metamodelType
+               id="org.ow2.aspirerfid.ide.bpwme.diagram.WorkflowMap_1000"
+               name="%metatype.name.WorkflowMap_1000"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="WorkflowMap"
+               edithelper="org.ow2.aspirerfid.ide.bpwme.diagram.edit.helpers.WorkflowMapEditHelper">
+            <param name="semanticHint" value="1000"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://aspire.ow2.org/">
+         <metamodelType
+               id="org.ow2.aspirerfid.ide.bpwme.diagram.OLCBProc_2001"
+               name="%metatype.name.OLCBProc_2001"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="OLCBProc"
+               edithelper="org.ow2.aspirerfid.ide.bpwme.diagram.edit.helpers.OLCBProcEditHelper">
+            <param name="semanticHint" value="2001"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://aspire.ow2.org/">
+         <metamodelType
+               id="org.ow2.aspirerfid.ide.bpwme.diagram.CLCBProc_3001"
+               name="%metatype.name.CLCBProc_3001"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="CLCBProc"
+               edithelper="org.ow2.aspirerfid.ide.bpwme.diagram.edit.helpers.CLCBProcEditHelper">
+            <param name="semanticHint" value="3001"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://aspire.ow2.org/">
+         <metamodelType
+               id="org.ow2.aspirerfid.ide.bpwme.diagram.EBProc_3002"
+               name="%metatype.name.EBProc_3002"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="EBProc"
+               edithelper="org.ow2.aspirerfid.ide.bpwme.diagram.edit.helpers.EBProcEditHelper">
+            <param name="semanticHint" value="3002"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://aspire.ow2.org/">
+         <metamodelType
+               id="org.ow2.aspirerfid.ide.bpwme.diagram.Connection_4001"
+               name="%metatype.name.Connection_4001"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="Connection"
+               edithelper="org.ow2.aspirerfid.ide.bpwme.diagram.edit.helpers.ConnectionEditHelper">
+            <param name="semanticHint" value="4001"/>
+         </metamodelType>
+      </metamodel>
+   </extension>
+
+   <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypeBindings" id="element-types-bindings">
+      <?gmfgen generated="true"?>
+      <clientContext id="org.ow2.aspirerfid.ide.bpwme.diagram.TypeContext">
+         <enablement>
+            <test
+               property="org.eclipse.gmf.runtime.emf.core.editingDomain"
+               value="org.ow2.aspirerfid.ide.bpwme.diagram.EditingDomain"/>
+         </enablement>
+      </clientContext> 
+      <binding context="org.ow2.aspirerfid.ide.bpwme.diagram.TypeContext">
+         <elementType ref="org.ow2.aspirerfid.ide.bpwme.diagram.WorkflowMap_1000"/>
+         <elementType ref="org.ow2.aspirerfid.ide.bpwme.diagram.OLCBProc_2001"/>
+         <elementType ref="org.ow2.aspirerfid.ide.bpwme.diagram.CLCBProc_3001"/>
+         <elementType ref="org.ow2.aspirerfid.ide.bpwme.diagram.EBProc_3002"/>
+         <elementType ref="org.ow2.aspirerfid.ide.bpwme.diagram.Connection_4001"/>
+         <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>
+      </binding>
+   </extension>
+
+   <extension id="BpwmeApplication" point="org.eclipse.core.runtime.applications">
+      <?gmfgen generated="true"?>
+      <application>
+         <run class="org.ow2.aspirerfid.ide.bpwme.diagram.application.BpwmeApplication"/>
+      </application>
+   </extension>
+
+   <extension point="org.eclipse.ui.perspectives" id="rcp-perspective">
+      <?gmfgen generated="true"?>
+      <perspective
+            id="bpwme.diagram.BpwmePerspective"
+            name="%perspectiveName"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.application.DiagramEditorPerspective">
+      </perspective>
+   </extension>
+
+   <extension point="org.eclipse.ui.commands" id="rcp-menu-commands">
+      <command
+            name="%openURIActionLabel"
+            description="%openURIActionDescription"
+            categoryId="org.eclipse.ui.category.file"
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.OpenURICommand"/>  
+      <command
+            name="%openActionLabel"
+            description="%openActionDescription"
+            categoryId="org.eclipse.ui.category.file"
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.OpenCommand"/>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.ShowXMLEditor"
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor"
+            name="showXmlEditor">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.RefreshXMLEditor"
+            id="org.ow2.aspirerfid.ide.bpwme.actions.refreshXML"
+            name="Refresh XML">
+      </command>      
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.NewDiagram"
+            id="org.ow2.aspirerfid.ide.bpwme.actions.newdiagram"
+            name="New Diagram">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.OpenDiagram"
+            id="org.ow2.aspirerfid.ide.bpwme.actions.opendiagram"
+            name="Open Diagram">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.GetLocations"
+            id="org.ow2.aspirerfid.ide.bpwme.actions.getLocations"
+            name="Get Locations">
+      </command>  
+   </extension>
+
+   <extension point="org.eclipse.ui.bindings" id="rcp-command-bindings">
+      <?gmfgen generated="true"?>
+      <key
+            commandId="org.ow2.aspirerfid.ide.bpwme.diagram.OpenURICommand"
+            sequence="M1+U"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      <key
+            commandId="org.ow2.aspirerfid.ide.bpwme.diagram.OpenCommand"
+            sequence="M1+O"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets" id="rcp-actions">
+      <?gmfgen generated="true"?>
+      <actionSet
+            label="%applicationActionSetLabel"
+            visible="true"
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.ActionSet">
+         <action
+               label="%newDiagramActionLabel"
+               class="org.ow2.aspirerfid.ide.bpwme.diagram.application.DiagramEditorActionBarAdvisor$NewDiagramAction"
+               menubarPath="file/new/additions"
+               id="org.ow2.aspirerfid.ide.bpwme.diagram.NewDiagramAction">
+         </action>
+         <action
+               label="%aboutActionLabel"
+               class="org.ow2.aspirerfid.ide.bpwme.diagram.application.DiagramEditorActionBarAdvisor$AboutAction"
+               menubarPath="help/additions"
+               id="org.ow2.aspirerfid.ide.bpwme.diagram.AboutAction">
+         </action>
+         <action
+               label="%openURIActionLabel"
+               definitionId="org.ow2.aspirerfid.ide.bpwme.diagram.OpenURICommand"
+               class="org.ow2.aspirerfid.ide.bpwme.diagram.application.DiagramEditorActionBarAdvisor$OpenURIAction"
+               menubarPath="file/additions"
+               id="org.ow2.aspirerfid.ide.bpwme.diagram.OpenURIAction">
+         </action>
+         <action
+               label="%openActionLabel"
+               definitionId="org.ow2.aspirerfid.ide.bpwme.diagram.OpenCommand"
+               class="org.ow2.aspirerfid.ide.bpwme.diagram.application.DiagramEditorActionBarAdvisor$OpenAction"
+               menubarPath="file/additions"
+               id="org.ow2.aspirerfid.ide.bpwme.diagram.OpenAction">
+         </action>
+      </actionSet>
+   </extension>
+   <extension point="org.eclipse.ui.commands" id="update-cmd">
+      <?gmfgen generated="true"?>
+      <command
+         categoryId="org.eclipse.ui.category.edit"
+         defaultHandler="org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramUpdateCommand"
+         description="%update.diagram.description"
+         id="bpwme.diagram.updateDiagram"
+         name="%update.diagram.name"/>
+   </extension>
+   
+   <extension point="org.eclipse.ui.bindings" id="update-cmd-binding">
+      <?gmfgen generated="true"?>
+      <key 
+         commandId="bpwme.diagram.updateDiagram"
+         contextId="bpwme.diagram.ui.diagramContext"
+         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+         sequence="F5"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.menus" id="context-menus">
+      <?gmfgen generated="true"?>
+      <!-- menuContribution locationURI="menu:org.eclipse.ui.main.menu?after=">
+      </menuContribution>
+      <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=">
+      </menuContribution -->
+      <menuContribution locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
+         <command commandId="org.ow2.aspirerfid.ide.bpwme.diagram.LoadResourceAction">
+            <visibleWhen>
+               <and>
+                  <with variable="activePartId"><equals value="bpwme.diagram.part.BpwmeDiagramEditorID"/></with>
+                  <with variable="selection"><iterate ifEmpty="false"> 
+                     <instanceof value="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart"/>
+                  </iterate></with>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+     
+      
+   </extension>
+
+   <extension point="org.eclipse.ui.commands" id="menu-commands">
+      <?gmfgen generated="true"?>
+      <category id="bpwme.diagram.part.BpwmeDiagramEditorID" name="%cmdcategory.name" description="%cmdcategory.desc"/>
+      <command id="org.ow2.aspirerfid.ide.bpwme.diagram.LoadResourceAction"
+         name="Load Resource"
+         categoryId="bpwme.diagram.part.BpwmeDiagramEditorID"
+         defaultHandler="org.ow2.aspirerfid.ide.bpwme.diagram.part.LoadResourceAction"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
+      <editpolicyProvider
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.edit.policies.EditpolicyProvider">
+         <Priority
+               name="Medium">
+         </Priority>
+         <context
+               editparts="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart">
+         </context>
+         <object
+               class="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart"
+               id="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart">
+         </object>
+      </editpolicyProvider>
+   </extension>
+   <extension
+         id="org.ow2.aspirerfid.ide.main.menu"
+         name="Aspire Rfid Main Menu"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="org.ow2.aspirerfid.ide.main.filemenu"
+               label="File">
+            <command
+                  commandId="org.ow2.aspirerfid.ide.bpwme.actions.newdiagram"
+                  label="New Diagram"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.ow2.aspirerfid.ide.bpwme.actions.opendiagram"
+                  label="Open Diagram"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="org.ow2.aspirerfid.ide.main.editmenu"
+               label="Edit">
+            <command
+                  commandId="org.ow2.aspirerfid.ide.bpwme.actions.refreshXML"
+                  label="Refresh XML"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.ow2.aspirerfid.ide.bpwme.actions.getLocations"
+                  label="Get Locations"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="org.ow2.aspirerfid.ide.main.windowmenu"
+               label="Window">
+            <menu
+                  id="org.ow2.aspirerfid.ide.main.windowmenu.showviewmenu"
+                  label="Show View">
+               <command
+                     commandId="org.eclipse.ui.views.showView"
+                     label="Outline View"
+                     style="push">
+                  <parameter
+                        name="org.eclipse.ui.views.showView.viewId"
+                        value="org.eclipse.ui.views.ContentOutline">
+                  </parameter>
+               </command>
+               <command
+                     commandId="org.eclipse.ui.views.showView"
+                     label="Error View"
+                     style="push">
+                  <parameter
+                        name="org.eclipse.ui.views.showView.viewId"
+                        value="org.eclipse.pde.runtime.LogView">
+                  </parameter>
+               </command>
+               <command
+                     commandId="org.eclipse.ui.views.showView"
+                     label="Property View"
+                     style="push">
+                  <parameter
+                        name="org.eclipse.ui.views.showView.viewId"
+                        value="org.eclipse.ui.views.PropertySheet">
+                  </parameter>
+               </command>
+               <command
+                     commandId="org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor"
+                     label="XML Editor"
+                     style="push">
+               </command>
+            </menu>
+            <separator
+                  name="org.ow2.aspirerfid.ide.main.windowmenu.separator1"
+                  visible="true">
+            </separator>
+            <menu
+                  id="org.ow2.aspirerfid.ide.main.windowmenu.showperspectivemenu"
+                  label="Show Perspective">
+               <command
+                     commandId="org.eclipse.ui.perspectives.showPerspective"
+                     label="Bpwme Perspective"
+                     style="push">
+                  <parameter
+                        name="org.eclipse.ui.perspectives.showPerspective.perspectiveId"
+                        value="bpwme.diagram.BpwmePerspective">
+                  </parameter>
+               </command>
+            </menu>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="org.ow2.aspirerfid.ide.main.toolbar">
+            <command
+                  commandId="org.eclipse.ui.file.save"
+                  label="Save"
+                  style="push">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.GetLocations"
+            id="org.ow2.aspirerfid.ide.bpwme.actions.getlocations"
+            name="GetLocations">
+      </command>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.objectContribution.EBProcEditPart"
+            objectClass="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart">
+         <!--
+         <menu
+               id="EBEdit"
+               label="Edit"
+               path="additions">
+            <separator
+                  name="editGroup">
+            </separator>
+         </menu>
+         -->
+         <action
+               class="org.ow2.aspirerfid.ide.bpwme.actions.EditECSpec"
+               id="org.ow2.aspirerfid.ide.bpwme.actions.EditECSpec"
+               label="EC Spec"
+               menubarPath="editMenu/editGroup">
+         </action>
+         <action
+               class="org.ow2.aspirerfid.ide.bpwme.actions.EditMasterData"
+               id="org.ow2.aspirerfid.ide.bpwme.actions.EditMasterData"
+               label="Master Data"
+               menubarPath="editMenu/editGroup">
+         </action>
+         
+      </objectContribution>
+   </extension>
+   <!--
+   <extension
+         point="org.eclipse.gmf.runtime.common.ui.services.action.contributionItemProviders">
+      <contributionItemProvider
+            checkPluginLoaded="true"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.AbstractContributionItemProvider1">
+         <Priority
+               name="Lowest">
+         </Priority>
+         <popupContribution>
+            <popupMenu
+                  id="org.ow2.aspirerfid.ide.bpwme.diagram.popupMenu1"
+                  path="/additionsGroup">
+            </popupMenu>
+         </popupContribution>
+      </contributionItemProvider>
+   </extension>
+	-->	
+   <!-- optionally, specify keybindings -->
+   
+   <!-- spec configuration-->
+
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor contributorId="org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor">
+         <propertyCategory category="Aspire"/>
+      </propertyContributor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor">
+         <propertyCategory
+               category="Aspire">
+         </propertyCategory>
+      </propertyContributor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs contributorId="org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor">
+       <propertyTab
+             category="Aspire"
+             id="LLRPTab"
+             label="LLRP">
+       </propertyTab>
+       <propertyTab
+             afterTab="LLRPTab"
+             category="Aspire"
+             id="RPTab"
+             label="RP">
+       </propertyTab>
+       <propertyTab
+             afterTab="RPTab"
+             category="Aspire"
+             id="HALTab"
+             label="HAL">
+       </propertyTab>
+       <propertyTab
+             afterTab="HALTab"
+             category="Aspire"
+             id="AdvancedTab"
+             label="Advanced">
+       </propertyTab>
+      </propertyTabs>
+   </extension>
+    
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections
+            contributorId="org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor">
+        
+        
+        <propertySection
+               class="org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection.ButtonSection"
+               id="LButtonSection"
+               tab="LLRPTab">
+            <input
+                  type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.LLRPSpec">
+            </input>
+         </propertySection>
+               
+         <propertySection
+               afterSection="LButtonSection"
+               class="org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection.TableSection"
+               id="LTableSection"
+               tab="LLRPTab">
+            <input
+                  type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.LLRPSpec">
+            </input>
+         </propertySection>
+ 
+ 
+ 
+         <propertySection
+               class="org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection.ButtonSection"
+               id="RButtonSection"
+               tab="RPTab">
+            <input
+                  type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.RPSpec">
+            </input>
+         </propertySection>         
+         <propertySection
+               afterSection="RButtonSection"
+               class="org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection.TableSection"
+               id="RTableSection"
+               tab="RPTab">
+            <input
+                  type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.RPSpec">
+            </input>
+         </propertySection>
+         
+         
+         
+         <propertySection
+               class="org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection.ButtonSection"
+               id="HButtonSection"
+               tab="HALTab">
+            <input
+                  type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.HALSpec">
+            </input>
+         </propertySection>
+         <propertySection
+               afterSection="HButtonSection"
+               class="org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection.TableSection"
+               id="HTableSection"
+               tab="HALTab">
+            <input
+                  type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.HALSpec">
+            </input>
+         </propertySection>
+         
+         
+         
+         <propertySection
+               class="org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection.LRAdvancedSection"
+               id="AdvanceSection"
+               tab="AdvancedTab">
+            <input
+                  type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.Spec">
+            </input>
+         </propertySection>
+      </propertySections>
+   </extension>
+
+    <!--about the ecspec report editing-->
+      <extension
+            point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+         <propertyTabs
+               contributorId="org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor">
+            <propertyTab
+                  category="Aspire"
+                  id="EC.AdvancedTab"
+                  label="Advanced">
+            </propertyTab>
+         </propertyTabs>
+      </extension>
+      <extension
+            point="org.eclipse.ui.views.properties.tabbed.propertySections">
+         <propertySections
+               contributorId="org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor">
+            
+            <propertySection
+                  afterSection="EC.NormalSection"
+                  class="org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection.ECAdvancedSection"
+                  id="EC.AdvanceSection"
+                  tab="EC.AdvancedTab">
+               <input
+                     type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.ReportSpec">
+               </input>
+            </propertySection>
+            <!--
+            <propertySection
+                  class="org.eclipse.ui.views.properties.tabbed.AdvancedPropertySection"
+                  id="EC.NormalSection"
+                  tab="EC.AdvancedTab">
+               <input
+                     type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.ReportSpec">
+               </input>
+            </propertySection>
+            
+            <propertySection
+                  class="org.eclipse.ui.views.properties.tabbed.AbstractOverridableTabListPropertySection"
+                  id="EC.TestSection"
+                  tab="EC.AdvancedTab">
+               <input
+                     type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.ReportSpec">
+               </input>
+            </propertySection>
+           -->
+         </propertySections>
+      </extension>
+      <extension
+            point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+         <propertyContributor
+               contributorId="org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor">
+            <propertyCategory
+                  category="Aspire">
+            </propertyCategory>
+         </propertyContributor>
+      </extension>
+      <extension
+            point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+         <propertyTabs
+               contributorId="org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor">
+            <propertyTab
+                  category="Aspire"
+                  id="DISTab"
+                  label="Core">
+            </propertyTab>
+         </propertyTabs>
+      </extension>
+      <extension
+            point="org.eclipse.ui.views.properties.tabbed.propertySections">
+         <propertySections
+               contributorId="org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor">
+            <propertySection
+                  class="org.ow2.aspirerfid.ide.bpwme.master.tabsection.ButtonSection"
+                  id="DButtonSection"
+                  tab="DISTab">
+               <input
+                     type="org.ow2.aspirerfid.ide.bpwme.master.model.DispositionItem">
+               </input>
+            </propertySection>
+            <propertySection
+                  afterSection="DButtonSection"
+                  class="org.ow2.aspirerfid.ide.bpwme.master.tabsection.TableSection"
+                  id="DTableSection"
+                  tab="DISTab">
+               <input
+                     type="org.ow2.aspirerfid.ide.bpwme.master.model.DispositionItem">
+               </input>
+            </propertySection>
+         </propertySections>
+      </extension>
+
+   
+</plugin>

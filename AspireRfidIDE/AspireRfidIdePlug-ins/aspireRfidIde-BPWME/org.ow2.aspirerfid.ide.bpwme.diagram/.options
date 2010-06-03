@@ -1,0 +1,7 @@
+# Tracing options for the org.ow2.aspirerfid.ide.bpwme.diagram plug-in
+
+# Common issues
+org.ow2.aspirerfid.ide.bpwme.diagram/debug=false
+
+# Visual IDs
+org.ow2.aspirerfid.ide.bpwme.diagram/debug/visualID=false
