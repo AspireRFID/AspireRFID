@@ -259,7 +259,7 @@ public class MasterDataUtil {
 			return null;
 		}
 		
-		VocabularyType vocabulary = getVocabulary(doc, "urn:epcglobal:epcis:vtype:BusinessLocation");
+		VocabularyType vocabulary = getVocabulary(doc, "urn:epcglobal:epcis:vtype:BusinessTransaction");
 		
 		if(vocabulary == null) {
 			return null;
