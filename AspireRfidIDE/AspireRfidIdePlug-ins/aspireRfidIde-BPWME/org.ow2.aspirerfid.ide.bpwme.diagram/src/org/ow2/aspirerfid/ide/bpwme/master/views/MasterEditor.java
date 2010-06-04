@@ -338,7 +338,7 @@ ITabbedPropertySheetPageContributor{
 		
 		text = mdb.getAttribute("urn:epcglobal:epcis:mda:action");		
 		actionCombo.add("ADD");
-		actionCombo.add("DROP");
+		actionCombo.add("OBSERVE");
 		actionCombo.add("DELETE");		
 		actionCombo.setText(text);//set text to the chosen one
 		
