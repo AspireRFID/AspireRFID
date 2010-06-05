@@ -3,7 +3,8 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ lib/aspirerfid-commons-1.3.jar
 Bundle-Activator: org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
