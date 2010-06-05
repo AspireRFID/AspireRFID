@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/aspireRfidIde-MasterDataEditorGMF/src"
+    modelPluginID="org.ow2.aspirerfid.ide.MasterDataEditorGMF" modelName="MasterDataEditorGMF"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
+    editPluginID="org.ow2.aspirerfid.ide.MasterDataEditorGMF.edit">
+  <foreignModel>MasterDataEditorGMF.ecore</foreignModel>
+  <genPackages prefix="MasterDataEditorGMF" basePackage="org.ow2.aspirerfid.ide" disposableProviderFactory="true"
+      ecorePackage="MasterDataEditorGMF.ecore#/">
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Company">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/country"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/city"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MasterDataEditorGMF.ecore#//Company/companyWarehouses"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="MasterDataEditorGMF.ecore#//AbstractWarehouse">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/description"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/type"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/EpcisID"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MasterDataEditorGMF.ecore#//AbstractWarehouse/warehouses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MasterDataEditorGMF.ecore#//AbstractWarehouse/containers"/>
+    </genClasses>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//BizLoc"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Warehouse"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Room"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Section"/>
+    <genClasses image="false" ecoreClass="MasterDataEditorGMF.ecore#//AbstractContainer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/ID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/ReadPoint"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/type"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/EpcisID"/>
+    </genClasses>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//ReadPoint"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Conveyor"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Shelf"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Gate"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//PalletTruck"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//PushArm"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//HandHeldReader"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container1"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container2"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container3"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container4"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container5"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container6"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container7"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container8"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container9"/>
+    <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container10"/>
+  </genPackages>
+</genmodel:GenModel>

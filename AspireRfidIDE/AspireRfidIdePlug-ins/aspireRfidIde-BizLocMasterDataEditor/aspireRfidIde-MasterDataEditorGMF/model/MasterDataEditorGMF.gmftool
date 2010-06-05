@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmftool:ToolRegistry xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:gmftool="http://www.eclipse.org/gmf/2005/ToolDefinition">
+  <palette
+      title="MasterDataEditorGMFPalette">
+    <tools
+        xsi:type="gmftool:ToolGroup"
+        title="MasterDataEditorGMF"
+        collapsible="true">
+      <tools
+          xsi:type="gmftool:ToolGroup"
+          title="Warehouses"
+          description=""
+          collapsible="true">
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="BizLoc"
+            description="Create new BizLoc">
+          <largeIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="Warehouse"
+            description="Create new Warehouse">
+          <largeIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="Room"
+            description="Create new Room">
+          <largeIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="Section"
+            description="Create new Section">
+          <largeIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+      </tools>
+      <tools
+          xsi:type="gmftool:ToolGroup"
+          title="Containers"
+          collapsible="true">
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="ReadPoint"
+            description="Create new ReadPoint">
+          <smallIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="Container"
+            description="Create new Container">
+          <largeIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="Conveyor"
+            description="Create new Conveyor">
+          <largeIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="Shelf"
+            description="Create new Shelf">
+          <largeIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="Gate"
+            description="Create new Gate">
+          <largeIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="PalletTruck"
+            description="Create new PalletTruck">
+          <largeIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="PushArm"
+            description="Create new PushArm">
+          <largeIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="HandHeldReader"
+            description="Create new HandHeldReader">
+          <largeIcon
+              xsi:type="gmftool:DefaultImage"/>
+        </tools>
+      </tools>
+    </tools>
+  </palette>
+</gmftool:ToolRegistry>
