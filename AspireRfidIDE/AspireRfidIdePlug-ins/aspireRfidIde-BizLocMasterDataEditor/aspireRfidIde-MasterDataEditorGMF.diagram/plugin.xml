@@ -201,9 +201,21 @@
             <input type="org.eclipse.gef.EditPart"/>
          </propertySection>
          <propertySection
-               class="org.ow2.aspirerfid.ide.MasterDataEditorGMF.customtabs.AdvancedSection"
-               filter="org.ow2.aspirerfid.ide.MasterDataEditorGMF.customtabs.AdvancedEditPartPropertySectionFilter"
-               id="property.section.advanced"
+               class="org.ow2.aspirerfid.ide.MasterDataEditorGMF.customtabs.AdvancedCompanySection"
+               filter="org.ow2.aspirerfid.ide.MasterDataEditorGMF.customtabs.AdvancedCompanyEditPartPropertySectionFilter"
+               id="property.section.companyadvanced"
+               tab="property.tab.advanced">
+         </propertySection>
+         <propertySection
+               class="org.ow2.aspirerfid.ide.MasterDataEditorGMF.customtabs.AdvancedWarehouseSection"
+               filter="org.ow2.aspirerfid.ide.MasterDataEditorGMF.customtabs.AdvancedWarehouseEditPartPropertySectionFilter"
+               id="property.section.warehouseadvanced"
+               tab="property.tab.advanced">
+         </propertySection>
+         <propertySection
+               class="org.ow2.aspirerfid.ide.MasterDataEditorGMF.customtabs.AdvancedReadPointSection"
+               filter="org.ow2.aspirerfid.ide.MasterDataEditorGMF.customtabs.AdvancedReadPointEditPartPropertySectionFilter"
+               id="property.section.readpointadvanced"
                tab="property.tab.advanced">
          </propertySection>
       </propertySections>
@@ -520,6 +532,10 @@
          <menu
                id="org.ow2.aspirerfid.ide.main.filemenu"
                label="File">
+            <separator
+                  name="org.ow2.aspirerfid.ide.main.windowmenu.separator1"
+                  visible="true">
+            </separator>
             <command
                   commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMF.command"
                   label="New MasterDataEditorGMF Diagram"

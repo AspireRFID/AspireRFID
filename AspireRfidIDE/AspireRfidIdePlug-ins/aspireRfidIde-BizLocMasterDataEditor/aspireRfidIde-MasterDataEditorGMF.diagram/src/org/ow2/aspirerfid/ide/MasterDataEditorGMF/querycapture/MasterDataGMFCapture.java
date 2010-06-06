@@ -24,7 +24,6 @@ import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.jface.dialogs.MessageDialog;
 
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences.DiagramConfiguratorPreferenceConstants;
 import org.ow2.aspirerfid.ide.masterdata.classes.EpcisConstants;

@@ -970,7 +970,7 @@ public class MasterDataEditParts {
 	/**
 	 * Check if part is warehouse compartment
 	 */
-	private static boolean isWarehouseCompartment(AbstractEditPart warehousePart) {
+	public static boolean isWarehouseCompartment(AbstractEditPart warehousePart) {
 		if (warehousePart instanceof WarehouseWarehousesCompartmentEditPart || warehousePart instanceof WarehouseWarehousesCompartment2EditPart ||
 				warehousePart instanceof BizLocWarehousesCompartmentEditPart || warehousePart instanceof BizLocWarehousesCompartment2EditPart || 
 				warehousePart instanceof RoomWarehousesCompartmentEditPart || warehousePart instanceof RoomWarehousesCompartment2EditPart || 
@@ -983,7 +983,7 @@ public class MasterDataEditParts {
 	/**
 	 * Check if part is container compartment
 	 */
-	private static boolean isContainerCompartment(AbstractEditPart containerPart) {
+	public static boolean isContainerCompartment(AbstractEditPart containerPart) {
 		if (containerPart instanceof WarehouseContainersCompartmentEditPart || containerPart instanceof WarehouseContainersCompartment2EditPart ||
 				containerPart instanceof BizLocContainersCompartmentEditPart || containerPart instanceof BizLocContainersCompartment2EditPart || 
 				containerPart instanceof RoomContainersCompartmentEditPart || containerPart instanceof RoomContainersCompartment2EditPart || 
