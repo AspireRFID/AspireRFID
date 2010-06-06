@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2005  IBM Corporation and others.                -->
+<!-- All rights reserved. This program and the accompanying materials      -->
+<!-- are made available under the terms of the Eclipse Public License v1.0 -->
+<!-- which accompanies this distribution, and is available at              -->
+<!-- http://www.eclipse.org/legal/epl-v10.html                             -->
+<!--                                                                       -->
+<!-- Contributors:                                                         -->
+<!--    IBM Corporation - initial API and implementation                   -->
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="%actionSetLabel"
+            visible="true"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.actionSet">
+         <action
+               class="org.ow2.aspirerfid.ide.MasterDataEditorGMF.layout.actions.SquareLayoutAction"
+               definitionId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.layout.actions.SquareLayoutAction.command"
+               icon="icons/diagram.gif"
+               id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.layout.actions.SquareLayoutAction"
+               label="%layout_menuLabel"
+               menubarPath="org.ow2.aspirerfid.ide.main.menu/additions"
+               tooltip="%layout_tooltip">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.layoutProviders">
+      <layoutProvider
+            class="org.ow2.aspirerfid.ide.MasterDataEditorGMF.layout.provider.SquareLayoutProvider">
+         <Priority
+               name="Medium">
+         </Priority>
+      </layoutProvider> 
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Master Data Editor GMF Square Layout"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.layout.actions.SquareLayoutAction.command"
+            name="Master Data Editor GMF Square Layout">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="org.ow2.aspirerfid.ide.main.filemenu"
+               label="File">
+            <separator
+                  name="org.ow2.aspirerfid.ide.main.windowmenu.separator2"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.layout.actions.SquareLayoutAction.command"
+                  label="MasterDataEditorGMF Square Layout"
+                  style="push">
+            </command>
+            <separator
+                  name="org.ow2.aspirerfid.ide.main.windowmenu.separator3"
+                  visible="true">
+            </separator>
+         </menu>
+      </menuContribution>
+   </extension>
+</plugin>
+
