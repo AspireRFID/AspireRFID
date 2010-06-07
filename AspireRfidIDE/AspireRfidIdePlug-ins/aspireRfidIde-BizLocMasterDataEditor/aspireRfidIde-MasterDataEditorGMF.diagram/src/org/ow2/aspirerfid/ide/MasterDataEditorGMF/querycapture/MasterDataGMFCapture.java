@@ -26,8 +26,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences.DiagramConfiguratorPreferenceConstants;
-import org.ow2.aspirerfid.ide.masterdata.classes.EpcisConstants;
-import org.ow2.aspirerfid.ide.masterdata.tools.MasterDataCaptureClient;
+//import org.ow2.aspirerfid.ide.masterdata.classes.EpcisConstants;
+//import org.ow2.aspirerfid.ide.masterdata.tools.MasterDataCaptureClient;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.tools.EpcisConstants;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.tools.MasterDataCaptureClient;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr

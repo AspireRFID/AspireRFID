@@ -42,8 +42,11 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.Company;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.MasterDataEditorGMFFactory;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.ReadPoint;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences.DiagramConfiguratorPreferenceConstants;
-import org.ow2.aspirerfid.ide.masterdata.classes.EpcisConstants;
-import org.ow2.aspirerfid.ide.masterdata.tools.QueryClientGuiHelper;
+//import org.ow2.aspirerfid.ide.masterdata.classes.EpcisConstants;
+//import org.ow2.aspirerfid.ide.masterdata.tools.QueryClientGuiHelper;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.tools.EpcisConstants;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.tools.QueryClientGuiHelper;
+
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
