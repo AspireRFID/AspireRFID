@@ -29,13 +29,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TimeZone;
+import java.util.Map.Entry;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.custom.StyledText;
@@ -61,6 +66,7 @@ import org.ow2.aspirerfid.commons.epcis.model.TransactionEventType;
 import org.ow2.aspirerfid.commons.epcis.model.Unsubscribe;
 import org.ow2.aspirerfid.commons.utils.TimeParser;
 //import org.ow2.aspirerfid.ide.masterdata.Activator;
+//import org.ow2.aspirerfid.ide.masterdata.classes.EpcisConstants;
 //import org.ow2.aspirerfid.ide.masterdata.preferences.PreferenceConstants;
 
 /**
@@ -445,6 +451,150 @@ public class QueryClientGuiHelper {
 		}
 		return table;
 	}
+	
+	/**
+	 * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
+	 * 
+	 * Returns a hashmap<key, value> consisting of the Master Data
+	 * that was replyed from the Epcis repository
+	 * 
+	 * @param Alist of VocabularyTypes
+	 *            The result list containing the matching vocabularys.
+	 * @return A HashMap<key, value> containing the matching vocabularys in a
+	 *         format suitable for a HashMap.
+	 */
+	public HashMap<String, String> processVocabularyAndChildren(final List<VocabularyType> vocabularyList) {
+		int nofVocabularys = vocabularyList.size();
+		HashMap<String, String> map = new HashMap<String, String>();
+		Object[][] table = new Object[nofVocabularys][80];
+		int row = 0;
+
+		System.out.print("\n\n" + nofVocabularys + " Vocabularys returned by the server:\n\n");
+		for (Object o : vocabularyList) {
+			if (o instanceof JAXBElement<?>) {
+				o = ((JAXBElement<?>) o).getValue();
+			}
+			VocabularyType vocabulary = (VocabularyType) o;
+			table[row][0] = vocabulary.getType();
+			System.out.println("Process Vocabulary\n\n\n\n");
+			System.out.println("Type is "+vocabulary.getType());
+									
+			List<VocabularyElementType> vocabularyElementList;
+			vocabularyElementList = vocabulary.getVocabularyElementList().getVocabularyElement();
+			int i = 1;
+			for (Object v : vocabularyElementList){
+				VocabularyElementType vocabularyElement = (VocabularyElementType) v;
+				
+				table[row][i] = vocabularyElement.getId();
+				System.out.println("In for--> id = "+vocabularyElement.getId());
+				map.put("ID", vocabularyElement.getId());
+				System.out.println("map" + i + map);
+				i++;
+				
+				System.out.println("Size="+vocabularyElement.getAttribute().size());
+				if(vocabularyElement.getAttribute().size()>0){
+					int s = vocabularyElement.getAttribute().size();
+					for(int aa1=0; aa1<s; aa1++){
+					   System.out.println("========>Attr: "+vocabularyElement.getAttribute().get(aa1).getId());
+					   for(int aa2=0;aa2<vocabularyElement.getAttribute().get(aa1).getOtherAttributes().size();aa2++) {
+						   Set<Entry<QName, String>> set = vocabularyElement.getAttribute().get(aa1).getOtherAttributes().entrySet();
+						   Iterator<Entry<QName, String>> itr = set.iterator();
+						   
+							while (itr.hasNext()) {
+								Entry<QName, String> item = itr.next();
+								System.out.println("========>Value: " + item.getValue());
+								map.put(vocabularyElement.getAttribute().get(aa1).getId(), item.getValue());
+							}
+					   }
+					}
+				}
+
+				if (vocabularyElement.getChildren() != null) {
+					for (int j = 0, k = 0; j < vocabularyElement.getChildren().getId().size(); j++) {
+						//if (vocabularyList.get(0).getType().equals((String) EpcisConstants.BUSINESS_LOCATION_ID))
+						
+						//insert only the warehouse children (1 comma)
+						String temp = null;
+						temp = vocabularyElement.getChildren().getId().get(j).replaceFirst(vocabularyElement.getId() + ",", "");
+						System.out.println("temp" + temp.toString() + " " + j + " " + " " + k + " " + temp.indexOf(","));
+						if (temp.indexOf(",") < 0) {
+							map.put("WarehouseChildren" + k, vocabularyElement.getChildren().getId().get(j));
+							k++;
+						}
+					}
+				}
+			}
+			row++;
+		}
+		System.out.println("Map: " + map);
+		return map;
+	}
+	
+	/**
+	 * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
+	 * 
+	 * Returns a hashmap<key, value> consisting of the Master Data
+	 * that was replyed from the Epcis repository
+	 * 
+	 * @param Alist of VocabularyTypes
+	 *            The result list containing the matching vocabularys.
+	 * @return A HashMap<key, value> containing the matching vocabularys in a
+	 *         format suitable for a HashMap.
+	 */
+	public HashMap<String, String> processVocabularyCompanyNames(final List<VocabularyType> vocabularyList) {
+		int nofVocabularys = vocabularyList.size();
+		HashMap<String, String> map = new HashMap<String, String>();
+		Object[][] table = new Object[nofVocabularys][80];
+		int row = 0;
+
+		System.out.print("\n\n" + nofVocabularys + " Vocabularys returned by the server:\n\n");
+		for (Object o : vocabularyList) {
+			if (o instanceof JAXBElement<?>) {
+				o = ((JAXBElement<?>) o).getValue();
+			}
+			VocabularyType vocabulary = (VocabularyType) o;
+			table[row][0] = vocabulary.getType();
+			System.out.println("Process Vocabulary\n\n\n\n");
+			System.out.println("Type is "+vocabulary.getType());
+						
+			List<VocabularyElementType> vocabularyElementList;
+			vocabularyElementList = vocabulary.getVocabularyElementList().getVocabularyElement();
+			int i = 1;
+			for (Object v : vocabularyElementList){
+				VocabularyElementType vocabularyElement = (VocabularyElementType) v;
+				
+				table[row][i] = vocabularyElement.getId();
+				System.out.println("In for--> id = "+vocabularyElement.getId());
+				i++;
+				
+				System.out.println("Size="+vocabularyElement.getAttribute().size());
+				if(vocabularyElement.getAttribute().size()>0){
+					int s = vocabularyElement.getAttribute().size();
+					for(int aa1=0; aa1<s; aa1++){
+					   System.out.println("========>Attr: "+vocabularyElement.getAttribute().get(aa1).getId());
+
+					   Set<Entry<QName, String>> set = vocabularyElement.getAttribute().get(aa1).getOtherAttributes().entrySet();
+					   Iterator<Entry<QName, String>> itr = set.iterator();
+					   
+					   while (itr.hasNext()) {
+							Entry<QName, String> item = itr.next();
+						   if (vocabularyElement.getId().indexOf(",") < 0) {	   
+							   if (vocabularyElement.getAttribute().get(aa1).getId().equals("urn:epcglobal:epcis:mda:Name"))
+								   map.put(vocabularyElement.getId(), item.getValue());
+							   else {
+								   if (!map.containsKey(vocabularyElement.getId()))						   
+									   map.put(vocabularyElement.getId(), vocabularyElement.getId());
+							   }
+						   }
+					   }
+					}
+				}
+			}
+			row++;
+		}
+		System.out.println("Map: " + map);
+		return map;
+	}
 
 	/**
 	 * Reset the query arguments.
@@ -523,6 +673,75 @@ public class QueryClientGuiHelper {
 		// print to debug window and return result
 		if (results != null && results.getResultsBody() != null) {
 			return processVocabulary(results.getResultsBody().getVocabularyList().getVocabulary());
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
+	 * 
+	 * Run the query with the currently set query arguments Returns the results
+	 * in a format that is suitable for a HashMap.
+	 * 
+	 * @return The pretty-printed query results.
+	 * @throws Exception
+	 *             If any Exception occurred while invoking the query service.
+	 */
+	public HashMap<String, String> runMasterDataQueryHashMap() throws Exception {
+		QueryParams queryParams = new QueryParams();
+		queryParams.getParam().addAll(internalQueryParams);
+		System.out.print("Number of MasterData query parameters: " + queryParams.getParam().size() + "\n");
+		for (QueryParam queryParam : internalQueryParams) {
+			System.out.print(queryParam.getName() + ": " + queryParam.getValue() + "\n");
+		}
+
+		Poll poll = new Poll();
+		poll.setQueryName("SimpleMasterDataQuery");
+		poll.setParams(queryParams);
+
+		System.out.print("running query...\n");
+		QueryResults results = queryClient.poll(poll);
+		System.out.print("done\n");
+
+		// print to debug window and return result
+		if (results != null && results.getResultsBody() != null) {
+			return processVocabularyAndChildren(results.getResultsBody().getVocabularyList().getVocabulary());
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
+	 * 
+	 * Run the query with the currently set query arguments Returns the results
+	 * in a format that is suitable for a HashMap.
+	 * 
+	 * @return The pretty-printed query results.
+	 * @throws Exception
+	 *             If any Exception occurred while invoking the query service.
+	 */
+	public HashMap<String, String> runMasterDataQueryCompanyNames() throws Exception {
+		QueryParams queryParams = new QueryParams();
+		queryParams.getParam().addAll(internalQueryParams);
+		System.out.print("Number of MasterData query parameters: " + queryParams.getParam().size() + "\n");
+		for (QueryParam queryParam : internalQueryParams) {
+			System.out.print(queryParam.getName() + ": " + queryParam.getValue() + "\n");
+		}
+
+		Poll poll = new Poll();
+		poll.setQueryName("SimpleMasterDataQuery");
+		poll.setParams(queryParams);
+
+		System.out.print("running query...\n");
+		QueryResults results = queryClient.poll(poll);
+		System.out.print("done\n");
+
+		// print to debug window and return result
+		if (results != null && results.getResultsBody() != null) {
+			//return processVocabulary(results.getResultsBody().getVocabularyList().getVocabulary());
+			return processVocabularyCompanyNames(results.getResultsBody().getVocabularyList().getVocabulary());
 		} else {
 			return null;
 		}
