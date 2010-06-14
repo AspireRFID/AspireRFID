@@ -1,9 +1,18 @@
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences;
 
+import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.*;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditor;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 
 /**
@@ -87,7 +96,21 @@ public class DiagramConfiguratorPreferencePage extends FieldEditorPreferencePage
 	@Override
 	public boolean performOk() {
 		MessageDialog.openWarning(getShell(), "Warning", 
-				"The application needs to be restarted in order to update the Advanced section.");
+				"The application needs to be restarted in order to update any new custom property.");
+//		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+//		IWorkbenchPage page = window.getActivePage();
+//		IEditorReference[] refs = page.getEditorReferences();
+//		IEditorPart[] editors = page.getEditors();
+//		page.get
+//		
+//		try {
+//			page.closeAllEditors(true);
+//			page.op
+//		} catch (PartInitException e) {
+//			e.printStackTrace();
+//		}
+		
+		
 		return super.performOk();
 	}
 

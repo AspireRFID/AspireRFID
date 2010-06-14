@@ -20,10 +20,16 @@ package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditor;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
@@ -39,6 +45,18 @@ public class OpenMasterDataEditorGMFFromEpcisViewHandler extends AbstractHandler
 		WizardDialog wizardDialog = new WizardDialog(
 				window.getShell(), wizard);
 		wizardDialog.open();
+		
+		//re-open the diagram to refresh the new attributes
+		IWorkbenchPage page = window.getActivePage();
+		IEditorPart editor  = page.getActiveEditor();
+		
+		try {
+			page.closeEditor(editor, true);
+			page.openEditor(new URIEditorInput(MasterDataEditParts.getEpcisFileURI()), MasterDataEditorGMFDiagramEditor.ID);	
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 }

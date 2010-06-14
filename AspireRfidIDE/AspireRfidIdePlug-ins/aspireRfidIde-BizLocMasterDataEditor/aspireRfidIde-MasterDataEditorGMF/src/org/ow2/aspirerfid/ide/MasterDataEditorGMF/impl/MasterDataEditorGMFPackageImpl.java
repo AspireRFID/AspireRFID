@@ -261,20 +261,10 @@ public class MasterDataEditorGMFPackageImpl extends EPackageImpl implements Mast
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link MasterDataEditorGMFPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
@@ -286,7 +276,7 @@ public class MasterDataEditorGMFPackageImpl extends EPackageImpl implements Mast
 		if (isInited) return (MasterDataEditorGMFPackage)EPackage.Registry.INSTANCE.getEPackage(MasterDataEditorGMFPackage.eNS_URI);
 
 		// Obtain or create and register package
-		MasterDataEditorGMFPackageImpl theMasterDataEditorGMFPackage = (MasterDataEditorGMFPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof MasterDataEditorGMFPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new MasterDataEditorGMFPackageImpl());
+		MasterDataEditorGMFPackageImpl theMasterDataEditorGMFPackage = (MasterDataEditorGMFPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof MasterDataEditorGMFPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new MasterDataEditorGMFPackageImpl());
 
 		isInited = true;
 
@@ -299,6 +289,9 @@ public class MasterDataEditorGMFPackageImpl extends EPackageImpl implements Mast
 		// Mark meta-data to indicate it can't be changed
 		theMasterDataEditorGMFPackage.freeze();
 
+  
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(MasterDataEditorGMFPackage.eNS_URI, theMasterDataEditorGMFPackage);
 		return theMasterDataEditorGMFPackage;
 	}
 
@@ -379,6 +372,456 @@ public class MasterDataEditorGMFPackageImpl extends EPackageImpl implements Mast
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getCompany_Attr1() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr2() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr3() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr4() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr5() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr6() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr7() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr8() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(14);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr9() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(15);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr10() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(16);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Att11() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(17);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr12() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(18);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr13() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(19);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr14() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(20);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr15() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(21);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr16() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(22);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr17() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(23);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr18() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(24);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr19() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(25);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr20() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(26);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr21() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(27);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr22() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(28);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr23() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(29);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr24() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(30);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr25() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(31);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr26() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(32);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr27() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(33);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr28() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(34);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr29() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(35);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr30() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(36);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr31() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(37);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr32() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(38);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr33() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(39);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr34() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(40);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr35() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(41);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr36() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(42);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr37() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(43);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr38() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(44);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr39() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(45);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr40() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(46);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr41() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(47);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr42() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(48);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr43() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(49);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr44() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(50);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr45() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(51);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr46() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(52);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr47() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(53);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr48() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(54);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr49() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(55);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCompany_Attr50() {
+		return (EAttribute)companyEClass.getEStructuralFeatures().get(56);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getAbstractWarehouse() {
 		return abstractWarehouseEClass;
 	}
@@ -424,17 +867,8 @@ public class MasterDataEditorGMFPackageImpl extends EPackageImpl implements Mast
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getAbstractWarehouse_EpcisID() {
-		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getAbstractWarehouse_Warehouses() {
-		return (EReference)abstractWarehouseEClass.getEStructuralFeatures().get(5);
+		return (EReference)abstractWarehouseEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -443,7 +877,457 @@ public class MasterDataEditorGMFPackageImpl extends EPackageImpl implements Mast
 	 * @generated
 	 */
 	public EReference getAbstractWarehouse_Containers() {
-		return (EReference)abstractWarehouseEClass.getEStructuralFeatures().get(6);
+		return (EReference)abstractWarehouseEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr1() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr2() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr3() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr4() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr5() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr6() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr7() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr8() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr9() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(14);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr10() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(15);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Att11() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(16);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr12() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(17);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr13() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(18);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr14() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(19);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr15() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(20);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr16() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(21);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr17() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(22);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr18() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(23);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr19() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(24);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr20() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(25);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr21() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(26);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr22() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(27);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr23() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(28);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr24() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(29);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr25() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(30);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr26() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(31);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr27() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(32);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr28() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(33);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr29() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(34);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr30() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(35);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr31() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(36);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr32() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(37);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr33() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(38);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr34() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(39);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr35() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(40);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr36() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(41);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr37() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(42);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr38() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(43);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr39() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(44);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr40() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(45);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr41() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(46);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr42() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(47);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr43() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(48);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr44() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(49);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr45() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(50);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr46() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(51);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr47() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(52);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr48() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(53);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr49() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(54);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractWarehouse_Attr50() {
+		return (EAttribute)abstractWarehouseEClass.getEStructuralFeatures().get(55);
 	}
 
 	/**
@@ -541,8 +1425,449 @@ public class MasterDataEditorGMFPackageImpl extends EPackageImpl implements Mast
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getAbstractContainer_EpcisID() {
+	public EAttribute getAbstractContainer_Attr1() {
 		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr2() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr3() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr4() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr5() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr6() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr7() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr8() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr9() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr10() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(14);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Att11() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(15);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr12() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(16);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr13() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(17);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr14() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(18);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr15() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(19);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr16() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(20);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr17() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(21);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr18() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(22);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr19() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(23);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr20() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(24);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr21() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(25);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr22() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(26);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr23() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(27);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr24() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(28);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr25() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(29);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr26() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(30);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr27() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(31);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr28() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(32);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr29() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(33);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr30() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(34);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr31() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(35);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr32() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(36);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr33() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(37);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr34() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(38);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr35() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(39);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr36() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(40);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr37() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(41);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr38() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(42);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr39() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(43);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr40() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(44);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr41() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(45);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr42() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(46);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr43() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(47);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr44() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(48);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr45() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(49);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr46() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(50);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr47() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(51);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr48() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(52);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr49() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(53);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAbstractContainer_Attr50() {
+		return (EAttribute)abstractContainerEClass.getEStructuralFeatures().get(54);
 	}
 
 	/**
@@ -743,15 +2068,114 @@ public class MasterDataEditorGMFPackageImpl extends EPackageImpl implements Mast
 		createEAttribute(companyEClass, COMPANY__CITY);
 		createEAttribute(companyEClass, COMPANY__DESCRIPTION);
 		createEReference(companyEClass, COMPANY__COMPANY_WAREHOUSES);
+		createEAttribute(companyEClass, COMPANY__ATTR1);
+		createEAttribute(companyEClass, COMPANY__ATTR2);
+		createEAttribute(companyEClass, COMPANY__ATTR3);
+		createEAttribute(companyEClass, COMPANY__ATTR4);
+		createEAttribute(companyEClass, COMPANY__ATTR5);
+		createEAttribute(companyEClass, COMPANY__ATTR6);
+		createEAttribute(companyEClass, COMPANY__ATTR7);
+		createEAttribute(companyEClass, COMPANY__ATTR8);
+		createEAttribute(companyEClass, COMPANY__ATTR9);
+		createEAttribute(companyEClass, COMPANY__ATTR10);
+		createEAttribute(companyEClass, COMPANY__ATT11);
+		createEAttribute(companyEClass, COMPANY__ATTR12);
+		createEAttribute(companyEClass, COMPANY__ATTR13);
+		createEAttribute(companyEClass, COMPANY__ATTR14);
+		createEAttribute(companyEClass, COMPANY__ATTR15);
+		createEAttribute(companyEClass, COMPANY__ATTR16);
+		createEAttribute(companyEClass, COMPANY__ATTR17);
+		createEAttribute(companyEClass, COMPANY__ATTR18);
+		createEAttribute(companyEClass, COMPANY__ATTR19);
+		createEAttribute(companyEClass, COMPANY__ATTR20);
+		createEAttribute(companyEClass, COMPANY__ATTR21);
+		createEAttribute(companyEClass, COMPANY__ATTR22);
+		createEAttribute(companyEClass, COMPANY__ATTR23);
+		createEAttribute(companyEClass, COMPANY__ATTR24);
+		createEAttribute(companyEClass, COMPANY__ATTR25);
+		createEAttribute(companyEClass, COMPANY__ATTR26);
+		createEAttribute(companyEClass, COMPANY__ATTR27);
+		createEAttribute(companyEClass, COMPANY__ATTR28);
+		createEAttribute(companyEClass, COMPANY__ATTR29);
+		createEAttribute(companyEClass, COMPANY__ATTR30);
+		createEAttribute(companyEClass, COMPANY__ATTR31);
+		createEAttribute(companyEClass, COMPANY__ATTR32);
+		createEAttribute(companyEClass, COMPANY__ATTR33);
+		createEAttribute(companyEClass, COMPANY__ATTR34);
+		createEAttribute(companyEClass, COMPANY__ATTR35);
+		createEAttribute(companyEClass, COMPANY__ATTR36);
+		createEAttribute(companyEClass, COMPANY__ATTR37);
+		createEAttribute(companyEClass, COMPANY__ATTR38);
+		createEAttribute(companyEClass, COMPANY__ATTR39);
+		createEAttribute(companyEClass, COMPANY__ATTR40);
+		createEAttribute(companyEClass, COMPANY__ATTR41);
+		createEAttribute(companyEClass, COMPANY__ATTR42);
+		createEAttribute(companyEClass, COMPANY__ATTR43);
+		createEAttribute(companyEClass, COMPANY__ATTR44);
+		createEAttribute(companyEClass, COMPANY__ATTR45);
+		createEAttribute(companyEClass, COMPANY__ATTR46);
+		createEAttribute(companyEClass, COMPANY__ATTR47);
+		createEAttribute(companyEClass, COMPANY__ATTR48);
+		createEAttribute(companyEClass, COMPANY__ATTR49);
+		createEAttribute(companyEClass, COMPANY__ATTR50);
 
 		abstractWarehouseEClass = createEClass(ABSTRACT_WAREHOUSE);
 		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ID);
 		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__NAME);
 		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__DESCRIPTION);
 		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__TYPE);
-		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__EPCIS_ID);
 		createEReference(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__WAREHOUSES);
 		createEReference(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__CONTAINERS);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR1);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR2);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR3);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR4);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR5);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR6);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR7);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR8);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR9);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR10);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATT11);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR12);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR13);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR14);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR15);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR16);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR17);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR18);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR19);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR20);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR21);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR22);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR23);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR24);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR25);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR26);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR27);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR28);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR29);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR30);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR31);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR32);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR33);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR34);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR35);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR36);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR37);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR38);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR39);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR40);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR41);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR42);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR43);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR44);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR45);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR46);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR47);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR48);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR49);
+		createEAttribute(abstractWarehouseEClass, ABSTRACT_WAREHOUSE__ATTR50);
 
 		bizLocEClass = createEClass(BIZ_LOC);
 
@@ -767,7 +2191,56 @@ public class MasterDataEditorGMFPackageImpl extends EPackageImpl implements Mast
 		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__DESCRIPTION);
 		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__READ_POINT);
 		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__TYPE);
-		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__EPCIS_ID);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR1);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR2);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR3);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR4);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR5);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR6);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR7);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR8);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR9);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR10);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATT11);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR12);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR13);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR14);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR15);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR16);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR17);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR18);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR19);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR20);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR21);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR22);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR23);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR24);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR25);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR26);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR27);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR28);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR29);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR30);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR31);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR32);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR33);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR34);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR35);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR36);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR37);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR38);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR39);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR40);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR41);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR42);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR43);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR44);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR45);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR46);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR47);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR48);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR49);
+		createEAttribute(abstractContainerEClass, ABSTRACT_CONTAINER__ATTR50);
 
 		readPointEClass = createEClass(READ_POINT);
 
@@ -866,15 +2339,114 @@ public class MasterDataEditorGMFPackageImpl extends EPackageImpl implements Mast
 		initEAttribute(getCompany_City(), ecorePackage.getEString(), "city", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCompany_Description(), ecorePackage.getEString(), "description", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCompany_CompanyWarehouses(), this.getAbstractWarehouse(), null, "companyWarehouses", null, 0, -1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr1(), ecorePackage.getEString(), "attr1", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr2(), ecorePackage.getEString(), "attr2", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr3(), ecorePackage.getEString(), "attr3", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr4(), ecorePackage.getEString(), "attr4", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr5(), ecorePackage.getEString(), "attr5", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr6(), ecorePackage.getEString(), "attr6", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr7(), ecorePackage.getEString(), "attr7", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr8(), ecorePackage.getEString(), "attr8", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr9(), ecorePackage.getEString(), "attr9", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr10(), ecorePackage.getEString(), "attr10", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Att11(), ecorePackage.getEString(), "att11", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr12(), ecorePackage.getEString(), "attr12", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr13(), ecorePackage.getEString(), "attr13", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr14(), ecorePackage.getEString(), "attr14", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr15(), ecorePackage.getEString(), "attr15", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr16(), ecorePackage.getEString(), "attr16", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr17(), ecorePackage.getEString(), "attr17", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr18(), ecorePackage.getEString(), "attr18", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr19(), ecorePackage.getEString(), "attr19", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr20(), ecorePackage.getEString(), "attr20", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr21(), ecorePackage.getEString(), "attr21", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr22(), ecorePackage.getEString(), "attr22", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr23(), ecorePackage.getEString(), "attr23", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr24(), ecorePackage.getEString(), "attr24", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr25(), ecorePackage.getEString(), "attr25", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr26(), ecorePackage.getEString(), "attr26", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr27(), ecorePackage.getEString(), "attr27", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr28(), ecorePackage.getEString(), "attr28", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr29(), ecorePackage.getEString(), "attr29", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr30(), ecorePackage.getEString(), "attr30", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr31(), ecorePackage.getEString(), "attr31", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr32(), ecorePackage.getEString(), "attr32", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr33(), ecorePackage.getEString(), "attr33", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr34(), ecorePackage.getEString(), "attr34", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr35(), ecorePackage.getEString(), "attr35", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr36(), ecorePackage.getEString(), "attr36", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr37(), ecorePackage.getEString(), "attr37", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr38(), ecorePackage.getEString(), "attr38", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr39(), ecorePackage.getEString(), "attr39", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr40(), ecorePackage.getEString(), "attr40", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr41(), ecorePackage.getEString(), "attr41", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr42(), ecorePackage.getEString(), "attr42", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr43(), ecorePackage.getEString(), "attr43", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr44(), ecorePackage.getEString(), "attr44", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr45(), ecorePackage.getEString(), "attr45", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr46(), ecorePackage.getEString(), "attr46", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr47(), ecorePackage.getEString(), "attr47", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr48(), ecorePackage.getEString(), "attr48", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr49(), ecorePackage.getEString(), "attr49", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCompany_Attr50(), ecorePackage.getEString(), "attr50", "", 0, 1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(abstractWarehouseEClass, AbstractWarehouse.class, "AbstractWarehouse", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAbstractWarehouse_ID(), ecorePackage.getEString(), "ID", "urn:epcglobal:fmcg:loc:", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAbstractWarehouse_Name(), ecorePackage.getEString(), "name", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAbstractWarehouse_Description(), ecorePackage.getEString(), "description", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAbstractWarehouse_Type(), ecorePackage.getEString(), "type", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAbstractWarehouse_EpcisID(), ecorePackage.getEString(), "EpcisID", null, 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAbstractWarehouse_Warehouses(), this.getAbstractWarehouse(), null, "warehouses", null, 0, -1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAbstractWarehouse_Containers(), this.getAbstractContainer(), null, "containers", null, 0, -1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr1(), ecorePackage.getEString(), "attr1", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr2(), ecorePackage.getEString(), "attr2", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr3(), ecorePackage.getEString(), "attr3", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr4(), ecorePackage.getEString(), "attr4", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr5(), ecorePackage.getEString(), "attr5", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr6(), ecorePackage.getEString(), "attr6", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr7(), ecorePackage.getEString(), "attr7", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr8(), ecorePackage.getEString(), "attr8", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr9(), ecorePackage.getEString(), "attr9", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr10(), ecorePackage.getEString(), "attr10", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Att11(), ecorePackage.getEString(), "att11", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr12(), ecorePackage.getEString(), "attr12", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr13(), ecorePackage.getEString(), "attr13", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr14(), ecorePackage.getEString(), "attr14", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr15(), ecorePackage.getEString(), "attr15", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr16(), ecorePackage.getEString(), "attr16", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr17(), ecorePackage.getEString(), "attr17", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr18(), ecorePackage.getEString(), "attr18", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr19(), ecorePackage.getEString(), "attr19", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr20(), ecorePackage.getEString(), "attr20", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr21(), ecorePackage.getEString(), "attr21", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr22(), ecorePackage.getEString(), "attr22", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr23(), ecorePackage.getEString(), "attr23", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr24(), ecorePackage.getEString(), "attr24", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr25(), ecorePackage.getEString(), "attr25", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr26(), ecorePackage.getEString(), "attr26", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr27(), ecorePackage.getEString(), "attr27", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr28(), ecorePackage.getEString(), "attr28", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr29(), ecorePackage.getEString(), "attr29", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr30(), ecorePackage.getEString(), "attr30", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr31(), ecorePackage.getEString(), "attr31", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr32(), ecorePackage.getEString(), "attr32", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr33(), ecorePackage.getEString(), "attr33", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr34(), ecorePackage.getEString(), "attr34", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr35(), ecorePackage.getEString(), "attr35", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr36(), ecorePackage.getEString(), "attr36", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr37(), ecorePackage.getEString(), "attr37", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr38(), ecorePackage.getEString(), "attr38", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr39(), ecorePackage.getEString(), "attr39", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr40(), ecorePackage.getEString(), "attr40", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr41(), ecorePackage.getEString(), "attr41", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr42(), ecorePackage.getEString(), "attr42", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr43(), ecorePackage.getEString(), "attr43", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr44(), ecorePackage.getEString(), "attr44", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr45(), ecorePackage.getEString(), "attr45", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr46(), ecorePackage.getEString(), "attr46", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr47(), ecorePackage.getEString(), "attr47", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr48(), ecorePackage.getEString(), "attr48", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr49(), ecorePackage.getEString(), "attr49", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractWarehouse_Attr50(), ecorePackage.getEString(), "attr50", "", 0, 1, AbstractWarehouse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(bizLocEClass, BizLoc.class, "BizLoc", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -890,11 +2462,60 @@ public class MasterDataEditorGMFPackageImpl extends EPackageImpl implements Mast
 		initEAttribute(getAbstractContainer_Description(), ecorePackage.getEString(), "description", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAbstractContainer_ReadPoint(), ecorePackage.getEBoolean(), "ReadPoint", "true", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAbstractContainer_Type(), ecorePackage.getEString(), "type", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAbstractContainer_EpcisID(), ecorePackage.getEString(), "EpcisID", null, 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr1(), ecorePackage.getEString(), "attr1", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr2(), ecorePackage.getEString(), "attr2", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr3(), ecorePackage.getEString(), "attr3", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr4(), ecorePackage.getEString(), "attr4", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr5(), ecorePackage.getEString(), "attr5", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr6(), ecorePackage.getEString(), "attr6", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr7(), ecorePackage.getEString(), "attr7", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr8(), ecorePackage.getEString(), "attr8", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr9(), ecorePackage.getEString(), "attr9", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr10(), ecorePackage.getEString(), "attr10", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Att11(), ecorePackage.getEString(), "att11", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr12(), ecorePackage.getEString(), "attr12", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr13(), ecorePackage.getEString(), "attr13", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr14(), ecorePackage.getEString(), "attr14", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr15(), ecorePackage.getEString(), "attr15", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr16(), ecorePackage.getEString(), "attr16", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr17(), ecorePackage.getEString(), "attr17", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr18(), ecorePackage.getEString(), "attr18", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr19(), ecorePackage.getEString(), "attr19", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr20(), ecorePackage.getEString(), "attr20", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr21(), ecorePackage.getEString(), "attr21", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr22(), ecorePackage.getEString(), "attr22", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr23(), ecorePackage.getEString(), "attr23", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr24(), ecorePackage.getEString(), "attr24", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr25(), ecorePackage.getEString(), "attr25", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr26(), ecorePackage.getEString(), "attr26", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr27(), ecorePackage.getEString(), "attr27", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr28(), ecorePackage.getEString(), "attr28", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr29(), ecorePackage.getEString(), "attr29", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr30(), ecorePackage.getEString(), "attr30", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr31(), ecorePackage.getEString(), "attr31", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr32(), ecorePackage.getEString(), "attr32", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr33(), ecorePackage.getEString(), "attr33", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr34(), ecorePackage.getEString(), "attr34", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr35(), ecorePackage.getEString(), "attr35", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr36(), ecorePackage.getEString(), "attr36", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr37(), ecorePackage.getEString(), "attr37", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr38(), ecorePackage.getEString(), "attr38", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr39(), ecorePackage.getEString(), "attr39", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr40(), ecorePackage.getEString(), "attr40", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr41(), ecorePackage.getEString(), "attr41", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr42(), ecorePackage.getEString(), "attr42", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr43(), ecorePackage.getEString(), "attr43", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr44(), ecorePackage.getEString(), "attr44", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr45(), ecorePackage.getEString(), "attr45", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr46(), ecorePackage.getEString(), "attr46", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr47(), ecorePackage.getEString(), "attr47", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr48(), ecorePackage.getEString(), "attr48", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr49(), ecorePackage.getEString(), "attr49", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAbstractContainer_Attr50(), ecorePackage.getEString(), "attr50", "", 0, 1, AbstractContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(readPointEClass, ReadPoint.class, "ReadPoint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(containerEClass, Container.class, "Container", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(containerEClass, org.ow2.aspirerfid.ide.MasterDataEditorGMF.Container.class, "Container", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(conveyorEClass, Conveyor.class, "Conveyor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

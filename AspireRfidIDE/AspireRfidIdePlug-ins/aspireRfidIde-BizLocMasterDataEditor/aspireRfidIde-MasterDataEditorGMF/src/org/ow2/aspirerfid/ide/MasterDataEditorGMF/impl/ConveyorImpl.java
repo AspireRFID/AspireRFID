@@ -43,7 +43,6 @@ public class ConveyorImpl extends AbstractContainerImpl implements Conveyor {
 	 */
 	protected ConveyorImpl() {
 		super();
-		type = "Conveyor";
 	}
 
 	/**

@@ -43,7 +43,6 @@ public class HandHeldReaderImpl extends AbstractContainerImpl implements HandHel
 	 */
 	protected HandHeldReaderImpl() {
 		super();
-		type = "HandHeldReader";
 	}
 
 	/**

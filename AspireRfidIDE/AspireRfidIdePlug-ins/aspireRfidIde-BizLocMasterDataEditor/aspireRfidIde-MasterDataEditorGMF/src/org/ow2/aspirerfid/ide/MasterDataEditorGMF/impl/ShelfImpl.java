@@ -43,7 +43,6 @@ public class ShelfImpl extends AbstractContainerImpl implements Shelf {
 	 */
 	protected ShelfImpl() {
 		super();
-		type = "Shelf";
 	}
 
 	/**

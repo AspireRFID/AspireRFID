@@ -31,6 +31,7 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFCreationWizardPage;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFQuery;
 
 /**
@@ -149,6 +150,7 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
 				MasterDataGMFQuery.setFromEPCIS(true);
+				MasterDataEditParts.setEpcisFileURI(diagramModelFilePage.getURI());
 				diagram = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
 						.createDiagram(diagramModelFilePage.getURI(), monitor);
 				if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
