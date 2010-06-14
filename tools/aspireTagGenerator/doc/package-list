@@ -1,0 +1,13 @@
+pops.ale.codec
+pops.ale.codec.gs1
+pops.ale.engine
+pops.ale.engine.collect
+pops.ale.engine.com
+pops.ale.engine.input
+pops.ale.engine.input.connectors
+pops.ale.engine.triggers
+pops.ale.epc.exceptions
+pops.ale.epc.reports
+pops.ale.epc.spec
+pops.ale.epc.spec.grouping
+pops.ale.epc.spec.grouping.string
