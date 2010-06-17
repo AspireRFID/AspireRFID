@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+OpenIDE-Module: org.ow2.aspirerfid.management.beg
+OpenIDE-Module-Localizing-Bundle: org/ow2/aspirerfid/management/beg/Bundle.properties
+OpenIDE-Module-Install: org/ow2/aspirerfid/management/beg/Installer.class
+OpenIDE-Module-Specification-Version: 1.0
+

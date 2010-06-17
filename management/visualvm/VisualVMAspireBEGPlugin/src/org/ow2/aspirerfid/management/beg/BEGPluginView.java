@@ -14,7 +14,7 @@
  * KIND, either express or implied. See the GNU Lesser General Public License
  * for the specific language governing rights and limitations.
  */
-package org.ow2.aspirerfid.management;
+package org.ow2.aspirerfid.management.beg;
 
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.ui.DataSourceView;
@@ -23,29 +23,22 @@ import com.sun.tools.visualvm.tools.jmx.JmxModel;
 import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
 import javax.management.MBeanServerConnection;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import org.openide.util.Exceptions;
 import org.openide.util.Utilities;
-import org.ow2.aspirerfid.management.model.PluginModel;
-import org.ow2.aspirerfid.management.views.ALEGeneralInfoPanel;
-import org.ow2.aspirerfid.management.views.ECSpecPanel;
-import org.ow2.aspirerfid.management.views.LRSpecPanel;
-import org.ow2.aspirerfid.management.views.SensorsPanel;
-
 /**
  *
  * @author Kiev
  */
-public class AspirePluginView extends DataSourceView {
-    private PluginModel model;
+public class BEGPluginView extends DataSourceView {
     private DataViewComponent dvc;
     private MBeanServerConnection mbs;
     //Make sure there is an image at this location in your project:
     private static final String IMAGE_PATH = "resources/aspireicon.png"; // NOI18N
 
-    public AspirePluginView(Application application) {
-        super(application,"Aspire ALEServer", new ImageIcon(Utilities.loadImage(IMAGE_PATH, true)).getImage(), 60, false);
+    public BEGPluginView(Application application) {
+        super(application,"Aspire BEG", new ImageIcon(Utilities.loadImage(IMAGE_PATH, true)).getImage(), 60, false);
         this.mbs = getConnection(application);
-        this.model = new PluginModel(mbs);
     }
 
 
@@ -67,7 +60,7 @@ public class AspirePluginView extends DataSourceView {
     protected DataViewComponent createComponent() {
 
         //Master view:
-        DataViewComponent.MasterView masterView = new DataViewComponent.MasterView("ALE Server Overview", null, new ALEGeneralInfoPanel(model));
+        DataViewComponent.MasterView masterView = new DataViewComponent.MasterView("Business Event Generator", null, new JLabel("BEG"));
 
         //Configuration of master view:
         DataViewComponent.MasterViewConfiguration masterConfiguration =
@@ -76,17 +69,7 @@ public class AspirePluginView extends DataSourceView {
         //Add the master view and configuration view to the component:
         dvc = new DataViewComponent(masterView, masterConfiguration);
 
-        //Add detail views to the component:
-        dvc.addDetailsView(new DataViewComponent.DetailsView(
-                "ECSpecs", null, 10, new ECSpecPanel(model), null), DataViewComponent.TOP_RIGHT);
-        dvc.addDetailsView(new DataViewComponent.DetailsView(
-                "LRSpecs", null, 20, new LRSpecPanel(model), null), DataViewComponent.TOP_RIGHT);
-
-        if (model.isSensorDataAvailable()) {
-            dvc.addDetailsView(new DataViewComponent.DetailsView(
-                    "Sensors", null, 30, new SensorsPanel(model), null), DataViewComponent.TOP_RIGHT);
-        }
-        return dvc;
+         return dvc;
 
     }
 
