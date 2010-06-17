@@ -92,7 +92,7 @@ public class AspirePluginView extends DataSourceView {
 
         if (model.isSensorDataAvailable()) {
             dvc.addDetailsView(new DataViewComponent.DetailsView(
-                    "Sensors", null, 30, new SensorsPanel(model), null), DataViewComponent.BOTTOM_RIGHT);
+                    "Sensors", null, 30, new SensorsPanel(model), null), DataViewComponent.TOP_RIGHT);
         }
         return dvc;
 
