@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+OpenIDE-Module: org.ow2.aspirerfid.management.epcis
+OpenIDE-Module-Localizing-Bundle: org/ow2/aspirerfid/management/epcis/Bundle.properties
+OpenIDE-Module-Install: org/ow2/aspirerfid/management/epcis/Installer.class
+OpenIDE-Module-Specification-Version: 1.0
+
