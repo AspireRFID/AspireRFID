@@ -1,0 +1,4 @@
+obr remove-url file:C:\Docume~1\Donsez\.m2\repository\repository.xml
+obr add-url file:C:\Docume~1\Donsez\.m2\repository\repository.xml
+obr start "OW2 :: Aspire RFID :: RXTX library 2.1.7"
+obr start "OW2 :: Aspire RFID :: TEMPer Producer" 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright 2005-2008, Aspire
+   
+   This library is free software; you can redistribute it and/or modify it 
+   under the terms of the GNU Lesser General Public License as published by 
+   the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+   License, or (at your option) any later version. If you do not alter this 
+   notice, a recipient may use your version of this file under either the 
+   LGPL version 2.1, or (at his option) any later version.
+   
+   You should have received a copy of the GNU Lesser General Public License 
+   along with this library; if not, write to the Free Software Foundation, 
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+   
+   This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+   KIND, either express or implied. See the GNU Lesser General Public 
+   License for the specific language governing rights and limitations.
+-->
+
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.ow2.aspirerfid.sensor</groupId>
+  <artifactId>org.ow2.aspirerfid.sensors.sunspot.producers</artifactId>
+  <packaging>bundle</packaging>
+  <version>0.3.0-SNAPSHOT</version>
+  <description>OSGi WireAdmin producers for the SunSPOT sensors</description>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-Copyright>OW2 Aspire RFID</Bundle-Copyright>
+            <Bundle-Name>OW2 :: AspireRFID :: SunSPOT producers</Bundle-Name>
+            <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+            <Bundle-Description>${pom.description}</Bundle-Description>
+            <Bundle-Vendor>Lionel Touseau</Bundle-Vendor>
+            <Private-Package>org.ow2.aspirerfid.sensor.sunspot.host, org.ow2.aspirerfid.sensor.sunspot.host.config, org.ow2.aspirerfid.sensor.sunspot.producers</Private-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-ipojo-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>ipojo-bundle</goal>
+            </goals>
+            <configuration>
+              <metadata>ipojo/metadata.xml</metadata>
+              <ignoreAnnotations>true</ignoreAnnotations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
+      <version>1.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.spot</groupId>
+      <artifactId>com.sun.spot.host.commons</artifactId>
+      <version>4.0.0</version>
+    </dependency>
+  </dependencies>
+</project>
