@@ -31,5 +31,7 @@
   <modules>
     <module>common</module>
     <module>readers</module>
+    <module>sensors</module>
+    <module>actuators</module>
   </modules>
 </project>
