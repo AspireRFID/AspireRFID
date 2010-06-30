@@ -1,0 +1,2 @@
+java -jar target\org.ow2.aspirerfid.deploy.licenseagreementtask-0.1.0-SNAPSHOT.jar LICENSE logo.png 10
+java -jar target\org.ow2.aspirerfid.deploy.licenseagreementtask-0.1.0-SNAPSHOT.jar LICENSE logo.png 10 agreementProperty
