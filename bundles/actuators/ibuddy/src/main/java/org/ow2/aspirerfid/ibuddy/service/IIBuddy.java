@@ -20,6 +20,7 @@
 
 package org.ow2.aspirerfid.ibuddy.service;
 
+import java.io.PrintStream;
 import java.util.Map;
 
 /**
@@ -37,5 +38,6 @@ public interface IIBuddy {
 	public Map<Long,IBuddyDescriptor> getListIbuddy();
 	
 	public IBuddyDescriptor getIBuddyID(Long i);
-
+	
+	public void execute(String command, PrintStream out, PrintStream err, String errMsg);
 }
