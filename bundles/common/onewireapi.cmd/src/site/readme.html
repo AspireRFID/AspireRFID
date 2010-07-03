@@ -1,0 +1,138 @@
+<html>
+<head>
+<title>${pom.name}</title>
+</head>
+<body>
+
+<!-- Start of  Documentation -->
+<hr width="100%" size="2">
+<h1><i><a name="${pom.artifactId}"></a><font color="#0000aa">${pom.name}</font></i></h1>
+
+<p>
+<b>Description</b><br>
+shell command to inspect OneWire adapters and devices connected to the host
+<br>For more details on how to use this bundle, refer to the /doc/readme.html file embedded in the bundle jarfile.
+</p>
+
+<p>
+<b>Contributors</b><br>
+<ul>
+<li>Author:OW2 AspireRFID Team</a></li>
+</ul>
+</p>
+
+
+<p>
+<b>Version</b><br>
+${pom.version}
+<br>
+</p>
+
+
+<p>
+<b>License</b><br>
+LGPL v2.1<br>
+</p>
+
+<p>
+<b>Services</b><br>
+<ul>
+<li>org.apache.felix.shell.Command</li>
+</ul>
+</p>
+
+<p>
+<b>Properties</b><br>
+<ul>
+<li>None</li>
+</ul>
+</p>
+
+<p><b>Requirements</b><br>
+<li>gnu.io</li>
+</p>
+
+<!-- End of Felix Bundle Documentation -->
+
+<hr width="100%" size="2">
+
+<!-- Start of extra information  -->
+
+</ul>
+</p>
+
+<p id="build">
+<b>Build</b><br>
+<ol>
+<li>build with Maven2 "mvn clean package install"</li>
+</ol>
+</p>
+
+<p id="settings">
+<b>Settings</b><br>
+None
+</p>
+
+<p id="usage">
+<b>Usage</b><br>
+<pre>
+-> ow help
+ow prop                  : list the properties
+ow list                  : list the available devices on the default adapter
+ow list &lt;name&gt; &lt;port&gt;    : list the available devices on the default adapter
+ow listAll               : list the available devices on all adapters
+ow monitor               : start a monitor on the default adapter
+ow monitor &lt;name&gt; &lt;port&gt; : start a monitor on the adapter
+ow stopMonitor           : stop the current monitor on the adapter
+ow adapters              : list the available adapters
+ow help                  : display this help
+
+
+-> ow list
+Adapter: {DS9490} Port: USB1
+BD000801A332FA10: DS1920 (DS18S20) Digital thermometer measures temperatures ...
+830000002C575881: DS1990A (DS2401,DS2411) 64-bit unique serial number
+27000000CD3B8D2D: DS1972 (DS2431) 1K-Bit protected 1-Wire EEPROM.
+
+-> ow list {DS9490} USB1
+
+-> ow monitor
+OneWire Device Event: ADD BD000801A332FA10
+OneWire Device Event: ADD 830000002C575881
+OneWire Device Event: ADD 27000000CD3B8D2D
+
+OneWire Device Event: REMOVE 27000000CD3B8D2D
+OneWire Device Event: ADD 27000000CD3B8D2D
+
+-> ow stopMonitor
+
+</pre>
+</p>
+
+<p>
+<pre>
+Windows DLL are provided in the "1-Wire Drivers" http://www.maxim-ic.com/products/ibutton/software/tmex/index.cfm
+
+Tested with adapters under Windows 
+# {DS9490} Port: USB1
+
+To be tested with adapters
+# adapterName=DS9097U on COM ports (could run without DLL ibtmjava.dll) -> product name DS9097U-9 see http://www.ibutton.com/products/readers.html
+# adapterName={DS9097U} on COM ports (required DLL Ib97u32.dll) -> product name DS9097 see http://www.ibutton.com/products/readers.html
+# adapterName={DS9097E} on COM ports (required DLL Ib97e32.dll)
+# adapterName={DS9490}  on USB ports (required DLL ib90usb.dll)
+# adapterName={DS1410E} on LPT ports (required DLL Ib10e32.dll)
+</pre>
+</p>
+
+
+
+<p id="links">
+<b>Links</b><br>
+<ul>
+<li><a href="http://www.maxim-ic.com/products/ibutton/software/1wire/1wire_api.cfm">OneWire API for Java Homepage</a></li>
+</ul>
+</p>
+
+</body>
+</html>
