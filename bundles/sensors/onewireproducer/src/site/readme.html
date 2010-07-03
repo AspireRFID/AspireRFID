@@ -1,0 +1,150 @@
+<html>
+<head>
+<title>OneWire Producer Bundle</title>
+</head>
+<body>
+
+<!-- Start of OSCAR Bundle Documentation -->
+<hr width="100%" size="2">
+<h1><i><a name="onewireproducer"></a><font color="#0000aa">OneWire Producer (onewireproducer.jar)</font></i></h1>
+
+<p>
+<b>Description</b><br>
+provides services when 1-Wire sensor are connected to a 1-Wire network
+<br>Polled measurements are Temperature, Humidity and ADVoltage. Others can be added !
+<br>For more details on how to use this bundle, refer to the /doc/readme.html file embedded in the bundle jarfile.<br>
+</p>
+
+<p>
+<b>Contributors</b><br>
+Didier Donsez (<a href="mailto:Didier.Donsez@ieee.org">Didier.Donsez@ieee.org</a>)<br>
+</p>
+
+<p>
+<b>License</b><br>
+Library GNU Public License<br>
+</p>
+
+<p>
+<b>Services</b><br>
+<code>org.osgi.service.wireadmin.Producer</code>
+</p>
+
+<p>
+<b>Properties</b><br>
+<li>wireadmin.producer.flavors=Class[] { org.osgi.util.measurement.Measurement.class })</li>
+<li>service.pid=<i>depend of the device address</i></li>
+
+</p>
+
+<p><b>Requirements</b><br>
+<li>org.osgi.service.wireadmin; specification-version="1.0"</li>
+<li>org.osgi.util.measurement; specification-version="1.0"</li>
+<li>javax.comm</li>
+<li>embeds the onewireapi.jar downloadable from <a href="http://www.ibutton.com/software/1wire/1wire_api.html">http://www.ibutton.com/software/1wire/1wire_api.html</a></li>
+</p>
+<!-- End of OSCAR Bundle Documentation -->
+
+<hr width="100%" size="2">
+
+<!-- Start of extra information  -->
+
+<p>
+<b>Download</b><br>
+<ul>
+<li><a href='http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/onewireproducer/onewireproducer.jar'>Bundle binaries</a></li>
+<li><a href='http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/onewireproducer/onewireproducer-src.jar'>Bundle sources</a></li>
+<li><a href='http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/onewireproducer/readme.html'>The latest version of this documentation</a></li>
+</ul>
+</p>
+
+<p>
+<b>Build</b><br>
+<ol>
+<li>download the onewireapi.jar from <a href="http://www.ibutton.com/software/1wire/1wire_api.html">http://www.ibutton.com/software/1wire/1wire_api.html</a><li>
+<li>put the onewireapi.jar in the ./embeddedlib</li>
+<li>download the <a href="http://www.ibutton.com/software/tmex/index.html">TMEX installer</a></li>
+<li>launch the installer. It installs DLLs in the C:\WINDOWS\SYSTEM32 of your system</li>
+<li>put those DLLs in the ./native directory.
+Those DLLs are : Ds1410d.sys, Ib10e32.dll, ib90usb.dll, Ib97e32.dll, Ib97u32.dll, ibfs32.dll, ibtmjava.dll</li>
+</ul>
+<li>configure the build properties in build.xml</li>
+<li>configure the onewire (adapter name, ...) properties in ./initialstate.properties</li>
+<ul>
+<li>adapterName=DS9097U on COM ports (could run without DLL ibtmjava.dll) -> product name DS9097U-9 see http://www.ibutton.com/products/readers.html</li>
+<li>adapterName={DS9097U} on COM ports (required DLL Ib97u32.dll) -> product name DS9097 see http://www.ibutton.com/products/readers.html</li>
+<li>adapterName={DS9097E} on COM ports (required DLL Ib97e32.dll)</li>
+<li>adapterName={DS9490}  on USB ports (required DLL ib90usb.dll)</li>
+<li>adapterName={DS1410E} on LPT ports (required DLL Ib10e32.dll)</li>
+</ul>
+<li>then build with ant</li>
+</ol>
+</p>
+
+<p>
+<b>Tested gateways</b><br>
+<ul>
+<li><a href="http//oscar.objectweb.org/">OSCAR</a> (done)</li>
+
+<li><a href="http://www.knopflerfish.org">Knopflerfish OSGi</a> (to do)</li>
+<li><a href="http://wwws.sun.com/software/embeddedserver/index.html">SUN JES</a> (to do)</li>
+<li><a href="http://www-306.ibm.com/software/wireless/wsdd/">IBM SMF</a> (to do)</li>
+</ul>
+</p>
+
+<p>
+<b>Tested OneWire Devices</b><br>
+<ul>
+<li>Adapter <a href="http://www.ibutton.com/products/readers.html">DS9097U-9</a></li>
+<li>Adapter <a href="http://www.ibutton.com/products/readers.html">DS9097</a></li>
+<li><a href="http://www.ibutton.com/products/ibuttons.html#temperature">Thermochron (DS1921L-F50)</a>  </li>
+<li>Java iButton, Cryptographic iButton (<i>JavaCard 2.0 compliant device</i>) (DS195X) for event</a>  </li>
+<li>...</li>
+</ul>
+</p>
+
+<p>
+<b>Typical Usage</b><br>
+<ul>
+
+<li>a Weather station
+<ul>
+<li><a href="http://www.ibutton.com/weather/">http://www.ibutton.com/weather/</a></li>
+<li><a href="http://melhuish.info/simon/projects/oww/">http://melhuish.info/simon/projects/oww/</a></li>
+</ul>
+</li>
+
+<li>Access control
+<ul>
+<li><a href="http://db.maxim-ic.com/ibutton/applications/index.cfm?Action=DD&id=11">http://db.maxim-ic.com/ibutton/applications/index.cfm?Action=DD&id=11</a></li>
+</ul>
+</li>
+
+
+</ul>
+</p>
+
+<p>
+<b>TODO (contributions are welcome)</b><br>
+<ul>
+<li>wire admin filtering</li>
+<li>one producer per AD channel ?? (I don't have the device to test that)</li>
+<li>add DS1923 Hygrochron Temperature/Humidity Logger</li>
+<li>JMX ConfigMBean configuration</li>
+<li>ONE ONE.06-00000021E461 Family (hex 2) andserial number including
+CRC (hex 6)
+1-wire bus of Dallas
+Semiconductor for the service.pid</li>
+</ul>
+</p>
+
+<p>
+<b>Links</b><br>
+<ul>
+<li><a href="http://www.ibutton.com/software/1wire/1wire_api.html">1-Wire API for Java SDK home page</a></li>
+<li><a href="http://www-adele.imag.fr/users/Didier.Donsez/cours/onewire_ibutton.pdf">My course on 1-Wire</a></li>
+</ul>
+</p>
+
+</body>
+</html>
