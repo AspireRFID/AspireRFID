@@ -1,0 +1,145 @@
+<html>
+<head>
+<title>${pom.name}</title>
+</head>
+<body>
+
+<!-- Start of  Documentation -->
+<hr width="100%" size="2">
+<h1><i><a name="${pom.artifactId}"></a><font color="#0000aa">${pom.name}</font></i></h1>
+
+<p>
+<b>Description</b><br>
+provides a command to send/receive bytes to/from a serial/parallel port
+<br>For more details on how to use this bundle, refer to the /doc/readme.html file embedded in the bundle jarfile.
+</p>
+
+<p>
+<b>Contributors</b><br>
+<ul>
+<li>Author:OW2 AspireRFID Team</a></li>
+</ul>
+</p>
+
+
+<p>
+<b>Version</b><br>
+${pom.version}
+<br>
+</p>
+
+
+<p>
+<b>License</b><br>
+LGPL v2.1<br>
+</p>
+
+<p>
+<b>Services</b><br>
+<ul>
+<li>org.apache.felix.shell.Command</li>
+</ul>
+</p>
+
+<p>
+<b>Properties</b><br>
+<ul>
+<li>None</li>
+</ul>
+</p>
+
+<p><b>Requirements</b><br>
+<li>gnu.io</li>
+</p>
+
+<!-- End of Felix Bundle Documentation -->
+
+<hr width="100%" size="2">
+
+<!-- Start of extra information  -->
+
+</ul>
+</p>
+
+<p id="build">
+<b>Build</b><br>
+<ol>
+<li>build with Maven2 "mvn clean package install"</li>
+</ol>
+</p>
+
+<p id="settings">
+<b>Settings</b><br>
+None
+</p>
+
+<p id="usage">
+<b>Usage</b><br>
+<pre>
+rxtx list                  : list the available ports
+rxtx open &lt;portname&gt; &lt;baudrate&gt; &lt;flowctrlin&gt; &lt;flowctrlout&gt; &lt;databits&gt; &lt;stopbits&gt; &lt;parity&gt;
+               flowctrl=None,Xon/XoffOut,Xon/XoffIn,RTS/CTSIn,RTS/CTSOut
+               databits=5,6,7,8
+               stopbits=1,1.5,2
+               parity=None,Odd,Even
+                           : open a serial port
+rxtx close                 : close the current opened port
+rxtx send &lt;bytes in hexa&gt;  : send message bytes
+rxtx binary                : switch IO in hex
+rxtx ascii                 : switch IO in ascii
+rxtx buffersize &lt;size&gt;     : set IO buffer size
+rxtx sendurl &lt;url&gt;         : send bytes contained at the url
+rxtx logfile &lt;filepath&gt;    : log received bytes in the file
+rxtx iowrapper &lt;classname&gt; : set a wrapper for IO parsing and printing. The class could be exported by a external bundle
+rxtx help                  : display this help</pre>
+</p>
+
+<p id="rundemo">
+<b>Run the demo</b><br>
+To run the demo of this bundle, enter the commands in the Felix shell for the script <a href="./rxtx.txt">rxtx.txt</a><br>
+</p>
+
+
+<p id="typicalusage">
+<b>Typical Usages</b><br>
+<li>debugging programs using gnu.io</li>
+<li>dump serial port output (GPS, RFID reader, ...)</li>
+</p>
+
+<p id="gateways">
+<b>Tested gateways</b><br>
+<ul>
+<li>Oscar (done)</li>
+<li>Felix (done)</li>
+<li>Knopflerfish OSGi (to do)</li>
+</ul>
+</p>
+
+<p id="versions">
+<b>Versions history</b><br>
+Last version is : ${pom.version}
+<ul>
+<li>0.1.0, April 11, 2005</li>
+<li>0.2.0, February, 14 2006</li>
+<li>0.3.0, October 2008: mavenization</li>
+</ul>
+</p>
+
+<p id="todo">
+<b>TODO (contributions are welcome)</b><br>
+<ul>
+<li>parameters for the wrapper instanciation</li>
+<li>BufferedCRLFAsciiWrapper (message contains a header with a length field) : parameter (the tail string)</li>
+<li>BufferedHexWrapper (message contains a header with a length field) : parameter size and position and coding (little/big endian) of the field length</li>
+</ul>
+</p>
+
+<p id="links">
+<b>Links</b><br>
+<ul>
+<li><a href="http://www.rxtx.org">RXTX Homepage</a></li>
+</ul>
+</p>
+
+</body>
+</html>
