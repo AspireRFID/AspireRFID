@@ -59,8 +59,12 @@ public abstract class OneWireAbstractProducer implements Producer, Runnable {
 		while( ! quit )
 			try {
 				Measurement currentMeasurement=getCurrentMeasurement();
-				for( int i=0; wires!=null && i<wires.length; i++ )
-					wires[i].update( currentMeasurement );
+				for( int i=0; wires!=null && i<wires.length; i++ ) {
+					Wire wire=wires[i];
+					if(wire.isConnected() && wire.isValid()) {
+						wire.update( currentMeasurement );
+					}
+				}
 				wait(pollInterval);
 			}
 			catch( InterruptedException ie) {

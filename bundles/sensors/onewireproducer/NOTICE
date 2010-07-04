@@ -1,0 +1,20 @@
+OW2 :: Aspire RFID :: OneWire Producer
+Copyright 2008 OW2 AspireRFID Project http://wiki.aspire.objectweb.org
+
+I. Included Software
+
+This product includes software developed at
+The OW2 Consortium (http://www.ow2.org/).
+Licensed under the LGPL v2.1.
+
+II. Used Software
+This product uses software developed at
+
+The OneWire APi for Maxim IC (Dallas Semiconductors)
+http://www.maxim-ic.com/products/ibutton/software/1wire/1wire_api.cfm
+http://files.dalsemi.com/auto_id/public/owapi_1_10.zip
+Licensed under the Xfree86 license (http://www.xfree86.org/4.0/LICENSE1.html).
+
+
+III. License Summary
+- LGPL v2.1
