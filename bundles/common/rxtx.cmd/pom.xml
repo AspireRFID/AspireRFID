@@ -98,9 +98,10 @@
 						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
 						<Bundle-Description>${description}</Bundle-Description>
 
-						<Export-Package>${pom.artifactId}</Export-Package>
-						<Private-Package>${pom.artifactId}.*,rxtx.*</Private-Package>
-						<Import-Package>*</Import-Package>
+						<Export-Package>${pom.artifactId},rxtx.sample</Export-Package>
+						<Private-Package>${pom.artifactId}.*</Private-Package>
+						<Import-Package>gnu.io, org.osgi.*,org.apache.felix.shell.*</Import-Package>
+						<DynamicImport-Package>*</DynamicImport-Package>
 
 						<Bundle-Activator>${pom.artifactId}.impl.Activator
 						</Bundle-Activator>
