@@ -27,19 +27,18 @@ import java.text.ParseException;
 public class DVM1200MultimeterAcquisition {
 
     private boolean[][] segmentTable;
-
+    private int[] digits;
+    
     public DVM1200MultimeterAcquisition(byte[] bytes) throws ParseException {
         segmentTable = getSegmentTable(bytes);
-
+        digits = getDigits();
     }
 
     public String toString() {
         String res = "";
         
-        //res+=toBinaryStr()+"\n";
-        
-        int[] digits = getDigits();
-        if(isOverRange(digits)) return "Over Range";
+        //res+=toBinaryStr()+"\n";        
+        if(isOverRange()) return "Over Range";
         int dotPosition = getDotPosition();
         String unit = getUnitStr();
         
@@ -125,8 +124,7 @@ public class DVM1200MultimeterAcquisition {
     }
     
     public double getValue() {
-        int[] digits = getDigits();
-        if(isOverRange(digits)) return Double.NaN;
+        if(isOverRange()) return Double.NaN;
 
         double value=digits[0]*1000+digits[1]*100+digits[2]*10+digits[3];
 
@@ -135,13 +133,7 @@ public class DVM1200MultimeterAcquisition {
         else if(dotPosition==2) value /=100;
         else if(dotPosition==3) value /=10;
      
-        if(isKilo()) value *=1000;
-        else if(isMega()) value *=1000000;
-        else if(isMilli()) value /=1000;
-        else if(isMicro()) value /=1000000;
-        else if(isNano()) value /=1000000000;
-
-        if(isPercentage()) value /=100;
+        value*=getScale();
                 
         if(isNegative()) value*=-1;
         
@@ -183,32 +175,72 @@ public class DVM1200MultimeterAcquisition {
 
     // Scales
 
-    public boolean isOverRange(int[] digits) {
+    public boolean isOverRange() {
     	// Test OL
     	return digits[0]==' ' && digits[0]==0 && digits[0]=='L' && digits[0]==' ' ;
     }
+
+    /**
+     * Extract the scale from the LCD segments
+     * @return
+     */
+    private double getScale() {
+    	double scale=1.0;
+	    if(isKilo()) scale =1000;
+	    else if(isMega()) scale =1000000;
+	    else if(isMilli()) scale /=1000;
+	    else if(isMicro()) scale /=1000000;
+	    else if(isNano()) scale /=1000000000;	
+	    else if(isPercentage()) scale /=100;
+	    return scale;
+    }
     
-    public boolean isMega() {
+    
+    /**
+     * Extract the scale from the LCD segments
+     * @return
+     */
+    private boolean isMega() {
     	return segmentTable[10][1];
     }
 
-    public boolean isKilo() {
+    /**
+     * Extract the scale from the LCD segments
+     * @return
+     */
+    private boolean isKilo() {
     	return segmentTable[9][1];
     }
 
-    public boolean isMilli() {
+    /**
+     * Extract the scale from the LCD segments
+     * @return
+     */
+    private boolean isMilli() {
     	return segmentTable[10][3];
     }
 
-    public boolean isMicro() {
+    /**
+     * Extract the scale from the LCD segments
+     * @return
+     */
+    private boolean isMicro() {
     	return segmentTable[9][3];
     }
 
-    public boolean isNano() {
+    /**
+     * Extract the scale from the LCD segments
+     * @return
+     */
+    private boolean isNano() {
     	return segmentTable[9][2];
     }
     
-    public boolean isPercentage() {
+    /**
+     * Extract the scale from the LCD segments
+     * @return
+     */
+    private boolean isPercentage() {
     	return segmentTable[10][2];
     }
     
@@ -282,6 +314,11 @@ public class DVM1200MultimeterAcquisition {
         return unit;
     }
 
+    /**
+     * Extract the unit from the LCD segments
+     * @param i
+     * @return
+     */
     public String getUnit() {
         String unit=null;
         if (segmentTable[13][1]) {
@@ -306,6 +343,11 @@ public class DVM1200MultimeterAcquisition {
     }
     
     
+    /**
+     * Extract the position of the dot from the LCD segments
+     * @param i
+     * @return
+     */
     private int getDotPosition() {
         if (segmentTable[3][3]) {
             return 1;
@@ -319,16 +361,25 @@ public class DVM1200MultimeterAcquisition {
         return 0;
     }
 
+    /**
+     * Extract the digit from the LCD segments
+     * @param i
+     * @return
+     */
     private int[] getDigits() {
         int[] res = new int[4];
         for (int i = 0; i < 4; i++) {
-            res[i] = getDigit(i, segmentTable);
+            res[i] = getDigit(i);
         }
         return res;
     }
 
-    
-    private int getDigit(int i, boolean[][] segmentTable) {
+    /**
+     * Extract the digit from the LCD segments
+     * @param i
+     * @return
+     */
+    private int getDigit(int i) {
         int index = i * 2 + 1;
         int res = -1;
         boolean[] digitSegments = new boolean[7];
@@ -559,6 +610,11 @@ public class DVM1200MultimeterAcquisition {
         return res;
     }
 
+    /**
+     * extract the LCD segments from the bytes
+     * @param bytes
+     * @return
+     */
     private boolean[][] getSegmentTable(byte[] bytes) {
         boolean[][] table = new boolean[14][4];
         boolean res;

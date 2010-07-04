@@ -29,7 +29,6 @@ import gnu.io.UnsupportedCommOperationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.text.ParseException;
 import java.util.Hashtable;
 import java.util.TooManyListenersException;
@@ -67,8 +66,12 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 	// TODO resizable buffer
 	byte[] readBuffer = new byte[256];
 
-	private static final Class[] m_flavors = new Class[] { Measurement.class,
-			Double.class, Float.class, String.class };
+	private static final Class[] m_flavors = new Class[] {
+			Measurement.class,
+			Double.class,
+			Float.class,
+			String.class
+			};
 
 	private BundleContext m_bundleContext;
 
@@ -76,10 +79,6 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 	 * registration of the Producer service
 	 */
 	private ServiceRegistration m_serviceRegistration;
-
-	private boolean m_end;
-
-	private Thread m_thread;
 
 	public DVM1200Producer(BundleContext bc) {
 		m_bundleContext = bc;
@@ -136,6 +135,19 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 		return null;
 	}
 
+	private void log(int level, String message){
+		if(m_logService!=null) {
+			m_logService.log(level, message);
+		}
+	}
+
+	private void log(int level, String message, Throwable throwable){
+		if(m_logService!=null) {
+			m_logService.log(level, message,throwable);
+		}
+	}
+
+	
 	private void open() {
 		SerialParameters serialParameters = new SerialParameters();
 		serialParameters.setPortName(m_portName);
@@ -148,37 +160,33 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 
 		CommPortIdentifier portId = null;
 		try {
-			portId = CommPortIdentifier.getPortIdentifier(serialParameters
-					.getPortName());
-		} catch (NoSuchPortException e1) {
-			System.err
-					.println("No Such Port:" + serialParameters.getPortName());
+			portId = CommPortIdentifier.getPortIdentifier(serialParameters.getPortName());
+		} catch (NoSuchPortException e) {
+			log(LogService.LOG_ERROR,"No Such Port:" + serialParameters.getPortName(),e);
 			return;
 		}
 		if (portId.getPortType() != CommPortIdentifier.PORT_SERIAL) {
-			System.err.println(serialParameters.getPortName()
-					+ " is not a serial port");
+			log(LogService.LOG_ERROR,serialParameters.getPortName()+ " is not a serial port");
 			return;
 		}
 		try {
 			serialPort = (SerialPort) portId.open("DVM1200", 2000);
 		} catch (PortInUseException e) {
-			System.err
-					.println(serialParameters.getPortName() + " already used");
+			log(LogService.LOG_ERROR,serialParameters.getPortName() + " already used",e);
 			return;
 		}
 
 		try {
 			outputStream = serialPort.getOutputStream();
 		} catch (IOException e) {
-			System.err.println(e);
+			log(LogService.LOG_ERROR,e.getMessage(),e);
 			return;
 		}
 
 		try {
 			inputStream = serialPort.getInputStream();
 		} catch (IOException e) {
-			System.err.println(e);
+			log(LogService.LOG_ERROR,e.getMessage(),e);
 			return;
 		}
 
@@ -186,16 +194,19 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 			serialPort.addEventListener(this);
 			serialPort.notifyOnDataAvailable(true);
 		} catch (TooManyListenersException e) {
-			System.err.println(e);
+			log(LogService.LOG_ERROR,e.getMessage(),e);
 			return;
 		}
 
 		try {
-			serialPort.setSerialPortParams(serialParameters.getBaudRate(),
-					serialParameters.getDatabits(), serialParameters
-							.getStopbits(), serialParameters.getParity());
+			serialPort.setSerialPortParams(
+					serialParameters.getBaudRate(),
+					serialParameters.getDatabits(),
+					serialParameters.getStopbits(),
+					serialParameters.getParity()
+			);
 		} catch (UnsupportedCommOperationException e) {
-			System.err.println(e);
+			log(LogService.LOG_ERROR,e.getMessage(),e);
 			return;
 		}
 
@@ -203,20 +214,14 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 
 	private void close() {
 		if (serialPort == null) {
-			System.err.println("No opened port");
+			log(LogService.LOG_ERROR,"No opened port");
 			return;
 		}
-		close(null, System.out, System.err);
-
-	}
-
-	private void close(String commandLine, PrintStream out,PrintStream err) {
 		if (outputStream != null) {
 			try {
 				outputStream.close();
 			} catch (IOException e) {
-				System.err.println(e);
-				return;
+				log(LogService.LOG_ERROR,e.getMessage(),e);
 			}
 			outputStream = null;
 		}
@@ -225,8 +230,7 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 			try {
 				inputStream.close();
 			} catch (IOException e) {
-				System.err.println(e);
-				return;
+				log(LogService.LOG_ERROR,e.getMessage(),e);
 			}
 			inputStream = null;
 		}
@@ -266,11 +270,16 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 
 						try {
 							DVM1200MultimeterAcquisition acquisition = new DVM1200MultimeterAcquisition(readBuffer);
+							
+							if(acquisition.isOverRange() || acquisition.isDataHoldMode() || acquisition.isMin() || acquisition.isMax())
+								continue;
+							
 							String unitStr=acquisition.getUnit();
 							Measurement m = new Measurement(UnitUtil.convertValue(acquisition.getValue(),unitStr), UnitUtil.convertError(acquisition.getError(),unitStr) , UnitUtil.getUnit(unitStr),System.currentTimeMillis());
 							m_lastMeasurement = m;
 
 							// System.out.println(acquisition.toString()+"-->"+m.toString());
+							log(LogService.LOG_INFO,"Acquire "+m.toString());
 							
 							synchronized (this) {
 								for (int i = 0; m_wires != null
@@ -281,18 +290,16 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 									}
 								}
 							}
-
 						} catch (ParseException e) {
-							System.err.println(e);
+							log(LogService.LOG_ERROR,e.getMessage(),e);
 							return;
 						}
 					}
 				}
 			} catch (IOException e) {
-				System.err.print("DVM1200" + ":" + e);
+				log(LogService.LOG_ERROR,e.getMessage(),e);
 			}
 			break;
 		}
 	}
-
 }
