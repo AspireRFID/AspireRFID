@@ -36,6 +36,7 @@ import org.osgi.framework.ServiceRegistration;
 
 import com.phidgets.Manager;
 import com.phidgets.Phidget;
+import com.phidgets.PhidgetException;
 import com.phidgets.event.AttachEvent;
 import com.phidgets.event.AttachListener;
 import com.phidgets.event.DetachEvent;
@@ -61,15 +62,14 @@ public class PhidgetCmdImpl implements Command, BundleActivator {
 	}
 
 	private void printUsage(PrintStream out) {
-		out
-				.println(getName()
+		out.println(getName()
 						+ " prop                  : list the properties\n"
 						+ getName()
 						+ " list                  : list the available phidgets\n"
 						+ getName()
-						+ " manager				  : start a manager\n"
+						+ " listen                : start attach/detach listening\n"
 						+ getName()
-						+ " stopManager           : stop the current manager\n"
+						+ " stopListen            : stop attach/detach listening\n"
 						+ getName()
 						+ " help                  : display this help\n");
 		return;
@@ -90,10 +90,10 @@ public class PhidgetCmdImpl implements Command, BundleActivator {
 
 		if (option.equals("list")) {
 			listPhidgets(commandLine, out, err);
-		} else if (option.equals("manager")) {
-			startManager(null, out, err);
-		} else if (option.equals("stopManager")) {
-			stopManager(null, out, err);
+		} else if (option.equals("listen")) {
+			startListen(null, out, err);
+		} else if (option.equals("stopListen")) {
+			stopListen(null, out, err);
 		} else if (option.equals("prop")) {
 			listFrameworkProperties(null, out, err);
 		} else {
@@ -110,22 +110,41 @@ public class PhidgetCmdImpl implements Command, BundleActivator {
 
 
 	private void listPhidgets(String commandLine, PrintStream out, PrintStream err) {
-
 		Vector phidgets=manager.getPhidgets();
 		Enumeration e=phidgets.elements();
+		int cpt=0;
 		while(e.hasMoreElements()){
 			Phidget phidget=(Phidget)e.nextElement();
-			out.println(phidget);
-		}	
+			try {
+				out.println(toString(phidget));
+			} catch (PhidgetException e1) {
+				err.println(e1.getMessage()+"with"+phidget);
+			}
+			cpt++;
+		}
+		out.println(cpt+" phidget(s)");
 	}
 
 	private Manager manager;
 
 	AttachListener al;
 	DetachListener dl;
+
 	
-	private void startManager(final String commandLine, final PrintStream out, final PrintStream err) {
-		stopManager( commandLine,  out, err);
+	private String toString(Phidget p) throws PhidgetException {
+		return   "id="+p.getDeviceID()
+				+";sn="+p.getSerialNumber()
+				+";label="+p.getDeviceLabel()
+				+";name="+p.getDeviceName()
+				+";type="+p.getDeviceType()
+				+";version="+p.getDeviceVersion()
+				+";class="+p.getDeviceClass()
+				;
+	}
+
+	
+	private void startListen(final String commandLine, final PrintStream out, final PrintStream err) {
+		stopListen( commandLine,  out, err);
 		
 		al=new AttachListener() {
 			public void attached(AttachEvent ae) {
@@ -145,7 +164,7 @@ public class PhidgetCmdImpl implements Command, BundleActivator {
 		
 	}
 	
-	private void stopManager(String commandLine, PrintStream out, PrintStream err) {
+	private void stopListen(String commandLine, PrintStream out, PrintStream err) {
 		if(al!=null) { manager.removeAttachListener(al); }
 		if(dl!=null) {manager.removeDetachListener(dl); }
 	}
@@ -162,7 +181,6 @@ public class PhidgetCmdImpl implements Command, BundleActivator {
 		bundleContext = context;
 		manager = new Manager();
 		manager.open();
-
 		Dictionary properties = new Hashtable();
 		properties.put("categories", new String[] { "shell" });
 		serviceRegistration = bundleContext.registerService(Command.class.getName(), this, properties);
@@ -172,8 +190,12 @@ public class PhidgetCmdImpl implements Command, BundleActivator {
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
-		stopManager(null, null, null);
+		stopListen(null, null, null);
 		manager.close();
 		serviceRegistration.unregister();
 	}
+	
+	
+	
+	
 }
