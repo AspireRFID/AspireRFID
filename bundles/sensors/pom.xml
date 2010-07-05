@@ -36,6 +36,8 @@
         <module>gpsfictive</module> 
         <module>sunspot.sensors.producers</module> 
         <module>temperproducer</module> 
+        <module>onewireproducer</module> 
+        <module>vellemandvm1200producer</module> 
     </modules>
 	
 </project>
