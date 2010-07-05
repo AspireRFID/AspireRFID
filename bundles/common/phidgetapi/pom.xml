@@ -42,7 +42,7 @@
   
   <dependency>
     <!--  this library is available for download from http://www.phidgets.com/programming_resources.php -->
-    <!-- install it with mvn install:install-file -DgroupId=com.phidgets -DartifactId=phidget -Dversion=1.10.0 -Dpackaging=jar -Dfile=phidget21.jar -->
+    <!-- install it with mvn install:install-file -DgroupId=com.phidgets -DartifactId=phidget -Dversion=2.1.0 -Dpackaging=jar -Dfile=phidget21.jar -->
 	  <groupId>com.phidgets</groupId> 
 	  <artifactId>phidget</artifactId> 
 	  <version>2.1.0</version>
@@ -64,9 +64,9 @@
             <Export-Package>com.phidgets, com.phidgets.event</Export-Package>
              
             <!--  for Phidget DDL -->
-          	<!-- 
-            <Bundle-NativeCode>
-             -->
+            <!-- You must install the phidget.msi from http://www.phidgets.com/drivers.php -->
+            <!-- Then copy the installed DLL is src/main/resources                         -->
+						<Bundle-NativeCode>phidget21.dll;osname=WindowsXP;osname=windows vista;osname=windows 7;processor=x86</Bundle-NativeCode>
             
           </instructions>
         </configuration>
