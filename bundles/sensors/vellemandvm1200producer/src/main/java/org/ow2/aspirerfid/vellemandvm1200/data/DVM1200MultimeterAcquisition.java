@@ -195,7 +195,6 @@ public class DVM1200MultimeterAcquisition {
 	    return scale;
     }
     
-    
     /**
      * Extract the scale from the LCD segments
      * @return
