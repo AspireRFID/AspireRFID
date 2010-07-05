@@ -116,7 +116,7 @@ public class PhidgetCmdImpl implements Command, BundleActivator {
 		while(e.hasMoreElements()){
 			Phidget phidget=(Phidget)e.nextElement();
 			try {
-				out.println(toString(phidget));
+				out.println(PhidgetUtil.toString(phidget));
 			} catch (PhidgetException e1) {
 				err.println(e1.getMessage()+"with"+phidget);
 			}
@@ -129,19 +129,6 @@ public class PhidgetCmdImpl implements Command, BundleActivator {
 
 	AttachListener al;
 	DetachListener dl;
-
-	
-	private String toString(Phidget p) throws PhidgetException {
-		return   "id="+p.getDeviceID()
-				+";sn="+p.getSerialNumber()
-				+";label="+p.getDeviceLabel()
-				+";name="+p.getDeviceName()
-				+";type="+p.getDeviceType()
-				+";version="+p.getDeviceVersion()
-				+";class="+p.getDeviceClass()
-				;
-	}
-
 	
 	private void startListen(final String commandLine, final PrintStream out, final PrintStream err) {
 		stopListen( commandLine,  out, err);
