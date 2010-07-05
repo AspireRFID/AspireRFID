@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright 2005-2008, Aspire
+   
+   This library is free software; you can redistribute it and/or modify it 
+   under the terms of the GNU Lesser General Public License as published by 
+   the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+   License, or (at your option) any later version. If you do not alter this 
+   notice, a recipient may use your version of this file under either the 
+   LGPL version 2.1, or (at his option) any later version.
+   
+   You should have received a copy of the GNU Lesser General Public License 
+   along with this library; if not, write to the Free Software Foundation, 
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+   
+   This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+   KIND, either express or implied. See the GNU Lesser General Public 
+   License for the specific language governing rights and limitations.
+-->
+<wireapp 
+	id="org.ow2.aspirerfid.sensorconsumer"
+	description="A wired application for sensor producers and the bridge consumer">
+		<!-- a one-to-many wireset without wire properties -->
+		<!-- + whileConsumer remove policy -->
+    <!-- check the WireAdminBinder documentation
+            http://svn.apache.org/viewvc/felix/sandbox/donsez/wireadminbinder/src/site/readme.html?view=co
+            http://svn.apache.org/viewvc/felix/sandbox/donsez/wireadminbinder/src/site/wireapp.dtd?view=co        
+    -->
+
+		<wireset
+			id="sensorproducers2bridge" 
+			description="a wire between a sensor producers and the bridge consumer"
+			producers-filter="(|(|(|(|(|(|(|(|(wireadmin.producer.flavors=*org.osgi.util.measurement.Measurement)(wireadmin.producer.flavors=*org.osgi.util.measurement.State))(wireadmin.producer.flavors=*org.osgi.util.position.Position))(wireadmin.producer.flavors=*java.awt.Image))(wireadmin.producer.flavors=*java.lang.Double))(wireadmin.producer.flavors=*java.lang.Float))(wireadmin.producer.flavors=*java.lang.Long))(wireadmin.producer.flavors=*java.lang.Integer))(wireadmin.producer.flavors=*java.lang.String))"
+			consumerPID="org.ow2.aspirerfid.sensorconsumer"
+			removepolicy="ifDisconnected"
+		>
+			<property
+				name="wireadmin.filter"
+				type="java.lang.String"
+      		><![CDATA[(wirevalue.elapsed>=10000)]]></property>
+		</wireset>
+</wireapp>

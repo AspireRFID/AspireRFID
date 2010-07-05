@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="lib" path="E:/Test/OSGI-Servlet/config/felix/runner/bundles/org.osgi.compendium-1.2.0.jar"/>
+	<classpathentry kind="lib" path="E:/Test/OSGI-Servlet/config/felix/runner/bundles/org.apache.felix.main_2.0.1.jar"/>
+	<classpathentry kind="lib" path="E:/Test/OSGI-Servlet/config/felix/runner/bundles/org.ops4j.pax.web.pax-web-jetty-bundle_0.7.2.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
