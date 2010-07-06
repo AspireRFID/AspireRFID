@@ -25,7 +25,7 @@
 
     <properties>
         <description>The RXTX library</description>
-        <rxtxVersion>2.1.7</rxtxVersion>
+        <rxtxVersion>2.2.0-PRERELEASE</rxtxVersion>
     </properties>
 
   <modelVersion>4.0.0</modelVersion>
@@ -36,13 +36,14 @@
 
   <groupId>org.ow2.aspirerfid</groupId>
   <artifactId>org.ow2.aspirerfid.rxtx</artifactId>
-  <version>0.1.1-SNAPSHOT</version>
+  <version>0.2.0-SNAPSHOT</version>
 
+  <!-- Ugly trick to force gnu.io export -->
   <dependencies>
     <dependency>
       <groupId>org.rxtx</groupId>
       <artifactId>rxtx</artifactId>
-      <version>${rxtxVersion}</version>
+      <version>2.1.7</version>
     </dependency>
   </dependencies>
 
@@ -64,19 +65,21 @@
 <!-- see clause in http://svn.apache.org/viewvc/felix/trunk/framework/src/main/java/org/apache/felix/framework/util/manifestparser/R4LibraryClause.java?view=markup -->
 
             <Bundle-NativeCode>
-            Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windowsnt,
-            Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windows2000,
-            Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windows2003,
-            Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windowsxp,
-            Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windowsvista,
-            Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windows7,
+            Windows/x86/rxtxSerial.dll;Windows/x86/rxtxParallel.dll;processor=x86;osname=windowsnt,
+            Windows/x86/rxtxSerial.dll;Windows/x86/rxtxParallel.dll;processor=x86;osname=windows2000,
+            Windows/x86/rxtxSerial.dll;Windows/x86/rxtxParallel.dll;processor=x86;osname=windows2003,
+            Windows/x86/rxtxSerial.dll;Windows/x86/rxtxParallel.dll;processor=x86;osname=windowsxp,
+            Windows/x86/rxtxSerial.dll;Windows/x86/rxtxParallel.dll;processor=x86;osname=windowsvista,
+            Windows/x86/rxtxSerial.dll;Windows/x86/rxtxParallel.dll;processor=x86;osname=windows7,
+            Windows/x86_64/rxtxSerial.dll;processor=x86_64;osname=windowsnt,
+            Windows/x86_64/rxtxSerial.dll;processor=x86_64;osname=windows2000,
+            Windows/x86_64/rxtxSerial.dll;processor=x86_64;osname=windows2003,
+            Windows/x86_64/rxtxSerial.dll;processor=x86_64;osname=windowsxp,
+            Windows/x86_64/rxtxSerial.dll;processor=x86_64;osname=windowsvista,
+            Windows/x86_64/rxtxSerial.dll;processor=x86_64;osname=windows7,
             Linux/i686-unknown-linux-gnu/librxtxSerial.so;Linux/i686-unknown-linux-gnu/librxtxParallel.so;processor=x86;osname=linux,
             Linux/x86_64-unknown-linux-gnu/librxtxSerial.so;processor=x86_64;osname=linux,
-            Linux/ia64-unknown-linux-gnu/librxtxSerial.so;processor=ia64;osname=linux,
-            Mac_OS_X/librxtxSerial.jnilib;osname=macosx; processor=x86; processor=PowerPC,
-            Solaris/sparc-solaris/sparc32-sun-solaris2.8/librxtxSerial.so;processor=sparc;osname=Solaris;osversion=2.8,
-            Solaris/sparc-solaris/sparc64-sun-solaris2.8/librxtxSerial.so;processor=sparc64;osname=Solaris;osversion=2.8
-            Solaris/sparc-solaris/sparc64-sun-solaris2.8/librxtxSerial.so;processor=sparc64;osname=Solaris;osversion=2.8
+            mac-10.5/librxtxSerial.jnilib;osname=macosx; processor=x86; processor=x86_64; processor=PowerPC
             </Bundle-NativeCode>
         <!-- <Bundle-ClassPath>RXTXcomm.jar</Bundle-ClassPath> -->
           </instructions>

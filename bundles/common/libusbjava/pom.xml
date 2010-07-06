@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <!--
  * Copyright (c) 2008-2010, AspireRFID
  *
@@ -19,85 +19,86 @@
  *
  * Contact: AspireRFID mailto:aspirerfid@ow2.org
 -->
-	<modelVersion>4.0.0</modelVersion>
-	<name>OW2 :: AspireRFID :: LIB USB JAVA PROXY</name>
-	<groupId>org.ow2.aspirerfid</groupId>
-	<artifactId>libusbjava</artifactId>
-	<packaging>bundle</packaging>
-	<version>2.0.0</version>
+    <modelVersion>4.0.0</modelVersion>
+    <name>OW2 :: AspireRFID :: LIB USB JAVA PROXY</name>
+    <groupId>org.ow2.aspirerfid</groupId>
+    <artifactId>libusbjava</artifactId>
+    <packaging>bundle</packaging>
+    <version>2.0.0</version>
 
-	<dependencies>
-		<dependency>
-			<groupId>libusb.java</groupId>
-			<artifactId>ch.ntb.usb</artifactId>
-			<version>0.5.8</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>org.osgi.compendium</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<extensions>true</extensions>
-				<configuration>
-					<instructions>
-						<Bundle-Copyright>OW2 Aspire RFID</Bundle-Copyright>
-						<Bundle-Name>OW2 :: AspireRFID :: LIB USB JAVA PROXY</Bundle-Name>
-						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-						<Bundle-Description>${pom.description}</Bundle-Description>
-						<!-- <Bundle-Vendor>EL mehdi Damou and Romain Gomez</Bundle-Vendor> -->
-						<Bundle-ClassPath>.</Bundle-ClassPath>
-						<Private-Package>
-							org.ow2.aspirerfid.libusbjava.host,
-							ch.ntb.usb.logger,
-							ch.ntb.usb.testApp,
-							ch.ntb.usb.usbView
-						</Private-Package>
-						<Export-Package>
-						 	ch.ntb.usb;
-							org.ow2.aspirerfid.libusbjava.service,
-						</Export-Package>
-						<!--						<Include-Resource>-->
-						<!--							src/main/resources,-->
-						<!--							@ch.ntb.usb-0.5.8.jar!/META-INF/**-->
-						<!--                        </Include-Resource>-->
+    <dependencies>
+        <dependency>
+            <groupId>libusb.java</groupId>
+            <artifactId>ch.ntb.usb</artifactId>
+            <version>0.5.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.osgi.compendium</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Copyright>OW2 Aspire RFID</Bundle-Copyright>
+                        <Bundle-Name>OW2 :: AspireRFID :: LIB USB JAVA PROXY</Bundle-Name>
+                        <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Description>${pom.description}</Bundle-Description>
+                        <!-- <Bundle-Vendor>EL mehdi Damou and Romain Gomez</Bundle-Vendor> -->
+                        <Bundle-ClassPath>.</Bundle-ClassPath>
+                        <Private-Package>
+                            org.ow2.aspirerfid.libusbjava.host,
+                            ch.ntb.usb.logger,
+                            ch.ntb.usb.testApp,
+                            ch.ntb.usb.usbView
+                        </Private-Package>
+                        <Export-Package>
+                            ch.ntb.usb;
+                            org.ow2.aspirerfid.libusbjava.service,
+                        </Export-Package>
+                        <!--                        <Include-Resource>-->
+                        <!--                            src/main/resources,-->
+                        <!--                            @ch.ntb.usb-0.5.8.jar!/META-INF/**-->
+                        <!--                        </Include-Resource>-->
 
-<!--						<Import-Package>-->
-<!--							ch.ntb.usb,-->
-<!--							javax.swing,-->
-<!--							javax.swing.border,-->
-<!--							javax.swing.event,-->
-<!--							javax.swing.tree-->
-<!--						</Import-Package>-->
-						<Bundle-NativeCode>LibusbJava.dll;osname=WindowsXP;processor=x86,LibusbJava.dll;osname=windows vista;processor=x86,libusbJava.so;osname=Linux;processor=x86</Bundle-NativeCode>
-					</instructions>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-ipojo-plugin</artifactId>
-				<version>1.0.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>ipojo-bundle</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+<!--                        <Import-Package>-->
+<!--                            ch.ntb.usb,-->
+<!--                            javax.swing,-->
+<!--                            javax.swing.border,-->
+<!--                            javax.swing.event,-->
+<!--                            javax.swing.tree-->
+<!--                        </Import-Package>-->
+                        <!-- Warning : 32 bits 64 bits for Linux may have the same name : choose carefully -->
+                        <Bundle-NativeCode>LibusbJava.dll;osname=WindowsXP;processor=x86,LibusbJava.dll;osname=windows vista;processor=x86,LibusbJava.dll;osname="Windows 7";processor=x86,libusbJava.so;osname=Linux;processor=x86,libusbJava.so;osname=Linux;processor=x86_64</Bundle-NativeCode>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-ipojo-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>ipojo-bundle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
