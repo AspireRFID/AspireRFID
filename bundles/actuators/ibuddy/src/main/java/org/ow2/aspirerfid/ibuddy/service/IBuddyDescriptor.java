@@ -33,13 +33,13 @@ import ch.ntb.usb.Usb_Device;
  **/
 
 public class IBuddyDescriptor {
-	
+
 
 	private static final byte[] INIT = {
 			0x22, 0x09, 0x00, 0x02, 0x01, 0x00, 0x00, 0x00 };
 	private static final byte[] COMMAND_HEADER = {
 			0x55, 0x53, 0x42, 0x43, 0x00, 0x40, 0x02, 0x00 };
-	
+
 	private byte currentCommand = (byte) 0xFF;
 	private boolean debug = true;
 	private boolean opened = false;
@@ -47,14 +47,14 @@ public class IBuddyDescriptor {
 	private long handle;
 	private Usb_Device usbdevice = null;
 	private ProxyLibUsbJavaService usblib;
-	
+
 	public IBuddyDescriptor(Long long1, Usb_Device usb_Device,
 			ProxyLibUsbJavaService usblib) {
 		this.id = long1;
 		this.usbdevice = usb_Device;
 		this.usblib = usblib;
 	}
-	
+
 	public void open() {
 		if ((opened == false) && (usbdevice != null)) {
 			handle = usblib.open(usbdevice);
@@ -70,10 +70,13 @@ public class IBuddyDescriptor {
 				printDebug("open -> usb_set_configuration : " + lDebug);
 			}
 
-			lDebug = usblib.claim_interface(handle, 0);
+			// PATCH: under Linux : interface 1; default : interface 0
+			lDebug = usblib.claim_interface(handle, 1);
 			printDebug("open -> usb_claim_interface : " + lDebug);
+
 			lDebug = usblib.set_altinterface(handle, 0);
 			printDebug("open -> usb_set_altinterface : " + lDebug);
+
 			opened=true;
 		}
 	}
@@ -86,10 +89,10 @@ public class IBuddyDescriptor {
 	}
 
 	private void sendCurrentCommand() {
-		
-		
+
+
 			if (opened == true) {
-				
+
 				usblib.control_msg(handle, 0x21, 0x09, 0x02, 0x01, INIT,
 					INIT.length, 250);
 			byte[] commandMessage = COMMAND_HEADER.clone();
@@ -97,7 +100,7 @@ public class IBuddyDescriptor {
 			usblib.control_msg(handle, 0x21, 0x09, 0x02, 0x01,
 					commandMessage, commandMessage.length, 250);
 			}
-	
+
 	}
 
 	public void sendReset() {
@@ -184,8 +187,8 @@ public class IBuddyDescriptor {
 		if (debug == true)
 			System.out.println("DEBUG_JBuddy " + pStr);
 	}
-	
-	
+
+
 	/**
 	 * @return the opened
 	 */

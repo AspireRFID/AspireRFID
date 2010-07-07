@@ -41,55 +41,55 @@ import org.ow2.aspirerfid.libusbjava.service.UsbDevice;
 import ch.ntb.usb.Usb_Device;
 
 /**
- * TODO 
+ * TODO
  * @author Daniel Lovera and Clément Deschamps and El Mehdi Damou
  */
 public class IBuddy implements IIBuddy {
 
-	ProxyLibUsbJavaService m_libusb;
+    ProxyLibUsbJavaService m_libusb;
 
-	public static final short IBUDDY_VENDOR_ID = 0x1130;
-	public static final short IBUDDY_PRODUCT_ID = 0x0004;
+    public static final short IBUDDY_VENDOR_ID = 0x1130;
+    public static final short IBUDDY_PRODUCT_ID = 0x0004;
 
-	private Map<Long,IBuddyDescriptor> listIbuddy=null;
-	
-	
-	
-	public void start(){
-		System.out.println("Init IBuddy API");
-		listIbuddy = getListIbuddy();
-	}
-	
-	public void stop(){
-		System.out.println("Stop IBuddy API");
-		listIbuddy = null;
-	}
-	
-	public Map<Long,IBuddyDescriptor> getListIbuddy(){
-		IBuddyDescriptor ibuddy=null;
-		long num = 0;
-		Map<Long,IBuddyDescriptor> ibuddyList=new HashMap<Long, IBuddyDescriptor>();
-		
-		Long id = m_libusb.findDevices(IBUDDY_VENDOR_ID, IBUDDY_PRODUCT_ID);
-		UsbDevice device = m_libusb.getDevice(id);
-		Map<Long,Usb_Device> listusb = device.getDevices();
-		Set<Long> total = listusb.keySet();
-		for (Iterator<Long> iterator = total.iterator(); iterator.hasNext();) {
-			Long long1 = (Long) iterator.next();
-			ibuddy = new IBuddyDescriptor(long1,listusb.get(long1),m_libusb);
-			ibuddyList.put(num, ibuddy);
-			num++;
-		}
-		
-		return ibuddyList;
-	}
+    private Map<Long,IBuddyDescriptor> listIbuddy=null;
 
-	public IBuddyDescriptor getIBuddyID(Long i) {
-		if (listIbuddy == null){
-			getListIbuddy();
-		}
-		return listIbuddy.get(i);
-	}
+
+
+    public void start(){
+        System.out.println("Init IBuddy API");
+        listIbuddy = getListIbuddy();
+    }
+
+    public void stop(){
+        System.out.println("Stop IBuddy API");
+        listIbuddy = null;
+    }
+
+    public Map<Long,IBuddyDescriptor> getListIbuddy(){
+        IBuddyDescriptor ibuddy=null;
+        long num = 0;
+        Map<Long,IBuddyDescriptor> ibuddyList=new HashMap<Long, IBuddyDescriptor>();
+
+        Long id = m_libusb.findDevices(IBUDDY_VENDOR_ID, IBUDDY_PRODUCT_ID);
+        UsbDevice device = m_libusb.getDevice(id);
+        Map<Long,Usb_Device> listusb = device.getDevices();
+        Set<Long> total = listusb.keySet();
+        for (Iterator<Long> iterator = total.iterator(); iterator.hasNext();) {
+            Long long1 = (Long) iterator.next();
+            ibuddy = new IBuddyDescriptor(long1,listusb.get(long1),m_libusb);
+            ibuddyList.put(num, ibuddy);
+            num++;
+        }
+
+        return ibuddyList;
+    }
+
+    public IBuddyDescriptor getIBuddyID(Long i) {
+        if (listIbuddy == null){
+            getListIbuddy();
+        }
+        return listIbuddy.get(i);
+    }
 
    /* (non-Javadoc)
     * @see org.ow2.aspirerfid.ibuddy.service.IIBuddy#execute(java.lang.String)
@@ -99,7 +99,7 @@ public class IBuddy implements IIBuddy {
       StringTokenizer st=new StringTokenizer(cmdline, " ");
       int n=st.countTokens();
 
-      
+
       if(n<2) {
          if (errMsg!=null)
             err.println(errMsg);
@@ -107,19 +107,19 @@ public class IBuddy implements IIBuddy {
             err.println("Command is not right");
          return;
       }
-      
+
       st.nextToken(); // skip command name
-      
-      
+
+
       String subcommand=st.nextToken();
       n-=2;
       Map<Long, IBuddyDescriptor> buddies =  getListIbuddy();
-      
+
       if (subcommand.equalsIgnoreCase("list")){
          out.println(buddies.keySet().size()+ " buddy(s) are connected!");
          for (Iterator<Long> iterator = buddies.keySet().iterator(); iterator.hasNext();) {
             Long ibuddyID = iterator.next();
-            out.println("Ibuddy" +ibuddyID+" id = " + ibuddyID ); 
+            out.println("Ibuddy" +ibuddyID+" id = " + ibuddyID );
          }
       }else if(subcommand.equalsIgnoreCase("*")){
          String cmd =null;
@@ -137,21 +137,21 @@ public class IBuddy implements IIBuddy {
             }
             listcmd = listcmd + " " + cmd;
          }
-         
+
          try {
             List<Map<Action,List<String>>> buddycmd = parseCmdLineOrder(listcmd);
-            
+
             for (Iterator<Long> iterator = buddies.keySet().iterator(); iterator.hasNext();) {
                Long ibuddyID = iterator.next();
                if (listcmd.equalsIgnoreCase("reset")){
-                  
+
                }
                out.println("Ibuddy" + ibuddyID+ " : "  );
                for (Iterator<Map<Action, List<String>>> iterator2 = buddycmd.iterator(); iterator2.hasNext();) {
                   Map<Action, List<String>> map = iterator2.next();
                   for (Iterator<Action> iterator3 = map.keySet().iterator(); iterator3.hasNext();) {
                      Action action = iterator3.next();
-                     
+
                      out.println("  "+action +  " : "  + map.get(action));
                   }
                   new MyBuddy(buddies.get(ibuddyID),map);
@@ -161,9 +161,9 @@ public class IBuddy implements IIBuddy {
             err.println(e.getMessageError());
             e.printStackTrace();
          }
-         
-         
-      }else{         
+
+
+      }else{
          try{
             Long id = Long.parseLong(subcommand);
             Map <Long, List<Map<Action,List<String>>>> listBuddy =  new HashMap<Long, List<Map<Action,List<String>>>>();
@@ -176,7 +176,7 @@ public class IBuddy implements IIBuddy {
                   resetAction.put(Action.RESET, null);
                   new MyBuddy(buddies.get(id),resetAction);
                   return;
-                  
+
                }else if (cmd.equalsIgnoreCase("ibuddy")){
                   List<Map<Action,List<String>>> buddycmd = parseCmdLineOrder(listcmd);
                   if (listBuddy.keySet().contains(id)){
@@ -191,14 +191,14 @@ public class IBuddy implements IIBuddy {
                   listcmd = listcmd + " " + cmd;
                }
             }
-            
+
             List<Map<Action,List<String>>> buddycmd = parseCmdLineOrder(listcmd);
             if (listBuddy.keySet().contains(id)){
                listBuddy.get(id).addAll(buddycmd);
             }else{
                listBuddy.put(id, buddycmd);
             }
-            
+
             IBuddyDescriptor abudy = null;
             for (Iterator<Long> iterator = listBuddy.keySet().iterator(); iterator
                   .hasNext();) {
@@ -221,15 +221,15 @@ public class IBuddy implements IIBuddy {
             err.println( "\n" +  e.getMessageError());
             e.printStackTrace();
          }
-      }      
+      }
    }
-   
-   
+
+
    private List<Map<Action,List<String>>> parseCmdLineOrder(String cmdline) throws CmdException{
-      
-      List<Map<Action,List<String>>> orderList= new ArrayList<Map<Action,List<String>>>(); 
+
+      List<Map<Action,List<String>>> orderList= new ArrayList<Map<Action,List<String>>>();
       Map<Action,List<String>> commandToDo = null;
-      
+
       StringTokenizer st=new StringTokenizer(cmdline, " ");
       List<String> actions = null;
       String cmd=null;
@@ -250,7 +250,7 @@ public class IBuddy implements IIBuddy {
                cmd = cmd.toUpperCase();
                actions.add(cmd);
                if (st.hasMoreTokens()) cmd = st.nextToken();
-               else break; 
+               else break;
             }
             if (commandToDo.keySet().contains(Action.ROTATE)){
                commandToDo.get(Action.ROTATE).addAll(actions);
@@ -270,8 +270,8 @@ public class IBuddy implements IIBuddy {
                times = Integer.parseInt(cmd);
                actions.add(times.toString());
             }catch (NumberFormatException e) {
-               throw (new CmdException(cmd + " is incorrect parameter! \n Flap command requiere two numbers parameter, ex : flap 80 10"));   
-            }           
+               throw (new CmdException(cmd + " is incorrect parameter! \n Flap command requiere two numbers parameter, ex : flap 80 10"));
+            }
             if (commandToDo.keySet().contains(Action.FLAP)){
                commandToDo.get(Action.FLAP).addAll(actions);
             }else{
@@ -292,16 +292,16 @@ public class IBuddy implements IIBuddy {
                cmd = cmd.toUpperCase();
                actions.add(cmd);
                if (st.hasMoreTokens()) cmd = st.nextToken();
-               else break;    
+               else break;
             }
-            
+
             if (commandToDo.keySet().contains(Action.HEART)){
                commandToDo.get(Action.HEART).addAll(actions);
             }else{
                commandToDo.put(Action.HEART, actions);
             }
            }
-           
+
            else if(cmd.equalsIgnoreCase("head")){
             actions = new ArrayList<String>();
             if (st.hasMoreTokens()) cmd = st.nextToken();
@@ -311,24 +311,24 @@ public class IBuddy implements IIBuddy {
             if (st.hasMoreTokens()) cmd = st.nextToken();
             else throw (new CmdException(cmd + " need paramter! \n tape ibuddy to get list of command "));
             cmd = cmd.toUpperCase();
-            while (cmd.equalsIgnoreCase("NONE") || cmd.equalsIgnoreCase("YELLOW") || 
+            while (cmd.equalsIgnoreCase("NONE") || cmd.equalsIgnoreCase("YELLOW") ||
                   cmd.equalsIgnoreCase("BLUE")|| cmd.equalsIgnoreCase("WHITE") ||
-                  cmd.equalsIgnoreCase("VIOLET")|| cmd.equalsIgnoreCase("CYAN")|| 
+                  cmd.equalsIgnoreCase("VIOLET")|| cmd.equalsIgnoreCase("CYAN")||
                   cmd.equalsIgnoreCase("GREEN")|| cmd.equalsIgnoreCase("RED")){
-               
+
                cmd = cmd.toUpperCase();
                actions.add(cmd);
                if (st.hasMoreTokens()) cmd = st.nextToken();
-               else break; 
+               else break;
             }
-            
+
             if (commandToDo.keySet().contains(Action.HEAD)){
                commandToDo.get(Action.HEAD).addAll(actions);
             }else{
                commandToDo.put(Action.HEAD, actions);
             }
-           }  
-           else throw (new CmdException(cmd  + "is an unknown command"));    
+           }
+           else throw (new CmdException(cmd  + "is an unknown command"));
         }
       return orderList;
    }
