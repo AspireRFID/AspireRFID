@@ -91,8 +91,11 @@ public class RocketCommand implements Command {
 	}
 
 	private String getFullUsage() {
-		return "rocket \n\tfire : Fire a rocket\n\tmove time direction [time direction ...] : Move the rocket tower\n"
-				+ "\t\ttime in milliseconds\n\t\tdirection in up,down,left,right,upleft,upright,downleft,downright";
+		String name = getName() + " ";
+		
+		String help = name + "fire [all] : Fires a rocket. All rockets if told so.\n";
+		help += name + "move <time> <direction:up|down|left|right|upleft|upright|downleft|downright> [fire] ... : moves the tower <direction> during <time> ms. Can fire between/after moves.\n";
+		return help;
 	}
 
 	private void fire(StringTokenizer tokens, PrintStream err) {
