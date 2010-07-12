@@ -22,16 +22,24 @@ import org.osgi.framework.BundleException;
 import org.ow2.aspirerfid.libusbjava.service.ProxyLibUsbJavaService;
 import org.ow2.aspirerfid.rocket.service.RocketService;
 
-
 import ch.ntb.usb.LibusbJava;
 import ch.ntb.usb.Usb_Device;
 
-public class Rocket implements RocketService{
+/**
+ * Rocket launcher implementation. Can move tower and fire rockets
+ * 
+ * @author Jean-François Marquet
+ * @author Wahiba Gabli
+ * @author Lionel Touseau
+ * @author Thomas Calmant (Linux Patch, refactoring)
+ * 
+ */
+public class Rocket implements RocketService {
 
-	//This Class uses a bundled version of libusb. 
-	//The non bundled code necessary to work is still available but commented.
-	
-	//This is where the bundle libusbjava is used
+	// This Class uses a bundled version of libusb.
+	// The non bundled code necessary to work is still available but commented.
+
+	// This is where the bundle libusbjava is used
 	ProxyLibUsbJavaService m_libusb;
 
 	static final short VENDOR_ID = 0x1130;
@@ -51,8 +59,8 @@ public class Rocket implements RocketService{
 
 	public void start() throws BundleException {
 
-		//Create and initialize the different packets to be sent
-		
+		// Create and initialize the different packets to be sent
+
 		PACKET_INIT_A = new byte[] { 'U', 'S', 'B', 'C', 0, 0, 4, 0 };
 		PACKET_INIT_B = new byte[] { 'U', 'S', 'B', 'C', 0, 0x40, 2, 0 };
 
@@ -67,10 +75,10 @@ public class Rocket implements RocketService{
 
 		// /* FIND MISSILE LAUNCHER */
 		// Usb_Device lMissileLauncher = getMissileLauncher();
-		
+
 		Usb_Device lMissileLauncher = m_libusb.findUsbDevice(VENDOR_ID,
 				PRODUCT_ID);
-		if (lMissileLauncher == null){
+		if (lMissileLauncher == null) {
 			System.out.println("No Rocket Launcher Found !");
 			throw new BundleException("No Rocket Launcher Found !");
 		}
@@ -78,11 +86,19 @@ public class Rocket implements RocketService{
 
 		/* CONFIGURE MISSILE LAUNCHER */
 		long lMissileLauncherID = LibusbJava.usb_open(lMissileLauncher);
-		
+
+		// By default, claim the interface 0
+		int usb_interface = 0;
+
+		if (System.getProperty("os.name").equals("Linux")) {
+			// Under Linux, we need to claim the interface 1
+			usb_interface = 1;
+		}
+
 		m_libusb.set_configuration(lMissileLauncherID, 1);
-		
+
 		// Under Linux : interface 1, default : 0
-		m_libusb.claim_interface(lMissileLauncherID, 1);
+		m_libusb.claim_interface(lMissileLauncherID, usb_interface);
 		m_libusb.set_altinterface(lMissileLauncherID, 0);
 
 		DeviceId = lMissileLauncherID;
@@ -96,17 +112,18 @@ public class Rocket implements RocketService{
 	 *            the framework context for the bundle.
 	 */
 	public void stop(BundleContext context) {
-		// NOTE: The org.ow2.aspirerfid.rocket.service is automatically unregistered.
+		// NOTE: The org.ow2.aspirerfid.rocket.service is automatically
+		// unregistered.
 	}
 
-
-	//public methods to communicate with the org.ow2.aspirerfid.rocket.impl launcher
+	// public methods to communicate with the org.ow2.aspirerfid.rocket.impl
+	// launcher
 
 	public void fire() {
 		sendCommand(DeviceId, Command.FIRE);
 	}
 
-	//the movement will stop after 'time' milliseconds 
+	// the movement will stop after 'time' milliseconds
 	public void moveDown(long time) {
 		sendCommand(DeviceId, Command.DOWN);
 		try {
@@ -174,7 +191,7 @@ public class Rocket implements RocketService{
 	}
 
 	public void moveUpLeft(long time) {
-		sendCommand(DeviceId, Command.UPRIGHT);
+		sendCommand(DeviceId, Command.UPLEFT);
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
@@ -195,7 +212,7 @@ public class Rocket implements RocketService{
 		sendCommand(DeviceId, Command.STOP);
 	}
 
-	//send a command to the org.ow2.aspirerfid.rocket.impl launcher
+	// send a command to the org.ow2.aspirerfid.rocket.impl launcher
 	private void sendCommand(long pDeviceID, Command pCommand) {
 		byte[] lBytes = PACKET_COMMAND.clone();
 		switch (pCommand) {
@@ -234,9 +251,9 @@ public class Rocket implements RocketService{
 			lBytes[5] = 1;
 			break;
 		}
-		
-		
-		//Send command to the device : two initialisation packets and the actual command
+
+		// Send command to the device : two initialisation packets and the
+		// actual command
 		m_libusb.control_msg(pDeviceID, USB_REQUEST_TYPE_HID,
 				REQUEST_SET_CONFIGURATION, REQUESTTYPE_RECIPIENT_ENDPOINT,
 				CONTROL_MSG_VALUE, PACKET_INIT_A, PACKET_INIT_A.length,
@@ -252,7 +269,6 @@ public class Rocket implements RocketService{
 
 	}
 
-
 	/*
 	 * private static Usb_Device getMissileLauncher() { Usb_Device temp = null;
 	 * Usb_Device device = null; boolean trouve = false; Usb_Bus tempbus =
@@ -261,12 +277,13 @@ public class Rocket implements RocketService{
 	 * 
 	 * while (!trouve && (tempbus != null)) { temp = tempbus.getDevices(); while
 	 * (!trouve && (temp != null)) { Usb_Device_Descriptor descriptor =
-	 * temp.getDescriptor(); System.out.println(descriptor.getIdVendor() + " -/ - " +
-	 * descriptor.getIdProduct()); if ((descriptor.getIdVendor() == VENDOR_ID) &&
-	 * (descriptor.getIdProduct() == PRODUCT_ID)) { System.out.println("Device
-	 * was found \n " + " - Vendor id : " +
+	 * temp.getDescriptor(); System.out.println(descriptor.getIdVendor() +
+	 * " -/ - " + descriptor.getIdProduct()); if ((descriptor.getIdVendor() ==
+	 * VENDOR_ID) && (descriptor.getIdProduct() == PRODUCT_ID)) {
+	 * System.out.println("Device was found \n " + " - Vendor id : " +
 	 * Short.toString(descriptor.getIdVendor()) + "\n - Product id : " +
-	 * Short.toString(descriptor.getIdProduct())); trouve = true; device = temp; }
-	 * temp = temp.getNext(); } tempbus = tempbus.getNext(); } return device; }
+	 * Short.toString(descriptor.getIdProduct())); trouve = true; device = temp;
+	 * } temp = temp.getNext(); } tempbus = tempbus.getNext(); } return device;
+	 * }
 	 */
 }

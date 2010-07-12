@@ -21,18 +21,10 @@
 package org.ow2.aspirerfid.ibuddy.cmd;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.apache.felix.shell.Command;
-import org.ow2.aspirerfid.ibuddy.service.Action;
-import org.ow2.aspirerfid.ibuddy.service.IBuddyDescriptor;
 import org.ow2.aspirerfid.ibuddy.service.IIBuddy;
-import org.ow2.aspirerfid.ibuddy.service.MyBuddy;
 
 /**
  * provides a shell command to control connected iBuddies.

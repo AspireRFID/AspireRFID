@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ipojo>
+
+    <component classname="org.ow2.aspirerfid.rocket.impl.Rocket" immediate="false">
+        <requires field="m_libusb" />
+        <provides />
+        <callback transition="validate" method="start" />
+        <callback transition="invalidate" method="stop" />
+    </component>
+    
+    <component classname="org.ow2.aspirerfid.rocket.cmd.RocketCommand" immediate="false">
+		<requires field="m_rocket" />
+		<provides />
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+	
+	<instance component="org.ow2.aspirerfid.rocket.impl.Rocket" name="Rocket_instance" />
+	<instance component="org.ow2.aspirerfid.rocket.cmd.RocketCommand" name="Rocket_command" />
+
+</ipojo>

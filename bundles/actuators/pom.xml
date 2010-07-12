@@ -33,6 +33,7 @@
 
     <modules>
         <module>ibuddy</module>
+        <module>rocket-launcher</module>
     </modules>
 	
 </project>

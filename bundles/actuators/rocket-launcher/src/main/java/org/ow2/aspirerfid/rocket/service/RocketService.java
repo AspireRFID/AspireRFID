@@ -19,6 +19,14 @@ package org.ow2.aspirerfid.rocket.service;
 
 //MissileLauncher interface, allows to send commands to the org.ow2.aspirerfid.rocket.impl launcher
 
+/**
+ * Rocket launcher service description
+ * 
+ * @author Jean-François Marquet
+ * @author Wahiba Gabli
+ * @author Lionel Touseau
+ * 
+ */
 public interface RocketService {
 
 	public void fire();

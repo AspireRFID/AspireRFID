@@ -29,7 +29,7 @@ import ch.ntb.usb.Usb_Device;
 
 /**
  * TODO
- * @author Daniel Lovera and Clément Deschamps and Mehdi Damou
+ * @author Daniel Lovera and Clï¿½ment Deschamps and Mehdi Damou
  **/
 
 public class IBuddyDescriptor {
@@ -62,16 +62,22 @@ public class IBuddyDescriptor {
 					.println("DEBUG_JBuddy open -> usb_open : " + handle);
 
 			int lDebug;
+			
+			// By default, claim the interface 0
+			int usb_interface =  0;
+			
 			if (System.getProperty("os.name").equals("Linux")) {
 				printDebug("os -> Running on Linux");
+				
+				// Under Linux, we need to claim the interface 1
+				usb_interface = 1;
 			} else {
 				printDebug("os -> Running on " + System.getProperty("os.name"));
 				lDebug = usblib.set_configuration(handle, 1);
 				printDebug("open -> usb_set_configuration : " + lDebug);
 			}
 
-			// PATCH: under Linux : interface 1; default : interface 0
-			lDebug = usblib.claim_interface(handle, 1);
+			lDebug = usblib.claim_interface(handle, usb_interface);
 			printDebug("open -> usb_claim_interface : " + lDebug);
 
 			lDebug = usblib.set_altinterface(handle, 0);
