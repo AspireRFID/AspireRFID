@@ -68,7 +68,7 @@
 		            <_donotcopy>(CVS|.svn|config.properties)</_donotcopy>
             		<Main-Class>${pom.artifactId}.LicenseAgreementMain</Main-Class>
             
-            		<Include-Resource>META-INF/LICENSE=LICENSE,META-INF/NOTICE=NOTICE,{src/main/resources/}</Include-Resource>
+            		<!-- <Include-Resource>META-INF/LICENSE=LICENSE,META-INF/NOTICE=NOTICE,{src/main/resources/}</Include-Resource> -->
             
 	          </instructions>
 	  		</configuration>
