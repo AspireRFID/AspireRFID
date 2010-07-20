@@ -1,0 +1,16 @@
+Naming method refactoring From the Old Master Data CaptureClient
+================================================================
+
+Old --> New
+
+simpleMasterDataAlter --> alterVocElem 
+simpleMasterDataInsert --> insertVocElem 
+simpleMasterDataMassInsert --> massInsertVocElem 
+simpleMasterDataSingleDelete --> deleteVocElem 
+simpleMasterDataMassDelete --> massDeleteVocElem 
+simpleMasterDataDeleteWithDescendants --> deleteWithDescendantsVocElem 
+simpleMasterDataMassDeleteWithDescendants -->massDeleteWithDescendantsVocElem 
+simpleMasterDataAndMassAttributeInsertOrAlter --> massInsertOrAlterVocElemAttr 
+simpleMasterDataAndAttributeInsertOrAlter --> insertOrAlterVocElemAttr 
+simpleMasterDataAttributeMassDelete --> massDeleteVocElemAttr 
+simpleMasterDataAttributeDelete -->deleteVocElemAttr 
