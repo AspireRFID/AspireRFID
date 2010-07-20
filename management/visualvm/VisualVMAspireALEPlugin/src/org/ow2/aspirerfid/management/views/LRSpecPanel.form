@@ -36,7 +36,7 @@
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="269" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane2" alignment="0" pref="409" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="430" max="32767" attributes="0"/>
                           <Component id="jPanel1" alignment="1" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -79,11 +79,6 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-      <Properties>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="null"/>
-        </Property>
-      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
@@ -139,11 +134,11 @@
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txLRSpecFile" pref="213" max="32767" attributes="0"/>
+                                  <Component id="txLRSpecFile" pref="235" max="32767" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="btBrowseLRSpec" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="txLRSpec" alignment="0" pref="318" max="32767" attributes="0"/>
+                              <Component id="txLRSpec" alignment="0" pref="340" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

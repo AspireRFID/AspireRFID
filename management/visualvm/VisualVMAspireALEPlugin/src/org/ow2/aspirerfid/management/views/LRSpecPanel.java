@@ -31,6 +31,7 @@ import org.ow2.aspirerfid.management.model.PluginModel;
  * @author Kiev
  */
 public class LRSpecPanel extends BasePanel {
+    private static String lastUsedPath = "";
     /** Creates new form LRSpecPanel */
     public LRSpecPanel() {
         initComponents();
@@ -123,8 +124,6 @@ public class LRSpecPanel extends BasePanel {
 
         setOpaque(false);
 
-        jScrollPane1.setPreferredSize(null);
-
         lrspecsList.setPreferredSize(new java.awt.Dimension(250, 250));
         jScrollPane1.setViewportView(lrspecsList);
 
@@ -174,10 +173,10 @@ public class LRSpecPanel extends BasePanel {
                         .addGap(8, 8, 8)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txLRSpecFile, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                                .addComponent(txLRSpecFile, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btBrowseLRSpec))
-                            .addComponent(txLRSpec, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))))
+                            .addComponent(txLRSpec, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -242,8 +241,8 @@ public class LRSpecPanel extends BasePanel {
             }
         });
         jScrollPane2.setViewportView(jTable1);
-		jTable1.setOpaque(false);
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13));
         jLabel2.setText(org.openide.util.NbBundle.getMessage(LRSpecPanel.class, "LRSpecPanel.jLabel2.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -264,7 +263,7 @@ public class LRSpecPanel extends BasePanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(269, 269, 269))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -306,7 +305,7 @@ public class LRSpecPanel extends BasePanel {
 }//GEN-LAST:event_btOKActionPerformed
 
     private void btBrowseLRSpecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBrowseLRSpecActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = new JFileChooser(lastUsedPath);
         fileChooser.setFileFilter(new FileFilter() {
             public boolean accept(File f) {
                 return f.isDirectory() || f.getName().toLowerCase().endsWith(".xml");
@@ -322,6 +321,7 @@ public class LRSpecPanel extends BasePanel {
             File file = fileChooser.getSelectedFile();
             txLRSpecFile.setText(file.getAbsolutePath());
             txLRSpecFile.setToolTipText(file.getAbsolutePath());
+            lastUsedPath = fileChooser.getSelectedFile().getParentFile().getPath();
         }
 }//GEN-LAST:event_btBrowseLRSpecActionPerformed
 

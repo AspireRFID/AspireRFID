@@ -28,6 +28,7 @@ import org.ow2.aspirerfid.management.model.PluginModel;
  * @author Kiev
  */
 public class ECSpecPanel extends BasePanel implements PropertyChangeListener {
+    private static String lastUsedPath = "";
     /** Creates new form ECSpecPanel */
     public ECSpecPanel() {
         initComponents();
@@ -317,7 +318,7 @@ public class ECSpecPanel extends BasePanel implements PropertyChangeListener {
     }//GEN-LAST:event_btOKActionPerformed
 
     private void btBrowseECSpecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBrowseECSpecActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = new JFileChooser(lastUsedPath);
         fileChooser.setFileFilter(new FileFilter() {
             public boolean accept(File f) {
                 return f.isDirectory() || f.getName().toLowerCase().endsWith(".xml");
@@ -333,6 +334,7 @@ public class ECSpecPanel extends BasePanel implements PropertyChangeListener {
             File file = fileChooser.getSelectedFile();
             txECSpecFile.setText(file.getAbsolutePath());
             txECSpecFile.setToolTipText(file.getAbsolutePath());
+            lastUsedPath = fileChooser.getSelectedFile().getParentFile().getPath();
         }
     }//GEN-LAST:event_btBrowseECSpecActionPerformed
 
