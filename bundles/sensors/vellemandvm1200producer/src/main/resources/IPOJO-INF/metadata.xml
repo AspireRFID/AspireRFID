@@ -2,11 +2,8 @@
 <!--
  -->
 <ipojo
->
-<!-- 
 	xmlns:jmx="org.apache.felix.ipojo.handlers.jmx"
 >
- -->
 	<component 	classname="org.ow2.aspirerfid.vellemandvm1200.producer.DVM1200Producer"
 				name ="dvm1200producer"
 				architecture="true"
@@ -23,11 +20,11 @@
 			<property name="portName" field="m_portName"/> 
 		</properties>
 
-<!-- 		
+ 		
 		<jmx:config domain="org.ow2.aspirerfid:type=sensor,name=DVM1200,port=COM15">
-			<property field="m_lastMeasurement" name="lastMeasurement" rights="r" notification="true"/>
+			<property field="m_lastMeasurementMap" name="lastMeasurement" rights="r" notification="true"/>
 		</jmx:config>			
--->					
+					
 	</component>
 
 	<instance component="dvm1200producer" name="dvm1200producer-inst">

@@ -53,6 +53,32 @@ public class UnitUtil {
 			return Unit.T;	
 		} else return null;
 	}
+
+	public static String toString(Unit unit) {
+		if(unit==null || unit.equals(Unit.unity)){
+			return "unity";
+		} else if(Unit.K.equals(unit)){
+			return "K";
+		} else if(Unit.V.equals(unit)){
+			return "V";	
+		} else if(Unit.A.equals(unit)){
+			return "A";	
+		} else if(Unit.F.equals(unit)){
+			return "F";	
+		} else if(Unit.Hz.equals(unit)){
+			return "Hz";	
+		} else if(Unit.Ohm.equals(unit)){
+			return "Ohm";	
+		} else if(Unit.S.equals(unit)){
+			return "S";	
+		} else if(Unit.cd.equals(unit)){
+			return "cd";	
+		} else if(Unit.lx.equals(unit)){
+			return "lx";	
+		} else if(Unit.T.equals(unit)){
+			return "T";	
+		} else return null;
+	}
 	
 	public static double convertValue(double value, String unitStr) {
 		if("C".equals(unitStr)){ // convert to Kelvin

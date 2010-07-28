@@ -30,7 +30,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.TooManyListenersException;
 
 import org.osgi.framework.BundleContext;
@@ -60,6 +62,9 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 	private LogService m_logService;
 	
 	private Measurement m_lastMeasurement;
+	
+	// for JMX MBean
+	private Map m_lastMeasurementMap;
 
 	private SerialPort serialPort = null;
 
@@ -272,8 +277,18 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 							
 							String unitStr=acquisition.getUnit();
 							Measurement m = new Measurement(UnitUtil.convertValue(acquisition.getValue(),unitStr), UnitUtil.convertError(acquisition.getError(),unitStr) , UnitUtil.getUnit(unitStr),System.currentTimeMillis());
+							
+							// set the last value for the wires
 							m_lastMeasurement = m;
-
+							
+							// set the last value for the JMX attribute
+							Map map=new HashMap();
+							map.put("value", new Double(m_lastMeasurement.getValue()));
+							map.put("error", new Double(m_lastMeasurement.getError()));
+							map.put("unit", UnitUtil.toString(m_lastMeasurement.getUnit()));
+							map.put("time", new Long(m_lastMeasurement.getTime()));
+							m_lastMeasurementMap = map; // injected by iPOJO
+							
 							// System.out.println(acquisition.toString()+"-->"+m.toString());
 							log(LogService.LOG_INFO,"Acquire "+m.toString());
 							
