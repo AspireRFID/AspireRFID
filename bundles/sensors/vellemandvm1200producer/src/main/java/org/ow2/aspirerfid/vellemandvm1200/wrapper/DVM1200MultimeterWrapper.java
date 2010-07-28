@@ -21,14 +21,13 @@ package org.ow2.aspirerfid.vellemandvm1200.wrapper;
 import java.text.ParseException;
 import java.util.StringTokenizer;
 
-import org.ow2.aspirerfid.rxtx.cmd.IOWrapper;
 import org.ow2.aspirerfid.vellemandvm1200.data.DVM1200MultimeterAcquisition;
 
 /**
  * format the date sent by the USB Multimeter
  * @author Julien Vey, Didier Donsez
  */
-public class DVM1200MultimeterWrapper implements IOWrapper {
+public class DVM1200MultimeterWrapper /*implements IOWrapper*/ {
 
     public String format(byte[] bytes) throws ParseException {
     	DVM1200MultimeterAcquisition acquisition=new DVM1200MultimeterAcquisition(bytes);

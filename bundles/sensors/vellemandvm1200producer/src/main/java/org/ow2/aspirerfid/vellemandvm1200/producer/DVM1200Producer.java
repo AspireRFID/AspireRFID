@@ -43,10 +43,14 @@ import org.osgi.service.wireadmin.WireConstants;
 import org.osgi.util.measurement.Measurement;
 import org.ow2.aspirerfid.vellemandvm1200.data.DVM1200MultimeterAcquisition;
 
-import rxtx.sample.SerialParameters;
-
 public class DVM1200Producer implements Producer, SerialPortEventListener {
 
+	/** Default bits per second for COM port. */
+	private static final int DATA_RATE = 2400;
+
+	/** Milliseconds to block while waiting for port open */
+	private static final int TIME_OUT = 2000;
+	
 	private String m_PID;
 
 	private String m_portName;
@@ -149,30 +153,22 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 
 	
 	private void open() {
-		SerialParameters serialParameters = new SerialParameters();
-		serialParameters.setPortName(m_portName);
-		serialParameters.setBaudRate(2400);
-		serialParameters.setFlowControlIn("None");
-		serialParameters.setFlowControlOut("None");
-		serialParameters.setDatabits(8);
-		serialParameters.setStopbits(1);
-		serialParameters.setParity("None");
 
 		CommPortIdentifier portId = null;
 		try {
-			portId = CommPortIdentifier.getPortIdentifier(serialParameters.getPortName());
+			portId = CommPortIdentifier.getPortIdentifier(m_portName);
 		} catch (NoSuchPortException e) {
-			log(LogService.LOG_ERROR,"No Such Port:" + serialParameters.getPortName(),e);
+			log(LogService.LOG_ERROR,"No Such Port:" + m_portName,e);
 			return;
 		}
 		if (portId.getPortType() != CommPortIdentifier.PORT_SERIAL) {
-			log(LogService.LOG_ERROR,serialParameters.getPortName()+ " is not a serial port");
+			log(LogService.LOG_ERROR,m_portName+ " is not a serial port");
 			return;
 		}
 		try {
-			serialPort = (SerialPort) portId.open("DVM1200", 2000);
+			serialPort = (SerialPort) portId.open("VellemanDVM1200", TIME_OUT);
 		} catch (PortInUseException e) {
-			log(LogService.LOG_ERROR,serialParameters.getPortName() + " already used",e);
+			log(LogService.LOG_ERROR,m_portName + " already used",e);
 			return;
 		}
 
@@ -199,11 +195,12 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 		}
 
 		try {
+			// set port parameters
 			serialPort.setSerialPortParams(
-					serialParameters.getBaudRate(),
-					serialParameters.getDatabits(),
-					serialParameters.getStopbits(),
-					serialParameters.getParity()
+					DATA_RATE,
+					SerialPort.DATABITS_8,
+					SerialPort.STOPBITS_1,
+					SerialPort.PARITY_NONE
 			);
 		} catch (UnsupportedCommOperationException e) {
 			log(LogService.LOG_ERROR,e.getMessage(),e);
@@ -240,7 +237,6 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 			serialPort.close();
 			serialPort = null;
 		}
-
 	}
 
 	/**
