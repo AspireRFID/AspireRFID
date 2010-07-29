@@ -21,14 +21,14 @@
 		</properties>
 
  		
-		<jmx:config domain="org.ow2.aspirerfid:type=sensor,name=DVM1200,port=COM15">
-			<property field="m_lastMeasurementMap" name="lastMeasurement" rights="r" notification="true"/>
+		<jmx:config objectName="org.ow2.aspirerfid:type=sensor,name=DVM1200,port=COM15">
+			<jmx:property field="m_lastMeasurementMap" name="lastMeasurement" rights="r" notification="true"/>
 		</jmx:config>			
 					
 	</component>
 
 	<instance component="dvm1200producer" name="dvm1200producer-inst">
 		<property name="pid" value="org.ow2.aspirerfid.vellemandvm1200producer"/>
-		<property name="portName" value="COM15"/>
+		<property name="portName" value="/dev/ttyUSB0"/>
 	</instance>
 </ipojo>
