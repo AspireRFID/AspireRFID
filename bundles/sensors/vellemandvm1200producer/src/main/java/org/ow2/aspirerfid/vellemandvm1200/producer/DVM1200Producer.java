@@ -35,6 +35,13 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.TooManyListenersException;
 
+import javax.management.openmbean.CompositeData;
+import javax.management.openmbean.CompositeDataSupport;
+import javax.management.openmbean.CompositeType;
+import javax.management.openmbean.OpenDataException;
+import javax.management.openmbean.OpenType;
+import javax.management.openmbean.SimpleType;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
@@ -65,7 +72,24 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 	
 	// for JMX MBean
 	private Map m_lastMeasurementMap;
+	private double m_lastMeasurementValue=Double.NaN;
+	private double m_lastMeasurementError=Double.NaN;
+	private long m_lastMeasurementTime=0;
+	private String m_lastMeasurementUnit = null;
+	private CompositeData m_lastMeasurementComposite;
+	
+	
+	private CompositeType m_lastMeasurementCompositeType;
 
+	private static final String[] m_itemsNames = {"time", "unit", "value", "error"};
+	
+	private static final String[] m_itemsDescr = {"T", "U", "V", "E"};
+	
+	private static final OpenType[] m_itemsTypes = {
+		SimpleType.LONG, SimpleType.STRING, SimpleType.DOUBLE, SimpleType.DOUBLE
+	};
+	
+	
 	private SerialPort serialPort = null;
 
 	private OutputStream outputStream = null;
@@ -89,8 +113,12 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 	 */
 	private ServiceRegistration m_serviceRegistration;
 
-	public DVM1200Producer(BundleContext bc) {
+	public DVM1200Producer(BundleContext bc) throws OpenDataException {
 		m_bundleContext = bc;
+		
+		m_lastMeasurementCompositeType = new CompositeType("DVM1200Measurement",
+				"Measurements from Velleman DVM1200",
+				m_itemsNames, m_itemsDescr, m_itemsTypes);
 	}
 
 	public void activate() {
@@ -288,6 +316,32 @@ public class DVM1200Producer implements Producer, SerialPortEventListener {
 							map.put("unit", UnitUtil.toString(m_lastMeasurement.getUnit()));
 							map.put("time", new Long(m_lastMeasurement.getTime()));
 							m_lastMeasurementMap = map; // injected by iPOJO
+							
+							try {
+								CompositeData tempData = new CompositeDataSupport(m_lastMeasurementCompositeType, map);
+								m_lastMeasurementComposite = tempData;
+							} catch (OpenDataException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+														
+							if(m_lastMeasurement.getValue()!=m_lastMeasurementValue) {
+								m_lastMeasurementValue=m_lastMeasurement.getValue();
+							}
+							
+							if(m_lastMeasurement.getError()!=m_lastMeasurementError) {
+								m_lastMeasurementError=m_lastMeasurement.getError();
+							}
+							
+							String curUnit;
+							if(!(curUnit = UnitUtil.toString(m_lastMeasurement.getUnit())).equals(m_lastMeasurementUnit)) {
+								m_lastMeasurementUnit=curUnit;
+							}
+							
+							if(m_lastMeasurement.getTime()!=m_lastMeasurementTime) {
+								m_lastMeasurementTime=m_lastMeasurement.getTime();
+							}
 							
 							// System.out.println(acquisition.toString()+"-->"+m.toString());
 							log(LogService.LOG_INFO,"Acquire "+m.toString());

@@ -20,9 +20,13 @@
 			<property name="portName" field="m_portName"/> 
 		</properties>
 
- 		
-		<jmx:config objectName="org.ow2.aspirerfid:type=sensor,name=DVM1200,port=COM15">
+		<jmx:config objectName="org.ow2.aspirerfid:type=sensor,name=DVM1200">
 			<jmx:property field="m_lastMeasurementMap" name="lastMeasurement" rights="r" notification="true"/>
+			<jmx:property field="m_lastMeasurementValue" name="lastMeasurementValue" rights="r" notification="true"/>
+			<jmx:property field="m_lastMeasurementError" name="lastMeasurementError" rights="r" notification="true"/>
+			<jmx:property field="m_lastMeasurementTime" name="lastMeasurementTime" rights="r" notification="true"/>
+			<jmx:property field="m_lastMeasurementUnit" name="lastMeasurementUnit" rights="r" notification="true"/>
+			<jmx:property field="m_lastMeasurementComposite" name="lastMeasurementComposite" rights="r" notification="true"/>
 		</jmx:config>			
 					
 	</component>
