@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipojo xmlns:jmx="org.apache.felix.ipojo.handlers.jmx">
+	<component 	classname="org.ow2.aspirerfid.sensor.thermometer.TemperatureProducer"
+				name ="fictiveproducer"
+				architecture="true"
+      			immediate="true">
+
+		<callback transition="validate" method="activate"/>
+		<callback transition="invalidate" method="deactivate"/>
+
+		<properties>
+			<property name="pid" field="m_PID"/>	
+			<property name="pollDelay" field="pollDelay" value="10000" /> 
+		</properties>
+
+		<jmx:config objectName="org.ow2.aspirerfid:type=sensor,name=FictiveThermometer">
+			<jmx:property field="m_lastMeasurementMap" name="lastMeasurement" rights="r" notification="true"/>
+		</jmx:config>			
+					
+	</component>
+
+	<instance component="fictiveproducer" name="fictiveproducer-inst">
+		<property name="pid" value="org.ow2.aspirerfid.osgi.util.fictiveTemperature"/>
+	</instance>
+</ipojo>
