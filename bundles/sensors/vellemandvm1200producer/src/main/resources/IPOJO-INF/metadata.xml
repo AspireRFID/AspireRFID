@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- -->
-<ipojo
-	xmlns:jmx="org.apache.felix.ipojo.handlers.jmx"
->
+<ipojo xmlns:jmx="org.apache.felix.ipojo.handlers.jmx">
 	<component 	classname="org.ow2.aspirerfid.vellemandvm1200.producer.DVM1200Producer"
 				name ="dvm1200producer"
 				architecture="true"
-      			immediate="true"
-    >
+      			immediate="true">
 
 		<requires  field="m_logService" optional="true"/>
 
@@ -21,6 +16,7 @@
 		</properties>
 
 		<jmx:config objectName="org.ow2.aspirerfid:type=sensor,name=DVM1200">
+				<!-- Not necessary:  preRegister="preRegister" -->
 			<jmx:property field="m_lastMeasurementMap" name="lastMeasurement" rights="r" notification="true"/>
 			<jmx:property field="m_lastMeasurementValue" name="lastMeasurementValue" rights="r" notification="true"/>
 			<jmx:property field="m_lastMeasurementError" name="lastMeasurementError" rights="r" notification="true"/>

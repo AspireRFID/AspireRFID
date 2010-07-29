@@ -44,20 +44,8 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>org.apache.felix.shell</artifactId>
-			<version>[1.0.0,2.0.0]</version>
-			<scope>provided</scope>
-		</dependency>
 
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.2</version>
-			<scope>test</scope>
-		</dependency>
 
 		<dependency>
 			<groupId>org.apache.felix</groupId>
@@ -83,7 +71,7 @@
 					<instructions>
 						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
 						<Bundle-Description>${description}</Bundle-Description>
-						<Import-Package>org.ow2.aspirerfid.rxtx.cmd, gnu.io, org.osgi.*,javax.management.openmbean.*</Import-Package>
+						<Import-Package>org.ow2.aspirerfid.rxtx.cmd, gnu.io, org.osgi.*,javax.management.*</Import-Package>
 						<Export-Package>org.ow2.aspirerfid.vellemandvm1200.wrapper, org.ow2.aspirerfid.vellemandvm1200.data</Export-Package>
 					</instructions>
 					<Embed-Dependency>mx4j</Embed-Dependency>
