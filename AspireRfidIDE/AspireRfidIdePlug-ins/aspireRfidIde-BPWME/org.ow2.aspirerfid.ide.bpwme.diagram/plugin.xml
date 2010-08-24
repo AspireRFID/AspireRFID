@@ -130,6 +130,9 @@
    <extension point="org.eclipse.core.runtime.preferences" id="prefs">
       <?gmfgen generated="true"?>
       <initializer class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DiagramPreferenceInitializer"/>
+      <initializer
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceInitializer">
+      </initializer>
    </extension>
 
    <extension point="org.eclipse.ui.preferencePages" id="prefpages">
@@ -163,6 +166,23 @@
             category="org.ow2.aspirerfid.ide.bpwme.diagram.general"
             class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DiagramRulersAndGridPreferencePage">
       </page>
+      <page
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DataPreferencePage"
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DataPreferencePage"
+            name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.data">
+      </page>
+      <page
+            category="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DataPreferencePage"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.ECDataPreferencePage"
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.ECDataPreferencePage"
+            name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.ecdata">
+      </page>
+      <page
+            category="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DataPreferencePage"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.MasterDataPreferencePage"
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.MasterDataPreferencePage"
+            name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.masterdata">
+      </page>      
    </extension>
 
    <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor" id="prop-contrib">
@@ -724,12 +744,14 @@
              id="HALTab"
              label="HAL">
        </propertyTab>
+       <!--
        <propertyTab
              afterTab="HALTab"
              category="Aspire"
              id="AdvancedTab"
              label="Advanced">
        </propertyTab>
+       -->
       </propertyTabs>
    </extension>
     
@@ -799,7 +821,7 @@
          </propertySection>
          
          
-         
+         <!--
          <propertySection
                class="org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection.LRAdvancedSection"
                id="AdvanceSection"
@@ -808,10 +830,12 @@
                   type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.Spec">
             </input>
          </propertySection>
+         -->
       </propertySections>
    </extension>
 
     <!--about the ecspec report editing-->
+    <!--
       <extension
             point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
          <propertyTabs
@@ -823,6 +847,7 @@
             </propertyTab>
          </propertyTabs>
       </extension>
+      -->
       <extension
             point="org.eclipse.ui.views.properties.tabbed.propertySections">
          <propertySections

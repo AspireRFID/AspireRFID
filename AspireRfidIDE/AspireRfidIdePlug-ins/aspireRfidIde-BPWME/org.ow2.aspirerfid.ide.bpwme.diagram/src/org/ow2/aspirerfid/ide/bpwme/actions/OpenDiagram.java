@@ -54,6 +54,7 @@ public class OpenDiagram extends AbstractHandler{
 				&& fileDialog.getFileName().length() > 0) {
 			URI fileURI = URI.createFileURI(fileDialog.getFilterPath()
 					+ File.separator + fileDialog.getFileName());
+			System.out.println(fileURI);
 			try {
 				page.openEditor(new URIEditorInput(fileURI), BpwmeDiagramEditor.ID);
 			} catch (PartInitException e) {

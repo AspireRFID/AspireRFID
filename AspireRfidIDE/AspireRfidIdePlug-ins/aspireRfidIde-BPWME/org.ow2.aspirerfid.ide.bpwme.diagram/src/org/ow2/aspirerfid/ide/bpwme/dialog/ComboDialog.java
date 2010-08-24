@@ -158,6 +158,7 @@ public class ComboDialog extends Dialog{
 		}
 	}
 	
+	
 	  private Point getMiddlePoint(Shell shell) {
 	       int x = shell.getParent().getLocation().x+(shell.getParent().getBounds().width-shell.getSize().x)/2;
 	       int y = shell.getParent().getLocation().y+(shell.getParent().getBounds().height-shell.getSize().y)/2;

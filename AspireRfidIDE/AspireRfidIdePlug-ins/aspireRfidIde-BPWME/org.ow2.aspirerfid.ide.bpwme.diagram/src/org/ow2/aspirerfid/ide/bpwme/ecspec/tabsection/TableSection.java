@@ -49,6 +49,8 @@ import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.AdvancedPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.ow2.aspirerfid.commons.ale.model.alelr.LRProperty;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceUtil;
 import org.ow2.aspirerfid.ide.bpwme.dialog.ComboDialog;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.model.*;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.TableSheetPage;
@@ -107,13 +109,16 @@ public class TableSection extends AbstractPropertySection {
 				MainControl mc = MainControl.getMainControl();
 				if(input instanceof LLRPSpec) {
 					cd.setMessage("Choose LLRP Property");
-					cd.setOption(mc.extraLLRPProperty);
+					//cd.setOption(mc.extraLLRPProperty);
+					cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_LLRP));
 				}else if(input instanceof RPSpec) {
 					cd.setMessage("Choose RP Property");
-					cd.setOption(mc.extraRPProperty);
+					//cd.setOption(mc.extraRPProperty);
+					cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_RP));
 				}else if(input instanceof HALSpec) {
 					cd.setMessage("Choose HAL Property");
-					cd.setOption(mc.extraHALProperty);
+					//cd.setOption(mc.extraHALProperty);
+					cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_HAL));
 				}
 				
 				String selection = cd.open();
