@@ -174,9 +174,75 @@ public class BpwmeDiagramEditorUtil {
 	}
 
 	/**
+	 * yluo modified, to make the storage only one file
+	 */
+	public static Resource createDiagram(URI diagramURI,
+			IProgressMonitor progressMonitor) {
+		TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
+				.createEditingDomain();
+		progressMonitor
+				.beginTask(
+						Messages.BpwmeDiagramEditorUtil_CreateDiagramProgressTask,3);
+		final Resource diagramResource = editingDomain.getResourceSet()
+				.createResource(diagramURI);
+		final String diagramName = diagramURI.lastSegment();
+		
+		//yluo add
+		MainControl mc = MainControl.getMainControl();
+		mc.setAPDLFileName(diagramURI);
+		//yluo add done
+
+		
+		AbstractTransactionalCommand command = new AbstractTransactionalCommand(
+				editingDomain,
+				Messages.BpwmeDiagramEditorUtil_CreateDiagramCommandLabel,
+				Collections.EMPTY_LIST) {
+			protected CommandResult doExecuteWithResult(
+					IProgressMonitor monitor, IAdaptable info)
+					throws ExecutionException {
+				WorkflowMap model = createInitialModel();
+				attachModelToResource(model, diagramResource);
+				
+				Diagram diagram = ViewService.createDiagram(model,
+						WorkflowMapEditPart.MODEL_ID,
+						BpwmeDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+
+				if (diagram != null) {
+					diagramResource.getContents().add(diagram);
+					diagram.setName(diagramName);
+					diagram.setElement(model);
+				}
+
+				try {
+
+					diagramResource
+							.save(org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorUtil
+									.getSaveOptions());
+				} catch (IOException e) {
+
+					BpwmeDiagramEditorPlugin.getInstance()
+							.logError(
+									"Unable to store model and diagram resources", e); //$NON-NLS-1$
+				}
+				return CommandResult.newOKCommandResult();
+			}
+		};
+		try {
+			OperationHistoryFactory.getOperationHistory().execute(command,
+					new SubProgressMonitor(progressMonitor, 1), null);
+		} catch (ExecutionException e) {
+			BpwmeDiagramEditorPlugin.getInstance().logError(
+							"Unable to create model and diagram", e); //$NON-NLS-1$
+		}
+		
+		return diagramResource;
+	}
+
+	
+	/**
 	 * @generated
 	 */
-	
+	/*
 	public static Resource createDiagram(URI diagramURI, URI modelURI,
 			IProgressMonitor progressMonitor) {
 		TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
@@ -239,7 +305,7 @@ public class BpwmeDiagramEditorUtil {
 		}
 		return diagramResource;
 	}
-	
+	*/
 	/**
 	 * Create a new instance of domain element associated with canvas.
 	 * <!-- begin-user-doc -->

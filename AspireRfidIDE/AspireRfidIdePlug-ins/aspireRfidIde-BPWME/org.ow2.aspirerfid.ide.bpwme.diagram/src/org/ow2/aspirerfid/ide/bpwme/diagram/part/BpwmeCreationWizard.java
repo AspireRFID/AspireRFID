@@ -36,7 +36,7 @@ public class BpwmeCreationWizard extends Wizard implements INewWizard {
 	/**
 	 * @generated
 	 */
-	protected BpwmeCreationWizardPage domainModelFilePage;
+	//protected BpwmeCreationWizardPage domainModelFilePage;
 
 	/**
 	 * @generated
@@ -108,25 +108,25 @@ public class BpwmeCreationWizard extends Wizard implements INewWizard {
 				.setDescription(Messages.BpwmeCreationWizard_DiagramModelFilePageDescription);
 		addPage(diagramModelFilePage);
 
-		domainModelFilePage = new BpwmeCreationWizardPage(
-				"DomainModelFile", getSelection(), "bpwme") { //$NON-NLS-1$ //$NON-NLS-2$
-
-			public void setVisible(boolean visible) {
-				if (visible) {
-					String fileName = diagramModelFilePage.getFileName();
-					fileName = fileName.substring(0, fileName.length()
-							- ".bpwme_diagram".length()); //$NON-NLS-1$
-					setFileName(BpwmeDiagramEditorUtil.getUniqueFileName(
-							getContainerFullPath(), fileName, "bpwme")); //$NON-NLS-1$
-				}
-				super.setVisible(visible);
-			}
-		};
-		domainModelFilePage
-				.setTitle(Messages.BpwmeCreationWizard_DomainModelFilePageTitle);
-		domainModelFilePage
-				.setDescription(Messages.BpwmeCreationWizard_DomainModelFilePageDescription);
-		addPage(domainModelFilePage);
+//		domainModelFilePage = new BpwmeCreationWizardPage(
+//				"DomainModelFile", getSelection(), "bpwme") { //$NON-NLS-1$ //$NON-NLS-2$
+//
+//			public void setVisible(boolean visible) {
+//				if (visible) {
+//					String fileName = diagramModelFilePage.getFileName();
+//					fileName = fileName.substring(0, fileName.length()
+//							- ".bpwme_diagram".length()); //$NON-NLS-1$
+//					setFileName(BpwmeDiagramEditorUtil.getUniqueFileName(
+//							getContainerFullPath(), fileName, "bpwme")); //$NON-NLS-1$
+//				}
+//				super.setVisible(visible);
+//			}
+//		};
+//		domainModelFilePage
+//				.setTitle(Messages.BpwmeCreationWizard_DomainModelFilePageTitle);
+//		domainModelFilePage
+//				.setDescription(Messages.BpwmeCreationWizard_DomainModelFilePageDescription);
+//		addPage(domainModelFilePage);
 	}
 
 	public boolean performFinish() {
@@ -134,9 +134,11 @@ public class BpwmeCreationWizard extends Wizard implements INewWizard {
 
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
+//				diagram = BpwmeDiagramEditorUtil.createDiagram(
+//						diagramModelFilePage.getURI(), domainModelFilePage
+//								.getURI(), monitor);
 				diagram = BpwmeDiagramEditorUtil.createDiagram(
-						diagramModelFilePage.getURI(), domainModelFilePage
-								.getURI(), monitor);
+						diagramModelFilePage.getURI(),monitor);
 				
 				
 				if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
