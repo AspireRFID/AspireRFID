@@ -428,6 +428,11 @@
             defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.GetLocations"
             id="org.ow2.aspirerfid.ide.bpwme.actions.getLocations"
             name="Get Locations">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.OpenFromAPDL"
+            id="org.ow2.aspirerfid.ide.bpwme.actions.openFromAPDL"
+            name="Open From APDL">
       </command>  
    </extension>
 
@@ -562,6 +567,11 @@
                   label="Open Diagram"
                   style="push">
             </command>
+            <command
+                  commandId="org.ow2.aspirerfid.ide.bpwme.actions.openFromAPDL"
+                  label="Open From APDL"
+                  style="push">
+            </command>
          </menu>
          <menu
                id="org.ow2.aspirerfid.ide.main.editmenu"
@@ -647,6 +657,7 @@
          </toolbar>
       </menuContribution>
    </extension>
+   <!--
    <extension
          point="org.eclipse.ui.commands">
       <command
@@ -655,7 +666,7 @@
             name="GetLocations">
       </command>
    </extension>
-   
+   -->
    <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution

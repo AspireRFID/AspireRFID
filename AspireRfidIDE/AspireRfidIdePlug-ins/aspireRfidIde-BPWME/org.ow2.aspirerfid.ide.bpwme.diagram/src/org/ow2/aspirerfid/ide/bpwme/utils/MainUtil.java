@@ -21,6 +21,9 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
+import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
 
 /**
  * Utils for the whole project and workspace
@@ -79,5 +82,18 @@ public class MainUtil {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Copy and transfer the model in APDL file to the model in GMF Diagram
+	 * @param olcb
+	 * @param workflowMap
+	 */
+	public static void copyToDiagramModel(OLCBProc olcbModel, WorkflowMap workflowMap) {
+		org.ow2.aspirerfid.ide.bpwme.OLCBProc olcbDiagram = BpwmeFactory.eINSTANCE.createOLCBProc();		
+		workflowMap.getNodes().add(olcbDiagram);
+		//olcb level
+		olcbDiagram.setId(olcbModel.getId());
+		olcbDiagram.setName(olcbModel.getName());
 	}
 }

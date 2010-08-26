@@ -40,15 +40,17 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 	 */
 	private WizardNewFileCreationPage myFileCreationPage;
 
-	/**
-	 * @generated
-	 */
-	private ModelElementSelectionPage diagramRootElementSelectionPage;
+//	/**
+//	 * @generated
+//	 */
+//	private ModelElementSelectionPage diagramRootElementSelectionPage;
 
 	/**
 	 * @generated
 	 */
 	private TransactionalEditingDomain myEditingDomain;
+	
+	private EObject root;
 
 	/**
 	 * @generated
@@ -84,13 +86,14 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 		myFileCreationPage.setFileName(BpwmeDiagramEditorUtil
 				.getUniqueFileName(filePath, fileName, "bpwme_diagram")); //$NON-NLS-1$
 
-		diagramRootElementSelectionPage = new DiagramRootElementSelectionPage(
-				Messages.BpwmeNewDiagramFileWizard_RootSelectionPageName);
-		diagramRootElementSelectionPage
-				.setTitle(Messages.BpwmeNewDiagramFileWizard_RootSelectionPageTitle);
-		diagramRootElementSelectionPage
-				.setDescription(Messages.BpwmeNewDiagramFileWizard_RootSelectionPageDescription);
-		diagramRootElementSelectionPage.setModelElement(diagramRoot);
+		root = diagramRoot;
+//		diagramRootElementSelectionPage = new DiagramRootElementSelectionPage(
+//				Messages.BpwmeNewDiagramFileWizard_RootSelectionPageName);
+//		diagramRootElementSelectionPage
+//				.setTitle(Messages.BpwmeNewDiagramFileWizard_RootSelectionPageTitle);
+//		diagramRootElementSelectionPage
+//				.setDescription(Messages.BpwmeNewDiagramFileWizard_RootSelectionPageDescription);
+//		diagramRootElementSelectionPage.setModelElement(diagramRoot);
 
 		myEditingDomain = editingDomain;
 	}
@@ -100,11 +103,11 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 	 */
 	public void addPages() {
 		addPage(myFileCreationPage);
-		addPage(diagramRootElementSelectionPage);
+		//addPage(diagramRootElementSelectionPage);
 	}
 
 	/**
-	 * @generated
+	 * modified by yluo
 	 */
 	public boolean performFinish() {
 		List affectedFiles = new LinkedList();
@@ -114,6 +117,9 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 		ResourceSet resourceSet = myEditingDomain.getResourceSet();
 		final Resource diagramResource = resourceSet
 				.createResource(diagramModelURI);
+		
+		
+		
 		AbstractTransactionalCommand command = new AbstractTransactionalCommand(
 				myEditingDomain,
 				Messages.BpwmeNewDiagramFileWizard_InitDiagramCommand,
@@ -122,17 +128,20 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 			protected CommandResult doExecuteWithResult(
 					IProgressMonitor monitor, IAdaptable info)
 					throws ExecutionException {
+				diagramResource.getContents().add(root);
+				
 				int diagramVID = BpwmeVisualIDRegistry
-						.getDiagramVisualID(diagramRootElementSelectionPage
-								.getModelElement());
+						.getDiagramVisualID(root);
+				
 				if (diagramVID != WorkflowMapEditPart.VISUAL_ID) {
 					return CommandResult
 							.newErrorCommandResult(Messages.BpwmeNewDiagramFileWizard_IncorrectRootError);
 				}
 				Diagram diagram = ViewService.createDiagram(
-						diagramRootElementSelectionPage.getModelElement(),
+						root,
 						WorkflowMapEditPart.MODEL_ID,
 						BpwmeDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+				System.out.println(diagram.getChildren().size());
 				diagramResource.getContents().add(diagram);
 				return CommandResult.newOKCommandResult();
 			}
@@ -155,42 +164,42 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 		return true;
 	}
 
-	/**
-	 * @generated
-	 */
-	private static class DiagramRootElementSelectionPage extends
-			ModelElementSelectionPage {
-
-		/**
-		 * @generated
-		 */
-		protected DiagramRootElementSelectionPage(String pageName) {
-			super(pageName);
-		}
-
-		/**
-		 * @generated
-		 */
-		protected String getSelectionTitle() {
-			return Messages.BpwmeNewDiagramFileWizard_RootSelectionPageSelectionTitle;
-		}
-
-		/**
-		 * @generated
-		 */
-		protected boolean validatePage() {
-			if (selectedModelElement == null) {
-				setErrorMessage(Messages.BpwmeNewDiagramFileWizard_RootSelectionPageNoSelectionMessage);
-				return false;
-			}
-			boolean result = ViewService.getInstance().provides(
-					new CreateDiagramViewOperation(new EObjectAdapter(
-							selectedModelElement),
-							WorkflowMapEditPart.MODEL_ID,
-							BpwmeDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT));
-			setErrorMessage(result ? null
-					: Messages.BpwmeNewDiagramFileWizard_RootSelectionPageInvalidSelectionMessage);
-			return result;
-		}
-	}
+//	/**
+//	 * @generated
+//	 */
+//	private static class DiagramRootElementSelectionPage extends
+//			ModelElementSelectionPage {
+//
+//		/**
+//		 * @generated
+//		 */
+//		protected DiagramRootElementSelectionPage(String pageName) {
+//			super(pageName);
+//		}
+//
+//		/**
+//		 * @generated
+//		 */
+//		protected String getSelectionTitle() {
+//			return Messages.BpwmeNewDiagramFileWizard_RootSelectionPageSelectionTitle;
+//		}
+//
+//		/**
+//		 * @generated
+//		 */
+//		protected boolean validatePage() {
+//			if (selectedModelElement == null) {
+//				setErrorMessage(Messages.BpwmeNewDiagramFileWizard_RootSelectionPageNoSelectionMessage);
+//				return false;
+//			}
+//			boolean result = ViewService.getInstance().provides(
+//					new CreateDiagramViewOperation(new EObjectAdapter(
+//							selectedModelElement),
+//							WorkflowMapEditPart.MODEL_ID,
+//							BpwmeDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT));
+//			setErrorMessage(result ? null
+//					: Messages.BpwmeNewDiagramFileWizard_RootSelectionPageInvalidSelectionMessage);
+//			return result;
+//		}
+//	}
 }

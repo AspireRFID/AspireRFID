@@ -221,6 +221,14 @@ public class MainControl {
 	}
 	
 	/**
+	 * Set the apdl uri with the given file name
+	 * @param apdlFileName
+	 */
+	public void setAPDLURI(String apdlFileName) {
+		apdlURI = URI.createFileURI(apdlFileName);
+	}
+	
+	/**
 	 * Rebuild the in memory models from the existing apdl file.
 	 * Called when open an existing diagram
 	 */
