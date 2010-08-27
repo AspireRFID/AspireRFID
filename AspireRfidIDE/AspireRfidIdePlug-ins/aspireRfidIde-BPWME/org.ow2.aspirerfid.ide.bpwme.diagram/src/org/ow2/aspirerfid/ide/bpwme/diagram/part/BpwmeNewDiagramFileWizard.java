@@ -40,11 +40,6 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 	 */
 	private WizardNewFileCreationPage myFileCreationPage;
 
-//	/**
-//	 * @generated
-//	 */
-//	private ModelElementSelectionPage diagramRootElementSelectionPage;
-
 	/**
 	 * @generated
 	 */
@@ -87,13 +82,6 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 				.getUniqueFileName(filePath, fileName, "bpwme_diagram")); //$NON-NLS-1$
 
 		root = diagramRoot;
-//		diagramRootElementSelectionPage = new DiagramRootElementSelectionPage(
-//				Messages.BpwmeNewDiagramFileWizard_RootSelectionPageName);
-//		diagramRootElementSelectionPage
-//				.setTitle(Messages.BpwmeNewDiagramFileWizard_RootSelectionPageTitle);
-//		diagramRootElementSelectionPage
-//				.setDescription(Messages.BpwmeNewDiagramFileWizard_RootSelectionPageDescription);
-//		diagramRootElementSelectionPage.setModelElement(diagramRoot);
 
 		myEditingDomain = editingDomain;
 	}
@@ -141,7 +129,7 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 						root,
 						WorkflowMapEditPart.MODEL_ID,
 						BpwmeDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
-				System.out.println(diagram.getChildren().size());
+				
 				diagramResource.getContents().add(diagram);
 				return CommandResult.newOKCommandResult();
 			}
