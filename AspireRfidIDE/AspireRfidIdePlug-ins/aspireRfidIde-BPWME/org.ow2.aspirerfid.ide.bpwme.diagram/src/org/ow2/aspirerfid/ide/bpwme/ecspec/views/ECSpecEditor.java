@@ -655,6 +655,7 @@ ITabbedPropertySheetPageContributor{
 		attributeTableViewer.setContentProvider(new BoundaryContentProvider());
 		attributeTableViewer.setLabelProvider(new BoundaryLabelProvider());
 		attributeTableViewer.setInput(ecsb);
+		
 
 		attributeTableViewer.getTable().setLinesVisible(true);
 		attributeTableViewer.getTable().setHeaderVisible(true);

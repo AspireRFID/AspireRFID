@@ -1,5 +1,6 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.application;
 
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
@@ -37,5 +38,4 @@ public class DiagramEditorWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor 
 		configurer.setInitialSize(new Point(1000, 700));
 		configurer.setTitle(Messages.DiagramEditorWorkbenchWindowAdvisor_Title);
 	}
-
 }

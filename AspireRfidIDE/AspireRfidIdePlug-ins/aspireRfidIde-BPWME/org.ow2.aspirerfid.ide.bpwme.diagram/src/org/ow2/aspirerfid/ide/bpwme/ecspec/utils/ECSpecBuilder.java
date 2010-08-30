@@ -36,6 +36,7 @@ import org.ow2.aspirerfid.commons.apdl.model.EBProc;
 import org.ow2.aspirerfid.commons.epcis.model.AttributeType;
 import org.ow2.aspirerfid.commons.epcis.model.EPCISMasterDataDocumentType;
 import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.model.Spec;
 import org.ow2.aspirerfid.ide.bpwme.master.utils.MasterDataUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
@@ -106,9 +107,9 @@ public class ECSpecBuilder {
 		ecspec.getBoundarySpec().getExtension().setStartTriggerList(of.createECBoundarySpecExtensionStartTriggerList());
 		ecspec.getBoundarySpec().getExtension().setStopTriggerList(of.createECBoundarySpecExtensionStopTriggerList());
 
-		setDuration(4500);
-		setRepeatPeriod(4500);
-		setStableSetInterval(0);
+		setDuration(PreferenceConstants.P_DURARION);
+		setRepeatPeriod(PreferenceConstants.P_REPEAT_PERIOD);
+		setStableSetInterval(PreferenceConstants.P_STABLE_SET_INTERVAL);
 		
 		EPCISMasterDataDocumentType doc = MasterDataUtil.getEPCISMasterDataDocument(ebproc);
 		VocabularyElementType vocabularyElement = MasterDataUtil.getEBProcVocabularyElement(doc);

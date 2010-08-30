@@ -17,6 +17,10 @@
 
 package org.ow2.aspirerfid.ide.bpwme.ecspec.model;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.ui.PlatformUI;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.ECSpecBuilder;
 
 /**
@@ -41,13 +45,30 @@ public class BoundaryContent{
 		return Long.toString(value);
 	}
 	public void setValue(String value) {
-		if(name.equals("Repeat Period")) {
-			//System.out.println("set repeat");
-			ecsb.setRepeatPeriod(Long.parseLong(value));
-		} else if(name.equals("Duration")) {
-			ecsb.setDuration(Long.parseLong(value));
-		} else if(name.equals("Stable Set Interval")) {
-			ecsb.setStableSetInterval(Long.parseLong(value));
+		if(value == null) {
+			return;
+		}
+		
+		try{
+			if(name.equals("Repeat Period")) {
+				ecsb.setRepeatPeriod(Long.parseLong(value));
+			} else if(name.equals("Duration")) {
+				ecsb.setDuration(Long.parseLong(value));
+			} else if(name.equals("Stable Set Interval")) {
+				ecsb.setStableSetInterval(Long.parseLong(value));
+			}
+		}catch(NumberFormatException e) {
+			System.out.println(value);
+			
+			MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
+					, SWT.ICON_ERROR | SWT.OK);
+			mb.setText("Error");
+			mb.setMessage("Value has to be a number");
+			mb.open();
+			
+			ecsb.setDuration(PreferenceConstants.P_DURARION);
+			ecsb.setRepeatPeriod(PreferenceConstants.P_REPEAT_PERIOD);
+			ecsb.setStableSetInterval(PreferenceConstants.P_STABLE_SET_INTERVAL);
 		}
 	}
 }

@@ -25,4 +25,10 @@ public class PreferenceConstants {
 	
 	public static final String P_BT = "btAttribute";
 	
+	public static final long P_DURARION = 4500;
+	
+	public static final long P_REPEAT_PERIOD = 4500;
+	
+	public static final long P_STABLE_SET_INTERVAL = 0;
+	
 }

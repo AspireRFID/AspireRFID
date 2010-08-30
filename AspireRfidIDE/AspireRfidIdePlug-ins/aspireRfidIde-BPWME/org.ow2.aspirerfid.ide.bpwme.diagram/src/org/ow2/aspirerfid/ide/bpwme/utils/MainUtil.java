@@ -20,9 +20,12 @@ package org.ow2.aspirerfid.ide.bpwme.utils;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.commons.apdl.model.*;
 import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
@@ -115,6 +118,44 @@ public class MainUtil {
 				 ebDiagram.setDescription(ebModel.getDescription());				 
 				 clcbDiagram.getEBProc().add(ebDiagram);
 			 }			
+		}
+	}
+	
+	/**
+	 * Justify whether the String is a integer or not
+	 * @param number
+	 * @return
+	 */
+	public static boolean isInteger(String number) {
+		
+		try{
+			Long.parseLong(number);
+			return true;
+		}catch(NumberFormatException e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * Set the message in status line
+	 * @param message
+	 */
+	public static void showInStatus(String message) {
+		IStatusLineManager statusLineManager;
+		IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		if (activePage != null)
+		{
+			IWorkbenchPart activePart = activePage.getActivePart();
+			if (activePart instanceof IViewPart) {
+				statusLineManager = 
+					((IViewPart)activePart).getViewSite().getActionBars().getStatusLineManager();
+				statusLineManager.setMessage(message);
+			}
+			else if (activePart instanceof IEditorPart) {
+				statusLineManager = 
+					((IEditorPart)activePart).getEditorSite().getActionBars().getStatusLineManager();
+				statusLineManager.setMessage(message);
+			}
 		}
 	}
 }
