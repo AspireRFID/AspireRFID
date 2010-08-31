@@ -148,6 +148,7 @@ public class InputDialog extends Dialog {
 	    data.horizontalSpan = 2;
 	    text.setLayoutData(data);
 	    text.setText(input);
+	    
 	    // Create the OK button and add a handler
 	    // so that pressing it will set input
 	    // to the entered value

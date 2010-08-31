@@ -846,7 +846,7 @@
    </extension>
 
     <!--about the ecspec report editing-->
-    <!--
+    
       <extension
             point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
          <propertyTabs
@@ -854,11 +854,11 @@
             <propertyTab
                   category="Aspire"
                   id="EC.AdvancedTab"
-                  label="Advanced">
+                  label="Report">
             </propertyTab>
          </propertyTabs>
       </extension>
-      -->
+     
       <extension
             point="org.eclipse.ui.views.properties.tabbed.propertySections">
          <propertySections
@@ -873,7 +873,7 @@
                      type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.ReportSpec">
                </input>
             </propertySection>
-            <!--
+            
             <propertySection
                   class="org.eclipse.ui.views.properties.tabbed.AdvancedPropertySection"
                   id="EC.NormalSection"
@@ -882,16 +882,6 @@
                      type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.ReportSpec">
                </input>
             </propertySection>
-            
-            <propertySection
-                  class="org.eclipse.ui.views.properties.tabbed.AbstractOverridableTabListPropertySection"
-                  id="EC.TestSection"
-                  tab="EC.AdvancedTab">
-               <input
-                     type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.ReportSpec">
-               </input>
-            </propertySection>
-           -->
          </propertySections>
       </extension>
       <extension

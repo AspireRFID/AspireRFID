@@ -49,6 +49,8 @@ import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.AdvancedPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.ow2.aspirerfid.commons.ale.model.alelr.LRProperty;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceUtil;
 import org.ow2.aspirerfid.ide.bpwme.dialog.ComboDialog;
 import org.ow2.aspirerfid.ide.bpwme.dialog.InputDialog;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.model.*;
@@ -107,13 +109,25 @@ public class TableSection extends AbstractPropertySection {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				super.mouseDown(e);
-				InputDialog id = new InputDialog(buttonComposite.getShell());
-				id.setMessage("Input Attribute Name");
-				String attributeName = id.open();
+				ComboDialog cd = new ComboDialog(buttonComposite.getShell());
+				cd.setText("Choose Dialog");
+				String id = input.getID();
+				if(id.startsWith("urn:epcglobal:fmcg:bizstep:")) {
+					cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_BS));
+				}else if(id.startsWith("urn:epcglobal:fmcg:disp:")) {
+					cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_DI));
+				}else if(id.startsWith("urn:epcglobal:fmcg:btt:")) {
+					cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_BT));
+				}
+				String selection = cd.open();
 				//add a new attribute pair
 				MasterDataBuilder mdb = MasterDataBuilder.getInstance();
-				mdb.addItemAttribute(input, attributeName, "");				
+				mdb.addItemAttribute(input, selection, "");				
 				page.refresh();
+
+//				InputDialog id = new InputDialog(buttonComposite.getShell());
+//				id.setMessage("Input Attribute Name");
+//				String attributeName = id.open();
 			}
 		});
 		
