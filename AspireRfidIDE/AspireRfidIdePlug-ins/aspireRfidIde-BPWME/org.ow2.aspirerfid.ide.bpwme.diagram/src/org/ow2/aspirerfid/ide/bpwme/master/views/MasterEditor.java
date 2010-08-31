@@ -65,6 +65,8 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.bpwmeintegration.MasterDataCon
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.bpwme.dialog.DispositionDialog;
+import org.ow2.aspirerfid.ide.bpwme.dialog.PrefixValidator;
+import org.ow2.aspirerfid.ide.bpwme.dialog.SomeDialog;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.SelectionProviderWrapper;
 import org.ow2.aspirerfid.ide.bpwme.master.model.DispositionItem;
 import org.ow2.aspirerfid.ide.bpwme.master.utils.MasterDataBuilder;
@@ -614,10 +616,16 @@ ITabbedPropertySheetPageContributor{
 		buttonNew.addSelectionListener(new SelectionAdapter(){
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				DispositionDialog dd = new DispositionDialog(parent.getShell());
-				dd.setMessage("Input URI and Name");
-				dd.setDefaultURI(defaultURI);
-				DispositionItem di = dd.open();
+//				DispositionDialog dd = new DispositionDialog(parent.getShell());
+//				dd.setMessage("Input URI and Name");
+//				dd.setDefaultURI(defaultURI);
+//				DispositionItem di = dd.open();
+				PrefixValidator pv = new PrefixValidator(defaultURI);
+				
+				SomeDialog sd = new SomeDialog
+				(parent.getShell(), "", "Input URI", "Input Name", defaultURI, "Default Name", pv);
+				DispositionItem di = sd.start();
+				
 				if(di == null) {
 					return;
 				}else {
@@ -739,7 +747,7 @@ ITabbedPropertySheetPageContributor{
 	
 	private void createBusinessStepPartLogic(final Composite parent) {
 		createTabPartLogic(parent, buttonBizNew, buttonBizDuplicate, 
-				buttonBizRemove, bizListViewer, Type.BusinessStep, "urn:epcglobal:fmcg:bizstep:*");
+				buttonBizRemove, bizListViewer, Type.BusinessStep, "urn:epcglobal:fmcg:bizstep:");
 	}
 	
 	private void createDispositionPart(final Composite parent) {
@@ -748,7 +756,7 @@ ITabbedPropertySheetPageContributor{
 	
 	private void createDispositionPartLogic(final Composite parent) {
 		createTabPartLogic(parent, buttonDispoNew, buttonDispoDuplicate, 
-				buttonDispoRemove, dispoListViewer, Type.Disposition, "urn:epcglobal:fmcg:disp:*");
+				buttonDispoRemove, dispoListViewer, Type.Disposition, "urn:epcglobal:fmcg:disp:");
 	}
 	
 	private void createTransactionPart(final Composite parent) {
@@ -757,7 +765,7 @@ ITabbedPropertySheetPageContributor{
 	
 	private void createTransactionPartLogic(final Composite parent) {
 		createTabPartLogic(parent, buttonTranzNew, buttonTranzDuplicate, 
-				buttonTranzRemove, tranzListViewer, Type.TransactionType, "urn:epcglobal:fmcg:btt:*");
+				buttonTranzRemove, tranzListViewer, Type.TransactionType, "urn:epcglobal:fmcg:btt:");
 	}
 	
 	@Override
