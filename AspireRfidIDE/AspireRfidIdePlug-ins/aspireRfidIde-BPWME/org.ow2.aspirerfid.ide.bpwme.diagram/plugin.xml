@@ -433,6 +433,11 @@
             defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.OpenFromAPDL"
             id="org.ow2.aspirerfid.ide.bpwme.actions.openFromAPDL"
             name="Open From APDL">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.ShowCheatsheets"
+            id="org.ow2.aspirerfid.ide.bpwme.actions.showCheatsheets"
+            name="Show Cheatsheets">
       </command>  
    </extension>
 
@@ -928,5 +933,33 @@
          </propertySections>
       </extension>
 
+	      <!--cheat sheets-->
+	      <extension
+	         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+	      <category
+	            id="org.ow2.aspirerfid.ide.bpwme.category"
+	            name="Aspire Cheatsheets">
+	      </category>
+	      <cheatsheet
+	            category="org.ow2.aspirerfid.ide.bpwme.category"
+	            composite="false"
+	            contentFile="cheatsheet.xml"
+	            id="org.ow2.aspirerfid.ide.bpwme.cheatsheet"
+	            name="Create a business process">
+	      </cheatsheet>
+	   </extension>   
+	   <extension point="org.eclipse.ui.actionSets">
+	  <actionSet
+	      label="Cheat Sheets"
+	      visible="true"
+	      id="org.eclipse.ui.cheatsheets.actionSet">
+	     <action
+            class="org.eclipse.ui.internal.cheatsheets.actions.CheatSheetHelpMenuAction"
+            id="org.ow2.aspirerfid.ide.bpwme.actions.openCheatsheets"
+            label="Cheat Sheets"
+            menubarPath="org.ow2.aspirerfid.ide.main.helpmenu/cheatsheets">
+	     </action>
+	  </actionSet>
+	</extension>
    
 </plugin>

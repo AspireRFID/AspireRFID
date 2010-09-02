@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Library model tutorial">
+<intro>
+<description>This tutorial guides you through the creation of a simple Java
+model with three Java classes.
+</description>
+</intro>
+<item title="Open the Java Perspective">
+<description>Select Window > Open Perspective > Java in the menubar at the
+top of the workbench. This step changes the perspective to set up the
+Eclipse workbench for Java development.
+</description>
+</item>
+<item title="Create a Java project" skip="true">
+<description>The first thing you will need is a Java Project. If you
+already have a Java project in your workspace that you would like to use,
+you may skip this step by clicking the "Click to Skip" button. If not,
+select File > New > Project... and choose Java Project in the list.
+Complete the subsequent pages as required.
+</description>
+</item>
+<item title="Create a Java package" skip="true">
+<description>You should now have a Java project in your workspace. The next
+thing to do is creating a package. Use the Eclipse tools by selecting
+File  > New  > Package action. Give the package a name for example
+"tutorial.library.model" and click the "Finish" button. If you already
+have a project with a package you might as well skip this step.
+</description>
+</item>
+<item title="Create the library model classes">
+<description>Now you should be set up for creating your library model. The
+library model consists of three Java classes, a library class, a writer
+class and a book class. Use the Java class wizard by selecting
+File  > New > Class. Repeat this for every class.
+</description>
+</item>
+<item title="Package your classes into an archive">
+<description>In the last step of this tutorial you will package the created
+classes into a Java archive or JAR file. Therefore, right-click your Java
+project and select the "Export..." action. In the wizard select "JAR file"
+and click the "Next" button. On the next page specify a location and name
+for the JAR file and click "Finish". You have now successfully created a
+little Java model and packaged that into a JAR file.
+</description>
+</item>
+</cheatsheet>
