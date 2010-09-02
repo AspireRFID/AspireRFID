@@ -1,46 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cheatsheet title="Library model tutorial">
+<cheatsheet title="Create a business process diagram">
 <intro>
-<description>This tutorial guides you through the creation of a simple Java
-model with three Java classes.
+<description>This tutorial guides you through the creation of a business process diagram using BPWME editor
 </description>
 </intro>
-<item title="Open the Java Perspective">
-<description>Select Window > Open Perspective > Java in the menubar at the
-top of the workbench. This step changes the perspective to set up the
-Eclipse workbench for Java development.
+
+<item title="Open the BPWME Perspective">
+<description>
+<b>
+Select Window &gt; Show Perspective &gt; 
+Bpwme Perspective in the menubar at the top of the Aspire IDE. 
+This step changes the perspective to set up the Aspire IDE 
+for graphical business process editing.
+</b>
+</description>
+<command
+      required="false"
+      serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=bpwme.diagram.BpwmePerspective)"/>
+</item>
+
+<item title="Create a bpwme diagram">
+<description>
+<b>The first thing you will need is a bpwme diagram. If you
+already have a diagram on your file system that you would like to use,
+you may skip this step by clicking the &quot;Click to Skip&quot; button. If not,
+select File &gt; New Diagram and give the new diagram file a proper path.
+Complete the subsequent pages as required.</b>
 </description>
 </item>
-<item title="Create a Java project" skip="true">
-<description>The first thing you will need is a Java Project. If you
-already have a Java project in your workspace that you would like to use,
-you may skip this step by clicking the "Click to Skip" button. If not,
-select File > New > Project... and choose Java Project in the list.
-Complete the subsequent pages as required.
+
+<item title="Create an Open Loop Composite Business Process (OLCBProc)" skip="false">
+<description>
+<b>
+You should now have a BPWME editor in your workspace. The next
+thing to do is creating an Open Loop Composite Business Process (OLCBProc). Select 
+OLCBProc on the right side of the editor palette, move the mouse cursor to the 
+editing area and left click on the mouse. You can see an OLCB Process is created. 
+You can edit the id and name in the properties view.</b>
 </description>
 </item>
-<item title="Create a Java package" skip="true">
-<description>You should now have a Java project in your workspace. The next
-thing to do is creating a package. Use the Eclipse tools by selecting
-File  > New  > Package action. Give the package a name for example
-"tutorial.library.model" and click the "Finish" button. If you already
-have a project with a package you might as well skip this step.
+<item title="Create a Close Loop Composite Business Process (CLCBProc)">
+<description>
+<b>
+   You can create a Close Loop Composite Business Process (CLCBProc) by choosing 
+   CLCBProc on the right side of the editor palette, just like creating an OLCBProc. 
+   Notice CLCBProc can only be putted inside OLCBProc.</b>
 </description>
 </item>
-<item title="Create the library model classes">
-<description>Now you should be set up for creating your library model. The
-library model consists of three Java classes, a library class, a writer
-class and a book class. Use the Java class wizard by selecting
-File  > New > Class. Repeat this for every class.
-</description>
-</item>
-<item title="Package your classes into an archive">
-<description>In the last step of this tutorial you will package the created
-classes into a Java archive or JAR file. Therefore, right-click your Java
-project and select the "Export..." action. In the wizard select "JAR file"
-and click the "Next" button. On the next page specify a location and name
-for the JAR file and click "Finish". You have now successfully created a
-little Java model and packaged that into a JAR file.
-</description>
+<item
+      title="Create an Elementary Business Process (EBProc)">
+   <description>
+      <b>You can create an Elementary Business Process (EBProc) by choosing 
+      EBProc on the right side of the editor palette, just like creating an 
+      OLCBProc. Notice EBProc can only be putted inside CLCBProc.</b>
+   </description>
 </item>
 </cheatsheet>
