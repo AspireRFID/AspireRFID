@@ -27,6 +27,7 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.*;
 import org.ow2.aspirerfid.commons.apdl.model.*;
 import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
 import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
@@ -158,4 +159,53 @@ public class MainUtil {
 			}
 		}
 	}
+	
+	
+	/**
+	 * From http://eclipse.dzone.com/tips/programmatically-split-editor-
+	 * TODO be more specific for our use
+	 * Split the editor area if there is at least two editors in it.
+	 */
+	public static void splitEditorArea() {
+		IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		IWorkbenchPart part = workbenchPage.getActivePart();
+		PartPane partPane = ((PartSite) part.getSite()).getPane();
+		LayoutPart layoutPart = partPane.getPart();
+
+		IEditorReference[] editorReferences = workbenchPage.getEditorReferences();
+		
+		// Do it only if we have more that one editor
+		if (editorReferences.length > 1) {
+			// Get PartPane that correspond to the active editor
+			PartPane currentEditorPartPane = ((PartSite) workbenchPage.getActiveEditor().getSite()).getPane();
+			EditorSashContainer editorSashContainer = null;
+			ILayoutContainer rootLayoutContainer = layoutPart.getContainer();
+			if (rootLayoutContainer instanceof LayoutPart) {
+				ILayoutContainer editorSashLayoutContainer = ((LayoutPart) rootLayoutContainer).getContainer();
+				if (editorSashLayoutContainer instanceof EditorSashContainer) {
+					editorSashContainer = ((EditorSashContainer) editorSashLayoutContainer);
+				}
+			}
+			/*
+			 * Create a new part stack (i.e. a workbook) to home the currentEditorPartPane
+			 * which hold the active editor
+			 * */
+			PartStack newPart = createStack(editorSashContainer);
+			editorSashContainer.stack(currentEditorPartPane, newPart);
+			if (rootLayoutContainer instanceof LayoutPart) {
+				ILayoutContainer cont = ((LayoutPart) rootLayoutContainer).getContainer();
+				if (cont instanceof PartSashContainer) {
+					// "Split" the editor area by adding the new part
+					((PartSashContainer) cont).add(newPart);
+				}
+			}
+		}
+	}
+	
+	private static PartStack createStack(EditorSashContainer editorSashContainer) {
+		WorkbenchPage workbenchPage = (WorkbenchPage) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		EditorStack newWorkbook = EditorStack.newEditorWorkbook(editorSashContainer, workbenchPage);
+		return newWorkbook;
+	}
+
 }

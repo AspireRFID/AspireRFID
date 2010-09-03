@@ -55,6 +55,9 @@ implements IObjectActionDelegate {
 			messageBox.open();
 			return;
 		}
+		
+
+		
 		//get the selected EBProc part
 		EBProcEditPart epe = (EBProcEditPart)getStructuredSelection().getFirstElement();		
 		EBProcImpl ebi = (EBProcImpl)((View)epe.getModel()).getElement();
@@ -92,5 +95,8 @@ implements IObjectActionDelegate {
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
+		
+		MainUtil.splitEditorArea();
+		
 	}
 }
