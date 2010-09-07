@@ -182,6 +182,12 @@
             class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.MasterDataPreferencePage"
             id="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.MasterDataPreferencePage"
             name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.masterdata">
+      </page>
+      <page
+            category="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DataPreferencePage"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.ExtendedDataPreferencePage"
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.ExtendedDataPreferencePage"
+            name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.extenddata">
       </page>      
    </extension>
 
@@ -700,6 +706,12 @@
                label="Master Data"
                menubarPath="editMenu/editGroup">
          </action>
+         <action
+               class="org.ow2.aspirerfid.ide.bpwme.actions.EditExtendedAttributes"
+               id="org.ow2.aspirerfid.ide.bpwme.actions.EditExtendedAttributes"
+               label="Extended Attributes"
+               menubarPath="editMenu/editGroup">
+         </action>
          
       </objectContribution>
    </extension>
@@ -961,5 +973,13 @@
 	     </action>
 	  </actionSet>
 	</extension>
+    <extension
+          point="org.eclipse.ui.views">
+       <view
+             class="org.ow2.aspirerfid.ide.bpwme.diagram.views.ExtendedAttr"
+             id="org.ow2.aspirerfid.ide.bpwme.diagram.views.ExtendedAttr"
+             name="Extended Attributes">
+       </view>
+    </extension>
    
 </plugin>

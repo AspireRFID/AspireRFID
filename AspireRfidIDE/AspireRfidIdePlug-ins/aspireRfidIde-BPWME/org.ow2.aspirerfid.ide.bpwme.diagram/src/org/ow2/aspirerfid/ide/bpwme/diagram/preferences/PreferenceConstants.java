@@ -1,5 +1,8 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.preferences;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Constant definitions for plug-in preferences
  */
@@ -30,5 +33,7 @@ public class PreferenceConstants {
 	public static final long P_REPEAT_PERIOD = 4500;
 	
 	public static final long P_STABLE_SET_INTERVAL = 0;
+	
+	public static final HashMap<String,String> P_EXTEND = new HashMap<String,String>();
 	
 }

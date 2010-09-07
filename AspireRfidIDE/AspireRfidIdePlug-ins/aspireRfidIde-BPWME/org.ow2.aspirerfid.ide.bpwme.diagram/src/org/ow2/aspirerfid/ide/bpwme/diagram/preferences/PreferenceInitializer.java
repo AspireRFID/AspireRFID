@@ -1,5 +1,8 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.preferences;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -29,5 +32,23 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(PreferenceConstants.P_BS, "Attr1,Attr2,Attr3");
 		store.setDefault(PreferenceConstants.P_DI, "Attr1,Attr2,Attr3");
 		store.setDefault(PreferenceConstants.P_BT, "Attr1,Attr2,Attr3");
+		
+		//Extended Attribute
+		PreferenceConstants.P_EXTEND.put("ECSpecSubscriptionURI","http://localhost:9999");
+		PreferenceConstants.P_EXTEND.put("AleClientEndPoint","http://localhost:8080/aspireRfidALE/services/ALEService");
+		PreferenceConstants.P_EXTEND.put("AleLrClientEndPoint","http://localhost:8080/aspireRfidALE/services/ALELRService");
+		PreferenceConstants.P_EXTEND.put("EpcisClientCaptureEndPoint","http://localhost:8080/aspireRfidEpcisRepository/capture");
+		PreferenceConstants.P_EXTEND.put("EpcisClientQueryEndPoint","http://localhost:8080/aspireRfidEpcisRepository/query");
+		PreferenceConstants.P_EXTEND.put("BegEngineEndpoint","http://localhost:8080/aspireRfidBEG/begengine");
+
+		
+		Iterator<String> iter = PreferenceConstants.P_EXTEND.keySet().iterator();
+		
+		while(iter.hasNext()) {
+			String key = iter.next();
+			String value = PreferenceConstants.P_EXTEND.get(key);
+			store.setDefault(key,value);
+		}
+
 	}
 }
