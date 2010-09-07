@@ -61,7 +61,7 @@ public class PeConfigPreferencePage
 		}
 		
 		{
-			addField(new DirectoryFieldEditor(PreferenceConstants.P_PE_PeEngineEndPoint, "PE Engine End Point:", getFieldEditorParent()));
+			addField(new StringFieldEditor(PreferenceConstants.P_PE_PeEngineEndPoint, "PE Engine End Point:", getFieldEditorParent()));
 		}
 		}
 
