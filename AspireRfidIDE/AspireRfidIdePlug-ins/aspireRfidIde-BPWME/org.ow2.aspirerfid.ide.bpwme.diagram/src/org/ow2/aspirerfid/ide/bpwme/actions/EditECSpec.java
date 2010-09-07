@@ -17,6 +17,8 @@
 
 package org.ow2.aspirerfid.ide.bpwme.actions;
 
+import java.util.HashSet;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gmf.runtime.common.ui.action.AbstractActionDelegate;
 import org.eclipse.gmf.runtime.notation.View;
@@ -28,11 +30,13 @@ import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.commons.apdl.model.ApdlDataField;
 import org.ow2.aspirerfid.commons.apdl.model.EBProc;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.ECSpecBuilder;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.LRSpecBuilder;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditorInput;
 import org.ow2.aspirerfid.ide.bpwme.impl.EBProcImpl;
+import org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
@@ -96,7 +100,11 @@ implements IObjectActionDelegate {
 			e.printStackTrace();
 		}
 		
-		MainUtil.splitEditorArea();
+		HashSet<String> editorIDs = new HashSet<String>();
+		editorIDs.add(ECSpecEditor.ID);
+		editorIDs.add(MasterEditor.ID);
+		
+		MainUtil.splitEditorArea(BpwmeDiagramEditor.ID,editorIDs);
 		
 	}
 }

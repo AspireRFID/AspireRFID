@@ -17,6 +17,8 @@
 
 package org.ow2.aspirerfid.ide.bpwme.actions;
 
+import java.util.HashSet;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gmf.runtime.common.ui.action.AbstractActionDelegate;
 import org.eclipse.gmf.runtime.notation.View;
@@ -27,6 +29,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.commons.apdl.model.EBProc;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
+import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
 import org.ow2.aspirerfid.ide.bpwme.impl.EBProcImpl;
 import org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor;
 import org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditorInput;
@@ -68,5 +72,11 @@ implements IObjectActionDelegate {
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
+		
+		HashSet<String> editorIDs = new HashSet<String>();
+		editorIDs.add(ECSpecEditor.ID);
+		editorIDs.add(MasterEditor.ID);
+		
+		MainUtil.splitEditorArea(BpwmeDiagramEditor.ID,editorIDs);
 	}
 }

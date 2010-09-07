@@ -17,18 +17,30 @@
 
 package org.ow2.aspirerfid.ide.bpwme.utils;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.*;
-import org.ow2.aspirerfid.commons.apdl.model.*;
+import org.eclipse.ui.internal.EditorSashContainer;
+import org.eclipse.ui.internal.EditorStack;
+import org.eclipse.ui.internal.ILayoutContainer;
+import org.eclipse.ui.internal.LayoutPart;
+import org.eclipse.ui.internal.PartPane;
+import org.eclipse.ui.internal.PartSashContainer;
+import org.eclipse.ui.internal.PartSite;
+import org.eclipse.ui.internal.PartStack;
+import org.eclipse.ui.internal.WorkbenchPage;
+import org.ow2.aspirerfid.commons.apdl.model.CLCBProc;
+import org.ow2.aspirerfid.commons.apdl.model.EBProc;
+import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
 import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
 
@@ -162,50 +174,111 @@ public class MainUtil {
 	
 	
 	/**
-	 * From http://eclipse.dzone.com/tips/programmatically-split-editor-
-	 * TODO be more specific for our use
-	 * Split the editor area if there is at least two editors in it.
+	 * Idea from http://eclipse.dzone.com/tips/programmatically-split-editor-
+	 * Some internal APIs are used because we have to
+	 * Split the editor only when the main editor is sharing the space with other editors
+	 * 
+	 * The organization is like the following:
+	 * EditorSashContainer
+	 * --EditorStack
+	 * ----PartPane
+	 * ------EditorPart
+	 * 
 	 */
-	public static void splitEditorArea() {
+	public static void splitEditorArea(String mainEditorID, HashSet<String> editorIDs) {
 		IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		IWorkbenchPart part = workbenchPage.getActivePart();
-		PartPane partPane = ((PartSite) part.getSite()).getPane();
-		LayoutPart layoutPart = partPane.getPart();
+//		IWorkbenchPart part = workbenchPage.getActivePart();
+//		PartPane partPane = ((PartSite) part.getSite()).getPane();
+//		LayoutPart layoutPart = partPane.getPart();
 
 		IEditorReference[] editorReferences = workbenchPage.getEditorReferences();
 		
-		// Do it only if we have more that one editor
-		if (editorReferences.length > 1) {
-			// Get PartPane that correspond to the active editor
-			PartPane currentEditorPartPane = ((PartSite) workbenchPage.getActiveEditor().getSite()).getPane();
-			EditorSashContainer editorSashContainer = null;
-			ILayoutContainer rootLayoutContainer = layoutPart.getContainer();
-			if (rootLayoutContainer instanceof LayoutPart) {
-				ILayoutContainer editorSashLayoutContainer = ((LayoutPart) rootLayoutContainer).getContainer();
-				if (editorSashLayoutContainer instanceof EditorSashContainer) {
-					editorSashContainer = ((EditorSashContainer) editorSashLayoutContainer);
-				}
+		//main editor is the editor who does not what to share the stack
+		IEditorPart mainEditor = null;
+		
+		for(int i = 0; i < editorReferences.length; i++) {
+			if(editorReferences[i].getId().equals(mainEditorID)) {
+				mainEditor = editorReferences[i].getEditor(false);
 			}
-			/*
-			 * Create a new part stack (i.e. a workbook) to home the currentEditorPartPane
-			 * which hold the active editor
-			 * */
-			PartStack newPart = createStack(editorSashContainer);
-			editorSashContainer.stack(currentEditorPartPane, newPart);
-			if (rootLayoutContainer instanceof LayoutPart) {
-				ILayoutContainer cont = ((LayoutPart) rootLayoutContainer).getContainer();
-				if (cont instanceof PartSashContainer) {
-					// "Split" the editor area by adding the new part
-					((PartSashContainer) cont).add(newPart);
+		}
+		
+		if(mainEditor != null) {
+			//get the editor stack of the main editor
+			//see if there are more than one editors in it			
+			PartStack mainStack = (PartStack)(((PartSite)mainEditor.getSite()).getPane().getContainer());
+									
+			if(mainStack.getChildren().length > 1) {
+				//split the main stack
+				PartPane anotherPane = getAnotherPane(mainStack,((PartSite)mainEditor.getSite()).getPane());				
+				//if there exists another stack, move the one to the new stack
+				LayoutPart[] sashChildren = ((EditorSashContainer)mainStack.getContainer()).getChildren();
+				if(sashChildren.length > 1) {
+					PartStack anotherStack = getAotherStack((EditorSashContainer)mainStack.getContainer(), mainStack);
+					if(anotherStack != null) {
+						mainStack.remove(anotherPane);
+						anotherStack.add(anotherPane);
+						return;
+					}					
+				}else {//if there is no new stack, create a new stack
+					EditorSashContainer ec = (EditorSashContainer)mainStack.getContainer();
+					PartStack anotherStack = EditorStack.newEditorWorkbook(ec, (WorkbenchPage)workbenchPage);
+					ec.add(anotherStack, IPageLayout.RIGHT, 0.65f, ec.findBottomRight());
+					mainStack.remove(anotherPane);
+					anotherStack.add(anotherPane);
+					return;
 				}
 			}
 		}
-	}
 	
-	private static PartStack createStack(EditorSashContainer editorSashContainer) {
-		WorkbenchPage workbenchPage = (WorkbenchPage) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		EditorStack newWorkbook = EditorStack.newEditorWorkbook(editorSashContainer, workbenchPage);
-		return newWorkbook;
+//		// Do it only if we have more that one editor
+//		if (editorReferences.length > 1) {
+//			// Get PartPane that correspond to the active editor
+//			PartPane currentEditorPartPane = ((PartSite) workbenchPage.getActiveEditor().getSite()).getPane();
+//			EditorSashContainer editorSashContainer = null;
+//			ILayoutContainer rootLayoutContainer = layoutPart.getContainer();
+//			if (rootLayoutContainer instanceof LayoutPart) {
+//				ILayoutContainer editorSashLayoutContainer = ((LayoutPart) rootLayoutContainer).getContainer();
+//				if (editorSashLayoutContainer instanceof EditorSashContainer) {
+//					editorSashContainer = ((EditorSashContainer) editorSashLayoutContainer);
+//				}
+//			}
+//			/*
+//			 * Create a new part stack (i.e. a workbook) to home the currentEditorPartPane
+//			 * which hold the active editor
+//			 * */
+//			PartStack newPart = createStack(editorSashContainer);
+//			//newPart.getChildren();
+//			editorSashContainer.stack(currentEditorPartPane, newPart);
+//			if (rootLayoutContainer instanceof LayoutPart) {
+//				ILayoutContainer cont = ((LayoutPart) rootLayoutContainer).getContainer();
+//				if (cont instanceof PartSashContainer) {
+//					// "Split" the editor area by adding the new part
+//					PartSashContainer c = (PartSashContainer)cont;
+//					c.add(newPart, IPageLayout.RIGHT, 0.65f, c.findBottomRight()); 
+//				}
+//			}
+//		}
 	}
 
+	
+	private static PartPane getAnotherPane(PartStack mainStack, PartPane mainPane) {
+		LayoutPart[] children = mainStack.getChildren();
+		for(int i = 0; i < children.length; i++) {
+			if((PartPane)children[i] != mainPane) {
+				return (PartPane)children[i];
+			}
+		}
+		return null;
+	}
+	
+	private static PartStack getAotherStack(EditorSashContainer mainSash, PartStack mainStack) {
+		LayoutPart[] children = mainSash.getChildren();
+		for(int i = 0; i < children.length; i++) {
+			if((PartStack)children[i] != mainStack) {
+				return (PartStack)children[i];
+			}
+		}
+		return null;
+	}
+	
 }
