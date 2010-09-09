@@ -94,16 +94,6 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 	 */
 	protected String id = BpwmeAssistant.getUniqueEBID();
 
-	/**
-	 * The cached value of the '{@link #getExtendedAttributes() <em>Extended Attributes</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getExtendedAttributes()
-	 * 
-	 * @ordered
-	 */
-	protected ExtendedAttributes extendedAttributes;
-
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -187,35 +177,6 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.EB_PROC__ID, oldId, id));
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ExtendedAttributes getExtendedAttributes() {
-		return extendedAttributes;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ExtendedAttributes basicGetExtendedAttributes() {
-		return extendedAttributes;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setExtendedAttributes(ExtendedAttributes newExtendedAttributes) {
-		ExtendedAttributes oldExtendedAttributes = extendedAttributes;
-		extendedAttributes = newExtendedAttributes;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.EB_PROC__EXTENDED_ATTRIBUTES, oldExtendedAttributes, extendedAttributes));
-	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -231,9 +192,6 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 				return getName();
 			case BpwmePackage.EB_PROC__ID:
 				return getId();
-			case BpwmePackage.EB_PROC__EXTENDED_ATTRIBUTES:
-				if (resolve) return getExtendedAttributes();
-				return basicGetExtendedAttributes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -254,9 +212,6 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 				return;
 			case BpwmePackage.EB_PROC__ID:
 				setId((String)newValue);
-				return;
-			case BpwmePackage.EB_PROC__EXTENDED_ATTRIBUTES:
-				setExtendedAttributes((ExtendedAttributes)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -279,9 +234,6 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 			case BpwmePackage.EB_PROC__ID:
 				setId(ID_EDEFAULT);
 				return;
-			case BpwmePackage.EB_PROC__EXTENDED_ATTRIBUTES:
-				setExtendedAttributes((ExtendedAttributes)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -300,8 +252,6 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case BpwmePackage.EB_PROC__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case BpwmePackage.EB_PROC__EXTENDED_ATTRIBUTES:
-				return extendedAttributes != null;
 		}
 		return super.eIsSet(featureID);
 	}

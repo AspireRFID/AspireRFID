@@ -82,31 +82,6 @@ public interface OLCBProc extends Node {
 	 */
 	void setId(String value);
 
-	/**
-	 * Returns the value of the '<em><b>Transitions</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Transitions</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Transitions</em>' reference.
-	 * @see #setTransitions(Transitions)
-	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getOLCBProc_Transitions()
-	 * @model
-	 * @generated
-	 */
-	Transitions getTransitions();
-
-	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.OLCBProc#getTransitions <em>Transitions</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Transitions</em>' reference.
-	 * @see #getTransitions()
-	 * @generated
-	 */
-	void setTransitions(Transitions value);
 
 	/**
 	 * Returns the value of the '<em><b>CLCB Proc</b></em>' containment reference list.

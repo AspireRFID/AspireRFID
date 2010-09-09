@@ -111,30 +111,31 @@ public interface CLCBProc extends Node {
 	void setId(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Transitions</b></em>' reference.
+	 * Returns the value of the '<em><b>Biz Location File</b></em>' attribute.
+	 * The default value is <code>""</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Transitions</em>' reference isn't clear,
+	 * If the meaning of the '<em>Biz Location File</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Transitions</em>' reference.
-	 * @see #setTransitions(Transitions)
-	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getCLCBProc_Transitions()
-	 * @model
+	 * @return the value of the '<em>Biz Location File</em>' attribute.
+	 * @see #setBizLocationFile(String)
+	 * @see bpwme.BpwmePackage#getCLCBProc_BizLocationFile()
+	 * @model default=""
 	 * @generated
 	 */
-	Transitions getTransitions();
+	String getBizLocationFile();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getTransitions <em>Transitions</em>}' reference.
+	 * Sets the value of the '{@link bpwme.CLCBProc#getBizLocationFile <em>Biz Location File</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Transitions</em>' reference.
-	 * @see #getTransitions()
+	 * @param value the new value of the '<em>Biz Location File</em>' attribute.
+	 * @see #getBizLocationFile()
 	 * @generated
 	 */
-	void setTransitions(Transitions value);
+	void setBizLocationFile(String value);
 
 	/**
 	 * Returns the value of the '<em><b>EB Proc</b></em>' containment reference list.

@@ -6,12 +6,12 @@
  */
 package org.ow2.aspirerfid.ide.bpwme.util;
 
+import org.ow2.aspirerfid.ide.bpwme.*;
 
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.ow2.aspirerfid.ide.bpwme.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,7 +23,7 @@ import org.ow2.aspirerfid.ide.bpwme.*;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage
+ * @see bpwme.BpwmePackage
  * @generated
  */
 public class BpwmeSwitch<T> {
@@ -126,36 +126,6 @@ public class BpwmeSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BpwmePackage.TRANSITIONS: {
-				Transitions transitions = (Transitions)theEObject;
-				T result = caseTransitions(transitions);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case BpwmePackage.TRANSITION: {
-				Transition transition = (Transition)theEObject;
-				T result = caseTransition(transition);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case BpwmePackage.EXTENDED_ATTRIBUTE: {
-				ExtendedAttribute extendedAttribute = (ExtendedAttribute)theEObject;
-				T result = caseExtendedAttribute(extendedAttribute);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case BpwmePackage.EXTENDED_ATTRIBUTES: {
-				ExtendedAttributes extendedAttributes = (ExtendedAttributes)theEObject;
-				T result = caseExtendedAttributes(extendedAttributes);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case BpwmePackage.CONDITION: {
-				Condition condition = (Condition)theEObject;
-				T result = caseCondition(condition);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -247,81 +217,6 @@ public class BpwmeSwitch<T> {
 	 * @generated
 	 */
 	public T caseEBProc(EBProc object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Transitions</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Transitions</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTransitions(Transitions object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Transition</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Transition</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTransition(Transition object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Extended Attribute</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Extended Attribute</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseExtendedAttribute(ExtendedAttribute object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Extended Attributes</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Extended Attributes</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseExtendedAttributes(ExtendedAttributes object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Condition</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Condition</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCondition(Condition object) {
 		return null;
 	}
 

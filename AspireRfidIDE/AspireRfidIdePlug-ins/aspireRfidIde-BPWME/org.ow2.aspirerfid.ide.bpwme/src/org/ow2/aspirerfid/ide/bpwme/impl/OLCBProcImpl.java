@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.ow2.aspirerfid.ide.bpwme.BpwmePackage;
 import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
-import org.ow2.aspirerfid.ide.bpwme.Transitions;
 import org.ow2.aspirerfid.ide.bpwme.util.BpwmeAssistant;
 
 /**
@@ -84,15 +83,6 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 	 */
 	protected String id = BpwmeAssistant.getUniqueOLCBID();
 
-	/**
-	 * The cached value of the '{@link #getTransitions() <em>Transitions</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTransitions()
-	 * @generated
-	 * @ordered
-	 */
-	protected Transitions transitions;
 
 	/**
 	 * The cached value of the '{@link #getCLCBProc() <em>CLCB Proc</em>}' containment reference list.
@@ -165,43 +155,6 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.OLCB_PROC__ID, oldId, id));
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Transitions getTransitions() {
-		if (transitions != null && transitions.eIsProxy()) {
-			InternalEObject oldTransitions = (InternalEObject)transitions;
-			transitions = (Transitions)eResolveProxy(oldTransitions);
-			if (transitions != oldTransitions) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BpwmePackage.OLCB_PROC__TRANSITIONS, oldTransitions, transitions));
-			}
-		}
-		return transitions;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Transitions basicGetTransitions() {
-		return transitions;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTransitions(Transitions newTransitions) {
-		Transitions oldTransitions = transitions;
-		transitions = newTransitions;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.OLCB_PROC__TRANSITIONS, oldTransitions, transitions));
-	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -241,9 +194,6 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 				return getName();
 			case BpwmePackage.OLCB_PROC__ID:
 				return getId();
-			case BpwmePackage.OLCB_PROC__TRANSITIONS:
-				if (resolve) return getTransitions();
-				return basicGetTransitions();
 			case BpwmePackage.OLCB_PROC__CLCB_PROC:
 				return getCLCBProc();
 		}
@@ -264,9 +214,6 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 				return;
 			case BpwmePackage.OLCB_PROC__ID:
 				setId((String)newValue);
-				return;
-			case BpwmePackage.OLCB_PROC__TRANSITIONS:
-				setTransitions((Transitions)newValue);
 				return;
 			case BpwmePackage.OLCB_PROC__CLCB_PROC:
 				getCLCBProc().clear();
@@ -290,9 +237,6 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 			case BpwmePackage.OLCB_PROC__ID:
 				setId(ID_EDEFAULT);
 				return;
-			case BpwmePackage.OLCB_PROC__TRANSITIONS:
-				setTransitions((Transitions)null);
-				return;
 			case BpwmePackage.OLCB_PROC__CLCB_PROC:
 				getCLCBProc().clear();
 				return;
@@ -312,8 +256,6 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case BpwmePackage.OLCB_PROC__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case BpwmePackage.OLCB_PROC__TRANSITIONS:
-				return transitions != null;
 			case BpwmePackage.OLCB_PROC__CLCB_PROC:
 				return cLCBProc != null && !cLCBProc.isEmpty();
 		}

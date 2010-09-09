@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.ow2.aspirerfid.ide.bpwme.BpwmePackage;
 import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.EBProc;
-import org.ow2.aspirerfid.ide.bpwme.Transitions;
 import org.ow2.aspirerfid.ide.bpwme.util.BpwmeAssistant;
 
 /**
@@ -96,6 +95,26 @@ public class CLCBProcImpl extends NodeImpl implements CLCBProc {
 	protected static final String ID_EDEFAULT = "";
 
 	/**
+	 * The default value of the '{@link #getBizLocationFile() <em>Biz Location File</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBizLocationFile()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String BIZ_LOCATION_FILE_EDEFAULT = "";
+
+	/**
+	 * The cached value of the '{@link #getBizLocationFile() <em>Biz Location File</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBizLocationFile()
+	 * @generated
+	 * @ordered
+	 */
+	protected String bizLocationFile = BIZ_LOCATION_FILE_EDEFAULT;
+
+	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -104,16 +123,6 @@ public class CLCBProcImpl extends NodeImpl implements CLCBProc {
 	 * @ordered
 	 */
 	protected String id = BpwmeAssistant.getUniqueCLCBID();
-
-	/**
-	 * The cached value of the '{@link #getTransitions() <em>Transitions</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTransitions()
-	 * @generated
-	 * @ordered
-	 */
-	protected Transitions transitions;
 
 	/**
 	 * The cached value of the '{@link #getEBProc() <em>EB Proc</em>}' containment reference list.
@@ -207,21 +216,14 @@ public class CLCBProcImpl extends NodeImpl implements CLCBProc {
 			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.CLCB_PROC__ID, oldId, id));
 	}
 
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Transitions getTransitions() {
-		if (transitions != null && transitions.eIsProxy()) {
-			InternalEObject oldTransitions = (InternalEObject)transitions;
-			transitions = (Transitions)eResolveProxy(oldTransitions);
-			if (transitions != oldTransitions) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BpwmePackage.CLCB_PROC__TRANSITIONS, oldTransitions, transitions));
-			}
-		}
-		return transitions;
+	public String getBizLocationFile() {
+		return bizLocationFile;
 	}
 
 	/**
@@ -229,20 +231,11 @@ public class CLCBProcImpl extends NodeImpl implements CLCBProc {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Transitions basicGetTransitions() {
-		return transitions;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTransitions(Transitions newTransitions) {
-		Transitions oldTransitions = transitions;
-		transitions = newTransitions;
+	public void setBizLocationFile(String newBizLocationFile) {
+		String oldBizLocationFile = bizLocationFile;
+		bizLocationFile = newBizLocationFile;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.CLCB_PROC__TRANSITIONS, oldTransitions, transitions));
+			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.CLCB_PROC__BIZ_LOCATION_FILE, oldBizLocationFile, bizLocationFile));
 	}
 
 	/**
@@ -285,9 +278,6 @@ public class CLCBProcImpl extends NodeImpl implements CLCBProc {
 				return getName();
 			case BpwmePackage.CLCB_PROC__ID:
 				return getId();
-			case BpwmePackage.CLCB_PROC__TRANSITIONS:
-				if (resolve) return getTransitions();
-				return basicGetTransitions();
 			case BpwmePackage.CLCB_PROC__EB_PROC:
 				return getEBProc();
 		}
@@ -303,17 +293,17 @@ public class CLCBProcImpl extends NodeImpl implements CLCBProc {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case BpwmePackage.CLCB_PROC__DESCRIPTION:
-				setDescription((String)newValue);
+			case BpwmePackage.CLCB_PROC__ID:
+				setId((String)newValue);
 				return;
 			case BpwmePackage.CLCB_PROC__NAME:
 				setName((String)newValue);
 				return;
-			case BpwmePackage.CLCB_PROC__ID:
-				setId((String)newValue);
+			case BpwmePackage.CLCB_PROC__DESCRIPTION:
+				setDescription((String)newValue);
 				return;
-			case BpwmePackage.CLCB_PROC__TRANSITIONS:
-				setTransitions((Transitions)newValue);
+			case BpwmePackage.CLCB_PROC__BIZ_LOCATION_FILE:
+				setBizLocationFile((String)newValue);
 				return;
 			case BpwmePackage.CLCB_PROC__EB_PROC:
 				getEBProc().clear();
@@ -331,17 +321,17 @@ public class CLCBProcImpl extends NodeImpl implements CLCBProc {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case BpwmePackage.CLCB_PROC__DESCRIPTION:
-				setDescription(DESCRIPTION_EDEFAULT);
+			case BpwmePackage.CLCB_PROC__ID:
+				setId(ID_EDEFAULT);
 				return;
 			case BpwmePackage.CLCB_PROC__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case BpwmePackage.CLCB_PROC__ID:
-				setId(ID_EDEFAULT);
+			case BpwmePackage.CLCB_PROC__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
 				return;
-			case BpwmePackage.CLCB_PROC__TRANSITIONS:
-				setTransitions((Transitions)null);
+			case BpwmePackage.CLCB_PROC__BIZ_LOCATION_FILE:
+				setBizLocationFile(BIZ_LOCATION_FILE_EDEFAULT);
 				return;
 			case BpwmePackage.CLCB_PROC__EB_PROC:
 				getEBProc().clear();
@@ -358,14 +348,14 @@ public class CLCBProcImpl extends NodeImpl implements CLCBProc {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case BpwmePackage.CLCB_PROC__DESCRIPTION:
-				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
-			case BpwmePackage.CLCB_PROC__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case BpwmePackage.CLCB_PROC__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case BpwmePackage.CLCB_PROC__TRANSITIONS:
-				return transitions != null;
+			case BpwmePackage.CLCB_PROC__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case BpwmePackage.CLCB_PROC__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case BpwmePackage.CLCB_PROC__BIZ_LOCATION_FILE:
+				return BIZ_LOCATION_FILE_EDEFAULT == null ? bizLocationFile != null : !BIZ_LOCATION_FILE_EDEFAULT.equals(bizLocationFile);
 			case BpwmePackage.CLCB_PROC__EB_PROC:
 				return eBProc != null && !eBProc.isEmpty();
 		}
@@ -382,12 +372,14 @@ public class CLCBProcImpl extends NodeImpl implements CLCBProc {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (description: ");
-		result.append(description);
+		result.append(" (id: ");
+		result.append(id);
 		result.append(", name: ");
 		result.append(name);
-		result.append(", id: ");
-		result.append(id);
+		result.append(", description: ");
+		result.append(description);
+		result.append(", bizLocationFile: ");
+		result.append(bizLocationFile);
 		result.append(')');
 		return result.toString();
 	}

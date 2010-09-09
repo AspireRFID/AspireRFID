@@ -65,9 +65,6 @@ public class BpwmeFactoryImpl extends EFactoryImpl implements BpwmeFactory {
 			case BpwmePackage.OLCB_PROC: return createOLCBProc();
 			case BpwmePackage.CLCB_PROC: return createCLCBProc();
 			case BpwmePackage.EB_PROC: return createEBProc();
-			case BpwmePackage.TRANSITIONS: return createTransitions();
-			case BpwmePackage.TRANSITION: return createTransition();
-			case BpwmePackage.CONDITION: return createCondition();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -123,37 +120,6 @@ public class BpwmeFactoryImpl extends EFactoryImpl implements BpwmeFactory {
 		return ebProc;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Transitions createTransitions() {
-		TransitionsImpl transitions = new TransitionsImpl();
-		return transitions;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Transition createTransition() {
-		TransitionImpl transition = new TransitionImpl();
-		return transition;
-	}
-
-
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Condition createCondition() {
-		ConditionImpl condition = new ConditionImpl();
-		return condition;
-	}
 
 	/**
 	 * <!-- begin-user-doc -->
