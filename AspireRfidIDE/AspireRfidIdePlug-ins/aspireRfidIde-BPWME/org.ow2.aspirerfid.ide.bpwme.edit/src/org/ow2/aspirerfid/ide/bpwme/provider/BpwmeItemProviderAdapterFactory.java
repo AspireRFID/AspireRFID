@@ -197,73 +197,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected TransitionsItemProvider transitionsItemProvider;
 
-	/**
-	 * This creates an adapter for a {@link org.ow2.aspirerfid.ide.bpwme.Transitions}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createTransitionsAdapter() {
-		if (transitionsItemProvider == null) {
-			transitionsItemProvider = new TransitionsItemProvider(this);
-		}
-
-		return transitionsItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.ide.bpwme.Transition} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected TransitionItemProvider transitionItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.ow2.aspirerfid.ide.bpwme.Transition}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createTransitionAdapter() {
-		if (transitionItemProvider == null) {
-			transitionItemProvider = new TransitionItemProvider(this);
-		}
-
-		return transitionItemProvider;
-	}
-
-
-
-
-
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.ide.bpwme.Condition} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ConditionItemProvider conditionItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.ow2.aspirerfid.ide.bpwme.Condition}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createConditionAdapter() {
-		if (conditionItemProvider == null) {
-			conditionItemProvider = new ConditionItemProvider(this);
-		}
-
-		return conditionItemProvider;
-	}
 
 	/**
 	 * This returns the root adapter factory that contains this factory.
@@ -369,9 +303,6 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 		if (olcbProcItemProvider != null) olcbProcItemProvider.dispose();
 		if (clcbProcItemProvider != null) clcbProcItemProvider.dispose();
 		if (ebProcItemProvider != null) ebProcItemProvider.dispose();
-		if (transitionsItemProvider != null) transitionsItemProvider.dispose();
-		if (transitionItemProvider != null) transitionItemProvider.dispose();
-		if (conditionItemProvider != null) conditionItemProvider.dispose();
 	}
 
 }
