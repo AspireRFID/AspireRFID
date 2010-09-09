@@ -66,7 +66,7 @@ public class EBProcItemProvider
 			addNamePropertyDescriptor(object);
 			addIdPropertyDescriptor(object);
 			//addTestPropertyDescriptor(object);
-			addExtendedAttributesPropertyDescriptor(object);
+			//addExtendedAttributesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
