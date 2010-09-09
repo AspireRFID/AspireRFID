@@ -167,6 +167,7 @@
             class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DiagramRulersAndGridPreferencePage">
       </page>
       <page
+            category="org.ow2.aspirerfid.ide.bpwme.diagram.general"
             class="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DataPreferencePage"
             id="org.ow2.aspirerfid.ide.bpwme.diagram.preferences.DataPreferencePage"
             name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.data">

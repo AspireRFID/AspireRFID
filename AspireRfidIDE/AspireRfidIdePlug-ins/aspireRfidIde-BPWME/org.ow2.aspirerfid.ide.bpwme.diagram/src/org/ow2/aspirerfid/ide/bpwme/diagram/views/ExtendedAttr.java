@@ -73,8 +73,9 @@ public class ExtendedAttr extends ViewPart {
 			return null;
 		}
 		
-		
-		
+		public void setValue(String value) {
+			this.value = value;
+		}
 	}
 	
 	class ExtendedAttrContentProvider implements IStructuredContentProvider {
@@ -112,6 +113,37 @@ public class ExtendedAttr extends ViewPart {
 			return null;
 		}
 	}
+	
+	class ExtendedCellModifier implements ICellModifier {
+
+		@Override
+		public boolean canModify(Object element, String property) {
+			if (property.equals("value")) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+
+		@Override
+		public Object getValue(Object element, String property) {
+			ExtendedAttribute ea = (ExtendedAttribute)element;
+			if(property.equals("value")) {
+				return ea.getValue();
+			}else if(property.equals("name")) {
+				return ea.getName();
+			}
+			return null;
+		}
+
+		@Override
+		public void modify(Object element, String property, Object value) {
+			ExtendedAttribute ea = (ExtendedAttribute)element;
+			if(property.equals("value")) {
+				ea.setValue((String)value);
+			}
+		}
+	}
 
 	/**
 	 * The constructor.
@@ -141,6 +173,11 @@ public class ExtendedAttr extends ViewPart {
 		viewer.setContentProvider(new ExtendedAttrContentProvider());
 		viewer.setLabelProvider(new ExtendedAttrLabelProvider());
 		viewer.setInput(getViewSite());
+		viewer.setColumnProperties(new String[] {"name", "value"});
+		viewer.setCellModifier(new ExtendedCellModifier());
+		
+		CellEditor[] editors = new CellEditor[2];
+		editors[1] = new ComboBoxCellEditor();
 	}
 
 	/**
