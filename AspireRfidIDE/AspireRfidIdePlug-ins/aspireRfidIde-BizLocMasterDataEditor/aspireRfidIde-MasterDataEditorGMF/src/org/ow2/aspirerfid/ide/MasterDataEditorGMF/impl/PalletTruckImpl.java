@@ -43,6 +43,7 @@ public class PalletTruckImpl extends AbstractContainerImpl implements PalletTruc
 	 */
 	protected PalletTruckImpl() {
 		super();
+		setType("PalletTruck");
 	}
 
 	/**

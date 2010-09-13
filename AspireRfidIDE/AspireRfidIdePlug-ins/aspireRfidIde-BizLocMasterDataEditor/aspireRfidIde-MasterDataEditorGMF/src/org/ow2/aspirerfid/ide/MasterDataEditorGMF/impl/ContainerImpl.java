@@ -43,6 +43,7 @@ public class ContainerImpl extends AbstractContainerImpl implements Container {
 	 */
 	protected ContainerImpl() {
 		super();
+		setType("Container");
 	}
 
 	/**

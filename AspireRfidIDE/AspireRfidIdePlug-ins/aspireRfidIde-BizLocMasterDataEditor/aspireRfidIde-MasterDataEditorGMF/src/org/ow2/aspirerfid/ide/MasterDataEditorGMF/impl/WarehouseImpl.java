@@ -43,6 +43,7 @@ public class WarehouseImpl extends AbstractWarehouseImpl implements Warehouse {
 	 */
 	protected WarehouseImpl() {
 		super();
+		setType("Warehouse");
 	}
 
 	/**

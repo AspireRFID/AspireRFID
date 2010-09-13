@@ -43,6 +43,7 @@ public class PushArmImpl extends AbstractContainerImpl implements PushArm {
 	 */
 	protected PushArmImpl() {
 		super();
+		setType("PushArm");
 	}
 
 	/**

@@ -43,6 +43,7 @@ public class GateImpl extends AbstractContainerImpl implements Gate {
 	 */
 	protected GateImpl() {
 		super();
+		setType("Gate");
 	}
 
 	/**
