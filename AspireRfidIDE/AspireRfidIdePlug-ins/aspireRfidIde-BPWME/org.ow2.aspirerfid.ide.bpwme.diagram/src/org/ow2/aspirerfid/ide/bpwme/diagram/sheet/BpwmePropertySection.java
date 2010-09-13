@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
+import org.ow2.aspirerfid.ide.bpwme.test.FakeProperties;
 
 
 /**
@@ -28,9 +29,14 @@ public class BpwmePropertySection extends AdvancedPropertySection implements
 
 	
 	/**
-	 * @generated
+	 * modified by yluo
 	 */
 	public IPropertySource getPropertySource(Object object) {
+		//inject in a fake property viewer
+		if (object instanceof org.ow2.aspirerfid.ide.bpwme.EBProc) {
+			return new FakeProperties();
+		}
+		//add end
 		if (object instanceof IPropertySource) {
 			return (IPropertySource) object;
 		}

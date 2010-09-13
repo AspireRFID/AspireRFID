@@ -288,9 +288,10 @@ ITabbedPropertySheetPageContributor{
 		
 		newReadPointButton = new Button(generalInfoGroup, SWT.NONE);
 		newReadPointButton.setText("+");
+		newReadPointButton.setToolTipText("Create new read point in editor");
 
 		refreshReadPointButton = new Button(generalInfoGroup, SWT.NONE);
-		refreshReadPointButton.setToolTipText("Refresh");
+		refreshReadPointButton.setToolTipText("Get location data from editor");
 		refreshReadPointButton.setImage(ResourceManager.getPluginImage(BpwmeDiagramEditorPlugin.getInstance(),"icons/s_reload.png"));
 		
 		final Label businessStepLabel = new Label(generalInfoGroup, SWT.NONE);
@@ -423,6 +424,14 @@ ITabbedPropertySheetPageContributor{
 		//set actions for the '+' buttons
 		//new read point button should jump to the existing master data diagram
 		//editor or invoke the method to create a new diagram
+		//now the logic behind the button is a little bit complicated.
+		//1. first, system will check if there is a valid file mapped with this clcb
+		//2. if so, open the file
+		//3. else, promote a dialog, let the users to choose
+		//3.1 whether user will create a new file or
+		//3.2 open an existing file or
+		//3.3 use an editor existed in the workspace
+		//3.4 when doing so, also update the fileString field in clcb
 		newReadPointButton.addSelectionListener(new SelectionAdapter(){
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -438,7 +447,7 @@ ITabbedPropertySheetPageContributor{
 					return;
 				}
 			}
-		});		
+		});	
 		refreshReadPointButton.addSelectionListener(new SelectionAdapter(){
 			@Override
 			public void widgetSelected(SelectionEvent e) {
