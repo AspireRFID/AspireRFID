@@ -51,19 +51,19 @@
          <menu
                id="org.ow2.aspirerfid.ide.main.filemenu"
                label="File">
-            <separator
-                  name="org.ow2.aspirerfid.ide.main.windowmenu.separator2"
-                  visible="true">
-            </separator>
-            <command
-                  commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.layout.actions.SquareLayoutAction.command"
-                  label="MasterDataEditorGMF Square Layout"
-                  style="push">
-            </command>
-            <separator
-                  name="org.ow2.aspirerfid.ide.main.windowmenu.separator3"
-                  visible="true">
-            </separator>
+            <menu
+                  id="org.ow2.aspirerfid.ide.main.filemenu.masterdataeditorgmfdiagram"
+                  label="MasterDataEditorGMF Diagram">
+               <command
+                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.layout.actions.SquareLayoutAction.command"
+                     label="MasterDataEditorGMF Square Layout"
+                     style="push">
+               </command>
+               <separator
+                     name="org.ow2.aspirerfid.ide.main.windowmenu.separator1"
+                     visible="true">
+               </separator>
+            </menu>
          </menu>
       </menuContribution>
    </extension>

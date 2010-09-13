@@ -30,6 +30,8 @@ import org.eclipse.gmf.runtime.notation.Bounds;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorPlugin;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences.DiagramConfiguratorPreferenceConstants;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
@@ -103,6 +105,14 @@ public class SquareLayoutProvider extends AbstractLayoutNodeProvider {
 					bounds.setY((i / rowsize) * gridHeight);
 					lnode.getNode().setLayoutConstraint(bounds);
 					
+					if (MasterDataEditorGMFDiagramEditorPlugin.getInstance().getPreferenceStore()
+							.getBoolean(DiagramConfiguratorPreferenceConstants.P_Size)) {
+						bounds.setHeight(MasterDataEditorGMFDiagramEditorPlugin.getInstance().getPreferenceStore()
+										.getInt(DiagramConfiguratorPreferenceConstants.P_Size_Height));
+						bounds.setWidth(MasterDataEditorGMFDiagramEditorPlugin.getInstance().getPreferenceStore()
+										.getInt(DiagramConfiguratorPreferenceConstants.P_Size_Width));
+					}
+
 					i++;
 				}
 			}
