@@ -85,9 +85,10 @@ public class AbstractWarehouseItemProvider
 			addTypePropertyDescriptor(object);
 			
 			int i = MasterDataEditParts.getNewWarehouseAttr().length;
-			
+
 			switch (i) {
-			case 1:addAttr1PropertyDescriptor(object);break;
+			case 0:break;
+			case 1:if (!(MasterDataEditParts.getNewWarehouseAttr()[0].isEmpty() && MasterDataEditParts.getNewWarehouseAttr()[0] == "")) addAttr1PropertyDescriptor(object);break;
 			case 2:addAttr1PropertyDescriptor(object);addAttr2PropertyDescriptor(object);break;
 			case 3:addAttr1PropertyDescriptor(object);addAttr2PropertyDescriptor(object);addAttr3PropertyDescriptor(object);break;
 			case 4:addAttr1PropertyDescriptor(object);addAttr2PropertyDescriptor(object);addAttr3PropertyDescriptor(object);addAttr4PropertyDescriptor(object);break;
