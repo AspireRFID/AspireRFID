@@ -446,6 +446,8 @@ public class EBProcEditPart extends ShapeNodeEditPart {
 						notification.getNewStringValue());
 			}else if(ei.getName().equals("description")) {
 				ebproc.setDescription(notification.getNewStringValue());
+			}else {
+				return;
 			}
 			
 			mc.saveObject();

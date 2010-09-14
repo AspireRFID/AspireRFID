@@ -387,8 +387,10 @@ public interface BpwmePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EB_PROC_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
+	int EB_PROC_FEATURE_COUNT = NODE_FEATURE_COUNT + 4;
 
+	
+	int EB_PROC_FAKE_FEATURE = NODE_FEATURE_COUNT + 3;
 
 	/**
 	 * Returns the meta object for class '{@link bpwme.WorkflowMap <em>Workflow Map</em>}'.
