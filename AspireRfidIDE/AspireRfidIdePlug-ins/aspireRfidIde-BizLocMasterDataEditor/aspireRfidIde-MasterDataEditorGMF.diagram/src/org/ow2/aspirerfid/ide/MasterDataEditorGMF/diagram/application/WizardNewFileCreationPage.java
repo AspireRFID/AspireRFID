@@ -17,6 +17,8 @@
 
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.application;
 
+import java.io.File;
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -60,15 +62,21 @@ public class WizardNewFileCreationPage extends WizardPage {
 	private Text fileNameEditor;
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public WizardNewFileCreationPage(String name,
 			IStructuredSelection currentSelection) {
 		super(name);
 		this.currentSelection = currentSelection;
-		String home = System.getProperty("user.home"); //$NON-NLS-1$
-		if (home != null) {
-			initialContainerFullPath = new Path(home);
+		String fileSeparator =	System.getProperty("file.separator");
+		String home = System.getProperty("user.home");
+		//the path where the MasterDataEditorGMF files should be created
+		String path = home + fileSeparator + "AspireRFID" + fileSeparator + "IDE" + fileSeparator + "BPWME" + fileSeparator; //$NON-NLS-1$
+		File directory = new File(path);
+		if(!directory.exists())
+			directory.mkdirs();
+		if (path != null) {
+			initialContainerFullPath = new Path(path);
 		}
 	}
 

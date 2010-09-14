@@ -30,15 +30,13 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFQuery;
 import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
  *
  */
-public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
+public class NewMasterDataEditorGMFWizard extends Wizard implements
 		INewWizard {
 
 	/**
@@ -55,11 +53,6 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 	 * @generated
 	 */
 	protected NewMasterDataEditorGMFWizardPage diagramModelFilePage;
-	
-	/**
-	 * @generated
-	 */
-	protected OpenMasterDataEditorGMFFromEpcisWizardPage diagramModelPage;
 
 	/**
 	 * @generated
@@ -125,7 +118,7 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.workbench = workbench;
 		this.selection = selection;
-		setWindowTitle("Open MasterDataEditorGMF Diagram");
+		setWindowTitle(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizardTitle);
 		ImageDescriptor descriptor = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorPlugin.
 			imageDescriptorFromPlugin("org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram", "icons/wizban/NewMasterDataEditorGMFWizard.gif");
 		setDefaultPageImageDescriptor(descriptor); //$NON-NLS-1$
@@ -136,18 +129,10 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 	 * @generated
 	 */
 	public void addPages() {
-		diagramModelPage = new OpenMasterDataEditorGMFFromEpcisWizardPage (
-				"DiagramModel", getSelection()); //$NON-NLS-1$ //$NON-NLS-2$
-		diagramModelPage
-				.setTitle("Open MasterDataEditorGMF Diagram From Epcis");
-		diagramModelPage
-				.setDescription("Select the Company from Epcis that will create the diagram model.");
-		addPage(diagramModelPage);
-
 		diagramModelFilePage = new NewMasterDataEditorGMFWizardPage(
 				"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
 		diagramModelFilePage
-				.setTitle("Open MasterDataEditorGMF Diagram From Epcis");
+				.setTitle(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizard_DiagramModelFilePageTitle);
 		diagramModelFilePage
 				.setDescription(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizard_DiagramModelFilePageDescription);
 		//set the filename of the MasterDataEditorGMF file only if a CLCBProc is selected
@@ -163,10 +148,7 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 
 			public void run(IProgressMonitor monitor)
-					throws InvocationTargetException, InterruptedException {
-				MasterDataGMFQuery.setFromEPCIS(true);
-				MasterDataEditParts.setEpcisFileURI(diagramModelFilePage.getURI());
-				
+					throws InvocationTargetException, InterruptedException {				
 				diagram = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
 						.createDiagram(diagramModelFilePage.getURI(), monitor);
 				if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
@@ -174,7 +156,6 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 						org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
 								.openDiagram(diagram);
 					} catch (PartInitException e) {
-						MasterDataGMFQuery.setFromEPCIS(false);
 						ErrorDialog
 								.openError(
 										getContainer().getShell(),
@@ -187,10 +168,8 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 		try {
 			getContainer().run(false, true, op);
 		} catch (InterruptedException e) {
-			MasterDataGMFQuery.setFromEPCIS(false);
 			return false;
 		} catch (InvocationTargetException e) {
-			MasterDataGMFQuery.setFromEPCIS(false);
 			if (e.getTargetException() instanceof CoreException) {
 				ErrorDialog
 						.openError(

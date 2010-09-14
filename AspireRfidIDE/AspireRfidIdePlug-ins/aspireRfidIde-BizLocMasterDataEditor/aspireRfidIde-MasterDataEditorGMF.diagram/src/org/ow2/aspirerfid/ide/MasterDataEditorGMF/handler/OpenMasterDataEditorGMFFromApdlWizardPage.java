@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Composite;
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
  *
  */
-public class NewMasterDataEditorGMFWizardPage extends
+public class OpenMasterDataEditorGMFFromApdlWizardPage extends
 		org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.application.WizardNewFileCreationPage {
 
 	/**
@@ -37,7 +37,7 @@ public class NewMasterDataEditorGMFWizardPage extends
 	/**
 	 * @generated
 	 */
-	public NewMasterDataEditorGMFWizardPage(String pageName,
+	public OpenMasterDataEditorGMFFromApdlWizardPage(String pageName,
 			IStructuredSelection selection, String fileExtension) {
 		super(pageName, selection);
 		this.fileExtension = fileExtension;

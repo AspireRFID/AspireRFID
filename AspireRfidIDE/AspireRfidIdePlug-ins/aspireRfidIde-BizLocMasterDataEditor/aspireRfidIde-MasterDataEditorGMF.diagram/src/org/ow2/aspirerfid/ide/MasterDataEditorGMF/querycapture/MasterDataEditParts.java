@@ -32,14 +32,12 @@ import java.util.Map.Entry;
 
 import org.eclipse.gef.editparts.AbstractEditPart;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.emf.common.util.URI;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractContainer;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractWarehouse;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.Company;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.edit.parts.*;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.impl.AbstractContainerImpl;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.impl.AbstractWarehouseImpl;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.impl.CompanyImpl;
@@ -132,15 +130,29 @@ public class MasterDataEditParts {
 	private static String[] newReadPointAttr = null;
 
 	/**
-	 * Preference store for the new attributes
-	 */
-	private static IPreferenceStore store = MasterDataEditorGMFDiagramEditorPlugin.getInstance().getPreferenceStore();
-
-	/**
 	 * File URI to open EPCIS diagram
 	 */
-	public static URI epcisFileURI = null;
+	private static URI epcisFileURI = null;
 	
+//	/**
+//	 * File URIs to re-open diagrams
+//	 */
+//	public static ArrayList<URI> fileURI = new ArrayList<URI>();
+//
+//	/**
+//	 * @return the fileURI
+//	 */
+//	public static ArrayList<URI> getFileURI() {
+//		return fileURI;
+//	}
+//
+//	/**
+//	 * @param fileURI the fileURI to set
+//	 */
+//	public static void setFileURI(URI fileURI) {
+//		MasterDataEditParts.fileURI.add(fileURI);
+//	}
+//	
 	/**
 	 * @return the epcisFileURI
 	 */
@@ -276,13 +288,6 @@ public class MasterDataEditParts {
 			ArrayList<String> deletedReadPointURIs) {
 		MasterDataEditParts.deletedReadPointURIs = deletedReadPointURIs;
 	}
-
-	/**
-	 * @return the store
-	 */
-	public static IPreferenceStore getStore() {
-		return store;
-	}
 	
 	/**
 	 * @return the newCompanyAttr
@@ -386,6 +391,14 @@ public class MasterDataEditParts {
 				allParts.add((AbstractEditPart) allParts.get(i).getChildren().get(j));
 			}
 		}
+	}
+	
+	/**
+	 * Get all the parts
+	 */
+	public static ArrayList<AbstractEditPart> getAllParts() {
+		setAllParts();
+		return allParts;
 	}
 	
 	/**

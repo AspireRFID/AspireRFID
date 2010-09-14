@@ -17,15 +17,7 @@
 
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Map.Entry;
-
-import org.eclipse.gef.editparts.AbstractEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -34,10 +26,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.ui.IWorkbenchPartReference;
-import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.Company;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.edit.parts.CompanyEditPart;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.impl.CompanyImpl;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 
@@ -52,11 +41,6 @@ public class InsertMasterDataEditorGMFIntoEpcisWizardPage extends WizardPage {
 	 */
 	private final IStructuredSelection currentSelection;
 	
-	/**
-	 * CompanyEditPart
-	 */
-	private static CompanyEditPart companyEditPart = null;
-
 	/**
 	 * Constructor
 	 */
@@ -85,38 +69,31 @@ public class InsertMasterDataEditorGMFIntoEpcisWizardPage extends WizardPage {
 		list.setLayoutData(new FillLayout(SWT.VERTICAL));
 		list.setSize(500, 230);
 		
-		Set<Entry<IWorkbenchPartReference, CompanyEditPart>> set = MasterDataEditParts.getCompanyPartRef().entrySet();
-		Iterator<Entry<IWorkbenchPartReference, CompanyEditPart>> itr = set.iterator();
-
-		while (itr.hasNext()) {
-			Entry<IWorkbenchPartReference, CompanyEditPart> item = itr.next();
-			Company company = (CompanyImpl) ((View) item.getValue().getModel()).getElement();
-			list.add(company.getID());
+		for (int i = 0; i < EditorHandler.getOpenEditors().size(); i++) {
+			Company company = (CompanyImpl) ((View) EditorHandler.getOpenEditors().get(i).getModel()).getElement();
+			if (!(company.getID().isEmpty() && company.getID() == ""))
+				list.add(company.getID());
 		}
 		   
 	    list.addSelectionListener(new SelectionListener() {
 	        public void widgetSelected(SelectionEvent event) {
 	          String[] selectedItems = list.getSelection();
 	          String selection = selectedItems[0];
-	          System.out.println(selection);
 	          
 	          if (!(selection == null && selection == "")) {	        	  
-	        	Set<Entry<IWorkbenchPartReference, CompanyEditPart>> set1 = MasterDataEditParts.getCompanyPartRef().entrySet();
-				Iterator<Entry<IWorkbenchPartReference, CompanyEditPart>> itr1 = set1.iterator();
-					
-				while (itr1.hasNext()) {
-					Entry<IWorkbenchPartReference, CompanyEditPart> item1 = itr1.next();
-					Company company = (CompanyImpl) ((View) item1.getValue().getModel()).getElement();
-					if (company.getID().equals(selection))
-						MasterDataEditParts.setCompanyPart(item1.getValue());
-				}
+	      		for (int i = 0; i < EditorHandler.getOpenEditors().size(); i++) {
+	    			Company company = (CompanyImpl) ((View) EditorHandler.getOpenEditors().get(i).getModel()).getElement();
+	    			if (company.getID().equals(selection))
+	    				MasterDataEditParts.setCompanyPart(EditorHandler.getOpenEditors().get(i));
+	      		}
+	      		
 				System.out.println(MasterDataEditParts.getCompanyPart());
 				setPageComplete(true);
 	          }
 	        }
 	        
-        public void widgetDefaultSelected(SelectionEvent event) {
-          }
+	        public void widgetDefaultSelected(SelectionEvent event) {
+	        }
         });
 
 		setControl(plate);

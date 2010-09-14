@@ -66,6 +66,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.MasterDataEditorGMFFactory;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromApdlWizard;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFCreateFromFile;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFQuery;
 
 /**
@@ -246,6 +248,7 @@ public class MasterDataEditorGMFDiagramEditorUtil {
 							"Unable to create model and diagram", e); //$NON-NLS-1$
 		}
 		MasterDataGMFQuery.setFromEPCIS(false);
+		MasterDataGMFCreateFromFile.setFromApdl(false);
 		return diagramResource;
 	}
 
@@ -259,6 +262,9 @@ public class MasterDataEditorGMFDiagramEditorUtil {
 		
 		if (MasterDataGMFQuery.isFromEPCIS())
 			return MasterDataGMFQuery.createEpcisModel(MasterDataGMFQuery.getSelectedCompany());
+		else if (MasterDataGMFCreateFromFile.isFromApdl())
+			return MasterDataGMFCreateFromFile.createApdlModel(MasterDataGMFCreateFromFile.getClcProcNames()
+					.get(OpenMasterDataEditorGMFFromApdlWizard.getCount()));
 		else
 			return MasterDataEditorGMFFactory.eINSTANCE.createCompany();
 	}

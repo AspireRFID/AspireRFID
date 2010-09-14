@@ -21,6 +21,8 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
@@ -29,6 +31,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
@@ -36,11 +39,13 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.impl.AbstractWarehouseImpl;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.Warehouse;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.impl.WarehouseImpl;
 
 /**
  * @generated
@@ -289,6 +294,12 @@ public class WarehouseEditPart extends ShapeNodeEditPart {
 		public WrappingLabel getFigureWarehouseNameFigure() {
 			return fFigureWarehouseNameFigure;
 		}
+		
+//		@Override
+//		public void paintFigure(Graphics arg0) { 
+//			this.setPreferredSize(100, 150);	
+//			super.paintFigure(arg0);
+//		}
 
 	}
 
@@ -300,14 +311,32 @@ public class WarehouseEditPart extends ShapeNodeEditPart {
 			Display.getDefault().getSystemFont().getFontData()[0].getName(),
 			10, SWT.BOLD);
 
-	/**
-	 * @generated NOT
-	 */
-	protected void handleNotificationEvent(Notification event) {
-		super.handleNotificationEvent(event);
+//	/**
+//	 * @generated NOT
+//	 */
+//	protected void handleNotificationEvent(Notification event) {
+//		System.out.println("handled");
+//		super.handleNotificationEvent(event);
+//		int type = event.getEventType();
+//		Object feature = event.getFeature();
+////		System.out.println("type: " + type);
+////
+////		//if (event.getNotifier() instanceof AbstractWarehouseImpl) {
+////			System.out.println("in");
+////			Dimension size = new Dimension(100, 150);
+////		    int x = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE.getLocation_X())).intValue();
+////		    int y = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE.getLocation_Y())).intValue();
+////		    Point loc = new Point(x + 100, y + 100);
+////		    ((GraphicalEditPart) getParent()).setLayoutConstraint(
+////		        this,
+////		        getFigure(),
+////		        new Rectangle(loc, size));
+////		    System.out.println("x: " + x + ", y: "+ y);
+//		Warehouse warehouse = (WarehouseImpl) ((View) this.getModel()).getElement();
+//		warehouse.setID("asd");
+//	
+//	}
 		
-		if (event.getNotifier() instanceof AbstractWarehouseImpl) {
-		}
-	}
+	
 	
 }

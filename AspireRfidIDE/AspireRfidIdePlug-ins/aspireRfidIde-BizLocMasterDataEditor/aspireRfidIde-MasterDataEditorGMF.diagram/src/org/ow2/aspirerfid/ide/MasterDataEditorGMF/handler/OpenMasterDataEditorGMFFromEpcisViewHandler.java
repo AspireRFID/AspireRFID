@@ -39,23 +39,35 @@ public class OpenMasterDataEditorGMFFromEpcisViewHandler extends AbstractHandler
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		OpenMasterDataEditorGMFFromEpcisWizard wizard = new OpenMasterDataEditorGMFFromEpcisWizard();
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
-		wizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
-		WizardDialog wizardDialog = new WizardDialog(
-				window.getShell(), wizard);
-		wizardDialog.open();
 		
-		//re-open the diagram to refresh the new attributes
-		IWorkbenchPage page = window.getActivePage();
-		IEditorPart editor  = page.getActiveEditor();
+		//select the CLCBProc where the MasterDataEditorGMF should reside in
+		SelectCLCBProcForMasterDataEditorGMFWizard selectCLCBwizard = new SelectCLCBProcForMasterDataEditorGMFWizard();
+		selectCLCBwizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
+		WizardDialog wizardDialog1 = new WizardDialog(
+				window.getShell(), selectCLCBwizard);
+		wizardDialog1.open();
 		
-		try {
-			page.closeEditor(editor, true);
-			page.openEditor(new URIEditorInput(MasterDataEditParts.getEpcisFileURI()), MasterDataEditorGMFDiagramEditor.ID);	
-		} catch (PartInitException e) {
-			e.printStackTrace();
-		}
+		//create the MasterDataEditorGMF
+		OpenMasterDataEditorGMFFromEpcisWizard newMasterDataWizard = new OpenMasterDataEditorGMFFromEpcisWizard();
+		//set the CLCBProc only if one is selected
+		if (selectCLCBwizard.getClcbProc() != null)
+			newMasterDataWizard.setClcbProc(selectCLCBwizard.getClcbProc());
+		newMasterDataWizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
+		WizardDialog wizardDialog2 = new WizardDialog(
+				window.getShell(), newMasterDataWizard);
+		wizardDialog2.open();
+		
+//		//re-open the diagram to refresh the new attributes
+//		IWorkbenchPage page = window.getActivePage();
+//		IEditorPart editor  = page.getActiveEditor();
+//		
+//		try {
+//			page.closeEditor(editor, true);
+//			page.openEditor(new URIEditorInput(MasterDataEditParts.getEpcisFileURI()), MasterDataEditorGMFDiagramEditor.ID);	
+//		} catch (PartInitException e) {
+//			e.printStackTrace();
+//		}
 		
 		return null;
 	}

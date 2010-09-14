@@ -40,6 +40,7 @@ Bundle-Localization: plugin
 Export-Package: org.ow2.aspirerfid.ide.MasterDataEditorGMF.bpwmeintegration,
  org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.edit.parts,
  org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part,
+ org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences,
  org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.providers,
  org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture
 Require-Bundle: org.eclipse.core.runtime,
@@ -59,6 +60,11 @@ Require-Bundle: org.eclipse.core.runtime,
  org.ow2.aspirerfid.ide.MasterDataEditorGMF;visibility:=reexport,
  org.ow2.aspirerfid.ide.MasterDataEditorGMF.edit;visibility:=reexport,
  org.eclipse.gmf.runtime.draw2d.ui;visibility:=reexport,
- org.eclipse.gef;visibility:=reexport
+ org.eclipse.gef;visibility:=reexport,
+ org.eclipse.ui.navigator;bundle-version="3.4.1",
+ org.eclipse.core.resources,
+ org.eclipse.ui.navigator.resources,
+ org.ow2.aspirerfid.ide.bpwme.diagram;bundle-version="1.0.0"
 Eclipse-LazyStart: true
-Import-Package: org.apache.commons.logging
+Import-Package: org.apache.commons.logging,
+ org.eclipse.ui.part

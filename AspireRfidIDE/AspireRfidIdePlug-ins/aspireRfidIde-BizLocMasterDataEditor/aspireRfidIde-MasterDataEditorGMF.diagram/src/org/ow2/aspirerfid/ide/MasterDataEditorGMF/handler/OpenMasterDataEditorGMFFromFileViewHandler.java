@@ -25,11 +25,13 @@ import org.eclipse.core.commands.ExecutionException;
 
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditor;
 
@@ -50,6 +52,13 @@ public class OpenMasterDataEditorGMFFromFileViewHandler extends AbstractHandler{
 				&& fileDialog.getFileName().length() > 0) {
 			URI fileURI = URI.createFileURI(fileDialog.getFilterPath()
 					+ File.separator + fileDialog.getFileName());
+			
+			if (!(fileURI.fileExtension().endsWith("masterdataeditorgmf_diagram"))) {
+				MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error", 
+				"A MasterDataEditorGMF can be created from files with the extension \"masterdataeditorgmf_diagram\".");
+				return null;
+			}
+			
 			try {
 				page.openEditor(new URIEditorInput(fileURI), MasterDataEditorGMFDiagramEditor.ID);
 			} catch (PartInitException e) {

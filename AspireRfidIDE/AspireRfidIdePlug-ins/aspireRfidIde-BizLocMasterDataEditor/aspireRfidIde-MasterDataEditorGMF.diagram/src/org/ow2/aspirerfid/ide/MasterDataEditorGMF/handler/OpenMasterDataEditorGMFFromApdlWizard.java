@@ -21,6 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -30,15 +31,13 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFQuery;
-import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFCreateFromFile;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
  *
  */
-public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
+public class OpenMasterDataEditorGMFFromApdlWizard extends Wizard implements
 		INewWizard {
 
 	/**
@@ -50,33 +49,16 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 	 * @generated
 	 */
 	protected IStructuredSelection selection;
-
-	/**
-	 * @generated
-	 */
-	protected NewMasterDataEditorGMFWizardPage diagramModelFilePage;
 	
 	/**
 	 * @generated
 	 */
-	protected OpenMasterDataEditorGMFFromEpcisWizardPage diagramModelPage;
+	protected NewMasterDataEditorGMFWizardPage[] diagramModelFilePage;
 
 	/**
 	 * @generated
 	 */
-	protected Resource diagram;
-	
-	/**
-	 * clcbProc
-	 */
-	protected CLCBProc clcbProc;
-
-	/**
-	 * Set clcbProc
-	 */
-	public void setClcbProc(CLCBProc clcbProc) {
-		this.clcbProc = clcbProc;
-	}
+	protected Resource[] diagram;
 
 	/**
 	 * @generated
@@ -89,6 +71,37 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 	public IWorkbench getWorkbench() {
 		return workbench;
 	}
+	
+	/**
+	 * fileURI
+	 */
+	private URI fileURI;
+	
+	/**
+	 * Counter for created Apdl files
+	 */
+	private static int count;
+
+	/**
+	 * @return the count
+	 */
+	public static int getCount() {
+		return count;
+	}
+
+	/**
+	 * @return the fileURI
+	 */
+	public URI getFileURI() {
+		return fileURI;
+	}
+
+	/**
+	 * @param fileURI the fileURI to set
+	 */
+	public void setFileURI(URI fileURI) {
+		this.fileURI = fileURI;
+	}
 
 	/**
 	 * @generated
@@ -100,7 +113,7 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 	/**
 	 * @generated
 	 */
-	public final Resource getDiagram() {
+	public final Resource[] getDiagram() {
 		return diagram;
 	}
 
@@ -126,6 +139,9 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 		this.workbench = workbench;
 		this.selection = selection;
 		setWindowTitle("Open MasterDataEditorGMF Diagram");
+		//open APDL file and set the CLCBProc names
+		MasterDataGMFCreateFromFile.openApdlFile(getFileURI());
+		MasterDataGMFCreateFromFile.setClcbProcNamesWithMasterDataFromApdl();
 		ImageDescriptor descriptor = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorPlugin.
 			imageDescriptorFromPlugin("org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram", "icons/wizban/NewMasterDataEditorGMFWizard.gif");
 		setDefaultPageImageDescriptor(descriptor); //$NON-NLS-1$
@@ -136,45 +152,54 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 	 * @generated
 	 */
 	public void addPages() {
-		diagramModelPage = new OpenMasterDataEditorGMFFromEpcisWizardPage (
-				"DiagramModel", getSelection()); //$NON-NLS-1$ //$NON-NLS-2$
-		diagramModelPage
-				.setTitle("Open MasterDataEditorGMF Diagram From Epcis");
-		diagramModelPage
-				.setDescription("Select the Company from Epcis that will create the diagram model.");
-		addPage(diagramModelPage);
-
-		diagramModelFilePage = new NewMasterDataEditorGMFWizardPage(
-				"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
-		diagramModelFilePage
-				.setTitle("Open MasterDataEditorGMF Diagram From Epcis");
-		diagramModelFilePage
-				.setDescription(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizard_DiagramModelFilePageDescription);
-		//set the filename of the MasterDataEditorGMF file only if a CLCBProc is selected
-		if (clcbProc != null)
-			diagramModelFilePage.setFileName(clcbProc.getName());
-		addPage(diagramModelFilePage);
+		diagramModelFilePage = new NewMasterDataEditorGMFWizardPage[MasterDataGMFCreateFromFile.getClcProcNames().size()];
+		
+		for (int i = 0; i < diagramModelFilePage.length; i++) {
+			diagramModelFilePage[i] = new NewMasterDataEditorGMFWizardPage(
+					"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
+			diagramModelFilePage[i]
+					.setTitle("Open MasterDataEditorGMF Diagram From Apdl File");
+			diagramModelFilePage[i]
+					.setDescription("Select file that will contain diagram model for the MasterData"
+							+ "\nthat reside in the CLCB element named \"" + MasterDataGMFCreateFromFile.getClcProcNames().get(i) + "\".");
+			diagramModelFilePage[i].setFileName(MasterDataGMFCreateFromFile.getClcProcNames().get(i));
+			addPage(diagramModelFilePage[i]);
+		}
 	}
 
 	/**
 	 * @generated
 	 */
 	public boolean performFinish() {
+		diagram = new Resource[diagramModelFilePage.length];
+		count = 0;
+		
+		for (int i = 0; i < diagram.length; i++) {
+			count = i;
+			createDiagrams(i);
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Create the diagrams
+	 */
+	public boolean createDiagrams(final int count) {
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
-				MasterDataGMFQuery.setFromEPCIS(true);
-				MasterDataEditParts.setEpcisFileURI(diagramModelFilePage.getURI());
-				
-				diagram = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
-						.createDiagram(diagramModelFilePage.getURI(), monitor);
-				if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
+				MasterDataGMFCreateFromFile.setFromApdl(true);
+
+				diagram[count] = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
+						.createDiagram(diagramModelFilePage[count].getURI(), monitor);
+				if (isOpenNewlyCreatedDiagramEditor() && diagram[count] != null) {
 					try {
 						org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
-								.openDiagram(diagram);
+								.openDiagram(diagram[count]);
 					} catch (PartInitException e) {
-						MasterDataGMFQuery.setFromEPCIS(false);
+						MasterDataGMFCreateFromFile.setFromApdl(false);
 						ErrorDialog
 								.openError(
 										getContainer().getShell(),
@@ -187,10 +212,10 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 		try {
 			getContainer().run(false, true, op);
 		} catch (InterruptedException e) {
-			MasterDataGMFQuery.setFromEPCIS(false);
+			MasterDataGMFCreateFromFile.setFromApdl(false);
 			return false;
 		} catch (InvocationTargetException e) {
-			MasterDataGMFQuery.setFromEPCIS(false);
+			MasterDataGMFCreateFromFile.setFromApdl(false);
 			if (e.getTargetException() instanceof CoreException) {
 				ErrorDialog
 						.openError(

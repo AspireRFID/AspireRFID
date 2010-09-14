@@ -511,6 +511,12 @@
             name="Open Master Data Editor GMF From File">
       </command>
       <command
+            defaultHandler="org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromApdlViewHandler"
+            description="Open Master Data Editor GMF From Apdl"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromApdl.command"
+            name="Open Master Data Editor GMF From Apdl">
+      </command>
+      <command
             defaultHandler="org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromEpcisViewHandler"
             description="Open Master Data Editor GMF From Epcis"
             id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromEpcis.command"
@@ -536,26 +542,39 @@
                   name="org.ow2.aspirerfid.ide.main.windowmenu.separator1"
                   visible="true">
             </separator>
-            <command
-                  commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMF.command"
-                  label="New MasterDataEditorGMF Diagram"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromFile.command"
-                  label="Open MasterDataEditorGMF Diagram From File"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromEpcis.command"
-                  label="Open MasterDataEditorGMF Diagram From Epcis"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.insertMasterDataEditorGMFEpcis.command"
-                  label="Insert MasterDataEditorGMF Diagram Into Epcis"
-                  style="push">
-            </command>
+            <menu
+                  id="org.ow2.aspirerfid.ide.main.filemenu.masterdataeditorgmfdiagram"
+                  label="MasterDataEditorGMF Diagram">
+               <command
+                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMF.command"
+                     label="New MasterDataEditorGMF Diagram"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromFile.command"
+                     label="Open MasterDataEditorGMF Diagram From File"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromApdl.command"
+                     label="Open MasterDataEditorGMF Diagram From Apdl"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromEpcis.command"
+                     label="Open MasterDataEditorGMF Diagram From Epcis"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.insertMasterDataEditorGMFEpcis.command"
+                     label="Insert MasterDataEditorGMF Diagram Into Epcis"
+                     style="push">
+               </command>
+               <separator
+                     name="org.ow2.aspirerfid.ide.main.windowmenu.separator2"
+                     visible="true">
+               </separator>
+            </menu>
          </menu>
          <menu
                id="org.ow2.aspirerfid.ide.main.windowmenu"
@@ -576,4 +595,10 @@
          </menu>
       </menuContribution>
    </extension>
+   
+   
+   
+   
+   
+   
 </plugin>

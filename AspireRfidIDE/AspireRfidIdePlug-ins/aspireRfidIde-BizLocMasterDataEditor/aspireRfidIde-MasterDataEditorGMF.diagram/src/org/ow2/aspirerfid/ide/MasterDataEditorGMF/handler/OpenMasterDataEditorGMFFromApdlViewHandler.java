@@ -17,41 +17,54 @@
 
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 
+import java.io.File;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
  *
  */
-public class NewMasterDataEditorGMFViewHandler extends AbstractHandler {
+public class OpenMasterDataEditorGMFFromApdlViewHandler extends AbstractHandler{
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
 		
-		//select the CLCBProc where the MasterDataEditorGMF should reside in
-		SelectCLCBProcForMasterDataEditorGMFWizard selectCLCBwizard = new SelectCLCBProcForMasterDataEditorGMFWizard();
-		selectCLCBwizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
-		WizardDialog wizardDialog1 = new WizardDialog(
-				window.getShell(), selectCLCBwizard);
-		wizardDialog1.open();
-		
-		//create the MasterDataEditorGMF
-		NewMasterDataEditorGMFWizard newMasterDataWizard = new NewMasterDataEditorGMFWizard();
-		//set the CLCBProc only if one is selected
-		if (selectCLCBwizard.getClcbProc() != null)
-			newMasterDataWizard.setClcbProc(selectCLCBwizard.getClcbProc());
-		newMasterDataWizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
-		WizardDialog wizardDialog2 = new WizardDialog(
-				window.getShell(), newMasterDataWizard);
-		wizardDialog2.open();
-		
+		//open the apdl file
+		FileDialog fileDialog = new FileDialog(window.getShell(),
+				SWT.OPEN);
+		fileDialog.open();
+		if (fileDialog.getFileName() != null && fileDialog.getFileName().length() > 0) {
+			URI fileURI = URI.createFileURI(fileDialog.getFilterPath()
+					+ File.separator + fileDialog.getFileName());
+
+			if (!(fileURI.fileExtension().endsWith("xml"))) {
+				MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error", 
+				"A MasterDataEditorGMF can be created from APDL files with the extension \"xml\".");
+				return null;
+			}
+			
+			//create the MasterDataEditorGMF
+			OpenMasterDataEditorGMFFromApdlWizard wizard = new OpenMasterDataEditorGMFFromApdlWizard();
+			//set the file
+			wizard.setFileURI(fileURI);
+			wizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
+			WizardDialog wizardDialog = new WizardDialog(
+					window.getShell(), wizard);
+			wizardDialog.open();
+		}
 		return null;
 	}
 }

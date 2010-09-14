@@ -28,6 +28,9 @@ public class DiagramConfiguratorPreferenceConstants {
 	
 	public static final String P_CaptureURL = "http://localhost:8080/aspireRfidEpcisRepository/capture";
 	public static final String P_QueryURL = "http://localhost:8080/aspireRfidEpcisRepository/query";
+	public static final String P_Size = "size";
+	public static final String P_Size_Height = "height";
+	public static final String P_Size_Width = "width";
 	
 	public static final String newCompanyAttributes = ",1";
 	public static final String newWarehouseAttributes = ",2";
