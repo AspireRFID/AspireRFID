@@ -33,6 +33,16 @@ import org.ow2.aspirerfid.ale.server.readers.rp.base.AbstractReader;
  */
 public class TagsysAdaptor extends AbstractAdaptor {
 
+	
+	/**
+	 * Default constructor
+	 */
+	public TagsysAdaptor() {
+	   super();
+	   readerName = "Tagsys Reader";
+   }
+	
+	
 	@Override
    protected AbstractReader getReader() {
 	   return new TagsysReader(this, logicalReaderProperties);
