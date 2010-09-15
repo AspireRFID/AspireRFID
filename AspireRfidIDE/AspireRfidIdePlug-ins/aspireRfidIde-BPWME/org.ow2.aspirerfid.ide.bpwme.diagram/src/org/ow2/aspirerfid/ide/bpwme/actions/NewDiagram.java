@@ -27,6 +27,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeCreationWizard;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.FileAction;
 
 /**
@@ -48,6 +49,9 @@ public class NewDiagram extends AbstractHandler {
 		WizardDialog wizardDialog = new WizardDialog(
 				window.getShell(), wizard);
 		wizardDialog.open();
+		
+		MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");
+		
 		return null;
 	}
 }

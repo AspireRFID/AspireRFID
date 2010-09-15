@@ -31,6 +31,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.FileAction;
 
 
@@ -63,6 +64,9 @@ public class OpenDiagram extends AbstractHandler{
 			mc.setAPDLFileName(fileURI);	
 			mc.rebuild();
 			mc.mapModels();
+			
+			MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");
+			
 		}
 		return null;
 	}

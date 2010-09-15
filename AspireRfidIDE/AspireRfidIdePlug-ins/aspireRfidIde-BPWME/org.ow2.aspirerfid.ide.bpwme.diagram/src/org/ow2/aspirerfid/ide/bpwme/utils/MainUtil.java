@@ -29,6 +29,7 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.internal.EditorSashContainer;
 import org.eclipse.ui.internal.EditorStack;
 import org.eclipse.ui.internal.ILayoutContainer;
@@ -281,4 +282,13 @@ public class MainUtil {
 		return null;
 	}
 	
+	public static void executeCommand(String commandId) {
+		IHandlerService handlerService = (IHandlerService) 
+		PlatformUI.getWorkbench().getService(IHandlerService.class);
+		try {
+			handlerService.executeCommand(commandId, null);
+		} catch (Exception ex) {
+			throw new RuntimeException(commandId + " not found");
+		}
+	}
 }
