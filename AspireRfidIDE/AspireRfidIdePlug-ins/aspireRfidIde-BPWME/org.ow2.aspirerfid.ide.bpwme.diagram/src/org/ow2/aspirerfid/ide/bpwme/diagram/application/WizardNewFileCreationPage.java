@@ -2,6 +2,7 @@ package org.ow2.aspirerfid.ide.bpwme.diagram.application;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -16,7 +17,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.Messages;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 
 
 /**
@@ -45,13 +48,17 @@ public class WizardNewFileCreationPage extends WizardPage {
 	private Text fileNameEditor;
 
 	/**
-	 * @generated
+	 * modified by yluo
 	 */
 	public WizardNewFileCreationPage(String name,
 			IStructuredSelection currentSelection) {
 		super(name);
 		this.currentSelection = currentSelection;
-		String home = System.getProperty("user.home"); //$NON-NLS-1$
+		//String home = System.getProperty("user.home"); //$NON-NLS-1$
+		
+		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
+		String home = store.getString(PreferenceConstants.P_BPWME_FILE);
+		
 		if (home != null) {
 			initialContainerFullPath = new Path(home);
 		}

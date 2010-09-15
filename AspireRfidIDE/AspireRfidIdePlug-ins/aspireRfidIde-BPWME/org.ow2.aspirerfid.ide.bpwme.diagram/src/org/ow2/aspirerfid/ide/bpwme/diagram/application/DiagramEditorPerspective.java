@@ -4,7 +4,6 @@ import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 import org.eclipse.ui.IPlaceholderFolderLayout;
-import org.ow2.aspirerfid.ide.bpwme.diagram.views.ExtendedAttr;
 import org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor;
 
 public class DiagramEditorPerspective implements IPerspectiveFactory {
@@ -20,7 +19,6 @@ public class DiagramEditorPerspective implements IPerspectiveFactory {
 		IFolderLayout buttomLeft = layout.createFolder(
 				"bottomLeft", IPageLayout.BOTTOM, 0.6f, layout.getEditorArea()); //$NON-NLS-1$	 //$NON-NLS-2$
 		buttomLeft.addView(IPageLayout.ID_PROP_SHEET);
-		buttomLeft.addPlaceholder(ExtendedAttr.ID);
 		
 		IFolderLayout bottomRight = layout.createFolder(
 				"bottomRight", IPageLayout.RIGHT, 0.7f, IPageLayout.ID_PROP_SHEET); //$NON-NLS-1$	 //$NON-NLS-2$

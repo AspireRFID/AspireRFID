@@ -39,6 +39,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.ow2.aspirerfid.commons.apdl.model.ApdlDataField;
 import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
 import org.ow2.aspirerfid.commons.apdl.model.ObjectFactory;
@@ -55,6 +56,8 @@ import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.EBProc;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.OLCBProcEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.PathEditorInput;
 import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.SimpleEditor;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.model.ExtraProperty;
@@ -129,9 +132,9 @@ public class MainControl {
 		System.getProperty("file.separator");
 	private static String userHome = System.getProperty("user.home");
 	//the folder that apdl xml file should reside in
-	private static final String P_PE_ApdlFilesPath =
-		userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator
-		+"APDLs"+fileSeparator;
+//	private static final String P_PE_ApdlFilesPath =
+//		userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator
+//		+"APDLs"+fileSeparator;
 	//apdl file uri
 	private URI apdlURI;
 	//assistant file path. assistant file now is to record
@@ -158,7 +161,8 @@ public class MainControl {
 
 	public MainControl() throws Exception {
 		//create apdl file directory if it's not exist
-		File directory = new File(P_PE_ApdlFilesPath);
+		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
+		File directory = new File(store.getString(PreferenceConstants.P_APDL_FILE));
 		if(!directory.exists()) {
 			directory.mkdirs();
 		}
@@ -195,10 +199,11 @@ public class MainControl {
 	 * @param diagramFileURI
 	 */
 	public void setAPDLFileName(URI diagramFileURI) {
+		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
 		String dot = "\\.";
 		String[] names = diagramFileURI.lastSegment().split(dot);
 		if(names.length == 2) {
-			apdlURI = URI.createFileURI(P_PE_ApdlFilesPath+names[0]+".xml");
+			apdlURI = URI.createFileURI(store.getString(PreferenceConstants.P_APDL_FILE)+names[0]+".xml");
 			File f = new File(apdlURI.toFileString());		
 			if(!f.exists()) {
 				try {

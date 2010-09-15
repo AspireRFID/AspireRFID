@@ -707,12 +707,6 @@
                label="Master Data"
                menubarPath="editMenu/editGroup">
          </action>
-         <action
-               class="org.ow2.aspirerfid.ide.bpwme.actions.EditExtendedAttributes"
-               id="org.ow2.aspirerfid.ide.bpwme.actions.EditExtendedAttributes"
-               label="Extended Attributes"
-               menubarPath="editMenu/editGroup">
-         </action>
          
       </objectContribution>
    </extension>
@@ -974,13 +968,5 @@
 	     </action>
 	  </actionSet>
 	</extension>
-    <extension
-          point="org.eclipse.ui.views">
-       <view
-             class="org.ow2.aspirerfid.ide.bpwme.diagram.views.ExtendedAttr"
-             id="org.ow2.aspirerfid.ide.bpwme.diagram.views.ExtendedAttr"
-             name="Extended Attributes">
-       </view>
-    </extension>
    
 </plugin>

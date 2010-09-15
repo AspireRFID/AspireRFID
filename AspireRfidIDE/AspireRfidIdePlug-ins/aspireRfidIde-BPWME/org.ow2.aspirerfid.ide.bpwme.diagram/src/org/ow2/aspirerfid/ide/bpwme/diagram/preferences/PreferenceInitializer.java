@@ -1,5 +1,6 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.preferences;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -32,6 +33,17 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(PreferenceConstants.P_BS, "Attr1,Attr2,Attr3");
 		store.setDefault(PreferenceConstants.P_DI, "Attr1,Attr2,Attr3");
 		store.setDefault(PreferenceConstants.P_BT, "Attr1,Attr2,Attr3");
+		
+		//file paths
+		store.setDefault(PreferenceConstants.P_BPWME_FILE, System.getProperty("user.home") + 
+				File.separator + "AspireRFID" +
+				File.separator + "IDE" +				
+				File.separator + "BPWME" + File.separator);
+		
+		store.setDefault(PreferenceConstants.P_APDL_FILE, System.getProperty("user.home") + 
+				File.separator + "AspireRFID" +
+				File.separator + "IDE" +				
+				File.separator + "APDLs" + File.separator);
 		
 		//Extended Attribute
 		PreferenceConstants.P_EXTEND.put("ECSpecSubscriptionURI","http://localhost:9999");
