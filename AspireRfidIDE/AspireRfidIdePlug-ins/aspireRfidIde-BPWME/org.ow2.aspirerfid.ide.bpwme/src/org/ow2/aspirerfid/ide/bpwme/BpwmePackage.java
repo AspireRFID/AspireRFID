@@ -380,6 +380,8 @@ public interface BpwmePackage extends EPackage {
 	 */
 	int EB_PROC__DESCRIPTION = NODE_FEATURE_COUNT + 2;
 
+	int EB_PROC_FAKE_FEATURE = NODE_FEATURE_COUNT + 3;
+	
 	/**
 	 * The number of structural features of the '<em>EB Proc</em>' class.
 	 * <!-- begin-user-doc -->
@@ -390,7 +392,7 @@ public interface BpwmePackage extends EPackage {
 	int EB_PROC_FEATURE_COUNT = NODE_FEATURE_COUNT + 4;
 
 	
-	int EB_PROC_FAKE_FEATURE = NODE_FEATURE_COUNT + 3;
+	
 
 	/**
 	 * Returns the meta object for class '{@link bpwme.WorkflowMap <em>Workflow Map</em>}'.

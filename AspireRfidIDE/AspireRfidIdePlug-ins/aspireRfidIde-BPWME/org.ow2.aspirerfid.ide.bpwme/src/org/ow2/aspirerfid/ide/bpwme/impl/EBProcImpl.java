@@ -135,6 +135,10 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.EB_PROC__DESCRIPTION, oldDescription, description));
 	}
 
+	public void setFake(String fake) {
+		eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.EB_PROC_FAKE_FEATURE, "fake", "fake"));
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -165,6 +169,10 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 		return id;
 	}
 
+	public String getFake() {
+		return "fake";
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -192,6 +200,8 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 				return getName();
 			case BpwmePackage.EB_PROC__ID:
 				return getId();
+			case BpwmePackage.EB_PROC_FAKE_FEATURE:
+				return getFake();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -212,6 +222,8 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 				return;
 			case BpwmePackage.EB_PROC__ID:
 				setId((String)newValue);
+				return;
+			case BpwmePackage.EB_PROC_FAKE_FEATURE:
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -234,6 +246,8 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 			case BpwmePackage.EB_PROC__ID:
 				setId(ID_EDEFAULT);
 				return;
+			case BpwmePackage.EB_PROC_FAKE_FEATURE:
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -252,6 +266,8 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case BpwmePackage.EB_PROC__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case BpwmePackage.EB_PROC_FAKE_FEATURE:
+				return true;
 		}
 		return super.eIsSet(featureID);
 	}

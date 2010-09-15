@@ -177,6 +177,7 @@ public class EBProcItemProvider
 			case BpwmePackage.EB_PROC__DESCRIPTION:
 			case BpwmePackage.EB_PROC__NAME:
 			case BpwmePackage.EB_PROC__ID:
+			case BpwmePackage.EB_PROC_FAKE_FEATURE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

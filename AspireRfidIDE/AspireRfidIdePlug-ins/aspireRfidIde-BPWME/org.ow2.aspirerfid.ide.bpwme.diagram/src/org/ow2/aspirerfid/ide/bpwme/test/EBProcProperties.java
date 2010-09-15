@@ -88,6 +88,7 @@ public class EBProcProperties extends PropertySource {
 			
 			EBProcUtil.setExtendedAttribute(ebproc, (String)id, 
 					PreferenceUtil.getAttributes((String)id)[(Integer)value]);
+			epi.setFake("fake");
 			//epi.setDirty();
 		}else {//normal attribute
 			if(id.equals("Id")) {
