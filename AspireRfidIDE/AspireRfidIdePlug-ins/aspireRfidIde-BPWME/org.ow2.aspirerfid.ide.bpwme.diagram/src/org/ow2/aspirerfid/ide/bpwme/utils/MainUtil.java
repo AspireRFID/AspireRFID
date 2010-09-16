@@ -197,9 +197,13 @@ public class MainUtil {
 		//main editor is the editor who does not what to share the stack
 		IEditorPart mainEditor = null;
 		
+		HashSet<IEditorPart> editors = new HashSet<IEditorPart>();
+		
 		for(int i = 0; i < editorReferences.length; i++) {
 			if(editorReferences[i].getId().equals(mainEditorID)) {
 				mainEditor = editorReferences[i].getEditor(false);
+			}else if(editorIDs.contains(editorReferences[i].getId())) {
+				editors.add(editorReferences[i].getEditor(false));
 			}
 		}
 		
@@ -210,7 +214,7 @@ public class MainUtil {
 									
 			if(mainStack.getChildren().length > 1) {
 				//split the main stack
-				PartPane anotherPane = getAnotherPane(mainStack,((PartSite)mainEditor.getSite()).getPane());				
+				PartPane anotherPane = getAnotherPane(mainStack,((PartSite)mainEditor.getSite()).getPane(), editorIDs);				
 				//if there exists another stack, move the one to the new stack
 				LayoutPart[] sashChildren = ((EditorSashContainer)mainStack.getContainer()).getChildren();
 				if(sashChildren.length > 1) {
@@ -262,10 +266,10 @@ public class MainUtil {
 	}
 
 	
-	private static PartPane getAnotherPane(PartStack mainStack, PartPane mainPane) {
+	private static PartPane getAnotherPane(PartStack mainStack, PartPane mainPane, HashSet<String> editorIDs) {
 		LayoutPart[] children = mainStack.getChildren();
 		for(int i = 0; i < children.length; i++) {
-			if((PartPane)children[i] != mainPane) {
+			if(((PartPane)children[i] != mainPane)&& (editorIDs.contains(children[i].getPart().getID()))){
 				return (PartPane)children[i];
 			}
 		}
