@@ -17,13 +17,17 @@
 
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -156,13 +160,23 @@ public class OpenMasterDataEditorGMFFromApdlWizard extends Wizard implements
 		
 		for (int i = 0; i < diagramModelFilePage.length; i++) {
 			diagramModelFilePage[i] = new NewMasterDataEditorGMFWizardPage(
-					"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
+					"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram", false); //$NON-NLS-1$ //$NON-NLS-2$
 			diagramModelFilePage[i]
 					.setTitle("Open MasterDataEditorGMF Diagram From Apdl File");
 			diagramModelFilePage[i]
 					.setDescription("Select file that will contain diagram model for the MasterData"
 							+ "\nthat reside in the CLCB element named \"" + MasterDataGMFCreateFromFile.getClcProcNames().get(i) + "\".");
+			
+			String fileSeparator =	System.getProperty("file.separator");
+			String home = System.getProperty("user.home");
+			String defaultPath = home + fileSeparator + "AspireRFID" + fileSeparator + "IDE" + fileSeparator + "BPWME" + fileSeparator;
+			File directory = new File(defaultPath);
+			if(!directory.exists())
+				directory.mkdirs();
 			diagramModelFilePage[i].setFileName(MasterDataGMFCreateFromFile.getClcProcNames().get(i));
+			IPath path = new Path(defaultPath);
+			diagramModelFilePage[i].setContainerFullPath(path);
+			
 			addPage(diagramModelFilePage[i]);
 		}
 	}
@@ -186,6 +200,16 @@ public class OpenMasterDataEditorGMFFromApdlWizard extends Wizard implements
 	 * Create the diagrams
 	 */
 	public boolean createDiagrams(final int count) {
+		//prompt the user to replace the file
+		File file = new File(diagramModelFilePage[count].getURI().toFileString());
+
+		if (file.exists()) {
+			boolean result = MessageDialog.openConfirm(getShell(), "Warning", 
+					diagramModelFilePage[count].getFileName() + ".masterdataeditorgmf_diagram already exists.\nDo you want to replace it?");
+			if (!result)
+				return true;
+		}
+		
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 
 			public void run(IProgressMonitor monitor)

@@ -47,6 +47,9 @@ public class OpenMasterDataEditorGMFFromFileViewHandler extends AbstractHandler{
 		IWorkbenchPage page = window.getActivePage();
 		FileDialog fileDialog = new FileDialog(window.getShell(),
 				SWT.OPEN);
+		//set the file type
+		String[] filterExt = {"*.masterdataeditorgmf_diagram"};
+		fileDialog.setFilterExtensions(filterExt);
 		fileDialog.open();
 		if (fileDialog.getFileName() != null
 				&& fileDialog.getFileName().length() > 0) {

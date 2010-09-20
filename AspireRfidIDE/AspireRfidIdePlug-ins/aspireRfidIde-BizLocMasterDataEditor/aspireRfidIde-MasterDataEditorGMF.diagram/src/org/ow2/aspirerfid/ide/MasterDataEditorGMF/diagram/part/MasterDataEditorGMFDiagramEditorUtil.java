@@ -101,7 +101,7 @@ public class MasterDataEditorGMFDiagramEditorUtil {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public static String getUniqueFileName(IPath containerFullPath,
 			String fileName, String extension) {
@@ -117,14 +117,14 @@ public class MasterDataEditorGMFDiagramEditorUtil {
 		}
 		extension = filePath.getFileExtension();
 		fileName = filePath.removeFileExtension().lastSegment();
-		int i = 1;
-		while (filePath.toFile().exists()) {
-			i++;
-			filePath = containerFullPath.append(fileName + i);
-			if (extension != null) {
-				filePath = filePath.addFileExtension(extension);
-			}
-		}
+//		int i = 1;
+//		while (filePath.toFile().exists()) {
+//			i++;
+//			filePath = containerFullPath.append(fileName + i);
+//			if (extension != null) {
+//				filePath = filePath.addFileExtension(extension);
+//			}
+//		}
 		return filePath.lastSegment();
 	}
 

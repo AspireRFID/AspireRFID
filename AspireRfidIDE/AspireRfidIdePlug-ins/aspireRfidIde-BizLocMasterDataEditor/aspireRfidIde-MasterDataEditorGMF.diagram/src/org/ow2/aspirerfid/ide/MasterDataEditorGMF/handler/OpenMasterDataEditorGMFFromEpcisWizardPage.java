@@ -43,8 +43,6 @@ public class OpenMasterDataEditorGMFFromEpcisWizardPage extends WizardPage {
 	 */
 	public OpenMasterDataEditorGMFFromEpcisWizardPage(String name, IStructuredSelection currentSelection) {
 		super(name);
-		setTitle("Open a new MasterDataEditorGMF diagram");
-		setDescription("Choose the company name.");
 		this.currentSelection = currentSelection;
 	}
 

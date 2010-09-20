@@ -45,6 +45,9 @@ public class OpenMasterDataEditorGMFFromApdlViewHandler extends AbstractHandler{
 		//open the apdl file
 		FileDialog fileDialog = new FileDialog(window.getShell(),
 				SWT.OPEN);
+		//set the file type
+		String[] filterExt = {"*.xml"};
+		fileDialog.setFilterExtensions(filterExt);
 		fileDialog.open();
 		if (fileDialog.getFileName() != null && fileDialog.getFileName().length() > 0) {
 			URI fileURI = URI.createFileURI(fileDialog.getFilterPath()

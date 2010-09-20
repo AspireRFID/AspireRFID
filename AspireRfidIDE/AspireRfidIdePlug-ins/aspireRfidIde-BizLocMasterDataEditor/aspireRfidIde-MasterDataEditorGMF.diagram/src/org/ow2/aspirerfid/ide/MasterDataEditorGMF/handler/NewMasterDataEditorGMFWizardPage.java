@@ -33,13 +33,22 @@ public class NewMasterDataEditorGMFWizardPage extends
 	 * @generated
 	 */
 	private final String fileExtension;
-
+	
 	/**
 	 * @generated
 	 */
 	public NewMasterDataEditorGMFWizardPage(String pageName,
 			IStructuredSelection selection, String fileExtension) {
 		super(pageName, selection);
+		this.fileExtension = fileExtension;
+	}
+
+	/**
+	 * @generated
+	 */
+	public NewMasterDataEditorGMFWizardPage(String pageName,
+			IStructuredSelection selection, String fileExtension, boolean isClcbProcSelected) {
+		super(pageName, selection, isClcbProcSelected);
 		this.fileExtension = fileExtension;
 	}
 
@@ -56,7 +65,7 @@ public class NewMasterDataEditorGMFWizardPage extends
 	 * @generated
 	 */
 	public URI getURI() {
-		return URI.createFileURI(getFilePath().toString());
+		return URI.createFileURI(getFilePath().toString() + "." + fileExtension);
 	}
 
 	/**
@@ -77,15 +86,15 @@ public class NewMasterDataEditorGMFWizardPage extends
 		if (!super.validatePage()) {
 			return false;
 		}
-		String extension = getExtension();
-		if (extension != null
-				&& !getFilePath().toString().endsWith("." + extension)) {
-			setErrorMessage(NLS
-					.bind(
-							org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizardPageExtensionError,
-							extension));
-			return false;
-		}
+//		String extension = getExtension();
+//		if (extension != null
+//				&& !getFilePath().toString().endsWith("." + extension)) {
+//			setErrorMessage(NLS
+//					.bind(
+//							org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizardPageExtensionError,
+//							extension));
+//			return false;
+//		}
 		return true;
 	}
 }

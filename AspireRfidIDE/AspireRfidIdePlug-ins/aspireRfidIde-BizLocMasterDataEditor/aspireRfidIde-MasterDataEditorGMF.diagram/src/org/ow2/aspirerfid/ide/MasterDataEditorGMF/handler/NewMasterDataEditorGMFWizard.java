@@ -17,12 +17,16 @@
 
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -31,6 +35,7 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
 import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
@@ -38,6 +43,11 @@ import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
  */
 public class NewMasterDataEditorGMFWizard extends Wizard implements
 		INewWizard {
+	
+	/**
+	 * Editor handler
+	 */
+	 EditorHandler editorHandler = new EditorHandler();
 
 	/**
 	 * @generated
@@ -130,14 +140,36 @@ public class NewMasterDataEditorGMFWizard extends Wizard implements
 	 */
 	public void addPages() {
 		diagramModelFilePage = new NewMasterDataEditorGMFWizardPage(
-				"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
+				"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram", clcbProc != null? true: false); //$NON-NLS-1$ //$NON-NLS-2$
 		diagramModelFilePage
 				.setTitle(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizard_DiagramModelFilePageTitle);
 		diagramModelFilePage
 				.setDescription(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizard_DiagramModelFilePageDescription);
-		//set the filename of the MasterDataEditorGMF file only if a CLCBProc is selected
-		if (clcbProc != null)
+		//set the filename and path of the MasterDataEditorGMF file only if a CLCBProc is selected
+		if (clcbProc != null) {
+			String fileSeparator = System.getProperty("file.separator");
+			OLCBProc clcbParent = (OLCBProc) clcbProc.eContainer();
+			String bpwmePath = editorHandler.getBpwmeFileNames().get(clcbProc).toString();
+			String masterDataPath = clcbParent.getName() + fileSeparator + clcbProc.getName() + fileSeparator;
+			File directory = new File(bpwmePath + masterDataPath);
+			if(!directory.exists())
+				directory.mkdirs();
+
 			diagramModelFilePage.setFileName(clcbProc.getName());
+			IPath path = new Path(bpwmePath + masterDataPath);
+			diagramModelFilePage.setContainerFullPath(path);
+		}
+		else {
+			String fileSeparator =	System.getProperty("file.separator");
+			String home = System.getProperty("user.home");
+			String defaultPath = home + fileSeparator + "AspireRFID" + fileSeparator + "IDE" + fileSeparator + "BPWME" + fileSeparator;
+			File directory = new File(defaultPath);
+			if(!directory.exists())
+				directory.mkdirs();
+			diagramModelFilePage.setFileName("default");
+			IPath path = new Path(defaultPath);
+			diagramModelFilePage.setContainerFullPath(path);
+		}
 		addPage(diagramModelFilePage);
 	}
 
@@ -145,6 +177,16 @@ public class NewMasterDataEditorGMFWizard extends Wizard implements
 	 * @generated
 	 */
 	public boolean performFinish() {
+		//prompt the user to replace the file
+		File file = new File(diagramModelFilePage.getURI().toFileString());
+
+		if (file.exists()) {
+			boolean result = MessageDialog.openConfirm(getShell(), "Warning", 
+					diagramModelFilePage.getFileName() + ".masterdataeditorgmf_diagram already exists.\nDo you want to replace it?");
+			if (!result)
+				return true;
+		}
+		
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 
 			public void run(IProgressMonitor monitor)

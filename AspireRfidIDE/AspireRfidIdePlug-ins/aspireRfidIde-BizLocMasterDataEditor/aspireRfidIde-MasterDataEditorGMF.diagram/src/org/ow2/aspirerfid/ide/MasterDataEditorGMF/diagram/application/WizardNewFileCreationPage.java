@@ -17,8 +17,6 @@
 
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.application;
 
-import java.io.File;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -57,10 +55,25 @@ public class WizardNewFileCreationPage extends WizardPage {
 	private IPath initialContainerFullPath;
 
 	/**
-	 * @generated
+	 * File name
 	 */
 	private Text fileNameEditor;
-
+	
+	/**
+	 * File path
+	 */
+	private Text filePathEditor;
+	
+	/**
+	 * Browse button
+	 */
+	private Button button;
+	
+	/**
+	 * isClcbProcSelected
+	 */
+	private boolean isClcbProcSelected;
+	
 	/**
 	 * @generated NOT
 	 */
@@ -68,16 +81,16 @@ public class WizardNewFileCreationPage extends WizardPage {
 			IStructuredSelection currentSelection) {
 		super(name);
 		this.currentSelection = currentSelection;
-		String fileSeparator =	System.getProperty("file.separator");
-		String home = System.getProperty("user.home");
-		//the path where the MasterDataEditorGMF files should be created
-		String path = home + fileSeparator + "AspireRFID" + fileSeparator + "IDE" + fileSeparator + "BPWME" + fileSeparator; //$NON-NLS-1$
-		File directory = new File(path);
-		if(!directory.exists())
-			directory.mkdirs();
-		if (path != null) {
-			initialContainerFullPath = new Path(path);
-		}
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	public WizardNewFileCreationPage(String name,
+			IStructuredSelection currentSelection, boolean isClcbProcSelected) {
+		super(name);
+		this.currentSelection = currentSelection;
+		this.isClcbProcSelected = isClcbProcSelected;
 	}
 
 	/**
@@ -91,7 +104,7 @@ public class WizardNewFileCreationPage extends WizardPage {
 	 * @generated
 	 */
 	public String getFileName() {
-		if (fileNameEditor == null) {
+		if (filePathEditor == null) {
 			return initialFileName;
 		}
 		IPath path = getFilePath();
@@ -105,7 +118,7 @@ public class WizardNewFileCreationPage extends WizardPage {
 	 * @generated
 	 */
 	public void setFileName(String fileName) {
-		if (fileNameEditor == null) {
+		if (filePathEditor == null) {
 			initialFileName = fileName;
 			return;
 		}
@@ -116,7 +129,7 @@ public class WizardNewFileCreationPage extends WizardPage {
 	 * @generated
 	 */
 	public IPath getContainerFullPath() {
-		if (fileNameEditor == null) {
+		if (filePathEditor == null) {
 			return initialContainerFullPath;
 		}
 		IPath path = getFilePath();
@@ -137,7 +150,7 @@ public class WizardNewFileCreationPage extends WizardPage {
 	 * @generated
 	 */
 	public void setContainerFullPath(IPath containerPath) {
-		if (fileNameEditor == null) {
+		if (filePathEditor == null) {
 			initialContainerFullPath = containerPath;
 			return;
 		}
@@ -148,15 +161,15 @@ public class WizardNewFileCreationPage extends WizardPage {
 	 * @generated
 	 */
 	protected IPath getFilePath() {
-		String fileName = fileNameEditor.getText().trim();
+		String fileName = filePathEditor.getText().trim() + fileNameEditor.getText().trim();
 		if (fileName.length() == 0) {
 			return null;
 		}
-		return new Path(fileNameEditor.getText());
+		return new Path(filePathEditor.getText() + fileNameEditor.getText());
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void setFilePath(IPath containerPath, String fileName) {
 		if (fileName == null) {
@@ -165,62 +178,79 @@ public class WizardNewFileCreationPage extends WizardPage {
 			fileName = fileName.trim();
 		}
 		if (containerPath == null) {
-			fileNameEditor.setText(fileName);
+			filePathEditor.setText(fileName);
 		} else {
 			if (!containerPath.hasTrailingSeparator()) {
 				containerPath = containerPath.addTrailingSeparator();
 			}
-			IPath path = fileName.length() == 0 ? containerPath : containerPath
-					.append(fileName);
-			fileNameEditor.setText(path.toOSString());
+//			IPath path = fileName.length() == 0 ? containerPath : containerPath
+//					.append(fileName);
+			filePathEditor.setText(containerPath.toOSString());
 		}
 		setPageComplete(validatePage());
 	}
-
+	
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public void createControl(Composite parent) {
 		Composite plate = new Composite(parent, SWT.NONE);
 		plate.setLayout(new GridLayout(2, false));
-		Label label = new Label(plate, SWT.NONE);
-		label
-				.setText(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.WizardNewFileCreationPage_FileLabel);
-		label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
-				false, 2, 1));
+		
+		Label fileNameLabel = new Label(plate, SWT.NONE);
+		fileNameLabel.setText("File name: ");
+		fileNameLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 2, 1));
+
 		fileNameEditor = new Text(plate, SWT.SINGLE | SWT.BORDER);
-		fileNameEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false));
-		Button button = new Button(plate, SWT.PUSH);
-		button
-				.setText(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.WizardNewFileCreationPage_BrowseButton);
-		button.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
-				false));
-
-		// logic
+		fileNameEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		fileNameEditor.setText(getFileName());
+		
+		Label filePathLabel = new Label(plate, SWT.NONE);
+		filePathLabel.setText("File path: ");
+		filePathLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 2, 1));
+		
+		filePathEditor = new Text(plate, SWT.SINGLE | SWT.BORDER);
+		filePathEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		
+		button = new Button(plate, SWT.PUSH);
+		button.setText(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.WizardNewFileCreationPage_BrowseButton);
+		button.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		
 		fileNameEditor.addModifyListener(new ModifyListener() {
-
+			
 			public void modifyText(ModifyEvent e) {
 				setPageComplete(validatePage());
 			}
 		});
-		button.addSelectionListener(new SelectionListener() {
-
-			public void widgetSelected(SelectionEvent e) {
-				FileDialog dialog = new FileDialog(getShell(), SWT.SAVE);
-				dialog
-						.setText(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.WizardNewFileCreationPage_SelectNewFileDialog);
-				dialog.setFileName(getFileName());
-				String fileName = dialog.open();
-				if (fileName != null) {
-					fileNameEditor.setText(fileName);
-					setPageComplete(validatePage());
+		
+		if (isClcbProcSelected) {
+			filePathEditor.setEditable(false);
+			button.setVisible(false);
+		}
+		else {
+			button.addSelectionListener(new SelectionListener() {
+	
+				public void widgetSelected(SelectionEvent e) {
+					FileDialog dialog = new FileDialog(getShell(), SWT.SAVE);
+					dialog.setText(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.WizardNewFileCreationPage_SelectNewFileDialog);
+					String[] filterExt = {"*.masterdataeditorgmf_diagram"};
+					dialog.setFilterExtensions(filterExt);
+					dialog.setFileName(getFileName());
+					String fileName = dialog.open();
+					System.out.println(fileName);
+					
+					System.out.println(fileName.lastIndexOf(System.getProperty("file.separator")));
+					if (fileName != null) {
+						fileNameEditor.setText(fileName.substring(fileName.lastIndexOf(System.getProperty("file.separator"))+1).replaceFirst(".masterdataeditorgmf_diagram", ""));
+						filePathEditor.setText(fileName.substring(0, fileName.lastIndexOf(System.getProperty("file.separator"))+1));
+						setPageComplete(validatePage());
+					}
 				}
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
+	
+				public void widgetDefaultSelected(SelectionEvent e) {
+				}
+			});
+		}
 
 		// init
 		setFilePath(initialContainerFullPath, initialFileName);
@@ -228,7 +258,7 @@ public class WizardNewFileCreationPage extends WizardPage {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected boolean validatePage() {
 		String fileName = fileNameEditor.getText().trim();
@@ -236,7 +266,17 @@ public class WizardNewFileCreationPage extends WizardPage {
 			setErrorMessage(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.WizardNewFileCreationPage_EmptyFileNameError);
 			return false;
 		}
-		if (!new Path("").isValidPath(fileName)) { //$NON-NLS-1$
+		if (fileName.endsWith(".")) {
+			setErrorMessage("File name must not end in \".\"");
+			return false;
+		}
+		if (fileName.indexOf("\\") > -1 || fileName.indexOf("/") > -1 || fileName.indexOf(":") > -1 || fileName.indexOf("*") > -1 || fileName.indexOf("?") > -1 
+				|| fileName.indexOf("\"") > -1 || fileName.indexOf("<") > -1 || fileName.indexOf(">") > -1 || fileName.indexOf("|") > -1) {
+			setErrorMessage("File name can't contain any of the following characters:\n\t\\ / : * ? \" < > |");
+			return false;
+		}
+		String filePath = filePathEditor.getText().trim();
+		if (!new Path("").isValidPath(filePath)) { //$NON-NLS-1$
 			setErrorMessage(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.WizardNewFileCreationPage_InvalidFileNameError);
 			return false;
 		}

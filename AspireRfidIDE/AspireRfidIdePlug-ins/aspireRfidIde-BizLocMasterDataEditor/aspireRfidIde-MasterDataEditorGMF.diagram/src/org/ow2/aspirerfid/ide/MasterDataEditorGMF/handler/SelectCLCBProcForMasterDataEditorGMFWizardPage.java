@@ -17,11 +17,7 @@
 
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 
-import java.util.ArrayList;
 
-import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -30,20 +26,18 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
-import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
-import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
-import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
-import org.ow2.aspirerfid.ide.bpwme.impl.WorkflowMapImpl;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
  *
  */
 public class SelectCLCBProcForMasterDataEditorGMFWizardPage extends WizardPage {
+	
+	/**
+	 * Editor handler
+	 */
+	 EditorHandler editorHandler = new EditorHandler();
 
 	/**
 	 * IStructuredSelection
@@ -88,9 +82,9 @@ public class SelectCLCBProcForMasterDataEditorGMFWizardPage extends WizardPage {
 		list.setLayoutData(new FillLayout(SWT.VERTICAL));
 		list.setSize(500, 230);
 		
-		for (int i = 0; i < getCLCBProc().size(); i++) {
-			if (!(getCLCBProc().get(i).getName().isEmpty() && getCLCBProc().get(i).getName() == ""))
-				list.add(getCLCBProc().get(i).getName());
+		for (int i = 0; i < editorHandler.getCLCBProc().size(); i++) {
+			if (!(editorHandler.getCLCBProc().get(i).getName().isEmpty() && editorHandler.getCLCBProc().get(i).getName() == ""))
+				list.add(editorHandler.getCLCBProc().get(i).getName());
 		}
 		   
 	    list.addSelectionListener(new SelectionListener() {
@@ -99,9 +93,9 @@ public class SelectCLCBProcForMasterDataEditorGMFWizardPage extends WizardPage {
 	          String selection = selectedItems[0];
 	          
 	          if (!(selection == null && selection == "")) {	        	  
-	      		for (int i = 0; i < getCLCBProc().size(); i++) {
-	    			if (getCLCBProc().get(i).getName().equals(selection)) {
-	    				clcbProc = getCLCBProc().get(i);
+	      		for (int i = 0; i < editorHandler.getCLCBProc().size(); i++) {
+	    			if (editorHandler.getCLCBProc().get(i).getName().equals(selection)) {
+	    				clcbProc = editorHandler.getCLCBProc().get(i);
 	    				break;
 	    			}
 	      		}
@@ -117,40 +111,4 @@ public class SelectCLCBProcForMasterDataEditorGMFWizardPage extends WizardPage {
 		setControl(plate);
 	}
 	
-	/**
-	 * Get a list with all the CLCBProc elements that reside in open BPWME editors
-	 */
-	private ArrayList<CLCBProc> getCLCBProc() {
-		ArrayList<OLCBProc> olcbProcs = new ArrayList<OLCBProc>();
-		ArrayList<CLCBProc> clcbProcs = new ArrayList<CLCBProc>();
-		ArrayList<WorkflowMap> workflowMaps = new ArrayList<WorkflowMap>();
-		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		
-		for (int i = 0; i < page.getEditorReferences().length; i++) {
-			IEditorPart editorPart = page.getEditorReferences()[i].getEditor(true);
-			DiagramEditPart diagramEditPart = ((DiagramEditor)editorPart).getDiagramEditPart();
-			
-			if (diagramEditPart instanceof WorkflowMapEditPart) {
-				WorkflowMapEditPart workflowMap = (WorkflowMapEditPart) diagramEditPart;
-				WorkflowMap  workflowMapDomain = (WorkflowMapImpl) ((View) workflowMap.getModel()).getElement();
-				workflowMaps.add(workflowMapDomain);
-			}
-		}
-		
-		for (int i = 0; i < workflowMaps.size(); i++) {
-			for (int j = 0; j < workflowMaps.get(i).eContents().size(); j++) {
-				olcbProcs.add((OLCBProc) workflowMaps.get(i).eContents().get(j));
-			}
-		}
-		
-		for (int i = 0; i < olcbProcs.size(); i++) {
-			for (int j = 0; j < olcbProcs.get(i).eContents().size(); j++) {
-				clcbProcs.add((CLCBProc) olcbProcs.get(i).eContents().get(j));
-			}
-		}
-
-		return clcbProcs;
-	}
-
-
 }

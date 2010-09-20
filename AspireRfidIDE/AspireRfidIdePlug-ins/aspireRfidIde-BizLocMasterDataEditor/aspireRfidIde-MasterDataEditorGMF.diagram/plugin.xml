@@ -544,7 +544,7 @@
             </separator>
             <menu
                   id="org.ow2.aspirerfid.ide.main.filemenu.masterdataeditorgmfdiagram"
-                  label="MasterDataEditorGMF Diagram">
+                  label="MasterDataEditorGMF">
                <command
                      commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMF.command"
                      label="New MasterDataEditorGMF Diagram"
