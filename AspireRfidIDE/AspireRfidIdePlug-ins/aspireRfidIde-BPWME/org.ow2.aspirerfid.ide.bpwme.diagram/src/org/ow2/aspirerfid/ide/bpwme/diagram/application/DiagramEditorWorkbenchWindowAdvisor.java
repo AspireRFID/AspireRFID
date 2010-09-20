@@ -23,6 +23,7 @@ public class DiagramEditorWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor 
 	}
 
 	/**
+	 * 
 	 * @generated
 	 */
 	public ActionBarAdvisor createActionBarAdvisor(

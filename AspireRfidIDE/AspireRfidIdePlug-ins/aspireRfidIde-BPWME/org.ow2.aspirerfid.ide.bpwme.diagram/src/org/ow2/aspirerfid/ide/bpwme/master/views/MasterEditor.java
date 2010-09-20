@@ -65,6 +65,7 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.bpwmeintegration.MasterDataCon
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.bpwme.dialog.DispositionDialog;
+import org.ow2.aspirerfid.ide.bpwme.dialog.NewDialog;
 import org.ow2.aspirerfid.ide.bpwme.dialog.PrefixValidator;
 import org.ow2.aspirerfid.ide.bpwme.dialog.SomeDialog;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.SelectionProviderWrapper;
@@ -435,17 +436,23 @@ ITabbedPropertySheetPageContributor{
 		newReadPointButton.addSelectionListener(new SelectionAdapter(){
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(MainUtil.isEditorOpened(MasterDataEditorGMFDiagramEditor.ID)) {
-					//activate it
-					MainUtil.activateEditor(MasterDataEditorGMFDiagramEditor.ID);					
-				}else {
-					MessageBox messageBox = new MessageBox(
-							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-					messageBox.setMessage("No masterdata diagram editor is in workspace.\n" +
-							"Please create or open a masterdata diagram.");
-					messageBox.open();
-					return;
-				}
+				NewDialog nd = new NewDialog(
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
+						);
+				nd.open();
+				return;
+				
+//				if(MainUtil.isEditorOpened(MasterDataEditorGMFDiagramEditor.ID)) {
+//					//activate it
+//					MainUtil.activateEditor(MasterDataEditorGMFDiagramEditor.ID);					
+//				}else {
+//					MessageBox messageBox = new MessageBox(
+//							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+//					messageBox.setMessage("No masterdata diagram editor is in workspace.\n" +
+//							"Please create or open a masterdata diagram.");
+//					messageBox.open();
+//					return;
+//				}
 			}
 		});	
 		refreshReadPointButton.addSelectionListener(new SelectionAdapter(){

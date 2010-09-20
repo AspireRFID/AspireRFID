@@ -74,7 +74,7 @@ public class EBProcUtil {
 	}
 	
 	//return the index of the given value, -1 if there is no
-	public static int getExtendedAttributeIndex(String value, String[] options) {
+	public static int getAttributeIndex(String value, String[] options) {
 		if(options == null) {
 			return -1;
 		}

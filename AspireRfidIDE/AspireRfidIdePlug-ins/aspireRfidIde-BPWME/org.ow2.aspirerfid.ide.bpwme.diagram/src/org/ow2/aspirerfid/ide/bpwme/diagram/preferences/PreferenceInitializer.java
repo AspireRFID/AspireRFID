@@ -35,12 +35,12 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(PreferenceConstants.P_BT, "Attr1,Attr2,Attr3");
 		
 		//file paths
-		store.setDefault(PreferenceConstants.P_BPWME_FILE, System.getProperty("user.home") + 
+		store.setDefault(PreferenceConstants.P_BPWME_DIR, System.getProperty("user.home") + 
 				File.separator + "AspireRFID" +
 				File.separator + "IDE" +				
 				File.separator + "BPWME" + File.separator);
 		
-		store.setDefault(PreferenceConstants.P_APDL_FILE, System.getProperty("user.home") + 
+		store.setDefault(PreferenceConstants.P_APDL_DIR, System.getProperty("user.home") + 
 				File.separator + "AspireRFID" +
 				File.separator + "IDE" +				
 				File.separator + "APDLs" + File.separator);

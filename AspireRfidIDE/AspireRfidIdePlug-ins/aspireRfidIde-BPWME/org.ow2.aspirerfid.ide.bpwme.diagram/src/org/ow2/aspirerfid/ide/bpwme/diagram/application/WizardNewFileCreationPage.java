@@ -57,7 +57,7 @@ public class WizardNewFileCreationPage extends WizardPage {
 		//String home = System.getProperty("user.home"); //$NON-NLS-1$
 		
 		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
-		String home = store.getString(PreferenceConstants.P_BPWME_FILE);
+		String home = store.getString(PreferenceConstants.P_BPWME_DIR);
 		
 		if (home != null) {
 			initialContainerFullPath = new Path(home);

@@ -278,7 +278,7 @@ public class MasterDataBuilder {
 	public void setAttribute(String name, String value) {
 		MasterDataUtil.setVocabularyElementAttribute(
 				ebProcVocabularyElement, name, value);
-		masterEditor.setDirty(true);
+		//masterEditor.setDirty(true);
 	}
 	
 	//get read points from master data editor
@@ -289,6 +289,25 @@ public class MasterDataBuilder {
 			readPoints[i] = list.getVocabularyElement().get(i).getId();
 		}
 		return readPoints;
+	}
+	
+	public String[] getBusinessSteps() {
+		VocabularyElementListType list = MasterDataUtil.getVocabularyElementList(businessStepVocabulary);
+		String[] businessSteps = new String[list.getVocabularyElement().size()];
+		for(int i = 0; i < businessSteps.length; i++) {
+			businessSteps[i] = list.getVocabularyElement().get(i).getId();
+		}
+		return  businessSteps;
+	}
+	
+	
+	private String[] getOptions(VocabularyType vocabulary) {
+		VocabularyElementListType list = MasterDataUtil.getVocabularyElementList(vocabulary);
+		String[] options = new String[list.getVocabularyElement().size()];
+		for(int i = 0; i < options.length; i++) {
+			options[i] = list.getVocabularyElement().get(i).getId();
+		}
+		return  options;		
 	}
 	
 	//from read point get the corresponding business location
@@ -382,11 +401,17 @@ public class MasterDataBuilder {
 	}
 	
 	public String[] getDispositions() {
-		String[] dispositions = new String[dispositionItemList.size()];
-		for(int i = 0; i < dispositionItemList.size(); i++) {
-			dispositions[i] = dispositionItemList.get(i).getLabel();
-		}
-		return dispositions;
+		
+		return getOptions(dispositionVocabulary);
+//		String[] dispositions = new String[dispositionItemList.size()];
+//		for(int i = 0; i < dispositionItemList.size(); i++) {
+//			dispositions[i] = dispositionItemList.get(i).getLabel();
+//		}
+//		return dispositions;
+	}
+	
+	public String[] getTransactions() {
+		return getOptions(businessTransactionVocabulary);
 	}
 	
 	public DispositionItem createNewDispositionItem() {

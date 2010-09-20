@@ -218,6 +218,11 @@
              category="domain"
              id="property.tab.domain"
              label="%tab.domain"/>
+          <propertyTab
+                category="extra"
+                id="property.tab.extend"
+                label="Extend">
+          </propertyTab>
       </propertyTabs>
    </extension>
 
@@ -250,6 +255,15 @@
             class="org.ow2.aspirerfid.ide.bpwme.diagram.sheet.BpwmePropertySection">
             <input type="org.eclipse.gmf.runtime.notation.View"/>
             <input type="org.eclipse.gef.EditPart"/>
+         </propertySection>
+         <propertySection
+               class="org.ow2.aspirerfid.ide.bpwme.diagram.sheet.EBProcExtendedPropertySection"
+               id="property.section.extend"
+               tab="property.tab.extend">
+               <input type="org.eclipse.gmf.runtime.notation.View"/>
+            <input
+                  type="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart">
+            </input>
          </propertySection>
       </propertySections>
    </extension>

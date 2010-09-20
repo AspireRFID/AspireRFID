@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.gmf.runtime.common.ui.services.properties.extended.PropertySource;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
+import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 import org.ow2.aspirerfid.commons.epcis.model.EPCISMasterDataDocumentType;
 import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
@@ -27,17 +28,21 @@ public class EBProcProperties extends PropertySource {
 	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		
-		IPropertyDescriptor[] propertyDescriptors = new IPropertyDescriptor[3 + PreferenceConstants.P_EXTEND.keySet().size()];
+		PropertyDescriptor[] propertyDescriptors = new PropertyDescriptor[3 + PreferenceConstants.P_EXTEND.keySet().size()];
 		propertyDescriptors[0] = new TextPropertyDescriptor("Id", "Id");
 		propertyDescriptors[1] = new TextPropertyDescriptor("Name", "Name");
 		propertyDescriptors[2] = new TextPropertyDescriptor("Description", "Description");
+		
+		for (int i = 0; i < 3; i ++) {
+			propertyDescriptors[i].setCategory("General");
+		}
 		
 		Iterator<String> iter = PreferenceConstants.P_EXTEND.keySet().iterator();
 		int i = 3;
 		while(iter.hasNext()) {
 			String key = iter.next();
-			propertyDescriptors[i] = 
-				new ComboBoxPropertyDescriptor(key, key, PreferenceUtil.getAttributes(key));
+			propertyDescriptors[i] = new ComboBoxPropertyDescriptor(key, key, PreferenceUtil.getAttributes(key));
+			propertyDescriptors[i].setCategory("ExtendedAttributes");
 			i++;
 		}
 		
@@ -55,7 +60,7 @@ public class EBProcProperties extends PropertySource {
 			String value = EBProcUtil.getExtendedAttributeValue(ebproc, (String)id);
 			//System.out.println(ebproc);
 			if(value != null) {
-				return EBProcUtil.getExtendedAttributeIndex(value, PreferenceUtil.getAttributes((String)id));
+				return EBProcUtil.getAttributeIndex(value, PreferenceUtil.getAttributes((String)id));
 			}else {
 				return -1;
 			}

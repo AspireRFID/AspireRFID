@@ -36,8 +36,10 @@ public class PreferenceConstants {
 	
 	public static final HashMap<String,String> P_EXTEND = new HashMap<String,String>();
 	
-	public static final String P_BPWME_FILE = "bpwmePath";
+	public static final String P_BPWME_DIR = "bpwmeDirPath";//directory path
 	
-	public static final String P_APDL_FILE = "apdlPath";
+	public static final String P_APDL_DIR = "apdlDirPath";//directory path
+	
+	public static final String P_APDL_FILE = "apdlFilePath";
 	
 }

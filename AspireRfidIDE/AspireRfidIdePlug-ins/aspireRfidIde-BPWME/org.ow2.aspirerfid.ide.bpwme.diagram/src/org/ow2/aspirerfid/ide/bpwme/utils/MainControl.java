@@ -162,7 +162,7 @@ public class MainControl {
 	public MainControl() throws Exception {
 		//create apdl file directory if it's not exist
 		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
-		File directory = new File(store.getString(PreferenceConstants.P_APDL_FILE));
+		File directory = new File(store.getString(PreferenceConstants.P_APDL_DIR));
 		if(!directory.exists()) {
 			directory.mkdirs();
 		}
@@ -203,7 +203,7 @@ public class MainControl {
 		String dot = "\\.";
 		String[] names = diagramFileURI.lastSegment().split(dot);
 		if(names.length == 2) {
-			apdlURI = URI.createFileURI(store.getString(PreferenceConstants.P_APDL_FILE)+names[0]+".xml");
+			apdlURI = URI.createFileURI(store.getString(PreferenceConstants.P_APDL_DIR)+names[0]+".xml");
 			File f = new File(apdlURI.toFileString());		
 			if(!f.exists()) {
 				try {
@@ -231,6 +231,7 @@ public class MainControl {
 	 */
 	public void setAPDLURI(String apdlFileName) {
 		apdlURI = URI.createFileURI(apdlFileName);
+		
 	}
 	
 	/**
