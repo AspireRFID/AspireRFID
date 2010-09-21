@@ -72,7 +72,8 @@ public class ACR122UReader extends AbstractReader {
 	 */
 	@Override
 	protected void closeReader() {
-		tagService.removeReaderMonitor(readerMonitor);
+      tagService.shutdown();
+	   tagService.removeReaderMonitor(readerMonitor);
 		tagService.removeTagMonitor(tagMonitor);
 		setState(STATE_NO_READER);
 	}
@@ -85,7 +86,8 @@ public class ACR122UReader extends AbstractReader {
 	 */
 	@Override
 	protected void openReader() {
-		tagService = new TagServiceImpl(tagServiceConfiguration);
+	   if (tagService==null)
+	      tagService = new TagServiceImpl(tagServiceConfiguration);
 		setState(STATE_READY);
 	}
 
@@ -117,7 +119,7 @@ public class ACR122UReader extends AbstractReader {
 			temp = Integer.parseInt(properties.get("PollInterval"));
 			tagServiceConfiguration.setPollInterval(temp);
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			tagServiceConfiguration.setPollInterval(DEFAULT_POLL_INTERVAL);
 		}
 
@@ -125,7 +127,7 @@ public class ACR122UReader extends AbstractReader {
 			temp = Integer.parseInt(properties.get("PutThresholdTime"));
 			tagServiceConfiguration.setPutThresholdTime(temp);
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			tagServiceConfiguration.setPutThresholdTime(DEFAULT_PUT_THRESHOLD_TIME);
 		}
 

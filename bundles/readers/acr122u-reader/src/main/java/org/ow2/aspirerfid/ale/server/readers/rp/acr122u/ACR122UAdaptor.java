@@ -33,6 +33,15 @@ import org.ow2.aspirerfid.ale.server.readers.rp.base.AbstractReader;
  * 
  */
 public class ACR122UAdaptor extends AbstractAdaptor {
+	
+	/**
+	 * Default constructor
+	 */
+	public ACR122UAdaptor() {
+	   super();
+	   readerName = "ACR122U Reader";
+   }
+
 
 	@Override
 	protected AbstractReader getReader() {
