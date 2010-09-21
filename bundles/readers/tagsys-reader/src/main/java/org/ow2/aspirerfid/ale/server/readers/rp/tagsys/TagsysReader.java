@@ -85,8 +85,10 @@ public class TagsysReader extends AbstractReader {
 	@Override
 	protected void closeReader() {
 		try {
-			if (readerDevice != null)
+			if (readerDevice != null) {
+			   readerDevice.stopRead();
 				readerDevice.setRf(TMedioLx00.RF_OFF);
+			}
 			if (readerProtocol != null)
 				readerProtocol.close();
 		} catch (TSTXeErrorException e) {
