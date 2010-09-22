@@ -13,12 +13,24 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.properties.sections.AdvancedPropertySection;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
+import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
+import org.ow2.aspirerfid.ide.bpwme.actions.ReadMasterDataAction;
 import org.ow2.aspirerfid.ide.bpwme.test.EBProcProperties;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
 
 /**
@@ -27,12 +39,28 @@ import org.ow2.aspirerfid.ide.bpwme.test.EBProcProperties;
 public class BpwmePropertySection extends AdvancedPropertySection implements
 		IPropertySourceProvider {
 
+	@Override
+	public void createControls(Composite parent,
+			TabbedPropertySheetPage aTabbedPropertySheetPage) {
+		super.createControls(parent, aTabbedPropertySheetPage);
+		
+		//add the import button to the local toolbar
+		IToolBarManager manager = aTabbedPropertySheetPage.getSite().getActionBars().getToolBarManager();
+		manager.add(new ReadMasterDataAction());
+	}
+	
+//	@Override
+//	public void refresh() {
+//		super.refresh();
+//		IToolBarManager manager = page.getSite().getActionBars().getToolBarManager();
+//		manager.add(new ReadMasterDataAction());
+//	}
 	
 	/**
 	 * modified by yluo
 	 */
 	public IPropertySource getPropertySource(Object object) {
-		//inject in a fake property viewer
+		//inject in a fake property viewer	
 		if (object instanceof org.ow2.aspirerfid.ide.bpwme.EBProc) {
 			return new EBProcProperties(object);
 		}

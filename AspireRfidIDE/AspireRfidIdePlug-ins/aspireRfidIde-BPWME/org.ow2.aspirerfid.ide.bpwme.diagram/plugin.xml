@@ -459,6 +459,11 @@
             defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.ShowCheatsheets"
             id="org.ow2.aspirerfid.ide.bpwme.actions.showCheatsheets"
             name="Show Cheatsheets">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.ShowMasterDataEditor"
+            id="org.ow2.aspirerfid.ide.bpwme.diagram.showMasterDataEditor"
+            name="showMasterDataEditor">
       </command>  
    </extension>
 
@@ -651,6 +656,11 @@
                      label="XML Editor"
                      style="push">
                </command>
+               <command
+                     commandId="org.ow2.aspirerfid.ide.bpwme.diagram.showMasterDataEditor"
+                     label="MasterData Editor"
+                     style="push">
+               </command>
             </menu>
             <separator
                   name="org.ow2.aspirerfid.ide.main.windowmenu.separator1"
@@ -715,13 +725,14 @@
                label="EC Spec"
                menubarPath="editMenu/editGroup">
          </action>
+         <!--
          <action
                class="org.ow2.aspirerfid.ide.bpwme.actions.EditMasterData"
                id="org.ow2.aspirerfid.ide.bpwme.actions.EditMasterData"
                label="Master Data"
                menubarPath="editMenu/editGroup">
          </action>
-         
+         -->
       </objectContribution>
    </extension>
    <!--

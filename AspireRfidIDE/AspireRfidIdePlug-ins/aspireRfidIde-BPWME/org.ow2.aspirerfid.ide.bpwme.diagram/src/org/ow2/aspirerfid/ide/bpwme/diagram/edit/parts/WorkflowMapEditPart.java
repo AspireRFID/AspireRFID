@@ -70,7 +70,12 @@ public class WorkflowMapEditPart extends DiagramEditPart {
 		MainControl mc = MainControl.getMainControl();
 		if(mc.getFileAction() == FileAction.OpenAction) {
 			mc.olcbep = (OLCBProcEditPart) child;
+		}else if(mc.getFileAction() == FileAction.Restart) {
+			mc.rebuild();
+			mc.olcbep = (OLCBProcEditPart) child;
+			mc.mapModels();
 		}
+		
 		super.addChild(child, index);
 	}
 	

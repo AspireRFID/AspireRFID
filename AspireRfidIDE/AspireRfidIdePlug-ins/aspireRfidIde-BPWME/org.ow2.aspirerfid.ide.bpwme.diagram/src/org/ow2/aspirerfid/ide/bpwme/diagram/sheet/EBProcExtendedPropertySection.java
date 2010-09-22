@@ -13,18 +13,38 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.properties.sections.AdvancedPropertySection;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
+import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
+import org.ow2.aspirerfid.ide.bpwme.actions.ReadMasterDataAction;
 import org.ow2.aspirerfid.ide.bpwme.test.EBProcMasterDataProperties;
 import org.ow2.aspirerfid.ide.bpwme.test.EBProcProperties;
 
 
 public class EBProcExtendedPropertySection extends AdvancedPropertySection implements
-		IPropertySourceProvider {
+IPropertySourceProvider {
+	@Override	
+	public void createControls(Composite parent,
+			TabbedPropertySheetPage aTabbedPropertySheetPage) {
+		super.createControls(parent, aTabbedPropertySheetPage);
+		//add the import button to the local toolbar
+//		IToolBarManager manager = aTabbedPropertySheetPage.getSite().getActionBars().getToolBarManager();
+//		System.out.println(manager);
+//		manager.add(new ReadMasterDataAction());
+	}	
 
+	//set this method to be null, let the action bar do not be updated
+	@Override
+	public void setActionBars(IActionBars actionBars) {
+
+	}
+	
 	
 	/**
 	 * modified by yluo
@@ -35,21 +55,21 @@ public class EBProcExtendedPropertySection extends AdvancedPropertySection imple
 			return new EBProcMasterDataProperties(object);
 		}
 		//add end
-//		if (object instanceof IPropertySource) {
-//			return (IPropertySource) object;
-//		}
-//		AdapterFactory af = getAdapterFactory(object);
-//		if (af != null) {
-//			IItemPropertySource ips = (IItemPropertySource) af.adapt(object,
-//					IItemPropertySource.class);
-//			if (ips != null) {
-//				return new PropertySource(object, ips);
-//			}
-//		}
-//		if (object instanceof IAdaptable) {
-//			return (IPropertySource) ((IAdaptable) object)
-//					.getAdapter(IPropertySource.class);
-//		}
+		//		if (object instanceof IPropertySource) {
+		//			return (IPropertySource) object;
+		//		}
+		//		AdapterFactory af = getAdapterFactory(object);
+		//		if (af != null) {
+		//			IItemPropertySource ips = (IItemPropertySource) af.adapt(object,
+		//					IItemPropertySource.class);
+		//			if (ips != null) {
+		//				return new PropertySource(object, ips);
+		//			}
+		//		}
+		//		if (object instanceof IAdaptable) {
+		//			return (IPropertySource) ((IAdaptable) object)
+		//					.getAdapter(IPropertySource.class);
+		//		}
 		return null;
 	}
 
@@ -109,13 +129,13 @@ public class EBProcExtendedPropertySection extends AdvancedPropertySection imple
 	protected AdapterFactory getAdapterFactory(Object object) {
 		if (getEditingDomain() instanceof AdapterFactoryEditingDomain) {
 			return ((AdapterFactoryEditingDomain) getEditingDomain())
-					.getAdapterFactory();
+			.getAdapterFactory();
 		}
 		TransactionalEditingDomain editingDomain = TransactionUtil
-				.getEditingDomain(object);
+		.getEditingDomain(object);
 		if (editingDomain != null) {
 			return ((AdapterFactoryEditingDomain) editingDomain)
-					.getAdapterFactory();
+			.getAdapterFactory();
 		}
 		return null;
 	}

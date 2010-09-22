@@ -15,6 +15,7 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -59,11 +60,20 @@ public class BpwmeDiagramEditorPlugin extends AbstractUIPlugin {
 	public BpwmeDiagramEditorPlugin() {
 	}
 
+	
+	@Override
+	protected void loadPreferenceStore() {
+		System.out.println("Do it");
+		super.loadPreferenceStore();
+	}
+	
 	/**
 	 * @generated
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		
+		
 		instance = this;
 		PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT,
 				getPreferenceStore());
@@ -80,6 +90,9 @@ public class BpwmeDiagramEditorPlugin extends AbstractUIPlugin {
 		super.stop(context);
 	}
 
+	
+	
+	
 	/**
 	 * @generated
 	 */

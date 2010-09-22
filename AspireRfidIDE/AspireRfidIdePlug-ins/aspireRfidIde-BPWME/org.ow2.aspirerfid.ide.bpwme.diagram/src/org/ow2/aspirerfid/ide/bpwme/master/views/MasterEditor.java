@@ -92,22 +92,22 @@ ITabbedPropertySheetPageContributor{
 	
 	public static final String ID = "org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor";
 	protected boolean isdirty = false;
-	private ComboViewer businessStepComboViewer;
-	private ComboViewer dispositionComboViewer;
-	private ComboViewer transactionComboViewer;
-	
-	private ComboViewer readPointComboViewer;
-	private Text businessLocationText;
-	private Combo actionCombo;
-	private Text eventTypeText;
-	private Text eventNameText;
-	//private MasterEditorInput mei;	
-	
-	private Button newReadPointButton;
-	private Button newBizStepButton;
-	private Button newDispositionButton;
-	private Button newTransactionButton;
-	private Button refreshReadPointButton;
+//	private ComboViewer businessStepComboViewer;
+//	private ComboViewer dispositionComboViewer;
+//	private ComboViewer transactionComboViewer;
+//	
+//	private ComboViewer readPointComboViewer;
+//	private Text businessLocationText;
+//	private Combo actionCombo;
+//	private Text eventTypeText;
+//	private Text eventNameText;
+//	//private MasterEditorInput mei;	
+//	
+//	private Button newReadPointButton;
+//	private Button newBizStepButton;
+//	private Button newDispositionButton;
+//	private Button newTransactionButton;
+//	private Button refreshReadPointButton;
 	
 	private CTabFolder tabFolder;
 	
@@ -179,12 +179,12 @@ ITabbedPropertySheetPageContributor{
 		tabFolder.setLayoutData(new GridData(GridData.FILL_BOTH));
 		tabFolder.setBackground(null);
 		
-		CTabItem ctiGeneral = new CTabItem(tabFolder, SWT.NONE);
-		ctiGeneral.setText("General");
-		Composite compositeGeneral = new Composite(tabFolder, SWT.NONE);
-		compositeGeneral.setLayout(new GridLayout());
-		compositeGeneral.setLayoutData(new GridData(GridData.FILL_BOTH));
-		ctiGeneral.setControl(compositeGeneral);
+//		CTabItem ctiGeneral = new CTabItem(tabFolder, SWT.NONE);
+//		ctiGeneral.setText("General");
+//		Composite compositeGeneral = new Composite(tabFolder, SWT.NONE);
+//		compositeGeneral.setLayout(new GridLayout());
+//		compositeGeneral.setLayoutData(new GridData(GridData.FILL_BOTH));
+//		ctiGeneral.setControl(compositeGeneral);
 		
 		
 		CTabItem ctiBizStep = new CTabItem(tabFolder, SWT.NONE);
@@ -212,10 +212,10 @@ ITabbedPropertySheetPageContributor{
 
 		
 		//select the first tab at the beginning
-		tabFolder.setSelection(ctiGeneral);	
-				
-		createGeneralPart(compositeGeneral);
-		createGeneralPartLogic();
+		tabFolder.setSelection(ctiBizStep);	
+//				
+//		createGeneralPart(compositeGeneral);
+//		createGeneralPartLogic();
 		
 		createBusinessStepPart(compositeBizStep);
 		createBusinessStepPartLogic(compositeBizStep);
@@ -230,335 +230,335 @@ ITabbedPropertySheetPageContributor{
 		composite.setSize(400, 500);
 	}
 	
-	private void createGeneralPart(final Composite parent) {
-		final Group generalInfoGroup = new Group(parent, SWT.NONE);
-		final GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 4;
-		gridLayout.makeColumnsEqualWidth = false;
-		generalInfoGroup.setLayout(gridLayout);
-		generalInfoGroup.setText("General Info");
-
-		final Label eventNameLabel = new Label(generalInfoGroup, SWT.NONE);
-		eventNameLabel.setText("Event Name");
-
-		eventNameText = new Text(generalInfoGroup, SWT.BORDER);
-		eventNameText.setEditable(false);
-		eventNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		
-		//fill space
-		new Label(generalInfoGroup, SWT.NONE);
-		new Label(generalInfoGroup, SWT.NONE);
-		
-		final Label eventTypeLabel = new Label(generalInfoGroup, SWT.NONE);
-		eventTypeLabel.setText("Event Type");
-
-		eventTypeText = new Text(generalInfoGroup, SWT.BORDER);
-		eventTypeText.setEditable(false);
-		eventTypeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-		//fill space
-		new Label(generalInfoGroup, SWT.NONE);
-		new Label(generalInfoGroup, SWT.NONE);
-		
-		final Label actionLabel = new Label(generalInfoGroup, SWT.NONE);
-		actionLabel.setText("Action");
-
-		actionCombo = new Combo(generalInfoGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
-		actionCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-		//fill space
-		new Label(generalInfoGroup, SWT.NONE);
-		new Label(generalInfoGroup, SWT.NONE);
-		
-		final Label businessLocationLabel = new Label(generalInfoGroup, SWT.NONE);
-		businessLocationLabel.setText("Business Location");
-
-		businessLocationText = new Text(generalInfoGroup, SWT.BORDER);
-		businessLocationText.setEditable(false);
-		businessLocationText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-		//fill space
-		new Label(generalInfoGroup, SWT.NONE);
-		new Label(generalInfoGroup, SWT.NONE);
-		
-		final Label readPointLabel = new Label(generalInfoGroup, SWT.NONE);
-		readPointLabel.setText("Read Point");
-		
-		readPointComboViewer = new ComboViewer(generalInfoGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
-		readPointComboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		
-		newReadPointButton = new Button(generalInfoGroup, SWT.NONE);
-		newReadPointButton.setText("+");
-		newReadPointButton.setToolTipText("Create new read point in editor");
-
-		refreshReadPointButton = new Button(generalInfoGroup, SWT.NONE);
-		refreshReadPointButton.setToolTipText("Get location data from editor");
-		refreshReadPointButton.setImage(ResourceManager.getPluginImage(BpwmeDiagramEditorPlugin.getInstance(),"icons/s_reload.png"));
-		
-		final Label businessStepLabel = new Label(generalInfoGroup, SWT.NONE);
-		businessStepLabel.setText("Business Step");
-
-		
-		businessStepComboViewer = new ComboViewer(generalInfoGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
-		businessStepComboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-		newBizStepButton = new Button(generalInfoGroup, SWT.NONE);
-		newBizStepButton.setText("+");
-		
-		new Label(generalInfoGroup, SWT.NONE);
-		
-		final Label dispositionLabel = new Label(generalInfoGroup, SWT.NONE);
-		dispositionLabel.setText("Disposition");
-		
-		dispositionComboViewer = new ComboViewer(generalInfoGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
-		dispositionComboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-		newDispositionButton = new Button(generalInfoGroup, SWT.NONE);
-		newDispositionButton.setText("+");
-		
-		new Label(generalInfoGroup, SWT.NONE);
-		
-		final Label transactionTypeLabel = new Label(generalInfoGroup, SWT.NONE);
-		transactionTypeLabel.setText("Transaction Type");
-
-		transactionComboViewer = new ComboViewer(generalInfoGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
-		transactionComboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		
-		newTransactionButton = new Button(generalInfoGroup, SWT.NONE);
-		newTransactionButton.setText("+");
-		
-		new Label(generalInfoGroup, SWT.NONE);
-		
-		generalInfoGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	}
+//	private void createGeneralPart(final Composite parent) {
+//		final Group generalInfoGroup = new Group(parent, SWT.NONE);
+//		final GridLayout gridLayout = new GridLayout();
+//		gridLayout.numColumns = 4;
+//		gridLayout.makeColumnsEqualWidth = false;
+//		generalInfoGroup.setLayout(gridLayout);
+//		generalInfoGroup.setText("General Info");
+//
+//		final Label eventNameLabel = new Label(generalInfoGroup, SWT.NONE);
+//		eventNameLabel.setText("Event Name");
+//
+//		eventNameText = new Text(generalInfoGroup, SWT.BORDER);
+//		eventNameText.setEditable(false);
+//		eventNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//		
+//		//fill space
+//		new Label(generalInfoGroup, SWT.NONE);
+//		new Label(generalInfoGroup, SWT.NONE);
+//		
+//		final Label eventTypeLabel = new Label(generalInfoGroup, SWT.NONE);
+//		eventTypeLabel.setText("Event Type");
+//
+//		eventTypeText = new Text(generalInfoGroup, SWT.BORDER);
+//		eventTypeText.setEditable(false);
+//		eventTypeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//
+//		//fill space
+//		new Label(generalInfoGroup, SWT.NONE);
+//		new Label(generalInfoGroup, SWT.NONE);
+//		
+//		final Label actionLabel = new Label(generalInfoGroup, SWT.NONE);
+//		actionLabel.setText("Action");
+//
+//		actionCombo = new Combo(generalInfoGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+//		actionCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//
+//		//fill space
+//		new Label(generalInfoGroup, SWT.NONE);
+//		new Label(generalInfoGroup, SWT.NONE);
+//		
+//		final Label businessLocationLabel = new Label(generalInfoGroup, SWT.NONE);
+//		businessLocationLabel.setText("Business Location");
+//
+//		businessLocationText = new Text(generalInfoGroup, SWT.BORDER);
+//		businessLocationText.setEditable(false);
+//		businessLocationText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//
+//		//fill space
+//		new Label(generalInfoGroup, SWT.NONE);
+//		new Label(generalInfoGroup, SWT.NONE);
+//		
+//		final Label readPointLabel = new Label(generalInfoGroup, SWT.NONE);
+//		readPointLabel.setText("Read Point");
+//		
+//		readPointComboViewer = new ComboViewer(generalInfoGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+//		readPointComboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//		
+//		newReadPointButton = new Button(generalInfoGroup, SWT.NONE);
+//		newReadPointButton.setText("+");
+//		newReadPointButton.setToolTipText("Create new read point in editor");
+//
+//		refreshReadPointButton = new Button(generalInfoGroup, SWT.NONE);
+//		refreshReadPointButton.setToolTipText("Get location data from editor");
+//		refreshReadPointButton.setImage(ResourceManager.getPluginImage(BpwmeDiagramEditorPlugin.getInstance(),"icons/s_reload.png"));
+//		
+//		final Label businessStepLabel = new Label(generalInfoGroup, SWT.NONE);
+//		businessStepLabel.setText("Business Step");
+//
+//		
+//		businessStepComboViewer = new ComboViewer(generalInfoGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+//		businessStepComboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//
+//		newBizStepButton = new Button(generalInfoGroup, SWT.NONE);
+//		newBizStepButton.setText("+");
+//		
+//		new Label(generalInfoGroup, SWT.NONE);
+//		
+//		final Label dispositionLabel = new Label(generalInfoGroup, SWT.NONE);
+//		dispositionLabel.setText("Disposition");
+//		
+//		dispositionComboViewer = new ComboViewer(generalInfoGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+//		dispositionComboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//
+//		newDispositionButton = new Button(generalInfoGroup, SWT.NONE);
+//		newDispositionButton.setText("+");
+//		
+//		new Label(generalInfoGroup, SWT.NONE);
+//		
+//		final Label transactionTypeLabel = new Label(generalInfoGroup, SWT.NONE);
+//		transactionTypeLabel.setText("Transaction Type");
+//
+//		transactionComboViewer = new ComboViewer(generalInfoGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+//		transactionComboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//		
+//		newTransactionButton = new Button(generalInfoGroup, SWT.NONE);
+//		newTransactionButton.setText("+");
+//		
+//		new Label(generalInfoGroup, SWT.NONE);
+//		
+//		generalInfoGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+//	}
 	
-	private void createGeneralPartLogic() {
-		final MasterDataBuilder mdb = MasterDataBuilder.getInstance();
-		String text = mdb.getAttribute("urn:epcglobal:epcis:mda:event_name");
-		eventNameText.setText(text);
-		
-		text = mdb.getAttribute("urn:epcglobal:epcis:mda:event_type");
-		eventTypeText.setText(text);
-		
-		text = mdb.getAttribute("urn:epcglobal:epcis:mda:action");		
-		actionCombo.add("ADD");
-		actionCombo.add("OBSERVE");
-		actionCombo.add("DELETE");		
-		actionCombo.setText(text);//set text to the chosen one
-		
-		actionCombo.addSelectionListener(new SelectionAdapter(){					
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String text = actionCombo.getText();
-				if(text == null) {
-					return;
-				}else {
-					mdb.setAttribute("urn:epcglobal:epcis:mda:action", text);
-				}
-			}
-		});
-		
-
-		
-		readPointComboViewer.setContentProvider(new IStructuredContentProvider(){
-			@Override
-			public Object[] getElements(Object inputElement) {
-				VocabularyElementListType list = 
-					MasterDataUtil.getVocabularyElementList((VocabularyType)inputElement);
-				return list.getVocabularyElement().toArray();
-			}
-
-			@Override
-			public void dispose() {
-			}
-
-			@Override
-			public void inputChanged(Viewer viewer, Object oldInput,
-					Object newInput) {
-			}			
-		});
-		readPointComboViewer.setLabelProvider(new LabelProvider(){
-			@Override
-			public String getText(Object element) {
-				return ((VocabularyElementType)element).getId();
-			}
-		});
-		readPointComboViewer.setInput(mdb.getReadPointVocabulary());
-		mdb.addListener(readPointComboViewer);
-		
-		readPointComboViewer.getCombo().addSelectionListener(new SelectionAdapter(){
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String text = readPointComboViewer.getCombo().getText();
-				if(text == null) {
-					return;
-				}else {
-					mdb.setAttribute("urn:epcglobal:epcis:mda:read_point", text);
-					String bizLocation = mdb.getBusinessLocation(text);
-					businessLocationText.setText(bizLocation);
-					mdb.setAttribute("urn:epcglobal:epcis:mda:business_location", bizLocation);
-					setDirty(true);
-				}
-			}
-		});
-		
-		text = mdb.getAttribute("urn:epcglobal:epcis:mda:read_point");
-		readPointComboViewer.getCombo().setText(text);
-		
-		text = mdb.getAttribute("urn:epcglobal:epcis:mda:business_location");
-		businessLocationText.setText(text);
-		
-		createComboViewerLogic(businessStepComboViewer, Type.BusinessStep);		
-		text = mdb.getAttribute("urn:epcglobal:epcis:mda:business_step");
-		businessStepComboViewer.getCombo().setText(text);
-
-		
-		createComboViewerLogic(dispositionComboViewer, Type.Disposition);
-		text = mdb.getAttribute("urn:epcglobal:epcis:mda:disposition");
-		dispositionComboViewer.getCombo().setText(text);
-
-		
-		createComboViewerLogic(transactionComboViewer, Type.TransactionType);
-		text = mdb.getAttribute("urn:epcglobal:epcis:mda:transaction_type");
-		transactionComboViewer.getCombo().setText(text);
-		
-		//set actions for the '+' buttons
-		//new read point button should jump to the existing master data diagram
-		//editor or invoke the method to create a new diagram
-		//now the logic behind the button is a little bit complicated.
-		//1. first, system will check if there is a valid file mapped with this clcb
-		//2. if so, open the file
-		//3. else, promote a dialog, let the users to choose
-		//3.1 whether user will create a new file or
-		//3.2 open an existing file or
-		//3.3 use an editor existed in the workspace
-		//3.4 when doing so, also update the fileString field in clcb
-		newReadPointButton.addSelectionListener(new SelectionAdapter(){
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				NewDialog nd = new NewDialog(
-						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
-						);
-				nd.open();
-				return;
-				
-//				if(MainUtil.isEditorOpened(MasterDataEditorGMFDiagramEditor.ID)) {
-//					//activate it
-//					MainUtil.activateEditor(MasterDataEditorGMFDiagramEditor.ID);					
-//				}else {
-//					MessageBox messageBox = new MessageBox(
-//							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-//					messageBox.setMessage("No masterdata diagram editor is in workspace.\n" +
-//							"Please create or open a masterdata diagram.");
-//					messageBox.open();
+//	private void createGeneralPartLogic() {
+//		final MasterDataBuilder mdb = MasterDataBuilder.getInstance();
+//		String text = mdb.getAttribute("urn:epcglobal:epcis:mda:event_name");
+//		eventNameText.setText(text);
+//		
+//		text = mdb.getAttribute("urn:epcglobal:epcis:mda:event_type");
+//		eventTypeText.setText(text);
+//		
+//		text = mdb.getAttribute("urn:epcglobal:epcis:mda:action");		
+//		actionCombo.add("ADD");
+//		actionCombo.add("OBSERVE");
+//		actionCombo.add("DELETE");		
+//		actionCombo.setText(text);//set text to the chosen one
+//		
+//		actionCombo.addSelectionListener(new SelectionAdapter(){					
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				String text = actionCombo.getText();
+//				if(text == null) {
 //					return;
+//				}else {
+//					mdb.setAttribute("urn:epcglobal:epcis:mda:action", text);
 //				}
-			}
-		});	
-		refreshReadPointButton.addSelectionListener(new SelectionAdapter(){
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				MainUtil.activateEditor(MasterDataEditorGMFDiagramEditor.ID);
-				
-				MasterDataBuilder mdb = MasterDataBuilder.getInstance();					
-				HashMap<String, HashMap<String, String>> companyMap = 
-					MasterDataContentsProvider.getCompanyUriAttributesValues();
-				HashMap<String, HashMap<String, String>> warehouseMap = 
-					MasterDataContentsProvider.getWarehouseUriAttributesValues();
-				HashMap<String, HashMap<String, String>> readpointMap = 
-					MasterDataContentsProvider.getReadPointUriAttributesValues();
-				
-				mdb.setBusinessStepReadPoint(companyMap, warehouseMap, readpointMap);
-				
-				MainUtil.activateEditor(MasterEditor.ID);
-			}
-
-
-		});
-		newBizStepButton.addSelectionListener(new SelectionAdapter(){
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				tabFolder.setSelection(1);
-			}
-		});
-		
-		newDispositionButton.addSelectionListener(new SelectionAdapter(){
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				tabFolder.setSelection(2);
-			}
-		});
-		
-		newTransactionButton.addSelectionListener(new SelectionAdapter(){
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				tabFolder.setSelection(3);
-			}
-		});
-	}
+//			}
+//		});
+//		
+//
+//		
+//		readPointComboViewer.setContentProvider(new IStructuredContentProvider(){
+//			@Override
+//			public Object[] getElements(Object inputElement) {
+//				VocabularyElementListType list = 
+//					MasterDataUtil.getVocabularyElementList((VocabularyType)inputElement);
+//				return list.getVocabularyElement().toArray();
+//			}
+//
+//			@Override
+//			public void dispose() {
+//			}
+//
+//			@Override
+//			public void inputChanged(Viewer viewer, Object oldInput,
+//					Object newInput) {
+//			}			
+//		});
+//		readPointComboViewer.setLabelProvider(new LabelProvider(){
+//			@Override
+//			public String getText(Object element) {
+//				return ((VocabularyElementType)element).getId();
+//			}
+//		});
+//		readPointComboViewer.setInput(mdb.getReadPointVocabulary());
+//		mdb.addListener(readPointComboViewer);
+//		
+//		readPointComboViewer.getCombo().addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				String text = readPointComboViewer.getCombo().getText();
+//				if(text == null) {
+//					return;
+//				}else {
+//					mdb.setAttribute("urn:epcglobal:epcis:mda:read_point", text);
+//					String bizLocation = mdb.getBusinessLocation(text);
+//					businessLocationText.setText(bizLocation);
+//					mdb.setAttribute("urn:epcglobal:epcis:mda:business_location", bizLocation);
+//					setDirty(true);
+//				}
+//			}
+//		});
+//		
+//		text = mdb.getAttribute("urn:epcglobal:epcis:mda:read_point");
+//		readPointComboViewer.getCombo().setText(text);
+//		
+//		text = mdb.getAttribute("urn:epcglobal:epcis:mda:business_location");
+//		businessLocationText.setText(text);
+//		
+//		createComboViewerLogic(businessStepComboViewer, Type.BusinessStep);		
+//		text = mdb.getAttribute("urn:epcglobal:epcis:mda:business_step");
+//		businessStepComboViewer.getCombo().setText(text);
+//
+//		
+//		createComboViewerLogic(dispositionComboViewer, Type.Disposition);
+//		text = mdb.getAttribute("urn:epcglobal:epcis:mda:disposition");
+//		dispositionComboViewer.getCombo().setText(text);
+//
+//		
+//		createComboViewerLogic(transactionComboViewer, Type.TransactionType);
+//		text = mdb.getAttribute("urn:epcglobal:epcis:mda:transaction_type");
+//		transactionComboViewer.getCombo().setText(text);
+//		
+//		//set actions for the '+' buttons
+//		//new read point button should jump to the existing master data diagram
+//		//editor or invoke the method to create a new diagram
+//		//now the logic behind the button is a little bit complicated.
+//		//1. first, system will check if there is a valid file mapped with this clcb
+//		//2. if so, open the file
+//		//3. else, promote a dialog, let the users to choose
+//		//3.1 whether user will create a new file or
+//		//3.2 open an existing file or
+//		//3.3 use an editor existed in the workspace
+//		//3.4 when doing so, also update the fileString field in clcb
+//		newReadPointButton.addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				NewDialog nd = new NewDialog(
+//						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
+//						);
+//				nd.open();
+//				return;
+//				
+////				if(MainUtil.isEditorOpened(MasterDataEditorGMFDiagramEditor.ID)) {
+////					//activate it
+////					MainUtil.activateEditor(MasterDataEditorGMFDiagramEditor.ID);					
+////				}else {
+////					MessageBox messageBox = new MessageBox(
+////							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+////					messageBox.setMessage("No masterdata diagram editor is in workspace.\n" +
+////							"Please create or open a masterdata diagram.");
+////					messageBox.open();
+////					return;
+////				}
+//			}
+//		});	
+//		refreshReadPointButton.addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				MainUtil.activateEditor(MasterDataEditorGMFDiagramEditor.ID);
+//				
+//				MasterDataBuilder mdb = MasterDataBuilder.getInstance();					
+//				HashMap<String, HashMap<String, String>> companyMap = 
+//					MasterDataContentsProvider.getCompanyUriAttributesValues();
+//				HashMap<String, HashMap<String, String>> warehouseMap = 
+//					MasterDataContentsProvider.getWarehouseUriAttributesValues();
+//				HashMap<String, HashMap<String, String>> readpointMap = 
+//					MasterDataContentsProvider.getReadPointUriAttributesValues();
+//				
+//				mdb.setBusinessStepReadPoint(companyMap, warehouseMap, readpointMap);
+//				
+//				MainUtil.activateEditor(MasterEditor.ID);
+//			}
+//
+//
+//		});
+//		newBizStepButton.addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				tabFolder.setSelection(1);
+//			}
+//		});
+//		
+//		newDispositionButton.addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				tabFolder.setSelection(2);
+//			}
+//		});
+//		
+//		newTransactionButton.addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				tabFolder.setSelection(3);
+//			}
+//		});
+//	}
 	
-	private void createComboViewerLogic(final ComboViewer comboViewer, final Type type) {
-		final MasterDataBuilder mdb = MasterDataBuilder.getInstance();
-
-		comboViewer.setContentProvider(new IStructuredContentProvider(){
-			@Override
-			public Object[] getElements(Object inputElement) {
-				VocabularyElementListType list = 
-					MasterDataUtil.getVocabularyElementList((VocabularyType)inputElement);
-				return list.getVocabularyElement().toArray();
-			}
-			@Override
-			public void dispose() {
-			}
-
-			@Override
-			public void inputChanged(Viewer viewer, Object oldInput,
-					Object newInput) {
-			}			
-		});
-		comboViewer.setLabelProvider(new LabelProvider(){
-			@Override
-			public String getText(Object element) {
-				return ((VocabularyElementType)element).getId();
-			}
-		});
-		switch(type) {
-		case BusinessStep:
-			comboViewer.setInput(mdb.getBusinessStepVocabulary());
-			break;
-		case Disposition:
-			comboViewer.setInput(mdb.getDispositionVocabulary());
-			break;
-		case TransactionType:
-			comboViewer.setInput(mdb.getBusinessTransactionVocabulary());
-			break;
-		}
-		
-		mdb.addListener(comboViewer);
-		
-		comboViewer.getCombo().addSelectionListener(new SelectionAdapter(){
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String text = comboViewer.getCombo().getText();
-				if(text == null) {
-					return;
-				}else {
-					switch(type) {
-					case BusinessStep:
-						mdb.setAttribute("urn:epcglobal:epcis:mda:business_step", text);
-						break;
-					case Disposition:
-						mdb.setAttribute("urn:epcglobal:epcis:mda:disposition", text);
-						break;
-					case TransactionType:
-						mdb.setAttribute("urn:epcglobal:epcis:mda:transaction_type", text);
-						break;
-					}
-					setDirty(true);
-				}
-			}
-		});
-	}
+//	private void createComboViewerLogic(final ComboViewer comboViewer, final Type type) {
+//		final MasterDataBuilder mdb = MasterDataBuilder.getInstance();
+//
+//		comboViewer.setContentProvider(new IStructuredContentProvider(){
+//			@Override
+//			public Object[] getElements(Object inputElement) {
+//				VocabularyElementListType list = 
+//					MasterDataUtil.getVocabularyElementList((VocabularyType)inputElement);
+//				return list.getVocabularyElement().toArray();
+//			}
+//			@Override
+//			public void dispose() {
+//			}
+//
+//			@Override
+//			public void inputChanged(Viewer viewer, Object oldInput,
+//					Object newInput) {
+//			}			
+//		});
+//		comboViewer.setLabelProvider(new LabelProvider(){
+//			@Override
+//			public String getText(Object element) {
+//				return ((VocabularyElementType)element).getId();
+//			}
+//		});
+//		switch(type) {
+//		case BusinessStep:
+//			comboViewer.setInput(mdb.getBusinessStepVocabulary());
+//			break;
+//		case Disposition:
+//			comboViewer.setInput(mdb.getDispositionVocabulary());
+//			break;
+//		case TransactionType:
+//			comboViewer.setInput(mdb.getBusinessTransactionVocabulary());
+//			break;
+//		}
+//		
+//		mdb.addListener(comboViewer);
+//		
+//		comboViewer.getCombo().addSelectionListener(new SelectionAdapter(){
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				String text = comboViewer.getCombo().getText();
+//				if(text == null) {
+//					return;
+//				}else {
+//					switch(type) {
+//					case BusinessStep:
+//						mdb.setAttribute("urn:epcglobal:epcis:mda:business_step", text);
+//						break;
+//					case Disposition:
+//						mdb.setAttribute("urn:epcglobal:epcis:mda:disposition", text);
+//						break;
+//					case TransactionType:
+//						mdb.setAttribute("urn:epcglobal:epcis:mda:transaction_type", text);
+//						break;
+//					}
+//					setDirty(true);
+//				}
+//			}
+//		});
+//	}
 	
 	
 	private void createTabPart(final Composite parent, final Type type, String groupText) {
@@ -790,8 +790,8 @@ ITabbedPropertySheetPageContributor{
 		MasterDataBuilder mdb = MasterDataBuilder.getInstance();
 		mdb.setMasterEditor(this);
 		//reload eventName
-		String text = mdb.getAttribute("urn:epcglobal:epcis:mda:event_name");
-		eventNameText.setText(text);
+//		String text = mdb.getAttribute("urn:epcglobal:epcis:mda:event_name");
+//		eventNameText.setText(text);
 		//MainControl mc = MainControl.getMainControl();
 	    //mc.setMasterEditor(this);
 	    //reload some data

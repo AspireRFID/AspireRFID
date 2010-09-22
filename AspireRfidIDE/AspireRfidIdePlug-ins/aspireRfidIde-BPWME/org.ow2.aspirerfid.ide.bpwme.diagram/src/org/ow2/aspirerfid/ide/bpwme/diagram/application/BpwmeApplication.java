@@ -15,7 +15,6 @@ public class BpwmeApplication implements IApplication {
 	 */
 	public Object start(IApplicationContext context) throws Exception {
 		Display display = PlatformUI.createDisplay();
-		
 		try {
 			int returnCode = PlatformUI.createAndRunWorkbench(display,
 					new DiagramEditorWorkbenchAdvisor());
@@ -28,6 +27,7 @@ public class BpwmeApplication implements IApplication {
 		}
 	}
 
+	
 	/**
 	 * @generated
 	 */

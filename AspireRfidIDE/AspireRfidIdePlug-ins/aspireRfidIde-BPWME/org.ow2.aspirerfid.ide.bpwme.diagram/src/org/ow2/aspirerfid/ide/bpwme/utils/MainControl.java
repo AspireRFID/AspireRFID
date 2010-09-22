@@ -84,7 +84,7 @@ public class MainControl {
 	 * If it's create a new file, don't do these things.
 	 */
 	public enum FileAction{
-		NewAction, OpenAction
+		NewAction, OpenAction, Restart
 	}
 	
 	/**
@@ -167,6 +167,14 @@ public class MainControl {
 			directory.mkdirs();
 		}
 		
+		String apdlFileString = store.getString(PreferenceConstants.P_APDL_FILE);
+		if(!apdlFileString.equals("")) {
+			//this is a restart
+			fa = FileAction.Restart;
+			setAPDLURI(apdlFileString);
+		}
+		
+		
 		//initialization for some objects
 		objectFactory = new ObjectFactory();
 		//candidateLRList = new ArrayList<ApdlDataField>();
@@ -187,7 +195,6 @@ public class MainControl {
 		extraRPProperty.add(new ExtraProperty("RoSpecID",ExtraProperty.RP_TYPE));
 	}
 
-
 	
 	public HashMap<Integer, Object> getObjectMap() {
 		return objectMap;
@@ -204,12 +211,13 @@ public class MainControl {
 		String[] names = diagramFileURI.lastSegment().split(dot);
 		if(names.length == 2) {
 			apdlURI = URI.createFileURI(store.getString(PreferenceConstants.P_APDL_DIR)+names[0]+".xml");
+			store.setValue(PreferenceConstants.P_APDL_FILE, apdlURI.toFileString());
 			File f = new File(apdlURI.toFileString());		
 			if(!f.exists()) {
 				try {
 					f.createNewFile();
 				} catch (IOException e) {
-						e.printStackTrace();
+					e.printStackTrace();
 				}
 			}
 			
@@ -241,10 +249,8 @@ public class MainControl {
 	public void rebuild() {
 		FileInputStream inputStream;
 		try {
-			MainControl mc = MainControl.getMainControl();
-			
-			inputStream = new FileInputStream(mc.getApdlURI().toFileString());
-			mc.olcbProc = deserializeOLCBProc(inputStream);
+			inputStream = new FileInputStream(apdlURI.toFileString());
+			olcbProc = deserializeOLCBProc(inputStream);
 			//System.out.println(mc.olcbProc);
 			inputStream.close();
 			

@@ -26,6 +26,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
@@ -39,6 +40,7 @@ import org.eclipse.ui.internal.PartSashContainer;
 import org.eclipse.ui.internal.PartSite;
 import org.eclipse.ui.internal.PartStack;
 import org.eclipse.ui.internal.WorkbenchPage;
+import org.eclipse.ui.part.ViewPart;
 import org.ow2.aspirerfid.commons.apdl.model.CLCBProc;
 import org.ow2.aspirerfid.commons.apdl.model.EBProc;
 import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
@@ -295,4 +297,16 @@ public class MainUtil {
 			throw new RuntimeException(commandId + " not found");
 		}
 	}
+	
+	public static IViewPart getView(String id) {
+		IWorkbenchPage pages = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();	
+		IViewReference[] references = pages.getViewReferences();
+		for(IViewReference reference : references) {
+			if(id.equals(reference.getId())) {
+				return reference.getView(false);
+			}
+		}		
+		return null;
+	}
+	
 }

@@ -45,7 +45,7 @@ public class MasterEditorInput implements IEditorInput{
 		MasterDataBuilder mdb = MasterDataBuilder.getInstance();
 		mdb.setEBProc(ebp);
 	}
-	
+		
 	@Override
 	public boolean exists() {
 		return false;
