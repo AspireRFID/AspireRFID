@@ -38,7 +38,7 @@ public class NewMasterDataEditorGMFViewHandler extends AbstractHandler {
 
 		//prompt to correlate the master data with a clcb
 		boolean result = MessageDialog.openQuestion(window.getShell(), "Question", 
-			"Press Yes to create a new MasterDataEditorGMF diagram or No to use an existing one.");
+		"Do you want to correlate the MasterDataEditorGMF file that will be created with a CLCB?");
 		
 		if (result) {
 			SelectCLCBProcForMasterDataEditorGMFWizard selectCLCBwizard = new SelectCLCBProcForMasterDataEditorGMFWizard();
