@@ -134,25 +134,25 @@ public class MasterDataEditParts {
 	 */
 	private static URI epcisFileURI = null;
 	
-//	/**
-//	 * File URIs to re-open diagrams
-//	 */
-//	public static ArrayList<URI> fileURI = new ArrayList<URI>();
-//
-//	/**
-//	 * @return the fileURI
-//	 */
-//	public static ArrayList<URI> getFileURI() {
-//		return fileURI;
-//	}
-//
-//	/**
-//	 * @param fileURI the fileURI to set
-//	 */
-//	public static void setFileURI(URI fileURI) {
-//		MasterDataEditParts.fileURI.add(fileURI);
-//	}
-//	
+	/**
+	 * If the diagram will be created from the EPCIS data
+	 */
+	private static boolean isFromEPCIS = false;
+	
+	/**
+	 * @return the isFromEPCIS
+	 */
+	public static boolean isFromEPCIS() {
+		return isFromEPCIS;
+	}
+
+	/**
+	 * @param isFromEPCIS the isFromEPCIS to set
+	 */
+	public static void setFromEPCIS(boolean isFromEPCIS) {
+		MasterDataEditParts.isFromEPCIS = isFromEPCIS;
+	}
+	
 	/**
 	 * @return the epcisFileURI
 	 */

@@ -505,6 +505,12 @@
             id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.insertMasterDataEditorGMFEpcis.command"
             name="Insert Master Data Editor GMF Into Epcis">
       </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.CorrelateMasterDataEditorGMFWithClcbViewHandler"
+            description="Correlate Master Data Editor GMF Diagram With Clcb"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.correlateMasterDataEditorGMFwithClcb.command"
+            name="Correlate Master Data Editor GMF Diagram With Clcb">
+      </command>
    </extension>
    <extension
          id="org.ow2.aspirerfid.ide.main.menu"
@@ -545,6 +551,11 @@
                <command
                      commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.insertMasterDataEditorGMFEpcis.command"
                      label="Insert MasterDataEditorGMF Diagram Into Epcis"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.correlateMasterDataEditorGMFwithClcb.command"
+                     label="Correlate MasterDataEditorGMF Diagram With Clcb"
                      style="push">
                </command>
                <separator

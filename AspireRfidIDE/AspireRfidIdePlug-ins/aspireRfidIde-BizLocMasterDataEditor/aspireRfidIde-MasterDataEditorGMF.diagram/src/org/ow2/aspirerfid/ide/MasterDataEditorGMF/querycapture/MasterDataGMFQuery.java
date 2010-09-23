@@ -17,7 +17,6 @@
 
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collections;
@@ -31,12 +30,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.ow2.aspirerfid.commons.epcis.model.ArrayOfString;
 import org.ow2.aspirerfid.commons.epcis.model.QueryParam;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractContainer;
@@ -48,12 +41,6 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.ReadPoint;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences.DiagramConfiguratorPreferenceConstants;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.tools.EpcisConstants;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.tools.QueryClientGuiHelper;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.NodeList;
-
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
@@ -70,16 +57,6 @@ public class MasterDataGMFQuery {
 	 * The QueryClientGuiHelper for the query service.
 	 */
 	private static QueryClientGuiHelper queryClient = new QueryClientGuiHelper(queryUrl);
-
-	/**
-	 * The logger.
-	 */
-	private static Log log = LogFactory.getLog(MasterDataGMFQuery.class);
-	
-	/**
-	 * If the diagram will be created from the EPCIS data
-	 */
-	private static boolean isFromEPCIS = false;
 	
 	/**
 	 * The selected company
@@ -98,20 +75,6 @@ public class MasterDataGMFQuery {
 	 */
 	public static void setSelectedCompany(String selectedCompany) {
 		MasterDataGMFQuery.selectedCompany = selectedCompany;
-	}
-
-	/**
-	 * @return the isFromEPCIS
-	 */
-	public static boolean isFromEPCIS() {
-		return isFromEPCIS;
-	}
-
-	/**
-	 * @param isFromEPCIS the isFromEPCIS to set
-	 */
-	public static void setFromEPCIS(boolean isFromEPCIS) {
-		MasterDataGMFQuery.isFromEPCIS = isFromEPCIS;
 	}
 
 	/**

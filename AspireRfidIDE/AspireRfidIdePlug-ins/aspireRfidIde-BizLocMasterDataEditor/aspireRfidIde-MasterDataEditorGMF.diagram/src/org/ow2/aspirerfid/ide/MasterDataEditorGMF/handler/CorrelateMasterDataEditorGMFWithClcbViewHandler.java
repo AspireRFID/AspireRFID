@@ -20,7 +20,6 @@ package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -30,31 +29,18 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
  *
  */
-public class NewMasterDataEditorGMFViewHandler extends AbstractHandler {
+public class CorrelateMasterDataEditorGMFWithClcbViewHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
 
-		//prompt to correlate the master data with a clcb
-		boolean result = MessageDialog.openQuestion(window.getShell(), "Question", 
-			"Press Yes to create a new MasterDataEditorGMF diagram or No to use an existing one.");
+		CorrelateMasterDataEditorGMFWithClcbWizard correlateMasterDataBwizard = new CorrelateMasterDataEditorGMFWithClcbWizard();
+		correlateMasterDataBwizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
+		WizardDialog wizardDialog = new WizardDialog(
+				window.getShell(), correlateMasterDataBwizard);
+		wizardDialog.open();
 		
-		if (result) {
-			SelectCLCBProcForMasterDataEditorGMFWizard selectCLCBwizard = new SelectCLCBProcForMasterDataEditorGMFWizard();
-			selectCLCBwizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
-			WizardDialog wizardDialog = new WizardDialog(
-					window.getShell(), selectCLCBwizard);
-			wizardDialog.open();
-		}
-		else {
-			NewMasterDataEditorGMFWizard newMasterDataWizard = new NewMasterDataEditorGMFWizard();
-			newMasterDataWizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
-			WizardDialog wizardDialog = new WizardDialog(
-					window.getShell(), newMasterDataWizard);
-			wizardDialog.open();
-		}
-			
 		return null;
 	}
 }

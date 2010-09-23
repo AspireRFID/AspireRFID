@@ -120,13 +120,17 @@ public class EditorHandler {
 		
 		for (int i = 0; i < workflowMaps.size(); i++) {
 			for (int j = 0; j < workflowMaps.get(i).eContents().size(); j++) {
-				olcbProcs.add((OLCBProc) workflowMaps.get(i).eContents().get(j));
+				if (workflowMaps.get(i).eContents().get(j) instanceof OLCBProc) {
+					olcbProcs.add((OLCBProc) workflowMaps.get(i).eContents().get(j));
+				}
 			}
 		}
 		
 		for (int i = 0; i < olcbProcs.size(); i++) {
 			for (int j = 0; j < olcbProcs.get(i).eContents().size(); j++) {
-				clcbProcs.add((CLCBProc) olcbProcs.get(i).eContents().get(j));
+				if (olcbProcs.get(i).eContents().get(j) instanceof CLCBProc) {
+					clcbProcs.add((CLCBProc) olcbProcs.get(i).eContents().get(j));
+				}
 			}
 		}
 
@@ -134,7 +138,7 @@ public class EditorHandler {
 	}
 	
 	/**
-	 * Get a list with all the file names of open BPWME editors
+	 * Map the CLCBs with all the corresponding file names of open BPWME editors
 	 */
 	public HashMap<CLCBProc, IPath> getBpwmeFileNames() {
 		clcbFileName.clear();
@@ -157,7 +161,7 @@ public class EditorHandler {
 							if (workflowMapDomain.eContents().get(k).eContents().contains(clcbProcs.get(j))) {
 								String path = editorPart.getTitleToolTip().replaceFirst("file:/", "");
 								path = path.replaceFirst(workflowMap.getDiagramView().getName(), "");
-								clcbFileName.put(clcbProcs.get(j), new Path(path));
+								clcbFileName.put(clcbProcs.get(j), new Path(path).removeFileExtension());
 							}
 						}
 					}

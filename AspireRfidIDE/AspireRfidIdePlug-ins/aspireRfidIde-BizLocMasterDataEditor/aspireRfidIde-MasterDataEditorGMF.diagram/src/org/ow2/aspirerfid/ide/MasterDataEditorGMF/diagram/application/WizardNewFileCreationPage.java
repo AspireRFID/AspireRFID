@@ -237,9 +237,7 @@ public class WizardNewFileCreationPage extends WizardPage {
 					dialog.setFilterExtensions(filterExt);
 					dialog.setFileName(getFileName());
 					String fileName = dialog.open();
-					System.out.println(fileName);
 					
-					System.out.println(fileName.lastIndexOf(System.getProperty("file.separator")));
 					if (fileName != null) {
 						fileNameEditor.setText(fileName.substring(fileName.lastIndexOf(System.getProperty("file.separator"))+1).replaceFirst(".masterdataeditorgmf_diagram", ""));
 						filePathEditor.setText(fileName.substring(0, fileName.lastIndexOf(System.getProperty("file.separator"))+1));

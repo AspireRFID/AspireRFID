@@ -36,8 +36,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFQuery;
-import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
-import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
@@ -75,18 +73,6 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 	 * @generated
 	 */
 	protected Resource diagram;
-	
-	/**
-	 * clcbProc
-	 */
-	protected CLCBProc clcbProc;
-
-	/**
-	 * Set clcbProc
-	 */
-	public void setClcbProc(CLCBProc clcbProc) {
-		this.clcbProc = clcbProc;
-	}
 
 	/**
 	 * @generated
@@ -153,39 +139,25 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 		diagramModelPage
 				.setDescription("Select the Company from Epcis that will create the diagram model.");
 		addPage(diagramModelPage);
-
+		
 		diagramModelFilePage = new NewMasterDataEditorGMFWizardPage(
-				"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram", clcbProc != null? true: false); //$NON-NLS-1$ //$NON-NLS-2$
+				"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
 		diagramModelFilePage
 				.setTitle("Open MasterDataEditorGMF Diagram From Epcis");
 		diagramModelFilePage
 				.setDescription(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizard_DiagramModelFilePageDescription);
-		//set the filename and path of the MasterDataEditorGMF file only if a CLCBProc is selected
-		if (clcbProc != null) {
-			String fileSeparator =	System.getProperty("file.separator");
-			OLCBProc clcbParent = (OLCBProc) clcbProc.eContainer();
-			String bpwmePath = editorHandler.getBpwmeFileNames().get(clcbProc).toString();
-			String masterDataPath = clcbParent.getName() + fileSeparator + clcbProc.getName() + fileSeparator;
-			File directory = new File(bpwmePath + masterDataPath);
-			
-			if(!directory.exists())
-				directory.mkdirs();
-
-			diagramModelFilePage.setFileName(clcbProc.getName());
-			IPath path = new Path(bpwmePath + masterDataPath);
-			diagramModelFilePage.setContainerFullPath(path);
-		}
-		else {
-			String fileSeparator =	System.getProperty("file.separator");
-			String home = System.getProperty("user.home");
-			String defaultPath = home + fileSeparator + "AspireRFID" + fileSeparator + "IDE" + fileSeparator + "BPWME" + fileSeparator;
-			File directory = new File(defaultPath);
-			if(!directory.exists())
-				directory.mkdirs();
-			diagramModelFilePage.setFileName("default");
-			IPath path = new Path(defaultPath);
-			diagramModelFilePage.setContainerFullPath(path);
-		}
+		
+		//set the default filename and path of the MasterDataEditorGMF file
+		String fileSeparator =	System.getProperty("file.separator");
+		String home = System.getProperty("user.home");
+		String defaultPath = home + fileSeparator + "AspireRFID" + fileSeparator + "IDE" + fileSeparator + "BPWME" + fileSeparator;
+		File directory = new File(defaultPath);
+		if(!directory.exists())
+			directory.mkdirs();
+		diagramModelFilePage.setFileName("default");
+		IPath path = new Path(defaultPath);
+		diagramModelFilePage.setContainerFullPath(path);
+		
 		addPage(diagramModelFilePage);
 	}
 
@@ -207,7 +179,7 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
-				MasterDataGMFQuery.setFromEPCIS(true);
+				MasterDataEditParts.setFromEPCIS(true);
 				MasterDataEditParts.setEpcisFileURI(diagramModelFilePage.getURI());
 				
 				diagram = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
@@ -217,7 +189,7 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 						org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
 								.openDiagram(diagram);
 					} catch (PartInitException e) {
-						MasterDataGMFQuery.setFromEPCIS(false);
+						MasterDataEditParts.setFromEPCIS(false);
 						ErrorDialog
 								.openError(
 										getContainer().getShell(),
@@ -230,10 +202,10 @@ public class OpenMasterDataEditorGMFFromEpcisWizard extends Wizard implements
 		try {
 			getContainer().run(false, true, op);
 		} catch (InterruptedException e) {
-			MasterDataGMFQuery.setFromEPCIS(false);
+			MasterDataEditParts.setFromEPCIS(false);
 			return false;
 		} catch (InvocationTargetException e) {
-			MasterDataGMFQuery.setFromEPCIS(false);
+			MasterDataEditParts.setFromEPCIS(false);
 			if (e.getTargetException() instanceof CoreException) {
 				ErrorDialog
 						.openError(

@@ -160,7 +160,7 @@ public class OpenMasterDataEditorGMFFromApdlWizard extends Wizard implements
 		
 		for (int i = 0; i < diagramModelFilePage.length; i++) {
 			diagramModelFilePage[i] = new NewMasterDataEditorGMFWizardPage(
-					"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram", false); //$NON-NLS-1$ //$NON-NLS-2$
+					"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
 			diagramModelFilePage[i]
 					.setTitle("Open MasterDataEditorGMF Diagram From Apdl File");
 			diagramModelFilePage[i]

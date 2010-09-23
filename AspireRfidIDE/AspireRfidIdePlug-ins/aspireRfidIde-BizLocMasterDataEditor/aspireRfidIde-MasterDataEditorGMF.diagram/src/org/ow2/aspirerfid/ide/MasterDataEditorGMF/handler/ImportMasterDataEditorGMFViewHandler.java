@@ -23,6 +23,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -30,7 +31,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
  *
  */
-public class NewMasterDataEditorGMFViewHandler extends AbstractHandler {
+public class ImportMasterDataEditorGMFViewHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -38,7 +39,7 @@ public class NewMasterDataEditorGMFViewHandler extends AbstractHandler {
 
 		//prompt to correlate the master data with a clcb
 		boolean result = MessageDialog.openQuestion(window.getShell(), "Question", 
-			"Press Yes to create a new MasterDataEditorGMF diagram or No to use an existing one.");
+			"Do you want to create a new MasterDataEditorGMF Diagram or use an existing one?");
 		
 		if (result) {
 			SelectCLCBProcForMasterDataEditorGMFWizard selectCLCBwizard = new SelectCLCBProcForMasterDataEditorGMFWizard();

@@ -19,7 +19,6 @@ package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -40,15 +39,6 @@ public class NewMasterDataEditorGMFWizardPage extends
 	public NewMasterDataEditorGMFWizardPage(String pageName,
 			IStructuredSelection selection, String fileExtension) {
 		super(pageName, selection);
-		this.fileExtension = fileExtension;
-	}
-
-	/**
-	 * @generated
-	 */
-	public NewMasterDataEditorGMFWizardPage(String pageName,
-			IStructuredSelection selection, String fileExtension, boolean isClcbProcSelected) {
-		super(pageName, selection, isClcbProcSelected);
 		this.fileExtension = fileExtension;
 	}
 
@@ -86,15 +76,6 @@ public class NewMasterDataEditorGMFWizardPage extends
 		if (!super.validatePage()) {
 			return false;
 		}
-//		String extension = getExtension();
-//		if (extension != null
-//				&& !getFilePath().toString().endsWith("." + extension)) {
-//			setErrorMessage(NLS
-//					.bind(
-//							org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizardPageExtensionError,
-//							extension));
-//			return false;
-//		}
 		return true;
 	}
 }

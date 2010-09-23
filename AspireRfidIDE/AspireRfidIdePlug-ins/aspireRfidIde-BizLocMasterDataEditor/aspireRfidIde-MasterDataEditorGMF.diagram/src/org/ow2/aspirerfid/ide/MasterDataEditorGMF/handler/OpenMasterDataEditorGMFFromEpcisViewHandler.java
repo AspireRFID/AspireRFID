@@ -20,16 +20,11 @@ package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditor;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
@@ -41,33 +36,24 @@ public class OpenMasterDataEditorGMFFromEpcisViewHandler extends AbstractHandler
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
 		
-		//select the CLCBProc where the MasterDataEditorGMF should reside in
-		SelectCLCBProcForMasterDataEditorGMFWizard selectCLCBwizard = new SelectCLCBProcForMasterDataEditorGMFWizard();
-		selectCLCBwizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
-		WizardDialog wizardDialog1 = new WizardDialog(
-				window.getShell(), selectCLCBwizard);
-		wizardDialog1.open();
+		//prompt to correlate the master data with a clcb
+		boolean result = MessageDialog.openQuestion(window.getShell(), "Question", 
+			"Do you want to correlate the MasterDataEditorGMF file that will be created with a CLCB?");
 		
-		//create the MasterDataEditorGMF
-		OpenMasterDataEditorGMFFromEpcisWizard newMasterDataWizard = new OpenMasterDataEditorGMFFromEpcisWizard();
-		//set the CLCBProc only if one is selected
-		if (selectCLCBwizard.getClcbProc() != null)
-			newMasterDataWizard.setClcbProc(selectCLCBwizard.getClcbProc());
-		newMasterDataWizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
-		WizardDialog wizardDialog2 = new WizardDialog(
-				window.getShell(), newMasterDataWizard);
-		wizardDialog2.open();
-		
-//		//re-open the diagram to refresh the new attributes
-//		IWorkbenchPage page = window.getActivePage();
-//		IEditorPart editor  = page.getActiveEditor();
-//		
-//		try {
-//			page.closeEditor(editor, true);
-//			page.openEditor(new URIEditorInput(MasterDataEditParts.getEpcisFileURI()), MasterDataEditorGMFDiagramEditor.ID);	
-//		} catch (PartInitException e) {
-//			e.printStackTrace();
-//		}
+		if (result) {
+			OpenMasterDataEditorGMFFromEpcisForClcbWizard newMasterDataWizard = new OpenMasterDataEditorGMFFromEpcisForClcbWizard();
+			newMasterDataWizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
+			WizardDialog wizardDialog2 = new WizardDialog(
+					window.getShell(), newMasterDataWizard);
+			wizardDialog2.open();
+		}
+		else {
+			OpenMasterDataEditorGMFFromEpcisWizard newMasterDataWizard = new OpenMasterDataEditorGMFFromEpcisWizard();
+			newMasterDataWizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
+			WizardDialog wizardDialog = new WizardDialog(
+					window.getShell(), newMasterDataWizard);
+			wizardDialog.open();
+		}
 		
 		return null;
 	}

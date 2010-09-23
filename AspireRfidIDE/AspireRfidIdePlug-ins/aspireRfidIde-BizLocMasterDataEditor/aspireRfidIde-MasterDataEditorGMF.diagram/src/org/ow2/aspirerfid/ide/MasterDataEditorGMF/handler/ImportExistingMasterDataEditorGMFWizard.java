@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -34,12 +35,13 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
+import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
  *
  */
-public class NewMasterDataEditorGMFWizard extends Wizard implements
+public class ImportExistingMasterDataEditorGMFWizard extends Wizard implements
 		INewWizard {
 	
 	/**
@@ -58,14 +60,33 @@ public class NewMasterDataEditorGMFWizard extends Wizard implements
 	protected IStructuredSelection selection;
 
 	/**
-	 * @generated
+	 * The existing MasterDataEditorGMF diagram file 
 	 */
-	protected NewMasterDataEditorGMFWizardPage diagramModelFilePage;
+	protected CorrelateMasterDataEditorGMFWithClcbWizardPage existingModelFileNamePage;
 
 	/**
 	 * @generated
 	 */
 	protected Resource diagram;
+	
+	/**
+	 * CLCBProc
+	 */
+	private CLCBProc clcbProc;
+	
+	/**
+	 * @return the clcbProc
+	 */
+	public CLCBProc getClcbProc() {
+		return clcbProc;
+	}
+
+	/**
+	 * @param clcbProc the clcbProc to set
+	 */
+	public void setClcbProc(CLCBProc clcbProc) {
+		this.clcbProc = clcbProc;
+	}
 
 	/**
 	 * @generated
@@ -114,7 +135,7 @@ public class NewMasterDataEditorGMFWizard extends Wizard implements
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.workbench = workbench;
 		this.selection = selection;
-		setWindowTitle(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizardTitle);
+		setWindowTitle("Select CLCBProc");
 		ImageDescriptor descriptor = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorPlugin.
 			imageDescriptorFromPlugin("org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram", "icons/wizban/NewMasterDataEditorGMFWizard.gif");
 		setDefaultPageImageDescriptor(descriptor); //$NON-NLS-1$
@@ -125,39 +146,46 @@ public class NewMasterDataEditorGMFWizard extends Wizard implements
 	 * @generated
 	 */
 	public void addPages() {
-		diagramModelFilePage = new NewMasterDataEditorGMFWizardPage(
-				"DiagramModelFile", getSelection(), "masterdataeditorgmf_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
-		diagramModelFilePage
-				.setTitle(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizard_DiagramModelFilePageTitle);
-		diagramModelFilePage
-				.setDescription(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizard_DiagramModelFilePageDescription);
-		
-		//set the default filename and path of the MasterDataEditorGMF file
-		String fileSeparator =	System.getProperty("file.separator");
-		String home = System.getProperty("user.home");
-		String defaultPath = home + fileSeparator + "AspireRFID" + fileSeparator + "IDE" + fileSeparator + "BPWME" + fileSeparator;
-		File directory = new File(defaultPath);
-		if(!directory.exists())
-			directory.mkdirs();
-		diagramModelFilePage.setFileName("default");
-		IPath path = new Path(defaultPath);
-		diagramModelFilePage.setContainerFullPath(path);
-
-		addPage(diagramModelFilePage);
+		existingModelFileNamePage = new CorrelateMasterDataEditorGMFWithClcbWizardPage(
+				"DiagramModel", getSelection()); //$NON-NLS-1$ //$NON-NLS-2$
+		existingModelFileNamePage
+		.setTitle("Select a MasterDataEditorGMF Diagram");
+		existingModelFileNamePage
+				.setDescription("Select the MasterDataEditorGMF that will reside in the selected CLCB.");
+		addPage(existingModelFileNamePage);
 	}
 
 	/**
 	 * @generated
 	 */
 	public boolean performFinish() {
+		String fileSeparator = System.getProperty("file.separator");				
+		String bpwmePath = editorHandler.getBpwmeFileNames().get(clcbProc).toString();
+		String masterDataPath = fileSeparator + clcbProc.getName() + fileSeparator;
+		
+		//create the directory under which the MasterDataEditorGMF file will reside
+		File directory = new File(bpwmePath + masterDataPath);
+		if(!directory.exists())
+			directory.mkdirs();
+
+		IPath path = new Path(bpwmePath + masterDataPath + clcbProc.getName());
+		createDiagram(URI.createFileURI(path.toString() + ".masterdataeditorgmf_diagram"));
+	
+		return true;
+	}
+	
+	/**
+	 * Create the diagram
+	 */
+	private void createDiagram(final URI fileURI) {
 		//prompt the user to replace the file
-		File file = new File(diagramModelFilePage.getURI().toFileString());
+		File file = new File(fileURI.toFileString());
 
 		if (file.exists()) {
 			boolean result = MessageDialog.openConfirm(getShell(), "Warning", 
 					file.getName() + " already exists.\nDo you want to replace it?");
 			if (!result)
-				return true;
+				return;
 		}
 		
 		IRunnableWithProgress op = new IRunnableWithProgress() {
@@ -165,7 +193,7 @@ public class NewMasterDataEditorGMFWizard extends Wizard implements
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {				
 				diagram = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
-						.createDiagram(diagramModelFilePage.getURI(), monitor);
+						.createDiagram(fileURI, monitor);
 				if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
 					try {
 						org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
@@ -183,7 +211,7 @@ public class NewMasterDataEditorGMFWizard extends Wizard implements
 		try {
 			getContainer().run(false, true, op);
 		} catch (InterruptedException e) {
-			return false;
+			return;
 		} catch (InvocationTargetException e) {
 			if (e.getTargetException() instanceof CoreException) {
 				ErrorDialog
@@ -198,8 +226,8 @@ public class NewMasterDataEditorGMFWizard extends Wizard implements
 						.logError(
 								"Error creating diagram", e.getTargetException()); //$NON-NLS-1$
 			}
-			return false;
+			return;
 		}
-		return diagram != null;
 	}
+	
 }
