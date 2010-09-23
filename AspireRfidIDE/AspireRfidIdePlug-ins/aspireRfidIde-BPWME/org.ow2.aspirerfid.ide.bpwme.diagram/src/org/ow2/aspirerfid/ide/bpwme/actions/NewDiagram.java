@@ -43,7 +43,6 @@ public class NewDiagram extends AbstractHandler {
 		
 		MainControl mc = MainControl.getMainControl();
 		mc.setFileAction(FileAction.NewAction);
-		System.out.println("reach");
 		BpwmeCreationWizard wizard = new BpwmeCreationWizard();
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
 		wizard.init(window.getWorkbench(), StructuredSelection.EMPTY);

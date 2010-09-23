@@ -12,6 +12,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
+import org.ow2.aspirerfid.ide.bpwme.diagram.application.WizardNewProjectCreationPage;
 
 /**
  * @generated
@@ -31,8 +32,10 @@ public class BpwmeCreationWizard extends Wizard implements INewWizard {
 	/**
 	 * @generated
 	 */
-	protected BpwmeCreationWizardPage diagramModelFilePage;
+//	protected BpwmeCreationWizardPage diagramModelFilePage;
 
+	protected WizardNewProjectCreationPage newProjectPage;
+	
 	/**
 	 * @generated
 	 */
@@ -100,33 +103,18 @@ public class BpwmeCreationWizard extends Wizard implements INewWizard {
 	 * @generated
 	 */
 	public void addPages() {
-		diagramModelFilePage = new BpwmeCreationWizardPage(
-				"DiagramModelFile", getSelection(), "bpwme_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
-		diagramModelFilePage
-				.setTitle(Messages.BpwmeCreationWizard_DiagramModelFilePageTitle);
-		diagramModelFilePage
-				.setDescription(Messages.BpwmeCreationWizard_DiagramModelFilePageDescription);
-		addPage(diagramModelFilePage);
-
-//		domainModelFilePage = new BpwmeCreationWizardPage(
-//				"DomainModelFile", getSelection(), "bpwme") { //$NON-NLS-1$ //$NON-NLS-2$
-//
-//			public void setVisible(boolean visible) {
-//				if (visible) {
-//					String fileName = diagramModelFilePage.getFileName();
-//					fileName = fileName.substring(0, fileName.length()
-//							- ".bpwme_diagram".length()); //$NON-NLS-1$
-//					setFileName(BpwmeDiagramEditorUtil.getUniqueFileName(
-//							getContainerFullPath(), fileName, "bpwme")); //$NON-NLS-1$
-//				}
-//				super.setVisible(visible);
-//			}
-//		};
-//		domainModelFilePage
-//				.setTitle(Messages.BpwmeCreationWizard_DomainModelFilePageTitle);
-//		domainModelFilePage
-//				.setDescription(Messages.BpwmeCreationWizard_DomainModelFilePageDescription);
-//		addPage(domainModelFilePage);
+		newProjectPage = new WizardNewProjectCreationPage("DiagramModelFile");
+		newProjectPage.setTitle("Create new project");
+		newProjectPage.setDescription("Create a new bpwme project");
+		addPage(newProjectPage);		
+		
+//		diagramModelFilePage = new BpwmeCreationWizardPage(
+//				"DiagramModelFile", getSelection(), "bpwme_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
+//		diagramModelFilePage
+//				.setTitle(Messages.BpwmeCreationWizard_DiagramModelFilePageTitle);
+//		diagramModelFilePage
+//				.setDescription(Messages.BpwmeCreationWizard_DiagramModelFilePageDescription);
+//		addPage(diagramModelFilePage);
 	}
 
 	public boolean performFinish() {
@@ -134,11 +122,10 @@ public class BpwmeCreationWizard extends Wizard implements INewWizard {
 
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
+				diagram = BpwmeDiagramEditorUtil.createDiagram(newProjectPage.getURI(),monitor);
+				
 //				diagram = BpwmeDiagramEditorUtil.createDiagram(
-//						diagramModelFilePage.getURI(), domainModelFilePage
-//								.getURI(), monitor);
-				diagram = BpwmeDiagramEditorUtil.createDiagram(
-						diagramModelFilePage.getURI(),monitor);
+//						diagramModelFilePage.getURI(),monitor);
 				
 				
 				if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
