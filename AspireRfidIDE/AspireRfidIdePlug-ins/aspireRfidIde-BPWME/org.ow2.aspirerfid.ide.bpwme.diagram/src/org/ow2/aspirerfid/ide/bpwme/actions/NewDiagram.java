@@ -39,10 +39,11 @@ public class NewDiagram extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		//at this time the url is not initiallized yet		
+		//at this time the url is not initiallized yet
+		
 		MainControl mc = MainControl.getMainControl();
 		mc.setFileAction(FileAction.NewAction);
-		
+		System.out.println("reach");
 		BpwmeCreationWizard wizard = new BpwmeCreationWizard();
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
 		wizard.init(window.getWorkbench(), StructuredSelection.EMPTY);

@@ -1,4 +1,4 @@
-package org.ow2.aspirerfid.ide.bpwme.test;
+package org.ow2.aspirerfid.ide.bpwme.diagram.sheet;
 
 import org.eclipse.gmf.runtime.common.ui.services.properties.extended.PropertySource;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
@@ -32,7 +32,7 @@ public class EBProcMasterDataProperties extends PropertySource {
 		propertyDescriptors[0] = new PropertyDescriptor("EventName", "Event Name");
 		propertyDescriptors[1] = new PropertyDescriptor("EventType", "Event Type");
 		propertyDescriptors[2] = new PropertyDescriptor("BusinessLocation", "Business Location");
-		
+		//combo box fields
 		propertyDescriptors[3] = new ComboBoxPropertyDescriptor("Action","Action",actions);
 		propertyDescriptors[4] = new ComboBoxPropertyDescriptor("ReadPoint","Read Point",mdb.getReadPoints());
 		propertyDescriptors[5] = new ComboBoxPropertyDescriptor("BusinessStep","Business Step",mdb.getBusinessSteps());

@@ -29,7 +29,6 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.ow2.aspirerfid.ide.bpwme.actions.ReadMasterDataAction;
-import org.ow2.aspirerfid.ide.bpwme.test.EBProcProperties;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
 

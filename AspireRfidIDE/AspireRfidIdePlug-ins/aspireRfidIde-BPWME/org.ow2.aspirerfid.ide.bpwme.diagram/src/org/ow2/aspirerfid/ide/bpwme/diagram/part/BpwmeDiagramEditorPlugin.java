@@ -61,19 +61,11 @@ public class BpwmeDiagramEditorPlugin extends AbstractUIPlugin {
 	}
 
 	
-	@Override
-	protected void loadPreferenceStore() {
-		System.out.println("Do it");
-		super.loadPreferenceStore();
-	}
-	
 	/**
 	 * @generated
 	 */
 	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		
-		
+		super.start(context);		
 		instance = this;
 		PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT,
 				getPreferenceStore());

@@ -61,8 +61,6 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementListType;
 import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
 import org.ow2.aspirerfid.commons.epcis.model.VocabularyType;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.bpwmeintegration.MasterDataContentsProvider;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.bpwme.dialog.DispositionDialog;
 import org.ow2.aspirerfid.ide.bpwme.dialog.NewDialog;

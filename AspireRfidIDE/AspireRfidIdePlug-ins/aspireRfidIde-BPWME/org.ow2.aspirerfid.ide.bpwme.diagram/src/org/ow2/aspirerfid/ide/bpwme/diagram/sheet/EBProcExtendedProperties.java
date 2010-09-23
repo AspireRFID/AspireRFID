@@ -1,4 +1,4 @@
-package org.ow2.aspirerfid.ide.bpwme.test;
+package org.ow2.aspirerfid.ide.bpwme.diagram.sheet;
 
 import java.util.Iterator;
 
@@ -19,33 +19,24 @@ import org.ow2.aspirerfid.ide.bpwme.master.utils.MasterDataUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.EBProcUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 
-public class EBProcProperties extends PropertySource {
+public class EBProcExtendedProperties extends PropertySource {
+
 	
-	public EBProcProperties(Object element) {
+	public EBProcExtendedProperties(Object element) {
 		super(element);
 	}
-	
 	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
-		
-		PropertyDescriptor[] propertyDescriptors = new PropertyDescriptor[3 + PreferenceConstants.P_EXTEND.keySet().size()];
-		propertyDescriptors[0] = new TextPropertyDescriptor("Id", "Id");
-		propertyDescriptors[1] = new TextPropertyDescriptor("Name", "Name");
-		propertyDescriptors[2] = new TextPropertyDescriptor("Description", "Description");
-		
-		for (int i = 0; i < 3; i ++) {
-			propertyDescriptors[i].setCategory("General");
-		}
-		
+		PropertyDescriptor[] propertyDescriptors = new PropertyDescriptor[PreferenceConstants.P_EXTEND.keySet().size()];
+
 		Iterator<String> iter = PreferenceConstants.P_EXTEND.keySet().iterator();
-		int i = 3;
+		int i = 0;
 		while(iter.hasNext()) {
 			String key = iter.next();
 			propertyDescriptors[i] = new ComboBoxPropertyDescriptor(key, key, PreferenceUtil.getAttributes(key));
-			propertyDescriptors[i].setCategory("ExtendedAttributes");
+			propertyDescriptors[i].setCategory("Extended Data");
 			i++;
 		}
-		
 		return propertyDescriptors;
 	}
 	
@@ -64,19 +55,8 @@ public class EBProcProperties extends PropertySource {
 			}else {
 				return -1;
 			}
-		}else {
-			EBProcImpl epi = (EBProcImpl)getElement();
-			if(id.equals("Id")) {
-				return epi.getId();
-			}else if(id.equals("Name")) {
-				return epi.getName();
-			}else if(id.equals("Description")) {
-				return epi.getDescription();
-			}else {
-				System.out.println("Wrong id in get " + id);
-				return "fake";
-			}
 		}
+		return -1;
 	}
 	
 	
@@ -94,30 +74,8 @@ public class EBProcProperties extends PropertySource {
 			EBProcUtil.setExtendedAttribute(ebproc, (String)id, 
 					PreferenceUtil.getAttributes((String)id)[(Integer)value]);
 			epi.setFake("fake");
-			//epi.setDirty();
-		}else {//normal attribute
-			if(id.equals("Id")) {
-				epi.setId((String)value);
-				ebproc.setId((String)value);
-				MasterDataUtil.setVocabularyElementID(vocabularyElement, (String)value);
-			}else if(id.equals("Name")) {
-				epi.setName((String)value);
-				ebproc.setName((String)value);
-				MasterDataUtil.setVocabularyElementAttribute(vocabularyElement, 
-						"urn:epcglobal:epcis:mda:event_name", 
-						(String)value);
-			}else if(id.equals("Description")) {
-				epi.setDescription((String)value);
-				ebproc.setDescription((String)value);
-			}else {
-				System.out.println("Wrong id in set" + id);
-			}
+			mc.saveObject();
 		}
 	}
-	
-	@Override
-	public boolean isPropertySet(Object id) {
-		return true;
-	}
-	
+
 }

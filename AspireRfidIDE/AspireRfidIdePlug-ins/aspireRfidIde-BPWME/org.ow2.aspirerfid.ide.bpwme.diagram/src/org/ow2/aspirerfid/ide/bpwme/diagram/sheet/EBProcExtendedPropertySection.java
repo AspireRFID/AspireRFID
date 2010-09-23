@@ -23,8 +23,6 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.ow2.aspirerfid.ide.bpwme.actions.ReadMasterDataAction;
-import org.ow2.aspirerfid.ide.bpwme.test.EBProcMasterDataProperties;
-import org.ow2.aspirerfid.ide.bpwme.test.EBProcProperties;
 
 
 public class EBProcExtendedPropertySection extends AdvancedPropertySection implements
@@ -33,10 +31,6 @@ IPropertySourceProvider {
 	public void createControls(Composite parent,
 			TabbedPropertySheetPage aTabbedPropertySheetPage) {
 		super.createControls(parent, aTabbedPropertySheetPage);
-		//add the import button to the local toolbar
-//		IToolBarManager manager = aTabbedPropertySheetPage.getSite().getActionBars().getToolBarManager();
-//		System.out.println(manager);
-//		manager.add(new ReadMasterDataAction());
 	}	
 
 	//set this method to be null, let the action bar do not be updated
@@ -52,24 +46,8 @@ IPropertySourceProvider {
 	public IPropertySource getPropertySource(Object object) {
 		//inject in a fake property viewer
 		if (object instanceof org.ow2.aspirerfid.ide.bpwme.EBProc) {
-			return new EBProcMasterDataProperties(object);
+			return new EBProcExtendedProperties(object);
 		}
-		//add end
-		//		if (object instanceof IPropertySource) {
-		//			return (IPropertySource) object;
-		//		}
-		//		AdapterFactory af = getAdapterFactory(object);
-		//		if (af != null) {
-		//			IItemPropertySource ips = (IItemPropertySource) af.adapt(object,
-		//					IItemPropertySource.class);
-		//			if (ips != null) {
-		//				return new PropertySource(object, ips);
-		//			}
-		//		}
-		//		if (object instanceof IAdaptable) {
-		//			return (IPropertySource) ((IAdaptable) object)
-		//					.getAdapter(IPropertySource.class);
-		//		}
 		return null;
 	}
 
