@@ -22,7 +22,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageLayout;
@@ -47,6 +50,9 @@ import org.ow2.aspirerfid.commons.apdl.model.EBProc;
 import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
 import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
+import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.CLCBProcEditPart;
+import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 
 /**
  * Utils for the whole project and workspace
@@ -321,6 +327,36 @@ public class MainUtil {
 			}
 		}		
 		return null;
+	}
+	
+	
+	public static CLCBProcEditPart getCLCBPartSelection() {
+		//get the editpart
+		IEditorPart editor = MainUtil.getEditor(BpwmeDiagramEditor.ID);
+		if(editor == null) {
+			return null;
+		}
+		ISelection selection = editor.getSite().getSelectionProvider().getSelection();
+
+		GraphicalEditPart selectedEditPart = null;
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+			if (structuredSelection.size() != 1) {
+				return null;
+			}
+			selectedEditPart = (GraphicalEditPart) structuredSelection.getFirstElement();
+		}
+		String clcbName = null;
+		CLCBProcEditPart clcbPart = null;
+		if(selectedEditPart instanceof CLCBProcEditPart) {
+			clcbPart = ((CLCBProcEditPart)selectedEditPart);
+			//if it is ebproc, get the parent	
+		}else if(selectedEditPart instanceof EBProcEditPart){
+			clcbPart = (CLCBProcEditPart)((EBProcEditPart)selectedEditPart).getParent().getParent();
+
+		}
+		
+		return clcbPart;
 	}
 	
 }
