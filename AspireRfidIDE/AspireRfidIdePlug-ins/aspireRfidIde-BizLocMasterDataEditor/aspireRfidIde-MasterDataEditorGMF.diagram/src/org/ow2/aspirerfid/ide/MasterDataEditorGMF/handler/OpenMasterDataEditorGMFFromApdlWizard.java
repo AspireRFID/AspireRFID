@@ -143,9 +143,6 @@ public class OpenMasterDataEditorGMFFromApdlWizard extends Wizard implements
 		this.workbench = workbench;
 		this.selection = selection;
 		setWindowTitle("Open MasterDataEditorGMF Diagram");
-		//open APDL file and set the CLCBProc names
-		MasterDataGMFCreateFromFile.openApdlFile(getFileURI());
-		MasterDataGMFCreateFromFile.setClcbProcNamesWithMasterDataFromApdl();
 		ImageDescriptor descriptor = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorPlugin.
 			imageDescriptorFromPlugin("org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram", "icons/wizban/NewMasterDataEditorGMFWizard.gif");
 		setDefaultPageImageDescriptor(descriptor); //$NON-NLS-1$
@@ -155,7 +152,7 @@ public class OpenMasterDataEditorGMFFromApdlWizard extends Wizard implements
 	/**
 	 * @generated
 	 */
-	public void addPages() {
+	public void addPages() {		
 		diagramModelFilePage = new NewMasterDataEditorGMFWizardPage[MasterDataGMFCreateFromFile.getClcProcNames().size()];
 		
 		for (int i = 0; i < diagramModelFilePage.length; i++) {
@@ -169,7 +166,8 @@ public class OpenMasterDataEditorGMFFromApdlWizard extends Wizard implements
 			
 			String fileSeparator =	System.getProperty("file.separator");
 			String home = System.getProperty("user.home");
-			String defaultPath = home + fileSeparator + "AspireRFID" + fileSeparator + "IDE" + fileSeparator + "BPWME" + fileSeparator;
+			String defaultPath = home + fileSeparator + "AspireRFID" + fileSeparator + "IDE" + fileSeparator + "BPWME" + fileSeparator +
+			MasterDataGMFCreateFromFile.getClcProcNames().get(i) + fileSeparator;
 			File directory = new File(defaultPath);
 			if(!directory.exists())
 				directory.mkdirs();

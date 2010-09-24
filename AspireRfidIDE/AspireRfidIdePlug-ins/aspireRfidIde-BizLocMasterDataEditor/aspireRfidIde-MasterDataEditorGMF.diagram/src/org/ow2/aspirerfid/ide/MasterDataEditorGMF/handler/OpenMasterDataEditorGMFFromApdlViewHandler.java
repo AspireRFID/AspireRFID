@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFCreateFromFile;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
@@ -59,10 +60,20 @@ public class OpenMasterDataEditorGMFFromApdlViewHandler extends AbstractHandler{
 				return null;
 			}
 			
+			//open APDL file and set the CLCBProc names
+			MasterDataGMFCreateFromFile.openApdlFile(fileURI);
+			MasterDataGMFCreateFromFile.setClcbProcNamesWithMasterDataFromApdl();
+			
+			if (MasterDataGMFCreateFromFile.getClcProcNames().size() == 0) {
+				MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error", 
+						"No MasterData found in the Apdl file.");
+				return null;
+			}
+			
 			//create the MasterDataEditorGMF
 			OpenMasterDataEditorGMFFromApdlWizard wizard = new OpenMasterDataEditorGMFFromApdlWizard();
 			//set the file
-			wizard.setFileURI(fileURI);
+			//wizard.setFileURI(fileURI);
 			wizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
 			WizardDialog wizardDialog = new WizardDialog(
 					window.getShell(), wizard);

@@ -511,6 +511,12 @@
             id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.correlateMasterDataEditorGMFwithClcb.command"
             name="Correlate Master Data Editor GMF Diagram With Clcb">
       </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.ImportMasterDataEditorGMFViewHandler"
+            description="Import Master Data Editor GMF Diagram"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.importMasterDataEditorGMF.command"
+            name="Import Master Data Editor GMF Diagram">
+      </command>
    </extension>
    <extension
          id="org.ow2.aspirerfid.ide.main.menu"

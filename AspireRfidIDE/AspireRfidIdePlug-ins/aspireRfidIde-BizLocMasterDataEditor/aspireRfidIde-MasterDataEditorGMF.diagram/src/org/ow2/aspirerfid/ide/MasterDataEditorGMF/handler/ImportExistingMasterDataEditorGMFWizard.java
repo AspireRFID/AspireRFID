@@ -18,23 +18,22 @@
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
+import java.io.FileReader;
+import java.io.FileWriter;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 
 /**
@@ -135,7 +134,7 @@ public class ImportExistingMasterDataEditorGMFWizard extends Wizard implements
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.workbench = workbench;
 		this.selection = selection;
-		setWindowTitle("Select CLCBProc");
+		setWindowTitle("Import MasterDataEditorGMF Diagram");
 		ImageDescriptor descriptor = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorPlugin.
 			imageDescriptorFromPlugin("org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram", "icons/wizban/NewMasterDataEditorGMFWizard.gif");
 		setDefaultPageImageDescriptor(descriptor); //$NON-NLS-1$
@@ -158,76 +157,56 @@ public class ImportExistingMasterDataEditorGMFWizard extends Wizard implements
 	/**
 	 * @generated
 	 */
-	public boolean performFinish() {
+	public boolean performFinish() {		
 		String fileSeparator = System.getProperty("file.separator");				
 		String bpwmePath = editorHandler.getBpwmeFileNames().get(clcbProc).toString();
 		String masterDataPath = fileSeparator + clcbProc.getName() + fileSeparator;
+		IPath path = new Path(bpwmePath + masterDataPath + clcbProc.getName());
+		
+		//prompt the user to replace the file
+		File file = new File(path.toString() + ".masterdataeditorgmf_diagram");
+
+		if (file.exists()) {
+			boolean result = MessageDialog.openConfirm(getShell(), "Warning", 
+					file.getName() + " already exists.\nDo you want to replace it?");
+			if (!result)
+				return true;
+		}
 		
 		//create the directory under which the MasterDataEditorGMF file will reside
 		File directory = new File(bpwmePath + masterDataPath);
 		if(!directory.exists())
 			directory.mkdirs();
 
-		IPath path = new Path(bpwmePath + masterDataPath + clcbProc.getName());
-		createDiagram(URI.createFileURI(path.toString() + ".masterdataeditorgmf_diagram"));
-	
-		return true;
-	}
-	
-	/**
-	 * Create the diagram
-	 */
-	private void createDiagram(final URI fileURI) {
-		//prompt the user to replace the file
-		File file = new File(fileURI.toFileString());
+	    File inputFile = new File(existingModelFileNamePage.getFilePathEditor().getText());
+	    File outputFile = new File(path.toString() + ".masterdataeditorgmf_diagram");
 
-		if (file.exists()) {
-			boolean result = MessageDialog.openConfirm(getShell(), "Warning", 
-					file.getName() + " already exists.\nDo you want to replace it?");
-			if (!result)
-				return;
+	    FileReader in;
+	    
+		try {
+			in = new FileReader(inputFile);
+		    FileWriter out = new FileWriter(outputFile);
+		    int c;
+
+		    while ((c = in.read()) != -1)
+		      out.write(c);
+
+		    in.close();
+		    out.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
-		IRunnableWithProgress op = new IRunnableWithProgress() {
-
-			public void run(IProgressMonitor monitor)
-					throws InvocationTargetException, InterruptedException {				
-				diagram = org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
-						.createDiagram(fileURI, monitor);
-				if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
-					try {
-						org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorUtil
-								.openDiagram(diagram);
-					} catch (PartInitException e) {
-						ErrorDialog
-								.openError(
-										getContainer().getShell(),
-										org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizardOpenEditorError,
-										null, e.getStatus());
-					}
-				}
-			}
-		};
+		URI fileURI = URI.createFileURI(path.toString() + ".masterdataeditorgmf_diagram");
+		
 		try {
-			getContainer().run(false, true, op);
-		} catch (InterruptedException e) {
-			return;
-		} catch (InvocationTargetException e) {
-			if (e.getTargetException() instanceof CoreException) {
-				ErrorDialog
-						.openError(
-								getContainer().getShell(),
-								org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizardCreationError,
-								null, ((CoreException) e.getTargetException())
-										.getStatus());
-			} else {
-				org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorPlugin
-						.getInstance()
-						.logError(
-								"Error creating diagram", e.getTargetException()); //$NON-NLS-1$
-			}
-			return;
+			getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new URIEditorInput(fileURI), MasterDataEditorGMFDiagramEditor.ID);
+		} catch (PartInitException e) {
+			e.printStackTrace();
 		}
+		
+		return true;
 	}
 	
 }

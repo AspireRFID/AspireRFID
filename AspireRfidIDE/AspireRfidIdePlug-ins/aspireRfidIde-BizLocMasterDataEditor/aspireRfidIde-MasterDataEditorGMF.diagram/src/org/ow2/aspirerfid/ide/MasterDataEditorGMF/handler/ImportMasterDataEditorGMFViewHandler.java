@@ -20,42 +20,45 @@ package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
  *
  */
 public class ImportMasterDataEditorGMFViewHandler extends AbstractHandler {
+	
+	private static CLCBProc clcbProc;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
-
-		//prompt to correlate the master data with a clcb
-		boolean result = MessageDialog.openQuestion(window.getShell(), "Question", 
-			"Do you want to create a new MasterDataEditorGMF Diagram or use an existing one?");
 		
-		if (result) {
-			SelectCLCBProcForMasterDataEditorGMFWizard selectCLCBwizard = new SelectCLCBProcForMasterDataEditorGMFWizard();
-			selectCLCBwizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
-			WizardDialog wizardDialog = new WizardDialog(
-					window.getShell(), selectCLCBwizard);
-			wizardDialog.open();
-		}
-		else {
-			NewMasterDataEditorGMFWizard newMasterDataWizard = new NewMasterDataEditorGMFWizard();
-			newMasterDataWizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
-			WizardDialog wizardDialog = new WizardDialog(
-					window.getShell(), newMasterDataWizard);
-			wizardDialog.open();
-		}
-			
+		SelectCLCBProcForMasterDataEditorGMFWizard selectCLCBwizard = new SelectCLCBProcForMasterDataEditorGMFWizard();
+		selectCLCBwizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
+		WizardDialog wizardDialog = new WizardDialog(
+				window.getShell(), selectCLCBwizard);
+		wizardDialog.open();
+		clcbProc = selectCLCBwizard.getClcbProc();
+		ImportMasterDataEditorGMFWizard importMasterDatawizard = new ImportMasterDataEditorGMFWizard();
+		importMasterDatawizard.setClcbProc(clcbProc);
+		importMasterDatawizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
+		WizardDialog wizardDialog1 = new WizardDialog(
+				window.getShell(), importMasterDatawizard);
+		wizardDialog1.open();
+
 		return null;
 	}
+
+	/**
+	 * @param clcbProc the clcbProc to set
+	 */
+	public static void setClcbProc(CLCBProc clcbProc) {
+		ImportMasterDataEditorGMFViewHandler.clcbProc = clcbProc;
+	}
+	
 }

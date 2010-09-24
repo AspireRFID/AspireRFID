@@ -34,7 +34,6 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.BizLoc;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.Company;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.MasterDataEditorGMFFactory;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.ReadPoint;
-import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -105,37 +104,6 @@ public class MasterDataGMFCreateFromFile {
 			e.printStackTrace();
 		}
 	}
-	
-//	/**
-//	 * Get all the CLCBProc names from the APDL file
-//	 */
-//	private static ArrayList<String> getClcbProcNamesFromApdl() {		
-//		try {
-//			NodeList olcbProcs = doc.getElementsByTagName("ns7:OLCBProc");
-//			
-//			for (int i = 0; i < olcbProcs.getLength(); i++) {
-//				Element olcbProc = (Element) olcbProcs.item(i);
-//				NodeList clcbProcs = olcbProc.getElementsByTagName("ns7:CLCBProc");
-//				
-//				for (int j = 0; j < clcbProcs.getLength(); j++) {
-//					Element clcbProc = (Element) clcbProcs.item(j);
-//					NamedNodeMap nnm1 = clcbProc.getAttributes();
-//					
-//					for (int n = 0; n < nnm1.getLength(); n++) {
-//						Attr attr1 = (Attr) nnm1.item(n);
-//						if (attr1.getNodeName().equals("name")) {
-//							clcProcNames.add(attr1.getNodeValue());
-//						}
-//					}
-//				}
-//				
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return clcProcNames;
-//	}
 	
 	/**
 	 * Get all the CLCBProc names if they have MasterData from the APDL file
