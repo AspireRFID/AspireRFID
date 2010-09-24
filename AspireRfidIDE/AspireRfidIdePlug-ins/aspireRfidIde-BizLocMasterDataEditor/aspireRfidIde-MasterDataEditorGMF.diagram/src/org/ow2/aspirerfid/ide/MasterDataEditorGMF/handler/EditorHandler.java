@@ -159,9 +159,8 @@ public class EditorHandler {
 					for (int k = 0; k < workflowMapDomain.eContents().size(); k++) {
 						for (int j = 0; j < clcbProcs.size(); j++) {
 							if (workflowMapDomain.eContents().get(k).eContents().contains(clcbProcs.get(j))) {
-								String path = editorPart.getTitleToolTip().replaceFirst("file:/", "");
-								path = path.replaceFirst(workflowMap.getDiagramView().getName(), "");
-								clcbFileName.put(clcbProcs.get(j), new Path(path).removeFileExtension());
+								URIEditorInput uri = (URIEditorInput)editorPart.getEditorInput();
+								clcbFileName.put(clcbProcs.get(j), new Path(uri.getURI().toFileString().replaceFirst(workflowMap.getDiagramView().getName(), "")));
 							}
 						}
 					}

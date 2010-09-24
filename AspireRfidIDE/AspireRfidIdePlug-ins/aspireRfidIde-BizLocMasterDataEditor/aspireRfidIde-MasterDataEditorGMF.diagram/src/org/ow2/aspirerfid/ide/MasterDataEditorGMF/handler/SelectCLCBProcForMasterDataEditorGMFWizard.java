@@ -170,6 +170,7 @@ public class SelectCLCBProcForMasterDataEditorGMFWizard extends Wizard implement
 		
 		String fileSeparator = System.getProperty("file.separator");				
 		String bpwmePath = editorHandler.getBpwmeFileNames().get(clcbProc).toString();
+		System.out.println("bpwme path: " + bpwmePath);
 		String masterDataPath = fileSeparator + clcbProc.getName() + fileSeparator;
 		
 		//create the directory under which the MasterDataEditorGMF file will reside
