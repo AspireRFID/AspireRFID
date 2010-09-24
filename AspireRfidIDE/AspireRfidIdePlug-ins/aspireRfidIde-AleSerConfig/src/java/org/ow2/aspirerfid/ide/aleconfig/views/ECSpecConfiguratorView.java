@@ -152,7 +152,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 
 		final ToolBar ecspecAleServerConfiguratorToolBar = new ToolBar(
 				aleMethodsGroup_1, SWT.BORDER);
-		ecspecAleServerConfiguratorToolBar.setBounds(100, 20, 511, 50);
+		ecspecAleServerConfiguratorToolBar.setBounds(103, 20, 511, 50);
 		ecspecAleServerConfiguratorToolBar.setBackground(SWTResourceManager
 				.getColor(179, 213, 186));
 
@@ -198,7 +198,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 
 		final ToolBar toolBar = new ToolBar(aleMethodsGroup_1, SWT.VERTICAL
 				| SWT.BORDER);
-		toolBar.setBounds(10, 65, 93, 238);
+		toolBar.setBounds(10, 70, 93, 238);
 		toolBar.setBackground(SWTResourceManager.getColor(179, 213, 186));
 
 		final ToolItem defineToolItem = new ToolItem(toolBar, SWT.PUSH);
@@ -508,7 +508,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 		button.setBackground(SWTResourceManager.getColor(255, 255, 255));
 		button.setImage(ResourceManager.getPluginImage(Activator.getDefault(),
 				"icons/img/desktop_icons_1.gif"));
-		button.setBounds(10, 22, 93, 43);
+		button.setBounds(10, 20, 93, 50);
 
 		createActions();
 		initializeToolBar();

@@ -169,17 +169,17 @@ public class LRSpecConfiguratorView extends ViewPart {
 
 		lrspecConfiguratorComposite = new Composite(lrspecConfiguratorScrolledComposite, SWT.NONE);
 		lrspecConfiguratorComposite.setLocation(0, 0);
-		lrspecConfiguratorComposite.setSize(709, 389);
+		lrspecConfiguratorComposite.setSize(709, 374);
 
 		lrspecConfiguratorScrolledComposite.setContent(lrspecConfiguratorComposite);
 
 		final Group alelrMethodsGroup_1 = new Group(lrspecConfiguratorComposite, SWT.NONE);
 		alelrMethodsGroup_1.setText("ALELR Methods");
-		alelrMethodsGroup_1.setBounds(10, 0, 680, 354);
+		alelrMethodsGroup_1.setBounds(10, 0, 689, 362);
 
 		final ToolBar toolBar = new ToolBar(alelrMethodsGroup_1, SWT.VERTICAL | SWT.BORDER);
 		toolBar.setBackground(SWTResourceManager.getColor(179, 213, 186));
-		toolBar.setBounds(10, 65, 101, 277); // If it doesnt apear set it to
+		toolBar.setBounds(10, 70, 111, 277); // If it doesnt apear set it to
 												// (10, 65, 120, 277)
 
 		final ToolItem defineToolItem = new ToolItem(toolBar, SWT.PUSH);
@@ -218,7 +218,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 		setPropertiesToolItem.setText("SetProperties");
 
 		alelrMethodGroup = new Group(alelrMethodsGroup_1, SWT.NONE);
-		alelrMethodGroup.setBounds(121, 71, 550, 271);
+		alelrMethodGroup.setBounds(130, 80, 550, 271);
 		alelrMethodGroup.setVisible(false);
 
 		defineLRSpecComposite = new Composite(alelrMethodGroup, SWT.NONE);
@@ -1095,11 +1095,11 @@ public class LRSpecConfiguratorView extends ViewPart {
 
 		final Button button = new Button(alelrMethodsGroup_1, SWT.FLAT | SWT.BORDER);
 		button.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/desktop_icons_1.gif"));
-		button.setBounds(10, 22, 101, 43);
+		button.setBounds(10, 22, 111, 50);
 
 		final ToolBar toolBar_1 = new ToolBar(alelrMethodsGroup_1, SWT.BORDER);
 		toolBar_1.setBackground(SWTResourceManager.getColor(179, 213, 186));
-		toolBar_1.setBounds(111, 22, 560, 43);
+		toolBar_1.setBounds(121, 22, 560, 50);
 
 		final ToolItem getLogicalReaderNamesToolItem = new ToolItem(toolBar_1, SWT.PUSH);
 		getLogicalReaderNamesToolItem.addSelectionListener(new GetLogicalReaderNamesToolItemSelectionListener());
