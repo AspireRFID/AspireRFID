@@ -140,7 +140,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 		ecspecConfiguratorComposite = new Composite(
 				ecspecConfiguratorScrolledComposite, SWT.NONE);
 		ecspecConfiguratorComposite.setLocation(0, 0);
-		ecspecConfiguratorComposite.setSize(629, 329);
+		ecspecConfiguratorComposite.setSize(674, 329);
 
 		ecspecConfiguratorScrolledComposite
 				.setContent(ecspecConfiguratorComposite);
@@ -148,11 +148,11 @@ public class ECSpecConfiguratorView extends ViewPart {
 		final Group aleMethodsGroup_1 = new Group(ecspecConfiguratorComposite,
 				SWT.NONE);
 		aleMethodsGroup_1.setText("ALE Methods");
-		aleMethodsGroup_1.setBounds(10, 0, 609, 316);
+		aleMethodsGroup_1.setBounds(10, 0, 614, 316);
 
 		final ToolBar ecspecAleServerConfiguratorToolBar = new ToolBar(
 				aleMethodsGroup_1, SWT.BORDER);
-		ecspecAleServerConfiguratorToolBar.setBounds(86, 22, 511, 43);
+		ecspecAleServerConfiguratorToolBar.setBounds(100, 20, 511, 50);
 		ecspecAleServerConfiguratorToolBar.setBackground(SWTResourceManager
 				.getColor(179, 213, 186));
 
@@ -198,7 +198,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 
 		final ToolBar toolBar = new ToolBar(aleMethodsGroup_1, SWT.VERTICAL
 				| SWT.BORDER);
-		toolBar.setBounds(10, 65, 76, 238);
+		toolBar.setBounds(10, 65, 93, 238);
 		toolBar.setBackground(SWTResourceManager.getColor(179, 213, 186));
 
 		final ToolItem defineToolItem = new ToolItem(toolBar, SWT.PUSH);
@@ -243,7 +243,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 		pollToolItem.setText("Poll");
 
 		aleMethodGroup = new Group(aleMethodsGroup_1, SWT.NONE);
-		aleMethodGroup.setBounds(96, 71, 501, 130);
+		aleMethodGroup.setBounds(110, 85, 501, 130);
 		aleMethodGroup.setVisible(false);
 
 		getSubscribersECSpecComposite = new Composite(aleMethodGroup, SWT.NONE);
@@ -508,7 +508,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 		button.setBackground(SWTResourceManager.getColor(255, 255, 255));
 		button.setImage(ResourceManager.getPluginImage(Activator.getDefault(),
 				"icons/img/desktop_icons_1.gif"));
-		button.setBounds(10, 22, 76, 43);
+		button.setBounds(10, 22, 93, 43);
 
 		createActions();
 		initializeToolBar();
