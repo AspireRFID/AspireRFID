@@ -68,7 +68,7 @@ public class WorkflowMapItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
+			//addNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}

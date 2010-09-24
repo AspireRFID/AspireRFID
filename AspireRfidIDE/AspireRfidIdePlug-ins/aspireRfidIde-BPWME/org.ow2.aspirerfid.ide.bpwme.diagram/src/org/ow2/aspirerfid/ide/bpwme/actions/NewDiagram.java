@@ -22,6 +22,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -48,10 +49,11 @@ public class NewDiagram extends AbstractHandler {
 		wizard.init(window.getWorkbench(), StructuredSelection.EMPTY);
 		WizardDialog wizardDialog = new WizardDialog(
 				window.getShell(), wizard);
-		wizardDialog.open();
+		int result = wizardDialog.open();
 		
-		MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");
-		
+		if(result == Window.OK) {
+			MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");
+		}
 		return null;
 	}
 }

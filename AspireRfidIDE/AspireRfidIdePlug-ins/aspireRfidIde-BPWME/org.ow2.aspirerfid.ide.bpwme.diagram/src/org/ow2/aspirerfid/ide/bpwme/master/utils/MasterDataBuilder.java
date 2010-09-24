@@ -151,13 +151,17 @@ public class MasterDataBuilder {
 			rlist.getVocabularyElement().add(element);
 		}
 
-		if(masterEditor != null) {
-			masterEditor.setDirty(true);
-		}else {
-			MainControl mc = MainControl.getMainControl();
-			mc.saveObject();
-		}
-		notifyListeners();
+		MainControl mc = MainControl.getMainControl();
+		mc.saveObject();
+
+		
+//		if(masterEditor != null) {
+//			masterEditor.setDirty(true);
+//		}else {
+//			MainControl mc = MainControl.getMainControl();
+//			mc.saveObject();
+//		}
+//		notifyListeners();
 	}
 	
 	private VocabularyElementType createCompanyElement(

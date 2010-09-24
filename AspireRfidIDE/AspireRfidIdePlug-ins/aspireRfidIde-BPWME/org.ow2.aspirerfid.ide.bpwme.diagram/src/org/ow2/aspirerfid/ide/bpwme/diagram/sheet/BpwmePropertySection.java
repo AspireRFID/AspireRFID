@@ -28,7 +28,9 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
-import org.ow2.aspirerfid.ide.bpwme.actions.ReadMasterDataAction;
+import org.ow2.aspirerfid.ide.bpwme.actions.EditBusinessLocationAction;
+import org.ow2.aspirerfid.ide.bpwme.actions.EditMasterDataAction;
+import org.ow2.aspirerfid.ide.bpwme.actions.ImportBusinessLocationAction;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
 
@@ -45,7 +47,9 @@ public class BpwmePropertySection extends AdvancedPropertySection implements
 		
 		//add the import button to the local toolbar
 		IToolBarManager manager = aTabbedPropertySheetPage.getSite().getActionBars().getToolBarManager();
-		manager.add(new ReadMasterDataAction());
+		manager.add(new EditMasterDataAction());
+		manager.add(new EditBusinessLocationAction());
+		manager.add(new ImportBusinessLocationAction());
 	}
 	
 //	@Override

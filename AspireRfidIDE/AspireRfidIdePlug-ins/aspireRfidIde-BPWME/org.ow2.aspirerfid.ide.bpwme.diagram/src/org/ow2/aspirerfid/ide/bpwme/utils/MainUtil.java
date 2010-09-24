@@ -17,6 +17,7 @@
 
 package org.ow2.aspirerfid.ide.bpwme.utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -173,6 +174,19 @@ public class MainUtil {
 				statusLineManager.setMessage(message);
 			}
 		}
+	}
+	
+	//get the project name
+	public static String getProjectName(String filePath) {
+		File f = new File(filePath);
+		if(!f.exists()) {
+			return null;
+		}		
+		if(f.isDirectory()) {
+			return null;
+		}
+		String[] names = f.getName().split("\\.");
+		return names[0];
 	}
 	
 	

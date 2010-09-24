@@ -67,7 +67,7 @@ public class CLCBProcItemProvider
 			addIdPropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
 			addDescriptionPropertyDescriptor(object);
-			addBizLocationFilePropertyDescriptor(object);
+			//addBizLocationFilePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
