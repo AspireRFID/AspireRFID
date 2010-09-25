@@ -652,6 +652,15 @@
                   </parameter>
                </command>
                <command
+                     commandId="org.eclipse.ui.views.showView"
+                     label="Bpwme Navigator"
+                     style="push">
+                  <parameter
+                        name="org.eclipse.ui.views.showView.viewId"
+                        value="org.ow2.aspirerfid.ide.bpwme.navigator.view">
+                  </parameter>
+               </command>
+               <command
                      commandId="org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor"
                      label="XML Editor"
                      style="push">
@@ -993,5 +1002,90 @@
 	     </action>
 	  </actionSet>
 	</extension>
+	
+	  <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.ow2.aspirerfid.ide.bpwme.navigator.BpwmeNavigator"
+            icon="icons/navigator/NavigatorToolBar.gif"
+            id="org.ow2.aspirerfid.ide.bpwme.navigator.view"
+            name="Bpwme Navigator"
+            restorable="true">
+      </view>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewer
+            viewerId="org.ow2.aspirerfid.ide.bpwme.navigator.view">
+         <popupMenu
+               allowsPlatformContributions="true"
+               id="org.ow2.aspirerfid.ide.bpwme.navigator.view.popup">
+            <insertionPoint
+                  name="group.new"
+                  separator="false">
+            </insertionPoint>
+            <insertionPoint
+                  name="group.open"
+                  separator="false">
+            </insertionPoint>
+            <insertionPoint
+                  name="group.edit"
+                  separator="true">
+            </insertionPoint>
+            <insertionPoint
+                  name="additions"
+                  separator="true">
+            </insertionPoint>
+            <insertionPoint
+                  name="group.properties"
+                  separator="true">
+            </insertionPoint>
+         </popupMenu>
+      </viewer>
+      <viewerContentBinding
+            viewerId="org.ow2.aspirerfid.ide.bpwme.navigator.view">
+         <includes>
+            <contentExtension
+                  isRoot="false"
+                  pattern="org.ow2.aspirerfid.ide.bpwme.navigator.VirtualContent">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent
+            activeByDefault="true"
+            contentProvider="org.ow2.aspirerfid.ide.bpwme.navigator.BpwmeContentProvider"
+            id="org.ow2.aspirerfid.ide.bpwme.navigator.VirtualContent"
+            labelProvider="org.ow2.aspirerfid.ide.bpwme.navigator.BpwmeLabelProvider"
+            name="Virtual content"
+            priority="normal">
+         <actionProvider
+               class="org.ow2.aspirerfid.ide.bpwme.navigator.BpwmeActionProvider"
+               id="openChildProvider">
+         </actionProvider>
+         <enablement>
+            <or>
+               <instanceof
+                     value="org.ow2.aspirerfid.ide.bpwme.navigator.Parent">
+               </instanceof>
+               <instanceof
+                     value="org.ow2.aspirerfid.ide.bpwme.navigator.Child">
+               </instanceof>
+               <instanceof
+                     value="org.ow2.aspirerfid.ide.bpwme.navigator.Root">
+               </instanceof>
+            </or>
+         </enablement>
+      </navigatorContent>
+      <commonFilter
+            class="org.ow2.aspirerfid.ide.bpwme.navigator.BpwmeFilter"
+            description="Only shows the Parent02"
+            id="org.ow2.aspirerfid.ide.bpwme.navigator.filters.parent2only"
+            name="Parent 02 Filter">
+      </commonFilter>
+   </extension>
    
 </plugin>

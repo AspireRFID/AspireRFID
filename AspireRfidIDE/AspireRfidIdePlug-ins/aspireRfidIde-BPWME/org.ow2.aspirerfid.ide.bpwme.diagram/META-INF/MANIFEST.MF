@@ -10,6 +10,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Export-Package: org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts,
  org.ow2.aspirerfid.ide.bpwme.diagram.part,
+ org.ow2.aspirerfid.ide.bpwme.diagram.preferences,
  org.ow2.aspirerfid.ide.bpwme.diagram.providers
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface,
