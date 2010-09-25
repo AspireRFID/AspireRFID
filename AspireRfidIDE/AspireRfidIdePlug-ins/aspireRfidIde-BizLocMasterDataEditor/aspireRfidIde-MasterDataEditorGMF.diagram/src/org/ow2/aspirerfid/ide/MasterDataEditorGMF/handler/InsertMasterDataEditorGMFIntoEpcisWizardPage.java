@@ -74,8 +74,8 @@ public class InsertMasterDataEditorGMFIntoEpcisWizardPage extends WizardPage {
 		list.setLayoutData(new FillLayout(SWT.VERTICAL));
 		list.setSize(500, 230);
 		
-		for (int i = 0; i < editorHandler.getOpenEditors().size(); i++) {
-			Company company = (CompanyImpl) ((View) editorHandler.getOpenEditors().get(i).getModel()).getElement();
+		for (int i = 0; i < editorHandler.getOpenMasterDataEditorGMFEditors().size(); i++) {
+			Company company = (CompanyImpl) ((View) editorHandler.getOpenMasterDataEditorGMFEditors().get(i).getModel()).getElement();
 			if (!(company.getID().isEmpty() && company.getID() == ""))
 				list.add(company.getID());
 		}
@@ -86,10 +86,10 @@ public class InsertMasterDataEditorGMFIntoEpcisWizardPage extends WizardPage {
 	          String selection = selectedItems[0];
 	          
 	          if (!(selection == null && selection == "")) {	        	  
-	      		for (int i = 0; i < editorHandler.getOpenEditors().size(); i++) {
-	    			Company company = (CompanyImpl) ((View) editorHandler.getOpenEditors().get(i).getModel()).getElement();
+	      		for (int i = 0; i < editorHandler.getOpenMasterDataEditorGMFEditors().size(); i++) {
+	    			Company company = (CompanyImpl) ((View) editorHandler.getOpenMasterDataEditorGMFEditors().get(i).getModel()).getElement();
 	    			if (company.getID().equals(selection))
-	    				MasterDataEditParts.setCompanyPart(editorHandler.getOpenEditors().get(i));
+	    				MasterDataEditParts.setCompanyPart(editorHandler.getOpenMasterDataEditorGMFEditors().get(i));
 	      		}
 				setPageComplete(true);
 	          }

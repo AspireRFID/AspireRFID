@@ -42,6 +42,7 @@ Export-Package: org.ow2.aspirerfid.ide.MasterDataEditorGMF.bpwmeintegration,
  org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part,
  org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences,
  org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.providers,
+ org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler,
  org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface,

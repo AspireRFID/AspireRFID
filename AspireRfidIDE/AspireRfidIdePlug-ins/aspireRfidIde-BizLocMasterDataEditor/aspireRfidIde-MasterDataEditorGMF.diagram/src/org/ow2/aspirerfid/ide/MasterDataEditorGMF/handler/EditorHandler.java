@@ -1,5 +1,6 @@
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -75,7 +76,7 @@ public class EditorHandler {
 	/**
 	 * Get a list with all the open MasterDataEditorGMF editors
 	 */
-	public ArrayList<CompanyEditPart> getOpenEditors() {
+	public ArrayList<CompanyEditPart> getOpenMasterDataEditorGMFEditors() {
 		ArrayList<CompanyEditPart> openEditors = new ArrayList<CompanyEditPart>();
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		
@@ -88,6 +89,51 @@ public class EditorHandler {
 				if (diagramEditPart instanceof CompanyEditPart) {
 					CompanyEditPart editor = (CompanyEditPart) diagramEditPart;
 					openEditors.add(editor);
+				}
+			}
+		}
+
+		return openEditors;
+	}
+	
+	/**
+	 * Get a list with all the EditorParts of all the open MasterDataEditorGMF editors
+	 */
+	public ArrayList<IEditorPart> getOpenMasterDataEditorGMFEditorParts() {
+		ArrayList<IEditorPart> openEditors = new ArrayList<IEditorPart>();
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		
+		for (int i = 0; i < page.getEditorReferences().length; i++) {
+			IEditorPart editorPart = page.getEditorReferences()[i].getEditor(true);
+			
+			if (editorPart.getSite().getId().equals(MasterDataEditorGMFDiagramEditor.ID)) {
+				DiagramEditPart diagramEditPart = ((DiagramEditor)editorPart).getDiagramEditPart();
+
+				if (diagramEditPart instanceof CompanyEditPart) {
+					openEditors.add(editorPart);
+				}
+			}
+		}
+
+		return openEditors;
+	}
+	
+	/**
+	 * Get a list with all the open MasterDataEditorGMF editors
+	 */
+	public HashMap<IEditorPart, CompanyEditPart> getOpenMasterDataEditorGMFForEditorPart() {
+		HashMap<IEditorPart, CompanyEditPart> openEditors = new HashMap<IEditorPart, CompanyEditPart>();
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		
+		for (int i = 0; i < page.getEditorReferences().length; i++) {
+			IEditorPart editorPart = page.getEditorReferences()[i].getEditor(true);
+			
+			if (editorPart.getSite().getId().equals(MasterDataEditorGMFDiagramEditor.ID)) {
+				DiagramEditPart diagramEditPart = ((DiagramEditor)editorPart).getDiagramEditPart();
+
+				if (diagramEditPart instanceof CompanyEditPart) {
+					CompanyEditPart editor = (CompanyEditPart) diagramEditPart;
+					openEditors.put(editorPart, editor);
 				}
 			}
 		}
@@ -160,7 +206,8 @@ public class EditorHandler {
 						for (int j = 0; j < clcbProcs.size(); j++) {
 							if (workflowMapDomain.eContents().get(k).eContents().contains(clcbProcs.get(j))) {
 								URIEditorInput uri = (URIEditorInput)editorPart.getEditorInput();
-								clcbFileName.put(clcbProcs.get(j), new Path(uri.getURI().toFileString().replaceFirst(workflowMap.getDiagramView().getName(), "")));
+								File file = new File(uri.getURI().toFileString());
+								clcbFileName.put(clcbProcs.get(j), new Path(uri.getURI().toFileString().replaceFirst(file.getName(), "")));
 							}
 						}
 					}
