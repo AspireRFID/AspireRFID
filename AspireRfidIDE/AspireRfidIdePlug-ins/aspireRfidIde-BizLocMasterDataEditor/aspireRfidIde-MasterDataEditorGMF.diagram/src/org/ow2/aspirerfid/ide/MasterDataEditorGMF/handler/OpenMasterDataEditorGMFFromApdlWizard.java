@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -36,6 +37,7 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFCreateFromFile;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
@@ -164,10 +166,10 @@ public class OpenMasterDataEditorGMFFromApdlWizard extends Wizard implements
 					.setDescription("Select file that will contain diagram model for the MasterData"
 							+ "\nthat reside in the CLCB element named \"" + MasterDataGMFCreateFromFile.getClcProcNames().get(i) + "\".");
 			
-			String fileSeparator =	System.getProperty("file.separator");
-			String home = System.getProperty("user.home");
-			String defaultPath = home + fileSeparator + "AspireRFID" + fileSeparator + "IDE" + fileSeparator + "BPWME" + fileSeparator +
-			MasterDataGMFCreateFromFile.getClcProcNames().get(i) + fileSeparator;
+			IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
+			String home = store.getString(org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants.P_BPWME_DIR);
+			String defaultPath = home + MasterDataGMFCreateFromFile.getClcProcNames().get(i) + File.separator;
+			
 			File directory = new File(defaultPath);
 			if(!directory.exists())
 				directory.mkdirs();

@@ -570,23 +570,6 @@
                </separator>
             </menu>
          </menu>
-         <menu
-               id="org.ow2.aspirerfid.ide.main.windowmenu"
-               label="Window">
-            <menu
-                  id="org.ow2.aspirerfid.ide.main.windowmenu.showviewmenu"
-                  label="Show View">
-               <command
-                     commandId="org.eclipse.ui.perspectives.showPerspective"
-                     label="Master Data Editor GMF"
-                     style="push">
-                  <parameter
-                        name="org.eclipse.ui.perspectives.showPerspective.perspectiveId"
-                        value="MasterDataEditorGMF.diagram.MasterDataEditorGMFPerspective">
-                  </parameter>
-               </command>
-            </menu>
-         </menu>
       </menuContribution>
    </extension>
    

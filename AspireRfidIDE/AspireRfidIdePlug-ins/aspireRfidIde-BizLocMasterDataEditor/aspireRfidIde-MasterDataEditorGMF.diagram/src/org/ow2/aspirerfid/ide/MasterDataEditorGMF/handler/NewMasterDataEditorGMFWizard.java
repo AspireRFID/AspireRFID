@@ -28,12 +28,14 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
@@ -133,9 +135,9 @@ public class NewMasterDataEditorGMFWizard extends Wizard implements
 				.setDescription(org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.Messages.MasterDataEditorGMFCreationWizard_DiagramModelFilePageDescription);
 		
 		//set the default filename and path of the MasterDataEditorGMF file
-		String fileSeparator =	System.getProperty("file.separator");
-		String home = System.getProperty("user.home");
-		String defaultPath = home + fileSeparator + "AspireRFID" + fileSeparator + "IDE" + fileSeparator + "BPWME" + fileSeparator;
+		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
+		String defaultPath = store.getString(org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants.P_BPWME_DIR);
+		
 		File directory = new File(defaultPath);
 		if(!directory.exists())
 			directory.mkdirs();
