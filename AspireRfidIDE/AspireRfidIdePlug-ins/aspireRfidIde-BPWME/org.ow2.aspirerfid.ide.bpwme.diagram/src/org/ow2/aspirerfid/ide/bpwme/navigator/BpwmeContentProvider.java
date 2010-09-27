@@ -97,15 +97,12 @@ public class BpwmeContentProvider implements ITreeContentProvider {
     		String fileName = getLocationFile(editorHandler.getBpwmeFileNames().get(element).toString() + element.getName() + File.separator);
     		//if filename does not exist
     		if (fileName == null || fileName.isEmpty())
-    			return EMPTY_ARRAY;
+    			return getElementChildren(parentElement);
     		
     		//if filename exists but it is not open
     		if (getOpenMasterDataEditorGMF(fileName) == null)
-    			return EMPTY_ARRAY;
-    		
-    		//MasterDataEditParts.setCompanyPart(getOpenMasterDataEditorGMF(fileName));
-    		//Company company = (CompanyImpl) ((View) MasterDataEditParts.getCompanyPart().getModel()).getElement();
-    		
+    			return getElementChildren(parentElement);
+		
     		Company company = (CompanyImpl) ((View) getOpenMasterDataEditorGMF(fileName).getModel()).getElement();;
     		Company companies[] = new Company[1];
     		companies[0] = company;
@@ -135,8 +132,12 @@ public class BpwmeContentProvider implements ITreeContentProvider {
     public Object getParent(Object element) {
     	if (element instanceof URI)
     		return ((Parent) element).getRoot();
-    	else if (element instanceof EObject)
-    		return ((EObject) element).eContainer();
+    	else if (element instanceof OLCBProc)
+    		return ((OLCBProc) element).eContainer();
+    	else if (element instanceof CLCBProc)
+    		return ((CLCBProc) element).eContainer();
+    	else if (element instanceof EBProc)
+    		return ((EBProc) element).eContainer();
     	else if (element instanceof AbstractContainer)
             return ((AbstractContainer) element).eContainer();
         else if (element instanceof AbstractWarehouse)
@@ -303,6 +304,9 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 	 * Set the Bpwme editors of the workbench	
 	 */
 	private void setBpwmeEditors() {
+		bpwmeList.clear();
+		mapBpwmePart.clear();
+		
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		WorkflowMap[] bpwmeEditors;
 		
@@ -339,13 +343,19 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 	 * Set the file URIs	
 	 */
 	private void setFileURIs() {
+		uriBpwmeMap.clear();
 		fileURIs = new URI[bpwmeList.size()];
 		
 		for (int i = 0; i < bpwmeList.size(); i++) {
 			fileURIs[i] = URI.createFileURI(bpwmeList.get(i).getDiagramView().getName().replaceFirst(".bpwme_diagram", ""));
 			WorkflowMap bpwme = (WorkflowMapImpl) ((View) bpwmeList.get(i).getModel()).getElement();
-			OLCBProc olcbProc = (OLCBProc) bpwme.eContents().get(0);
-			uriBpwmeMap.put(fileURIs[i], olcbProc);
+
+			for (int j = 0; j < bpwme.eContents().size(); j++) { 
+				if (bpwme.eContents().get(j) instanceof OLCBProc) {
+					OLCBProc olcbProc = (OLCBProc) bpwme.eContents().get(j);
+					uriBpwmeMap.put(fileURIs[i], olcbProc);
+				}
+			}
 		}
 	}
 	
