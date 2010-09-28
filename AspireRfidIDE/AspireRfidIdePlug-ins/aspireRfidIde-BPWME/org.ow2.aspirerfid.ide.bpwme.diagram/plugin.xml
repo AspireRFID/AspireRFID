@@ -223,6 +223,11 @@
                 id="property.tab.extend"
                 label="Extend">
           </propertyTab>
+          <propertyTab
+                category="extra"
+                id="property.tab.businessstep"
+                label="Business Step">
+          </propertyTab>
       </propertyTabs>
    </extension>
 
@@ -263,6 +268,17 @@
                <input type="org.eclipse.gmf.runtime.notation.View"/>
             <input
                   type="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart">
+            </input>
+         </propertySection>
+         <propertySection
+               class="org.ow2.aspirerfid.ide.bpwme.diagram.sheet.BusinessStepPropertySection"
+               id="property.section.businessstep"
+               tab="property.tab.businessstep">
+            <input
+                  type="org.eclipse.gmf.runtime.notation.View">
+            </input>
+            <input
+                  type="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.OLCBProcEditPart">
             </input>
          </propertySection>
       </propertySections>
