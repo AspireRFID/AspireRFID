@@ -1,5 +1,8 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.application;
 
+import java.io.File;
+import java.io.FilenameFilter;
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -222,7 +225,27 @@ public class WizardNewFileCreationPage extends WizardPage {
 			setErrorMessage(Messages.WizardNewFileCreationPage_InvalidFileNameError);
 			return false;
 		}
+		//if there is a existing diagram file in the folder
+		if (containFile(".bpwme_diagram")) {
+			setErrorMessage("Diagram file already exists.");
+			return false;
+		}
 		setErrorMessage(null);
 		return true;
+	}
+	
+	private boolean containFile(String extension) {
+		IPath p = getContainerFullPath();
+		File f = p.toFile();
+		if(!f.exists()) {
+			return false;
+		}
+		
+		for(String file : f.list()) {
+			if(file.endsWith(extension)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -1,5 +1,6 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.part;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,12 +23,14 @@ import org.eclipse.gmf.runtime.diagram.core.services.view.CreateDiagramViewOpera
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PartInitException;
 import org.ow2.aspirerfid.ide.bpwme.diagram.application.WizardNewFileCreationPage;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 
 
 /**
@@ -44,6 +47,7 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 	 * @generated
 	 */
 	private TransactionalEditingDomain myEditingDomain;
+	private URI bpwmeURI;
 	
 	private EObject root;
 
@@ -55,7 +59,8 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 		assert domainModelURI != null : "Domain model uri must be specified"; //$NON-NLS-1$
 		assert diagramRoot != null : "Doagram root element must be specified"; //$NON-NLS-1$
 		assert editingDomain != null : "Editing domain must be specified"; //$NON-NLS-1$
-
+		bpwmeURI = null;
+		
 		myFileCreationPage = new WizardNewFileCreationPage(
 				Messages.BpwmeNewDiagramFileWizard_CreationPageName,
 				StructuredSelection.EMPTY);
@@ -71,7 +76,12 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 			filePath = new Path(domainModelURI.trimSegments(1)
 					.toPlatformString(true));
 		} else if (domainModelURI.isFile()) {
-			filePath = new Path(domainModelURI.trimSegments(1).toFileString());
+			IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
+			String path = store.getString(PreferenceConstants.P_BPWME_DIR);
+			filePath = new Path(path+File.separator+fileName);
+			
+//			filePath = new Path(domainModelURI.trimSegments(1).toFileString()
+//					+File.separator+fileName);
 		} else {
 			// TODO : use some default path
 			throw new IllegalArgumentException(
@@ -106,7 +116,7 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 		final Resource diagramResource = resourceSet
 				.createResource(diagramModelURI);
 		
-		
+		bpwmeURI = diagramModelURI;
 		
 		AbstractTransactionalCommand command = new AbstractTransactionalCommand(
 				myEditingDomain,
@@ -151,6 +161,11 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 		}
 		return true;
 	}
+	
+	public URI getBpwmeURI() {
+		return bpwmeURI;
+	}
+	
 
 //	/**
 //	 * @generated

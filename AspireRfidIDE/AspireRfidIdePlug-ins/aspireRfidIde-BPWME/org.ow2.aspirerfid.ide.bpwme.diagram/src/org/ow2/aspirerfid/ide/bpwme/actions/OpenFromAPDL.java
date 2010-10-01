@@ -42,7 +42,7 @@ public class OpenFromAPDL extends AbstractHandler{
 		}
 		if (fileDialog.getFilterPath() != null) {
 			fileName = fileDialog.getFilterPath() + File.separator + fileName;
-		}		
+		}
 		//read the file into memory, get the model
 		MainControl mc = MainControl.getMainControl();
 		mc.setAPDLURI(fileName);
@@ -54,11 +54,12 @@ public class OpenFromAPDL extends AbstractHandler{
 		MainUtil.copyToDiagramModel(olcb, workflowMap);
 		
 		//use the gmf model to get the whole diagram
-		Wizard wizard = new BpwmeNewDiagramFileWizard(mc.getApdlURI(),
+		BpwmeNewDiagramFileWizard wizard = new BpwmeNewDiagramFileWizard(mc.getApdlURI(),
 				(EObject)workflowMap, editingDomain);
 		wizard.setWindowTitle(NLS.bind(Messages.InitDiagramFile_WizardTitle,
 				WorkflowMapEditPart.MODEL_ID));
 		BpwmeDiagramEditorUtil.runWizard(shell, wizard, "InitDiagramFile"); //$NON-NLS-1$
+		
 		return null;
 		
 	}
