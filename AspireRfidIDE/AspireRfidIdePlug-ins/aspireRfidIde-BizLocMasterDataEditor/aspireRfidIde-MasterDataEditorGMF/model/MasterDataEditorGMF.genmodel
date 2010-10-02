@@ -26,7 +26,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr8"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr9"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr10"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/att11"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr11"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr12"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr13"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr14"/>
@@ -36,36 +36,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr18"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr19"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr20"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr21"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr22"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr23"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr24"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr25"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr26"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr27"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr28"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr29"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr30"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr31"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr32"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr33"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr34"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr35"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr36"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr37"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr38"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr39"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr40"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr41"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr42"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr43"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr44"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr45"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr46"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr47"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr48"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr49"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//Company/attr50"/>
     </genClasses>
     <genClasses image="false" ecoreClass="MasterDataEditorGMF.ecore#//AbstractWarehouse">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/ID"/>
@@ -84,7 +54,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr8"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr9"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr10"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/att11"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr11"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr12"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr13"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr14"/>
@@ -94,36 +64,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr18"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr19"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr20"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr21"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr22"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr23"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr24"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr25"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr26"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr27"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr28"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr29"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr30"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr31"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr32"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr33"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr34"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr35"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr36"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr37"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr38"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr39"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr40"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr41"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr42"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr43"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr44"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr45"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr46"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr47"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr48"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr49"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractWarehouse/attr50"/>
     </genClasses>
     <genClasses ecoreClass="MasterDataEditorGMF.ecore#//BizLoc"/>
     <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Warehouse"/>
@@ -145,7 +85,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr8"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr9"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr10"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/att11"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr11"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr12"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr13"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr14"/>
@@ -155,36 +95,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr18"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr19"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr20"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr21"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr22"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr23"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr24"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr25"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr26"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr27"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr28"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr29"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr30"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr31"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr32"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr33"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr34"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr35"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr36"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr37"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr38"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr39"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr40"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr41"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr42"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr43"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr44"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr45"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr46"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr47"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr48"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr49"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MasterDataEditorGMF.ecore#//AbstractContainer/attr50"/>
     </genClasses>
     <genClasses ecoreClass="MasterDataEditorGMF.ecore#//ReadPoint"/>
     <genClasses ecoreClass="MasterDataEditorGMF.ecore#//Container"/>

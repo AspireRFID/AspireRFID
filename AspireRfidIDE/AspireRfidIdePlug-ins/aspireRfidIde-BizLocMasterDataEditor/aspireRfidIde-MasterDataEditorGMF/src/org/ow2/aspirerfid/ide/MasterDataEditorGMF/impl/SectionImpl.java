@@ -43,7 +43,6 @@ public class SectionImpl extends AbstractWarehouseImpl implements Section {
 	 */
 	protected SectionImpl() {
 		super();
-		setType("Section");
 	}
 
 	/**

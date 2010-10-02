@@ -43,7 +43,6 @@ public class RoomImpl extends AbstractWarehouseImpl implements Room {
 	 */
 	protected RoomImpl() {
 		super();
-		setType("Room");
 	}
 
 	/**
