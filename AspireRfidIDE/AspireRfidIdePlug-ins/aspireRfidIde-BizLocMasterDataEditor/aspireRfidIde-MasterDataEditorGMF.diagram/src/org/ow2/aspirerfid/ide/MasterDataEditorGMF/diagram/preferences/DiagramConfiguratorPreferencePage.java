@@ -1,10 +1,8 @@
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences;
 
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.*;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 
 /**
@@ -44,19 +42,19 @@ public class DiagramConfiguratorPreferencePage extends FieldEditorPreferencePage
 		}
 		
 		{
-			final CompanyStringListEditor listOfNewCompanyAttributes = new CompanyStringListEditor(DiagramConfiguratorPreferenceConstants.newCompanyAttributes, "New Company Attributes:",
+			final CompanyStringListEditor listOfNewCompanyAttributes = new CompanyStringListEditor(DiagramConfiguratorPreferenceConstants.newCompanyAttributes, "Custom Company Attributes (max: 20):",
 					"Company Attribute Dialog", "Insert Company Attribute:", getFieldEditorParent());
 			addField(listOfNewCompanyAttributes);
 		}
 		
 		{
-			final WarehouseStringListEditor listOfNewWarehouseAttributes = new WarehouseStringListEditor(DiagramConfiguratorPreferenceConstants.newWarehouseAttributes, "New Warehouse Attributes:",
+			final WarehouseStringListEditor listOfNewWarehouseAttributes = new WarehouseStringListEditor(DiagramConfiguratorPreferenceConstants.newWarehouseAttributes, "Custom Warehouse Attributes (max: 20):",
 					"Warehouse Attribute Dialog", "Insert Warehouse Attribute:", getFieldEditorParent());
 			addField(listOfNewWarehouseAttributes);
 		}
 		
 		{
-			final ReadPointStringListEditor listOfNewReadPointAttributes = new ReadPointStringListEditor(DiagramConfiguratorPreferenceConstants.newReadPointAttributes, "New ReadPoint Attributes:",
+			final ReadPointStringListEditor listOfNewReadPointAttributes = new ReadPointStringListEditor(DiagramConfiguratorPreferenceConstants.newReadPointAttributes, "Custom ReadPoint Attributes (max: 20):",
 					"ReadPoint Attribute Dialog", "Insert ReadPoint Attribute:", getFieldEditorParent());
 			addField(listOfNewReadPointAttributes);
 		}
@@ -98,18 +96,4 @@ public class DiagramConfiguratorPreferencePage extends FieldEditorPreferencePage
 
 		return temp;
 	}
-	
-	@Override
-	public boolean performOk() {
-		boolean result = MessageDialog.openConfirm(getShell(), "Warning", 
-			"The application needs to be restarted in order to update any new custom property.");
-
-		super.performOk();
-		
-		if (result)
-			PlatformUI.getWorkbench().restart();
-		
-		return true;
-	}
-
 }

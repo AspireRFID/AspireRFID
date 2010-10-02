@@ -17,12 +17,13 @@
 
 package org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.edit.parts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
@@ -31,7 +32,6 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
@@ -39,13 +39,17 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
-import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.views.properties.IPropertySource;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractWarehouse;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.Warehouse;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.sheet.WarehouseProperties;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.impl.AbstractWarehouseImpl;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.impl.WarehouseImpl;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 
 /**
  * @generated
@@ -310,33 +314,90 @@ public class WarehouseEditPart extends ShapeNodeEditPart {
 			.getCurrent(),
 			Display.getDefault().getSystemFont().getFontData()[0].getName(),
 			10, SWT.BOLD);
+	
+//	@Override
+//	public Object getAdapter(Class adapter) {
+//		Warehouse warehouse = (WarehouseImpl) ((View) this.getModel()).getElement();
+////		System.out.println("adapter: " + adapter);
+//		
+//		if (adapter == IPropertySource.class) {
+//			System.out.println("adapter: " + adapter);
+//			//ISelection sel = new StructuredSelection(BpwmeContentProvider.viewer.getSelection());
+//			//a.setInput(getIWorkbenchPart(), sel);
+//			return new WarehouseProperties(warehouse).getPropertyDescriptors();
+//		}
+//		return null;
+//	}
 
 //	/**
 //	 * @generated NOT
 //	 */
 //	protected void handleNotificationEvent(Notification event) {
-//		System.out.println("handled");
 //		super.handleNotificationEvent(event);
-//		int type = event.getEventType();
-//		Object feature = event.getFeature();
-////		System.out.println("type: " + type);
-////
-////		//if (event.getNotifier() instanceof AbstractWarehouseImpl) {
-////			System.out.println("in");
-////			Dimension size = new Dimension(100, 150);
-////		    int x = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE.getLocation_X())).intValue();
-////		    int y = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE.getLocation_Y())).intValue();
-////		    Point loc = new Point(x + 100, y + 100);
-////		    ((GraphicalEditPart) getParent()).setLayoutConstraint(
-////		        this,
-////		        getFigure(),
-////		        new Rectangle(loc, size));
-////		    System.out.println("x: " + x + ", y: "+ y);
-//		Warehouse warehouse = (WarehouseImpl) ((View) this.getModel()).getElement();
-//		warehouse.setID("asd");
+//		
+//		if (event.getNotifier() instanceof AbstractWarehouseImpl) {
+//			resetProperties(element);
+//		}
+//	}
 //	
+//	/**
+//	 * Element
+//	 */
+//	AbstractWarehouse element = (AbstractWarehouseImpl) ((View) this.getModel()).getElement();
+//	
+//	/**
+//	 * Element attr
+//	 */
+//	private String[] elementAttr = {element.getAttr1(), element.getAttr2(), element.getAttr3(), element.getAttr4(), element.getAttr5(), 
+//									element.getAttr6(), element.getAttr7(), element.getAttr8(), element.getAttr9(), element.getAttr10(), 
+//									element.getAttr11(), element.getAttr12(), element.getAttr13(), element.getAttr14(), element.getAttr15(), 
+//									element.getAttr16(), element.getAttr17(), element.getAttr18(), element.getAttr19(), element.getAttr20()};
+//	
+//	/**
+//	 * Resets the values of non existing properties
+//	 */
+//	private void resetProperties(AbstractWarehouse element) {
+//		List<Integer> countAttr = new ArrayList<Integer>();
+//		boolean found = false;
+//		
+//		for (int i = 0; i <  elementAttr.length; i++) {
+//			if (!(elementAttr[i].isEmpty() && elementAttr[i] == "")) {
+//				found = false;
+//				
+//				for (int j = 0; j < MasterDataEditParts.getNewWarehouseAttr().length; j++) {
+//					if (elementAttr[i].startsWith(MasterDataEditParts.getNewWarehouseAttr()[j] + "_")) {
+//						found = true;
+//					}
+//				}
+//				if (!found)
+//					countAttr.add(i);
+//			}
+//		}
+//	
+//		for (int i = 0; i < countAttr.size(); i++) {
+//			switch(countAttr.get(i)) {
+//				case 0:element.setAttr1("");break;
+//				case 1:element.setAttr2("");break;
+//				case 2:element.setAttr3("");break;
+//				case 3:element.setAttr4("");break;
+//				case 4:element.setAttr5("");break;
+//				case 5:element.setAttr6("");break;
+//				case 6:element.setAttr7("");break;
+//				case 7:element.setAttr8("");break;
+//				case 8:element.setAttr9("");break;
+//				case 9:element.setAttr10("");break;
+//				case 10:element.setAttr11("");break;
+//				case 11:element.setAttr12("");break;
+//				case 12:element.setAttr13("");break;
+//				case 13:element.setAttr14("");break;
+//				case 14:element.setAttr15("");break;
+//				case 15:element.setAttr16("");break;
+//				case 16:element.setAttr17("");break;
+//				case 17:element.setAttr18("");break;
+//				case 18:element.setAttr19("");break;
+//				case 19:element.setAttr20("");break;
+//			}
+//		}
 //	}
 		
-	
-	
 }

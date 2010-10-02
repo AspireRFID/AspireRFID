@@ -20,16 +20,15 @@ package org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.ListEditor;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.EditorHandler;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 
 /**
- * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
  * 
  */
 public class ReadPointStringListEditor extends ListEditor {
@@ -76,8 +75,8 @@ public class ReadPointStringListEditor extends ListEditor {
 		createControl(parent);
 	}
 
-	/*
-	 * (non-Javadoc) Method declared on ListEditor. Creates a single string from
+	/**
+	 * Method declared on ListEditor. Creates a single string from
 	 * the given array by separating each string with the appropriate
 	 * OS-specific path separator.
 	 */
@@ -90,24 +89,56 @@ public class ReadPointStringListEditor extends ListEditor {
 			path.append(items[i]);
 			path.append(",");
 		}
+		
+		String turnNewAttr[] = new String[newAttr.length];
+		
+		for (int i = turnNewAttr.length - 1, j = 0; i >= 0; i--, j++) {
+			if (!(newAttr[i].isEmpty() && newAttr[i] == ""))
+				turnNewAttr[j] = newAttr[i];
+		}
+		
 		MasterDataEditParts.setNewReadPointAttr(newAttr);
 
 		return path.toString();
 	}
 
-	/*
-	 * (non-Javadoc) Method declared on ListEditor. Creates a new path element
+	/**
+	 * Method declared on ListEditor. Creates a new path element
 	 * by means of a directory dialog.
 	 */
 	protected String getNewInputObject() {
-		InputDialog inputDialog = new InputDialog(getShell(), dialogtitle, inputStringtitle, "", null);
+		if (getList().getItemCount() == 7) {
+			MessageDialog.openError(getShell(), "Error", "You can insert up to 20 custom attributes.");
+			return null;
+		}
+		
+		IInputValidator validator = new IInputValidator() {
+	          public String isValid(String newText) {
+	            if(newText.equals(""))
+	              return "";
+	            return null;
+	          }
+	        };
+	
+		InputDialog inputDialog = new InputDialog(getShell(), dialogtitle, inputStringtitle, "", validator);
 		inputDialog.open();
 		String input = inputDialog.getValue();
+		
+		if (input.isEmpty() || input == "")
+			return null;
+		
+		for (int i = 0; i < getList().getItemCount(); i++) {
+			if (input.equals(getList().getItem(i))) {
+				MessageDialog.openError(getShell(), "Error", "The attribute with the name " + input + " already exists.");
+				return null;
+			}
+		}
+		
 		return input;
 	}
 
-	/*
-	 * (non-Javadoc) Method declared on ListEditor.
+	/**
+	 * Method declared on ListEditor.
 	 */
 	protected String[] parseString(String stringList) {
 		StringTokenizer st = new StringTokenizer(stringList, "," + "\n\r");//$NON-NLS-1$ //File.pathSeparator

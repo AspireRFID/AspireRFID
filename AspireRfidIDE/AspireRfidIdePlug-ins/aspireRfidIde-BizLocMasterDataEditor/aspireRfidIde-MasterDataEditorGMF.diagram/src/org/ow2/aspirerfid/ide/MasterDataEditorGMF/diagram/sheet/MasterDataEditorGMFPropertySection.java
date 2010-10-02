@@ -35,6 +35,9 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractContainer;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractWarehouse;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.Company;
 
 /**
  * @generated
@@ -43,9 +46,19 @@ public class MasterDataEditorGMFPropertySection extends AdvancedPropertySection
 		implements IPropertySourceProvider {
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public IPropertySource getPropertySource(Object object) {
+		if (object instanceof Company) {
+			return new CompanyProperties(object);
+		}
+		if (object instanceof AbstractWarehouse) {
+			return new WarehouseProperties(object);
+		}
+		if (object instanceof AbstractContainer) {
+			return new ReadPointProperties(object);
+		}
+		
 		if (object instanceof IPropertySource) {
 			return (IPropertySource) object;
 		}
