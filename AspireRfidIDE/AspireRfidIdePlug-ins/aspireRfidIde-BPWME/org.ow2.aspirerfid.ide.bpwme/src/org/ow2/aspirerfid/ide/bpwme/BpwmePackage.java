@@ -241,7 +241,9 @@ public interface BpwmePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int OLCB_PROC_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
+	int OLCB_PROC_FAKE_FEATURE = NODE_FEATURE_COUNT + 3;
+	
+	int OLCB_PROC_FEATURE_COUNT = NODE_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link bpwme.impl.CLCBProcImpl <em>CLCB Proc</em>}' class.

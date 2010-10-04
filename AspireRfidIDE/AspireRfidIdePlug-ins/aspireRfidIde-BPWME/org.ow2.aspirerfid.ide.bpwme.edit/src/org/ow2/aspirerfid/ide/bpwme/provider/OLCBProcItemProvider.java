@@ -183,6 +183,8 @@ public class OLCBProcItemProvider
 		switch (notification.getFeatureID(OLCBProc.class)) {
 			case BpwmePackage.OLCB_PROC__NAME:
 			case BpwmePackage.OLCB_PROC__ID:
+			case BpwmePackage.OLCB_PROC_FAKE_FEATURE:
+				System.out.println("reach");
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case BpwmePackage.OLCB_PROC__CLCB_PROC:

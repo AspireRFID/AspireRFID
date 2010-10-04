@@ -156,6 +156,11 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 	}
 
 
+	public void setFake() {
+		eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.OLCB_PROC_FAKE_FEATURE, "fake", "fake"));
+	}
+
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -196,9 +201,17 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 				return getId();
 			case BpwmePackage.OLCB_PROC__CLCB_PROC:
 				return getCLCBProc();
+			case BpwmePackage.OLCB_PROC_FAKE_FEATURE:
+				return getFake();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
+	
+	
+	public String getFake() {
+		return "fake";
+	}
+
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -218,6 +231,8 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 			case BpwmePackage.OLCB_PROC__CLCB_PROC:
 				getCLCBProc().clear();
 				getCLCBProc().addAll((Collection<? extends CLCBProc>)newValue);
+				return;
+			case BpwmePackage.OLCB_PROC_FAKE_FEATURE:
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -240,6 +255,8 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 			case BpwmePackage.OLCB_PROC__CLCB_PROC:
 				getCLCBProc().clear();
 				return;
+			case BpwmePackage.OLCB_PROC_FAKE_FEATURE:
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -258,6 +275,8 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case BpwmePackage.OLCB_PROC__CLCB_PROC:
 				return cLCBProc != null && !cLCBProc.isEmpty();
+			case BpwmePackage.OLCB_PROC_FAKE_FEATURE:
+				return true;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -292,8 +292,8 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 		return result.toString();
 	}
 	//does not work
-	public void setDirty() {
-		eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.EB_PROC_FAKE_FEATURE, "OLD", "NEW"));
-	}
+//	public void setDirty() {
+//		eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.EB_PROC_FAKE_FEATURE, "OLD", "NEW"));
+//	}
 	
 } //EBProcImpl
