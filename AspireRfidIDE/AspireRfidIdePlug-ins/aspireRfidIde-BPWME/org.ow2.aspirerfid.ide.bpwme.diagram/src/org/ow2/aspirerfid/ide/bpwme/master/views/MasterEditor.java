@@ -65,7 +65,7 @@ import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.bpwme.dialog.DispositionDialog;
 import org.ow2.aspirerfid.ide.bpwme.dialog.NewDialog;
 import org.ow2.aspirerfid.ide.bpwme.dialog.PrefixValidator;
-import org.ow2.aspirerfid.ide.bpwme.dialog.SomeDialog;
+import org.ow2.aspirerfid.ide.bpwme.dialog.NewDispoDialog;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.SelectionProviderWrapper;
 import org.ow2.aspirerfid.ide.bpwme.master.model.DispositionItem;
 import org.ow2.aspirerfid.ide.bpwme.master.utils.MasterDataBuilder;
@@ -636,7 +636,7 @@ ITabbedPropertySheetPageContributor{
 //				DispositionItem di = dd.open();
 				PrefixValidator pv = new PrefixValidator(defaultURI);
 				
-				SomeDialog sd = new SomeDialog
+				NewDispoDialog sd = new NewDispoDialog
 				(parent.getShell(), "", "Input URI", "Input Name", defaultURI, "Default Name", pv);
 				DispositionItem di = sd.start();
 				

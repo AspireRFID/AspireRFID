@@ -501,14 +501,14 @@ public class MasterDataBuilder {
 	
 	public void addItemAttribute(DispositionItem item, String name, String value) {
 		item.addAttribute(name, value);
-		masterEditor.setDirty(true);
+		//masterEditor.setDirty(true);
 	}
 	
 	public void modifyAttribute() {}
 	
 	public void removeItemAttribute(DispositionItem item, String name) {
 		item.removeAttribute(name);
-		masterEditor.setDirty(true);
+		//masterEditor.setDirty(true);
 	}
 	
 

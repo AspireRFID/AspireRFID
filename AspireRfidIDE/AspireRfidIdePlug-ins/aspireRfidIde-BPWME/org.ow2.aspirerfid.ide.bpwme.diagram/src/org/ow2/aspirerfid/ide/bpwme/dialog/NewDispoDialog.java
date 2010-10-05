@@ -23,7 +23,7 @@ import org.ow2.aspirerfid.ide.bpwme.master.utils.MasterDataBuilder;
 
 
 
-public class SomeDialog extends Dialog {
+public class NewDispoDialog extends Dialog {
     /**
      * The title of the dialog.
      */
@@ -90,7 +90,7 @@ public class SomeDialog extends Dialog {
      * @param validator
      *            an input validator, or <code>null</code> if none
      */
-    public SomeDialog(Shell parentShell, String dialogTitle,
+    public NewDispoDialog(Shell parentShell, String dialogTitle,
             String dialogMessage, String dialogMessage2,String initialUriValue, String initialNameValue,IInputValidator validator) {
         super(parentShell);
         this.title = dialogTitle;

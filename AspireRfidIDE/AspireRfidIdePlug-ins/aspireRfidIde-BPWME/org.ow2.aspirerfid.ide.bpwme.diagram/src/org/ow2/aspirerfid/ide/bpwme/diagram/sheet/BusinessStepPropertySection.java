@@ -45,9 +45,13 @@ import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.ow2.aspirerfid.commons.epcis.model.AttributeType;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceUtil;
+import org.ow2.aspirerfid.ide.bpwme.dialog.ComboDialog;
+import org.ow2.aspirerfid.ide.bpwme.dialog.EditVocabularyAttributeDialog;
 import org.ow2.aspirerfid.ide.bpwme.dialog.InputDialog;
 import org.ow2.aspirerfid.ide.bpwme.dialog.PrefixValidator;
-import org.ow2.aspirerfid.ide.bpwme.dialog.SomeDialog;
+import org.ow2.aspirerfid.ide.bpwme.dialog.NewDispoDialog;
 import org.ow2.aspirerfid.ide.bpwme.master.model.DispositionItem;
 import org.ow2.aspirerfid.ide.bpwme.master.utils.MasterDataBuilder;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
@@ -112,7 +116,7 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 					public void widgetSelected(SelectionEvent e) {
 						String defaultURI = "urn:epcglobal:fmcg:bizstep:";
 						PrefixValidator pv = new PrefixValidator(defaultURI);						
-						SomeDialog sd = new SomeDialog
+						NewDispoDialog sd = new NewDispoDialog
 						(parent.getShell(), "", "Input URI", "Input Name", defaultURI, "Default Name", pv);
 						DispositionItem di = sd.start();
 						
@@ -198,6 +202,40 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 				//button1LData.grabExcessHorizontalSpace = true;
 				propertyButtonNew.setLayoutData(button1LData);
 				propertyButtonNew.setText("New");
+				
+				propertyButtonNew.addSelectionListener(new SelectionAdapter(){
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						ComboDialog cd = new ComboDialog(parent.getShell());
+						cd.setText("Choose Dialog");
+						
+//						IStructuredSelection select = 
+//							(IStructuredSelection)listViewerMain.getSelection();
+//						if(select == null)
+//							return;
+						DispositionItem input = (DispositionItem)propertyViewer.getInput();
+						if(input == null) {
+							return;
+						}
+						
+						String id = input.getID();
+						if(id.startsWith("urn:epcglobal:fmcg:bizstep:")) {
+							cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_BS));
+						}else if(id.startsWith("urn:epcglobal:fmcg:disp:")) {
+							cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_DI));
+						}else if(id.startsWith("urn:epcglobal:fmcg:btt:")) {
+							cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_BT));
+						}
+						String selection = cd.open();
+						//add a new attribute pair
+						MasterDataBuilder mdb = MasterDataBuilder.getInstance();
+						MainControl mc = MainControl.getMainControl();
+						mdb.addItemAttribute(input, selection, "");				
+						propertyViewer.refresh(false);
+						mc.saveObject();
+					}
+				});
+				
 			}
 			{
 				propertyButtonEdit = new Button(propertyButtonGroup, SWT.PUSH | SWT.CENTER);
@@ -206,6 +244,23 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 				//button2LData.grabExcessHorizontalSpace = true;
 				propertyButtonEdit.setLayoutData(button2LData);
 				propertyButtonEdit.setText("Edit");
+				
+				propertyButtonEdit.addSelectionListener(new SelectionAdapter(){
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						StructuredSelection selection = (StructuredSelection)propertyViewer.getSelection();
+						if(selection == null) {
+							return;
+						}
+						AttributeType attr = (AttributeType) selection.getFirstElement();
+						EditVocabularyAttributeDialog ed = new EditVocabularyAttributeDialog(parent.getShell(),attr);
+						ed.start();
+						propertyViewer.refresh();
+						MainControl mc = MainControl.getMainControl();
+						mc.saveObject();
+						
+					}
+				});
 			}
 			{
 				propertyButtonRemove = new Button(propertyButtonGroup, SWT.PUSH | SWT.CENTER);
@@ -214,6 +269,26 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 				//button3LData.grabExcessHorizontalSpace = true;
 				propertyButtonRemove.setLayoutData(button3LData);
 				propertyButtonRemove.setText("Remove");
+				
+				propertyButtonRemove.addSelectionListener(new SelectionAdapter(){
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						DispositionItem input = (DispositionItem)propertyViewer.getInput();
+						if(input == null) {
+							return;
+						}
+						StructuredSelection selection = (StructuredSelection)propertyViewer.getSelection();
+						if(selection == null) {
+							return;
+						}
+						AttributeType attr = (AttributeType) selection.getFirstElement();
+						MasterDataBuilder mdb = MasterDataBuilder.getInstance();
+						mdb.removeItemAttribute(input, attr.getId());
+						MainControl mc = MainControl.getMainControl();
+						mc.saveObject();
+						propertyViewer.refresh(false);
+					}
+				});
 			}
 		}
 		{
