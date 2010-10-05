@@ -41,7 +41,10 @@ public class DispositionItem implements IWorkbenchAdapter, IAdaptable{
 	
 	public DispositionItem(VocabularyElementType element) {
 		vocabularyElement = element;
-		addAttribute("urn:epcglobal:epcis:mda:Name", "testValue");
+		String name = getAttribute("urn:epcglobal:epcis:mda:Name");
+		if(name == null) {
+			addAttribute("urn:epcglobal:epcis:mda:Name", "testValue");
+		}
 	}
 	
 	public String getLabel() {
@@ -128,6 +131,9 @@ public class DispositionItem implements IWorkbenchAdapter, IAdaptable{
 
 	public String getAttribute(String name) {
 		AttributeType attr =  MasterDataUtil.getVocabularyElementAttribute(vocabularyElement, name);
+		if(attr == null) {
+			return null;
+		}
 		String value = attr.getOtherAttributes().get(new QName("value"));
 		return value;
 	}

@@ -228,6 +228,16 @@
                 id="property.tab.businessstep"
                 label="Business Step">
           </propertyTab>
+          <propertyTab
+                category="extra"
+                id="property.tab.disposition"
+                label="Disposition">
+          </propertyTab>
+          <propertyTab
+                category="extra"
+                id="property.tab.transactiontype"
+                label="Transaction Type">
+          </propertyTab>
       </propertyTabs>
    </extension>
 
@@ -274,6 +284,28 @@
                class="org.ow2.aspirerfid.ide.bpwme.diagram.sheet.BusinessStepPropertySection"
                id="property.section.businessstep"
                tab="property.tab.businessstep">
+            <input
+                  type="org.eclipse.gmf.runtime.notation.View">
+            </input>
+            <input
+                  type="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.OLCBProcEditPart">
+            </input>
+         </propertySection>
+         <propertySection
+               class="org.ow2.aspirerfid.ide.bpwme.diagram.sheet.DispositionPropertySection"
+               id="property.section.disposition"
+               tab="property.tab.disposition">
+            <input
+                  type="org.eclipse.gmf.runtime.notation.View">
+            </input>
+            <input
+                  type="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.OLCBProcEditPart">
+            </input>
+         </propertySection>
+         <propertySection
+               class="org.ow2.aspirerfid.ide.bpwme.diagram.sheet.TransactionTypePropertySection"
+               id="property.section.transactiontype"
+               tab="property.tab.transactiontype">
             <input
                   type="org.eclipse.gmf.runtime.notation.View">
             </input>

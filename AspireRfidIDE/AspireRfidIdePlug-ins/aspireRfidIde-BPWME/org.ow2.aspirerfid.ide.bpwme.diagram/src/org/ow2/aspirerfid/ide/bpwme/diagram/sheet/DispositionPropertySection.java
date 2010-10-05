@@ -57,19 +57,7 @@ import org.ow2.aspirerfid.ide.bpwme.master.utils.MasterDataBuilder;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 
 
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
-public class BusinessStepPropertySection extends AbstractPropertySection{
+public class DispositionPropertySection extends AbstractPropertySection{
 	private ListViewer listViewerMain;
 	private Group listButtonGroup;
 	private Button propertyButtonRemove;
@@ -81,7 +69,7 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 	private Button buttonEdit;
 	private Button buttonNew;
 
-	public BusinessStepPropertySection() {
+	public DispositionPropertySection() {
 	}	
 	
 	@Override
@@ -114,7 +102,7 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 				buttonNew.addSelectionListener(new SelectionAdapter(){
 					@Override
 					public void widgetSelected(SelectionEvent e) {
-						String defaultURI = "urn:epcglobal:fmcg:bizstep:";
+						String defaultURI = "urn:epcglobal:fmcg:disp:";
 						PrefixValidator pv = new PrefixValidator(defaultURI);						
 						NewDispoDialog sd = new NewDispoDialog
 						(parent.getShell(), "", "Input URI", "Input Name", defaultURI, "Default Name", pv);
@@ -123,10 +111,9 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 						if(di == null) {
 							return;
 						}
-						mdb.addBizStepItem(di);
+						mdb.addDispositionItem(di);
 						listViewerMain.refresh(false);
 						mc.saveObject();
-						//setDirty();
 					}
 				});
 
@@ -172,7 +159,7 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 						if(di == null) {
 							return;
 						}else {
-							mdb.removeBizStepItem(di);
+							mdb.removeDispositionItem(di);
 							listViewerMain.refresh(false);					
 							mc.saveObject();
 						}
@@ -418,7 +405,7 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 					return ((DispositionItem)element).getLabel();
 				}
 			});
-			listViewerMain.setInput(mdb.getBizStepList());
+			listViewerMain.setInput(mdb.getDispositionList());
 			
 			listViewerMain.addSelectionChangedListener(new ISelectionChangedListener(){
 
