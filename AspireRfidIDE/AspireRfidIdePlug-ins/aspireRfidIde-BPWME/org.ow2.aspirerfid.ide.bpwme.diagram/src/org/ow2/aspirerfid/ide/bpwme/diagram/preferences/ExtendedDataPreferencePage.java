@@ -21,14 +21,15 @@ public class ExtendedDataPreferencePage extends FieldEditorPreferencePage implem
 	
 	@Override
 	protected void createFieldEditors() {
-		
-		Iterator<String> iter = PreferenceConstants.P_EXTEND.keySet().iterator();
-		while(iter.hasNext()) {
-			String key = iter.next();
-			addField(
-					new StringListEditor(key,key,"Input Dialog","Input the attribute value",getFieldEditorParent())
-			);
-		}
+
+		addField(new TwoListEditor(getFieldEditorParent()));
+//		Iterator<String> iter = PreferenceConstants.P_EXTEND.keySet().iterator();
+//		while(iter.hasNext()) {
+//			String key = iter.next();
+//			addField(
+//					new StringListEditor(key,key,"Input Dialog","Input the attribute value",getFieldEditorParent())
+//			);
+//		}
 	}
 
 	@Override
