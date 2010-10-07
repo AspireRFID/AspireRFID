@@ -22,7 +22,7 @@ public class ExtendedDataPreferencePage extends FieldEditorPreferencePage implem
 	@Override
 	protected void createFieldEditors() {
 
-		addField(new TwoListEditor(getFieldEditorParent()));
+		addField(new TwoListEditor(PreferenceConstants.P_EXTEND.keySet(),getFieldEditorParent()));
 //		Iterator<String> iter = PreferenceConstants.P_EXTEND.keySet().iterator();
 //		while(iter.hasNext()) {
 //			String key = iter.next();

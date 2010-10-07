@@ -1,6 +1,13 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.preferences;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
@@ -15,7 +22,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
+
+/*
+ * Modified from org.eclipse.jface.preference.ListEditor
+ */
+
 
 public class TwoListEditor extends FieldEditor{
 
@@ -50,9 +63,12 @@ public class TwoListEditor extends FieldEditor{
     private Button downButton;
 
     private SelectionListener selectionListener;
+    
+    private Set<String> keySet;
 	
-    public TwoListEditor(Composite parent) {
+    public TwoListEditor(Set<String> keySet, Composite parent) {
 		createControl(parent);
+		this.keySet = keySet;
 	}
     
 	@Override
@@ -69,32 +85,19 @@ public class TwoListEditor extends FieldEditor{
         GridData gd = new GridData();
         gd.horizontalSpan = numColumns;
         control.setLayoutData(gd);
-//		GridData gd;
+
         mainList = getMainListControl(parent);
         gd = new GridData(GridData.FILL_HORIZONTAL);
         gd.verticalAlignment = GridData.FILL;
         gd.horizontalSpan = 1;
         gd.grabExcessHorizontalSpace = true;
-
-//        gd = new GridData();
-//        gd.verticalAlignment = GridData.FILL;
-//        gd.grabExcessVerticalSpace = true;
-//        gd.horizontalAlignment = GridData.FILL;
-//        gd.grabExcessHorizontalSpace = true;
         mainList.setLayoutData(gd);
         
         subList = getSubListControl(parent);
-
         gd = new GridData(GridData.FILL_HORIZONTAL);
         gd.verticalAlignment = GridData.FILL;
         gd.horizontalSpan = 1;
         gd.grabExcessHorizontalSpace = true;
-
-//        gd = new GridData();
-//        gd.verticalAlignment = GridData.FILL;
-//        gd.grabExcessVerticalSpace = true;
-//        gd.horizontalAlignment = GridData.FILL;
-//        gd.grabExcessHorizontalSpace = true;
         subList.setLayoutData(gd);
 
         buttonBox = getButtonBoxControl(parent);
@@ -142,24 +145,127 @@ public class TwoListEditor extends FieldEditor{
             public void widgetSelected(SelectionEvent event) {
                 Widget widget = event.widget;
                 if (widget == addButton) {
-                    //addPressed();
+                    addPressed();
                 } else if (widget == removeButton) {
-                    //removePressed();
+                    removePressed();
                 } else if (widget == upButton) {
-                    //upPressed();
+                    upPressed();
                 } else if (widget == downButton) {
-                    //downPressed();
+                    downPressed();
                 } else if (widget == mainList) {
-                    //selectionChanged();
+                    mainSelectionChanged();
                 } else if (widget == subList) {
-                	//
+                	subSelectionChanged();
                 }
             }
         };
     }
 	
+
+	protected Shell getShell() {
+        if (addButton == null) {
+			return null;
+		}
+        return addButton.getShell();
+    }
+    
+	protected String getNewInputObject() {
+		InputDialog inputDialog = new InputDialog(getShell(), "Input Dialog","Input the attribute value", "", null);
+		inputDialog.open();
+		String input = inputDialog.getValue();
+		return input;
+	}    
 	
-    private SelectionListener getSelectionListener() {
+    protected void downPressed() {
+    	swap(false);
+    	doStore();
+	}
+
+	protected void upPressed() {
+		swap(true);
+		doStore();
+	}
+
+	protected void removePressed() {
+        setPresentsDefaultValue(false);
+        int index = subList.getSelectionIndex();
+        if (index >= 0) {
+        	subList.remove(index);
+            subSelectionChanged();
+        }
+		doStore();
+	}
+	
+	
+    private void swap(boolean up) {
+        setPresentsDefaultValue(false);
+        int index = subList.getSelectionIndex();
+        int target = up ? index - 1 : index + 1;
+
+        if (index >= 0) {
+            String[] selection = subList.getSelection();
+            Assert.isTrue(selection.length == 1);
+            subList.remove(index);
+            subList.add(selection[0], target);
+            subList.setSelection(target);
+        }
+        subSelectionChanged();
+        
+    }
+
+	protected void addPressed() {
+        setPresentsDefaultValue(false);
+        String input = getNewInputObject();
+        
+        if (input != null) {
+            int index = subList.getSelectionIndex();
+            if (index >= 0) {
+            	subList.add(input, index + 1);
+			} else {
+				subList.add(input, 0);
+			}
+            subSelectionChanged();
+            doStore();
+        }
+	}
+	
+    protected void subSelectionChanged() {
+
+        int index = subList.getSelectionIndex();
+        int size = subList.getItemCount();
+
+        removeButton.setEnabled(index >= 0);
+        upButton.setEnabled(size > 1 && index > 0);
+        downButton.setEnabled(size > 1 && index >= 0 && index < size - 1);
+    }
+	
+	
+	
+	protected void mainSelectionChanged() {
+    	String[] selection = mainList.getSelection();
+		if(selection.length < 1) {
+			return;
+		}
+		String subOption = getPreferenceStore().getString(selection[0]);
+		String[] subOptions = parseString(subOption);
+		subList.removeAll();
+		for(int i = 0; i < subOptions.length; i++) {
+			subList.add(subOptions[i]);
+		}
+	}
+    
+    
+	protected String[] parseString(String stringList) {
+		StringTokenizer st = new StringTokenizer(stringList, "," + "\n\r");//$NON-NLS-1$ //File.pathSeparator
+		ArrayList<String> v = new ArrayList<String>();
+		while (st.hasMoreElements()) {
+			v.add((String) st.nextElement());
+		}
+		return (String[]) v.toArray(new String[v.size()]);
+	}
+
+
+	private SelectionListener getSelectionListener() {
         if (selectionListener == null) {
 			createSelectionListener();
 		}
@@ -217,20 +323,50 @@ public class TwoListEditor extends FieldEditor{
     
 	@Override
 	protected void doLoad() {
-		// TODO Auto-generated method stub
-		
+		if(mainList != null) {
+			Iterator<String> iter = keySet.iterator();
+			while(iter.hasNext()) {
+				mainList.add(iter.next());
+			}
+		}
+		if(subList != null) {
+			
+		}
 	}
 
 	@Override
 	protected void doLoadDefault() {
-		// TODO Auto-generated method stub
-		
+		if(mainList != null) {
+			mainList.removeAll();
+			Iterator<String> iter = keySet.iterator();
+			while(iter.hasNext()) {
+				String name = iter.next();
+				mainList.add(name);
+				getPreferenceStore().setValue(name, getPreferenceStore().getDefaultString(name));
+			}
+		}
+		if(subList != null) {
+			subList.removeAll();
+		}		
 	}
 
+	protected String createList(String[] items) {
+		StringBuffer path = new StringBuffer("");//$NON-NLS-1$
+
+		for (int i = 0; i < items.length; i++) {
+			path.append(items[i]);
+			path.append(",");
+		}
+		return path.toString();
+	}
+	
 	@Override
 	protected void doStore() {
-		// TODO Auto-generated method stub
-		
+        String s = createList(subList.getItems());
+        String[] name = mainList.getSelection();
+        if ((s != null)&&(name.length > 0)) {
+			getPreferenceStore().setValue(name[0], s);
+		}
 	}
 
 	@Override
