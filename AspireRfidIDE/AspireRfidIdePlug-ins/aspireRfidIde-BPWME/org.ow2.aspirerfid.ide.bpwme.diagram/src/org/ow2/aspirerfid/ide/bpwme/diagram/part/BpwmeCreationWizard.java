@@ -4,15 +4,26 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gmf.runtime.emf.core.resources.GMFResource;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
+import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
+import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
 import org.ow2.aspirerfid.ide.bpwme.diagram.application.WizardNewProjectCreationPage;
+import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
+import org.ow2.aspirerfid.ide.bpwme.impl.WorkflowMapImpl;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
 /**
  * @generated
@@ -127,10 +138,29 @@ public class BpwmeCreationWizard extends Wizard implements INewWizard {
 //				diagram = BpwmeDiagramEditorUtil.createDiagram(
 //						diagramModelFilePage.getURI(),monitor);
 				
-				
 				if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
 					try {
 						BpwmeDiagramEditorUtil.openDiagram(diagram);
+						
+						IEditorPart editor = MainUtil.getEditor(BpwmeDiagramEditor.ID);
+						if(editor != null) {
+							BpwmeDiagramEditor beditor = (BpwmeDiagramEditor)editor;
+							WorkflowMapEditPart wPart = (WorkflowMapEditPart)beditor.getDiagramEditPart();
+							WorkflowMapImpl wmp = (WorkflowMapImpl)((View)wPart.getModel()).getElement();
+							OLCBProc olcb = BpwmeFactory.eINSTANCE.createOLCBProc();
+							//OLCBProcEditPart olcbp = BpwmeEditPartFactory
+						}
+						
+//						GMFResource gr = (GMFResource)diagram;
+//						EList<EObject> objects = gr.getContents();
+//						
+//						for(EObject object : objects) {
+//							//if(object instanceof WorkflowMapEditPart) {
+//								System.out.println(object);								
+//							//}
+//						}
+
+						
 					} catch (PartInitException e) {
 						ErrorDialog.openError(getContainer().getShell(),
 								Messages.BpwmeCreationWizardOpenEditorError,
