@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.ow2.aspirerfid.sensor</groupId>
+  <artifactId>org.ow2.aspirerfid.sensor.sunspot.example.remotecontrol</artifactId>
+  <packaging>bundle</packaging>
+  <version>1.0.0</version>
+  <description>OSGi bundle that emulates key stroke with SunSPOT switch buttons</description> 
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-Copyright>OW2 Aspire RFID</Bundle-Copyright>
+            <Bundle-Name>OW2 :: AspireRFID :: SunSPOT Example :: RemoteControl</Bundle-Name>
+            <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+            <Bundle-Description>${pom.description}</Bundle-Description>
+            <Bundle-Vendor>Lionel Touseau</Bundle-Vendor>
+            <Private-Package>org.ow2.aspirerfid.sensor.sunspot.example.remotecontrol</Private-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-ipojo-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>ipojo-bundle</goal>
+            </goals>
+            <configuration>
+              <metadata>ipojo/metadata.xml</metadata>
+              <ignoreAnnotations>true</ignoreAnnotations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+	<dependencies>
+	    <dependency>
+			<groupId>org.ow2.aspirerfid.sensor</groupId>
+  			<artifactId>org.ow2.aspirerfid.sensor.sunspot.service</artifactId>
+  			<version>0.1.0-SNAPSHOT</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.apache.felix</groupId>
+	      <artifactId>org.osgi.compendium</artifactId>
+	      <version>1.2.0</version>
+    	</dependency>
+	</dependencies>
+
+  
+</project>

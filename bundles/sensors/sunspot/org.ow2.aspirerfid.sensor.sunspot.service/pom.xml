@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.ow2.aspirerfid.sensor</groupId>
+  <artifactId>org.ow2.aspirerfid.sensor.sunspot.service</artifactId>
+  <packaging>bundle</packaging>
+  <version>0.1.0-SNAPSHOT</version>
+  <description>SunSPOT administration service</description>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-Copyright>OW2 Aspire RFID</Bundle-Copyright>
+            <Bundle-Name>OW2 :: AspireRFID :: SunSPOT Service</Bundle-Name>
+            <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+            <Bundle-Description>${pom.description}</Bundle-Description>
+            <Bundle-Vendor>Lionel Touseau</Bundle-Vendor>
+            <Export-Package>org.ow2.aspirerfid.sensor.sunspot.service</Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+</project>

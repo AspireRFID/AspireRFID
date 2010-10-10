@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>org.ow2.aspirerfid.sensor</groupId>
+  <artifactId>org.ow2.aspirerfid.sensor.sunspot.controller</artifactId>
+  <packaging>bundle</packaging>
+  <version>0.2.0-SNAPSHOT</version>
+  <description>OSGi bundle that controls SunSPOTs through a service and provides sensor data via WireAdmin producers</description>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-Copyright>OW2 Aspire RFID</Bundle-Copyright>
+            <Bundle-Name>OW2 :: AspireRFID :: SunSPOT Controller</Bundle-Name>
+            <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+            <Bundle-Description>${project.description}</Bundle-Description>
+            <Bundle-Vendor>Lionel Touseau</Bundle-Vendor>
+            <Private-Package>org.ow2.aspirerfid.sensor.sunspot.controller, org.ow2.aspirerfid.sensor.sunspot.producers, org.ow2.aspirerfid.sensor.sunspot.service.impl, org.ow2.aspirerfid.sensor.sunspot.event.buttons</Private-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-ipojo-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>ipojo-bundle</goal>
+            </goals>
+            <configuration>
+              <metadata>ipojo/metadata.xml</metadata>
+              <ignoreAnnotations>true</ignoreAnnotations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
+      <version>1.4.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.spot</groupId>
+      <artifactId>com.sun.spot.host.commons</artifactId>
+      <version>5.0.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.ipojo</artifactId>
+      <version>1.3.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ow2.aspirerfid.sensor</groupId>
+      <artifactId>org.ow2.aspirerfid.sensor.sunspot.service</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+</project>

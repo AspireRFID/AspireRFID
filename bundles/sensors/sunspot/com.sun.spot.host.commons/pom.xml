@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>com.sun.spot</groupId>
+  <artifactId>com.sun.spot.host.commons</artifactId>
+  <packaging>bundle</packaging>
+  <version>5.0.0</version>
+  <description>Bundle wrapping SunSPOT common libraries for host applications. This bundle includes libraries from the Red Sun SPOT SDK (release 5.0)</description>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>       
+          <instructions>
+            <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+            <Bundle-Name>SunSPOT Host Red API</Bundle-Name>
+            <Bundle-Vendor>Sun Microsystems</Bundle-Vendor>
+            <Export-Package>com.sun.*,javax.microedition.*</Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.sun.spot</groupId>
+  		<artifactId>com.sun.spot.commons.multihop</artifactId>
+  		<version>5.0.0</version>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.sun.spot</groupId>
+  		<artifactId>com.sun.spot.spotlib.host</artifactId>
+  		<version>5.0.0</version>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.sun.spot</groupId>
+  		<artifactId>com.sun.spot.spotlib.device</artifactId>
+  		<version>5.0.0</version>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.sun.spot</groupId>
+  		<artifactId>com.sun.spot.spotlib.common</artifactId>
+  		<version>5.0.0</version>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.sun.spot</groupId>
+  		<artifactId>com.sun.spot.squawk.host.classes</artifactId>
+  		<version>5.0.0</version>
+  		<scope>compile</scope>
+  	</dependency>
+  	</dependencies>  
+</project>
