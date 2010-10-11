@@ -39,10 +39,11 @@ public class GateImpl extends AbstractContainerImpl implements Gate {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected GateImpl() {
 		super();
+		setType("Gate");
 	}
 
 	/**

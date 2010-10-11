@@ -39,10 +39,11 @@ public class ConveyorImpl extends AbstractContainerImpl implements Conveyor {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected ConveyorImpl() {
 		super();
+		setType("Conveyor");
 	}
 
 	/**

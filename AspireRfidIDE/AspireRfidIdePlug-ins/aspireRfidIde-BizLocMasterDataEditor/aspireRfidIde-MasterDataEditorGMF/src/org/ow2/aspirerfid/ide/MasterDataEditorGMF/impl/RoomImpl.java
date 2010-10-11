@@ -39,10 +39,11 @@ public class RoomImpl extends AbstractWarehouseImpl implements Room {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected RoomImpl() {
 		super();
+		setType("Room");
 	}
 
 	/**

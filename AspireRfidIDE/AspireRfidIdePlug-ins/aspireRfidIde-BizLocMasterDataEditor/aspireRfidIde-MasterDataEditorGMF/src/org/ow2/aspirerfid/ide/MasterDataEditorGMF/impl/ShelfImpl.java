@@ -39,10 +39,11 @@ public class ShelfImpl extends AbstractContainerImpl implements Shelf {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected ShelfImpl() {
 		super();
+		setType("Shelf");
 	}
 
 	/**

@@ -39,10 +39,11 @@ public class PushArmImpl extends AbstractContainerImpl implements PushArm {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected PushArmImpl() {
 		super();
+		setType("PushArm");
 	}
 
 	/**

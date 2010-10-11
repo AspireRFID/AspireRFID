@@ -39,10 +39,11 @@ public class WarehouseImpl extends AbstractWarehouseImpl implements Warehouse {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected WarehouseImpl() {
 		super();
+		setType("Warehouse");
 	}
 
 	/**

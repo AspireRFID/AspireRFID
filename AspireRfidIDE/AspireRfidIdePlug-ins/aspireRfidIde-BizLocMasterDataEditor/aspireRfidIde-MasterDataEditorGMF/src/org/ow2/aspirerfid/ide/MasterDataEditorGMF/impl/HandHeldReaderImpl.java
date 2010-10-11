@@ -39,10 +39,11 @@ public class HandHeldReaderImpl extends AbstractContainerImpl implements HandHel
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected HandHeldReaderImpl() {
 		super();
+		setType("HandHeldReader");
 	}
 
 	/**

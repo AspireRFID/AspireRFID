@@ -39,10 +39,11 @@ public class SectionImpl extends AbstractWarehouseImpl implements Section {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected SectionImpl() {
 		super();
+		setType("Section");
 	}
 
 	/**

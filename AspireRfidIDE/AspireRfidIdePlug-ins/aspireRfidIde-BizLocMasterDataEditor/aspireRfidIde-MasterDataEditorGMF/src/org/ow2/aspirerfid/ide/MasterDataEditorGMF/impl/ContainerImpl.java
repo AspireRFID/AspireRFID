@@ -39,10 +39,11 @@ public class ContainerImpl extends AbstractContainerImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected ContainerImpl() {
 		super();
+		setType("Container");
 	}
 
 	/**
