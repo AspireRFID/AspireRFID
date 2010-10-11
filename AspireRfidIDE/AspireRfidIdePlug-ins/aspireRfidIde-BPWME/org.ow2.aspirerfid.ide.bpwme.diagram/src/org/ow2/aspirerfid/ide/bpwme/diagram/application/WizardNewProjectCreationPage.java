@@ -79,6 +79,10 @@ public class WizardNewProjectCreationPage extends WizardPage{
 		return true;
 	}
 	
+	public String getProjectName() {
+		return projectNameEditor.getText().trim();
+	}
+	
 	private boolean isProjectExist(String name) {
 		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
 		String home = store.getString(PreferenceConstants.P_BPWME_DIR);
