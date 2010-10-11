@@ -57,6 +57,11 @@ public class MasterDataGMFCreateFromFile {
 	private static boolean isFromApdl = false;
 	
 	/**
+	 * If the diagram will be created from the BPWME APDL file
+	 */
+	private static boolean isFromBpwmeApdl = false;
+	
+	/**
 	 * All the CLCBProc names of the APDL file
 	 */
 	private static ArrayList<String> clcProcNames;
@@ -90,11 +95,25 @@ public class MasterDataGMFCreateFromFile {
 	}
 
 	/**
+	 * @return the isFromBpwmeApdl
+	 */
+	public static boolean isFromBpwmeApdl() {
+		return isFromBpwmeApdl;
+	}
+
+	/**
+	 * @param isFromBpwmeApdl the isFromBpwmeApdl to set
+	 */
+	public static void setFromBpwmeApdl(boolean isFromBpwmeApdl) {
+		MasterDataGMFCreateFromFile.isFromBpwmeApdl = isFromBpwmeApdl;
+	}
+
+	/**
 	 * Open the APDL xml file
 	 */
 	public static void openApdlFile(URI fileURI) {
 		try {
-			String URI = fileURI.toFileString();
+			String URI = fileURI.toString();
 			File file = new File(URI);
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();

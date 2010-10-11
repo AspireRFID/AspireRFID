@@ -67,6 +67,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.MasterDataEditorGMFFactory;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromApdlWizard;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromBpwmeApdlWizard;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFCreateFromFile;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFQuery;
@@ -250,6 +251,7 @@ public class MasterDataEditorGMFDiagramEditorUtil {
 		}
 		MasterDataEditParts.setFromEPCIS(false);
 		MasterDataGMFCreateFromFile.setFromApdl(false);
+		MasterDataGMFCreateFromFile.setFromBpwmeApdl(false);
 		return diagramResource;
 	}
 
@@ -266,6 +268,9 @@ public class MasterDataEditorGMFDiagramEditorUtil {
 		else if (MasterDataGMFCreateFromFile.isFromApdl())
 			return MasterDataGMFCreateFromFile.createApdlModel(MasterDataGMFCreateFromFile.getClcProcNames()
 					.get(OpenMasterDataEditorGMFFromApdlWizard.getCount()));
+		else if (MasterDataGMFCreateFromFile.isFromBpwmeApdl())
+			return MasterDataGMFCreateFromFile.createApdlModel(MasterDataGMFCreateFromFile.getClcProcNames()
+					.get(OpenMasterDataEditorGMFFromBpwmeApdlWizard.getCount()));
 		else
 			return MasterDataEditorGMFFactory.eINSTANCE.createCompany();
 	}

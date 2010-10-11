@@ -610,12 +610,12 @@ public class MasterDataEditParts {
 		if (!(company.getDescription().isEmpty() && company.getDescription() == ""))
 			hm.put("Description", company.getDescription());
 		
-//		String[] companyCustomAttr = {company.getAttr1(),company.getAttr2(),company.getAttr3(),company.getAttr4(),company.getAttr5(),company.getAttr6(),company.getAttr7(),company.getAttr8(),company.getAttr9(),company.getAttr10(),company.getAtt11(),company.getAttr12(),company.getAttr13(),company.getAttr14(),company.getAttr15(),company.getAttr16(),company.getAttr17(),company.getAttr18(),company.getAttr19(),company.getAttr20(),company.getAttr21(),company.getAttr22(),company.getAttr23(),company.getAttr24(),company.getAttr25(),company.getAttr26(),company.getAttr27(),company.getAttr28(),company.getAttr29(),company.getAttr30(),company.getAttr31(),company.getAttr32(),company.getAttr33(),company.getAttr34(),company.getAttr35(),company.getAttr36(),company.getAttr37(),company.getAttr38(),company.getAttr39(),company.getAttr40(),company.getAttr41(),company.getAttr42(),company.getAttr43(),company.getAttr44(),company.getAttr45(),company.getAttr46(),company.getAttr47(),company.getAttr48(),company.getAttr49(),company.getAttr50()};
-//		
-//		for (int i = 0; i < newCompanyAttr.length; i++) {
-//			if (!(companyCustomAttr[i].isEmpty() && companyCustomAttr[i] == ""))
-//				hm.put(newCompanyAttr[i], companyCustomAttr[i]);
-//		}
+		String[] companyCustomAttr = {company.getAttr1(),company.getAttr2(),company.getAttr3(),company.getAttr4(),company.getAttr5(),company.getAttr6(),company.getAttr7(),company.getAttr8(),company.getAttr9(),company.getAttr10(),company.getAttr11(),company.getAttr12(),company.getAttr13(),company.getAttr14(),company.getAttr15(),company.getAttr16(),company.getAttr17(),company.getAttr18(),company.getAttr19(),company.getAttr20()};
+		
+		for (int i = 0; i < companyCustomAttr.length; i++) {
+			if (!(companyCustomAttr[i].isEmpty() && companyCustomAttr[i] == ""))
+				hm.put(companyCustomAttr[i].substring(0, companyCustomAttr[i].indexOf("_")), companyCustomAttr[i].substring(companyCustomAttr[i].indexOf("_")+1));
+		}
 		
 		return hm;
 	}
@@ -636,12 +636,12 @@ public class MasterDataEditParts {
 		if (!(warehouse.getType().isEmpty() && warehouse.getType() == ""))
 			hm.put("Type", warehouse.getType());
 		
-//		String[] warehouseCustomAttr = {warehouse.getAttr1(),warehouse.getAttr2(),warehouse.getAttr3(),warehouse.getAttr4(),warehouse.getAttr5(),warehouse.getAttr6(),warehouse.getAttr7(),warehouse.getAttr8(),warehouse.getAttr9(),warehouse.getAttr10(),warehouse.getAtt11(),warehouse.getAttr12(),warehouse.getAttr13(),warehouse.getAttr14(),warehouse.getAttr15(),warehouse.getAttr16(),warehouse.getAttr17(),warehouse.getAttr18(),warehouse.getAttr19(),warehouse.getAttr20(),warehouse.getAttr21(),warehouse.getAttr22(),warehouse.getAttr23(),warehouse.getAttr24(),warehouse.getAttr25(),warehouse.getAttr26(),warehouse.getAttr27(),warehouse.getAttr28(),warehouse.getAttr29(),warehouse.getAttr30(),warehouse.getAttr31(),warehouse.getAttr32(),warehouse.getAttr33(),warehouse.getAttr34(),warehouse.getAttr35(),warehouse.getAttr36(),warehouse.getAttr37(),warehouse.getAttr38(),warehouse.getAttr39(),warehouse.getAttr40(),warehouse.getAttr41(),warehouse.getAttr42(),warehouse.getAttr43(),warehouse.getAttr44(),warehouse.getAttr45(),warehouse.getAttr46(),warehouse.getAttr47(),warehouse.getAttr48(),warehouse.getAttr49(),warehouse.getAttr50()};
-//		
-//		for (int i = 0; i < newWarehouseAttr.length; i++) {
-//			if (!(warehouseCustomAttr[i].isEmpty() && warehouseCustomAttr[i] == ""))
-//				hm.put(newWarehouseAttr[i], warehouseCustomAttr[i]);
-//		}
+		String[] warehouseCustomAttr = {warehouse.getAttr1(),warehouse.getAttr2(),warehouse.getAttr3(),warehouse.getAttr4(),warehouse.getAttr5(),warehouse.getAttr6(),warehouse.getAttr7(),warehouse.getAttr8(),warehouse.getAttr9(),warehouse.getAttr10(),warehouse.getAttr11(),warehouse.getAttr12(),warehouse.getAttr13(),warehouse.getAttr14(),warehouse.getAttr15(),warehouse.getAttr16(),warehouse.getAttr17(),warehouse.getAttr18(),warehouse.getAttr19(),warehouse.getAttr20()};
+		
+		for (int i = 0; i < warehouseCustomAttr.length; i++) {
+			if (!(warehouseCustomAttr[i].isEmpty() && warehouseCustomAttr[i] == ""))
+				hm.put(warehouseCustomAttr[i].substring(0, warehouseCustomAttr[i].indexOf("_")), warehouseCustomAttr[i].substring(warehouseCustomAttr[i].indexOf("_")+1));
+		}
 	
 		String readPointValue = "";
 		int x = 0;
@@ -690,12 +690,12 @@ public class MasterDataEditParts {
 		if (!(container.getType().isEmpty() && container.getType() == ""))
 			hm.put("Type", container.getType());
 	
-//		String[] readPointCustomAttr = {container.getAttr1(),container.getAttr2(),container.getAttr3(),container.getAttr4(),container.getAttr5(),container.getAttr6(),container.getAttr7(),container.getAttr8(),container.getAttr9(),container.getAttr10(),container.getAtt11(),container.getAttr12(),container.getAttr13(),container.getAttr14(),container.getAttr15(),container.getAttr16(),container.getAttr17(),container.getAttr18(),container.getAttr19(),container.getAttr20(),container.getAttr21(),container.getAttr22(),container.getAttr23(),container.getAttr24(),container.getAttr25(),container.getAttr26(),container.getAttr27(),container.getAttr28(),container.getAttr29(),container.getAttr30(),container.getAttr31(),container.getAttr32(),container.getAttr33(),container.getAttr34(),container.getAttr35(),container.getAttr36(),container.getAttr37(),container.getAttr38(),container.getAttr39(),container.getAttr40(),container.getAttr41(),container.getAttr42(),container.getAttr43(),container.getAttr44(),container.getAttr45(),container.getAttr46(),container.getAttr47(),container.getAttr48(),container.getAttr49(),container.getAttr50()};
-//		
-//		for (int i = 0; i < newReadPointAttr.length; i++) {
-//			if (!(readPointCustomAttr[i].isEmpty() && readPointCustomAttr[i] == ""))
-//				hm.put(newReadPointAttr[i], readPointCustomAttr[i]);
-//		}
+		String[] readPointCustomAttr = {container.getAttr1(),container.getAttr2(),container.getAttr3(),container.getAttr4(),container.getAttr5(),container.getAttr6(),container.getAttr7(),container.getAttr8(),container.getAttr9(),container.getAttr10(),container.getAttr11(),container.getAttr12(),container.getAttr13(),container.getAttr14(),container.getAttr15(),container.getAttr16(),container.getAttr17(),container.getAttr18(),container.getAttr19(),container.getAttr20()};
+		
+		for (int i = 0; i < readPointCustomAttr.length; i++) {
+			if (!(readPointCustomAttr[i].isEmpty() && readPointCustomAttr[i] == ""))
+				hm.put(readPointCustomAttr[i].substring(0, readPointCustomAttr[i].indexOf("_")), readPointCustomAttr[i].substring(readPointCustomAttr[i].indexOf("_")+1));
+		}
 		
 		return hm;
 	}
@@ -778,12 +778,6 @@ public class MasterDataEditParts {
 		setInsertedReadPointURIs();
 		setBizLocUriAttributesValues();
 		setReadPointUriAttributesValues();
-		/*
-		System.out.println("Initial:" + warehouseInitialEpcisID);
-		System.out.println("End:    " + warehouseEndEpcisID);
-		System.out.println("Initial:" + containerInitialEpcisID);
-		System.out.println("End:    " + containerEndEpcisID);
-		*/
 	}
 	
 	/**
@@ -797,12 +791,7 @@ public class MasterDataEditParts {
 		setEndContainerEpcisID();
 		setAlteredReadPointURIs();
 		setDeletedReadPointURIs();
-		/*
-		System.out.println("Initial:" + warehouseInitialEpcisID);
-		System.out.println("End:    " + warehouseEndEpcisID);
-		System.out.println("Initial:" + containerInitialEpcisID);
-		System.out.println("End:    " + containerEndEpcisID);
-		*/
+		
 		setInitialParts();
 	}
 	

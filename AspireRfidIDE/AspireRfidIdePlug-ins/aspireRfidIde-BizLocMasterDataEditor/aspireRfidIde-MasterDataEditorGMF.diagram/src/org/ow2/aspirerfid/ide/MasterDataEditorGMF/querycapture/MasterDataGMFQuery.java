@@ -38,6 +38,7 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.BizLoc;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.Company;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.MasterDataEditorGMFFactory;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.ReadPoint;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences.DiagramConfiguratorPreferenceConstants;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.tools.EpcisConstants;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.tools.QueryClientGuiHelper;
@@ -217,24 +218,45 @@ public class MasterDataGMFQuery {
 		if (companyData.containsKey("urn:epcglobal:epcis:mda:Description"))
 			company.setDescription(companyData.get("urn:epcglobal:epcis:mda:Description"));
 		
-//		Set<Entry<String, String>> set1 = companyData.entrySet();
-//		Iterator<Entry<String, String>> itr1 = set1.iterator();
-//
-//		while (itr1.hasNext()) {
-//			Entry<String, String> item1 = itr1.next();
-//		
-//			if (item1.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Address") 
-//					&& !item1.getKey().equals("urn:epcglobal:epcis:mda:City") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Country") 
-//					&& !item1.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Description")) {
-//				for (int i = 0; i < MasterDataEditParts.getNewCompanyAttr().length; i++) {
-//					if ((item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "").equals(MasterDataEditParts.getNewCompanyAttr()[i]))) {
-//						switch(i) {
-//						case 0:company.setAttr1(companyData.get(item1.getKey()));break;case 1:company.setAttr2(companyData.get(item1.getKey()));break;case 2:company.setAttr3(companyData.get(item1.getKey()));break;case 3:company.setAttr4(companyData.get(item1.getKey()));break;case 4:company.setAttr5(companyData.get(item1.getKey()));break;case 5:company.setAttr6(companyData.get(item1.getKey()));break;case 6:company.setAttr7(companyData.get(item1.getKey()));break;case 7:company.setAttr8(companyData.get(item1.getKey()));break;case 8:company.setAttr9(companyData.get(item1.getKey()));break;case 9:company.setAttr10(companyData.get(item1.getKey()));break;case 10:company.setAtt11(companyData.get(item1.getKey()));break;case 11:company.setAttr12(companyData.get(item1.getKey()));break;case 12:company.setAttr13(companyData.get(item1.getKey()));break;case 13:company.setAttr14(companyData.get(item1.getKey()));break;case 14:company.setAttr15(companyData.get(item1.getKey()));break;case 15:company.setAttr16(companyData.get(item1.getKey()));break;case 16:company.setAttr17(companyData.get(item1.getKey()));break;case 17:company.setAttr18(companyData.get(item1.getKey()));break;case 18:company.setAttr19(companyData.get(item1.getKey()));break;case 19:company.setAttr20(companyData.get(item1.getKey()));break;case 20:company.setAttr21(companyData.get(item1.getKey()));break;case 21:company.setAttr22(companyData.get(item1.getKey()));break;case 22:company.setAttr23(companyData.get(item1.getKey()));break;case 23:company.setAttr24(companyData.get(item1.getKey()));break;case 24:company.setAttr25(companyData.get(item1.getKey()));break;case 25:company.setAttr26(companyData.get(item1.getKey()));break;case 26:company.setAttr27(companyData.get(item1.getKey()));break;case 27:company.setAttr28(companyData.get(item1.getKey()));break;case 28:company.setAttr29(companyData.get(item1.getKey()));break;case 29:company.setAttr30(companyData.get(item1.getKey()));break;case 30:company.setAttr31(companyData.get(item1.getKey()));break;case 31:company.setAttr32(companyData.get(item1.getKey()));break;case 32:company.setAttr33(companyData.get(item1.getKey()));break;case 33:company.setAttr34(companyData.get(item1.getKey()));break;case 34:company.setAttr35(companyData.get(item1.getKey()));break;case 35:company.setAttr36(companyData.get(item1.getKey()));break;case 36:company.setAttr37(companyData.get(item1.getKey()));break;case 37:company.setAttr38(companyData.get(item1.getKey()));break;case 38:company.setAttr39(companyData.get(item1.getKey()));break;case 39:company.setAttr40(companyData.get(item1.getKey()));break;case 40:company.setAttr41(companyData.get(item1.getKey()));break;case 41:company.setAttr42(companyData.get(item1.getKey()));break;case 42:company.setAttr43(companyData.get(item1.getKey()));break;case 43:company.setAttr44(companyData.get(item1.getKey()));break;case 44:company.setAttr45(companyData.get(item1.getKey()));break;case 45:company.setAttr46(companyData.get(item1.getKey()));break;case 46:company.setAttr47(companyData.get(item1.getKey()));break;case 47:company.setAttr48(companyData.get(item1.getKey()));break;case 48:company.setAttr49(companyData.get(item1.getKey()));break;case 49:company.setAttr50(companyData.get(item1.getKey()));
-//						}
-//					}
-//				}
-//			}
-//		}
+		//add custom attributes
+		Set<Entry<String, String>> set1 = companyData.entrySet();
+		Iterator<Entry<String, String>> itr1 = set1.iterator();
+
+		while (itr1.hasNext()) {
+			Entry<String, String> item1 = itr1.next();
+		
+			if (item1.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Address") 
+					&& !item1.getKey().equals("urn:epcglobal:epcis:mda:City") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Country") 
+					&& !item1.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Description")) {
+				for (int i = 0; i < MasterDataEditParts.getNewCompanyAttr().length; i++) {
+					if (!(MasterDataEditParts.getNewCompanyAttr()[i].isEmpty() && MasterDataEditParts.getNewCompanyAttr()[i] == "")) {
+						if (!(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "").equals(MasterDataEditParts.getNewCompanyAttr()[i]))) {
+							//add the custom attribute in the preferences
+							String value = MasterDataEditorGMFDiagramEditorPlugin.getInstance().
+								getPreferenceStore().getString(DiagramConfiguratorPreferenceConstants.newCompanyAttributes) + 
+								item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "") + ",";
+							MasterDataEditorGMFDiagramEditorPlugin.getInstance().
+								getPreferenceStore().setValue(DiagramConfiguratorPreferenceConstants.newCompanyAttributes, value);
+//							System.out.println("********************");
+//							System.out.println(MasterDataEditorGMFDiagramEditorPlugin.getInstance().
+//								getPreferenceStore().getString(DiagramConfiguratorPreferenceConstants.newCompanyAttributes));System.out.println("********************");
+							String newAttr[] = new String[MasterDataEditParts.getNewCompanyAttr().length + 1];
+							
+							for (int attr = 0; attr < MasterDataEditParts.getNewCompanyAttr().length; attr++)
+								newAttr[attr] = MasterDataEditParts.getNewCompanyAttr()[attr];
+							
+							newAttr[newAttr.length - 1] = item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "");
+							
+							MasterDataEditParts.setNewCompanyAttr(newAttr);
+						}
+					
+						switch(i) {
+						case 0:company.setAttr1(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 1:company.setAttr2(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 2:company.setAttr3(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 3:company.setAttr4(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 4:company.setAttr5(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 5:company.setAttr6(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 6:company.setAttr7(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 7:company.setAttr8(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 8:company.setAttr9(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 9:company.setAttr10(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 10:company.setAttr11(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 11:company.setAttr12(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 12:company.setAttr13(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 13:company.setAttr14(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 14:company.setAttr15(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 15:company.setAttr16(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 16:company.setAttr17(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 17:company.setAttr18(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 18:company.setAttr19(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 19:company.setAttr20(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;
+						}
+					}
+				}
+			}
+		}
 		
 		Set<Entry<String, String>> set = companyData.entrySet();
 		Iterator<Entry<String, String>> itr = set.iterator();

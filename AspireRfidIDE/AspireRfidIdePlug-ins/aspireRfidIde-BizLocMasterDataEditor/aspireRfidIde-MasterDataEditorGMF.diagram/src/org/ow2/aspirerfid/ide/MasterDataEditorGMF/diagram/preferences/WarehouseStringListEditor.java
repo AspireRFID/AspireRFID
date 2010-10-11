@@ -86,8 +86,8 @@ public class WarehouseStringListEditor extends ListEditor {
 				
 		for (int i = 0; i < items.length; i++) {
 			newAttr[i] = items[i];
-			path.append(items[i]);
-			path.append(",");
+//			path.append(items[i]);
+//			path.append(",");
 		}
 		
 		String turnNewAttr[] = new String[newAttr.length];
@@ -98,6 +98,11 @@ public class WarehouseStringListEditor extends ListEditor {
 		}
 		
 		MasterDataEditParts.setNewWarehouseAttr(newAttr);
+		
+		for (int i = 0; i < MasterDataEditParts.getNewWarehouseAttr().length; i++) {
+			path.append(MasterDataEditParts.getNewWarehouseAttr()[i]);
+			path.append(",");
+		}
 
 		return path.toString();
 	}
