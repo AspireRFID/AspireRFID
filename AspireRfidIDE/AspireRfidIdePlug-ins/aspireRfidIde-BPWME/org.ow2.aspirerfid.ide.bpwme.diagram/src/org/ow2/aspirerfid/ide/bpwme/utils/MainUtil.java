@@ -97,6 +97,10 @@ public class MainUtil {
 		}
 	}
 	
+	/**
+	 * Bring the editor to the top of the stack
+	 * @param editorID
+	 */
 	public static void bringToTop(String editorID) {
 		IEditorPart editor = getEditor(editorID);
 		if(editor == null) {

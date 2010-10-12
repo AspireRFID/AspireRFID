@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -26,9 +27,11 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFCrea
 import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
 import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorUtil;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeNewDiagramFileWizard;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.Messages;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
@@ -43,7 +46,13 @@ public class OpenFromAPDL extends AbstractHandler{
 		
 		//select the apdl file
 		FileDialog fileDialog = new FileDialog(shell, SWT.OPEN);
+		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();		
+		String filterPath = store.getString(PreferenceConstants.P_APDL_DIR);
+		String[] extensions = new String[]{"*.xml"};
+		fileDialog.setFilterExtensions(extensions);
+		fileDialog.setFilterPath(filterPath);		
 		fileDialog.open();
+		
 		String fileName = fileDialog.getFileName();
 		if (fileName == null || fileName.length() == 0) {
 			return null;

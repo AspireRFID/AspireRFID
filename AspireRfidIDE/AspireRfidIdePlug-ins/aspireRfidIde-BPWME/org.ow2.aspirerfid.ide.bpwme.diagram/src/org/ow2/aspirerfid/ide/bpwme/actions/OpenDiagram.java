@@ -23,6 +23,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchPage;
@@ -30,6 +31,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.FileAction;
@@ -50,12 +53,16 @@ public class OpenDiagram extends AbstractHandler{
 		IWorkbenchPage page = window.getActivePage();
 		FileDialog fileDialog = new FileDialog(window.getShell(),
 				SWT.OPEN);
+		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();		
+		String filterPath = store.getString(PreferenceConstants.P_BPWME_DIR);
+		String[] extensions = new String[]{"*.bpwme_diagram"};
+		fileDialog.setFilterExtensions(extensions);
+		fileDialog.setFilterPath(filterPath);
 		fileDialog.open();
 		if (fileDialog.getFileName() != null
 				&& fileDialog.getFileName().length() > 0) {
 			URI fileURI = URI.createFileURI(fileDialog.getFilterPath()
 					+ File.separator + fileDialog.getFileName());
-			System.out.println(fileURI);
 			try {
 				page.openEditor(new URIEditorInput(fileURI), BpwmeDiagramEditor.ID);
 			} catch (PartInitException e) {
