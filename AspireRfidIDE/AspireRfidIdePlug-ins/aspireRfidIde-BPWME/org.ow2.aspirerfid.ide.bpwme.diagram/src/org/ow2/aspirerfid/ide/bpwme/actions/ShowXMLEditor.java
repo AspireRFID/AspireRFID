@@ -52,10 +52,11 @@ public class ShowXMLEditor extends AbstractHandler {
 		PathEditorInput input= new PathEditorInput(location);
 		IWorkbenchPage page = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage();
 		try {
-			page.openEditor(input, XMLEditor.ID);
+			page.openEditor(input, XMLEditor.ID, false);
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
 }

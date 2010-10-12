@@ -66,7 +66,8 @@ public class OpenDiagram extends AbstractHandler{
 			mc.mapModels();
 			
 			MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");
-			
+			MainUtil.bringToTop(BpwmeDiagramEditor.ID);
+			MainUtil.setPerspective("bpwme.diagram.BpwmePerspective");
 		}
 		return null;
 	}

@@ -33,7 +33,9 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.internal.EditorSashContainer;
 import org.eclipse.ui.internal.EditorStack;
@@ -94,6 +96,17 @@ public class MainUtil {
 			}
 		}
 	}
+	
+	public static void bringToTop(String editorID) {
+		IEditorPart editor = getEditor(editorID);
+		if(editor == null) {
+			return;
+		}
+		IWorkbenchPage page = PlatformUI.getWorkbench().
+		getActiveWorkbenchWindow().getActivePage();
+		page.bringToTop(editor);
+	}
+	
 	
 	/**
 	 * Get the editor instance if it is in the workspace
@@ -357,6 +370,31 @@ public class MainUtil {
 		}
 		
 		return clcbPart;
+	}
+	
+	
+	/**
+	 * Set the current workbench window to the specified perspective if it is not set already
+	 * @param perspectiveID
+	 */
+	public static void setPerspective(String perspectiveID) {
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if(window == null) {
+			return;
+		}
+		IWorkbenchPage page = window.getActivePage();
+		if(page == null) {
+			return;
+		}
+		String oldID = page.getPerspective().getId();
+		if(oldID.equals(perspectiveID)) {
+			return;
+		}
+		try {
+			PlatformUI.getWorkbench().showPerspective(perspectiveID, window);
+		} catch (WorkbenchException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

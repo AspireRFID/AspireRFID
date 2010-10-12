@@ -21,12 +21,20 @@ package org.ow2.aspirerfid.ide.bpwme.actions;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeCreationWizard;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
+import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.PathEditorInput;
+import org.ow2.aspirerfid.ide.bpwme.diagram.xmleditor.XMLEditor;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.FileAction;
@@ -52,7 +60,9 @@ public class NewDiagram extends AbstractHandler {
 		int result = wizardDialog.open();
 		
 		if(result == Window.OK) {
-			MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");
+			MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");			
+			MainUtil.bringToTop(BpwmeDiagramEditor.ID);
+			MainUtil.setPerspective("bpwme.diagram.BpwmePerspective");
 		}
 		return null;
 	}
