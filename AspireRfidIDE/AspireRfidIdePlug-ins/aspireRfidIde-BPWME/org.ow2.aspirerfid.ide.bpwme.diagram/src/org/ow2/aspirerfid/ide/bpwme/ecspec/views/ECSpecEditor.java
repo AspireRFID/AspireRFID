@@ -21,10 +21,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -46,6 +50,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -54,6 +59,9 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.ow2.aspirerfid.commons.ale.model.ale.ECReportSpec;
+import org.ow2.aspirerfid.commons.apdl.model.EBProc;
+import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.dialog.ComplexDialog;
 import org.ow2.aspirerfid.ide.bpwme.dialog.InputDialog;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.model.*;
@@ -65,8 +73,10 @@ import org.ow2.aspirerfid.ide.bpwme.ecspec.provider.ReportLabelProvider;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.ECSpecBuilder;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.LRSpecBuilder;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.SelectionProviderWrapper;
+import org.ow2.aspirerfid.ide.bpwme.impl.EBProcImpl;
 
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
 
 /**
@@ -84,7 +94,7 @@ import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
  */
 
 public class ECSpecEditor extends EditorPart implements 
-ITabbedPropertySheetPageContributor{
+ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 	private ECSpecBuilder ecsb;
 	private LRSpecBuilder lrsb;
 	private TreeViewer treeViewer;
@@ -167,6 +177,8 @@ ITabbedPropertySheetPageContributor{
 	
 	public void refresh() {
 		logicalListViewer.refresh();
+		candidateViewer.refresh();
+		selectViewer.refresh();
 	}
 	
 	
@@ -870,6 +882,13 @@ ITabbedPropertySheetPageContributor{
         lrsb = ((ECSpecEditorInput)input).getLRSpecBuilder();
         ecsb = ((ECSpecEditorInput)input).getECSpecBuilder();
         spw = new SelectionProviderWrapper();
+        
+		//add this listener
+		IEditorPart editor = MainUtil.getEditor(BpwmeDiagramEditor.ID);
+		if(editor != null) {
+			editor.getEditorSite().getSelectionProvider().addSelectionChangedListener(this);
+		}
+
 		
 	}
 
@@ -886,6 +905,37 @@ ITabbedPropertySheetPageContributor{
 	@Override
 	public boolean isSaveAsAllowed() {
 		return false;
+	}
+
+	@Override
+	public void selectionChanged(SelectionChangedEvent event) {
+		ISelection selection = event.getSelection();
+		MainControl mc = MainControl.getMainControl();
+		if(selection instanceof IStructuredSelection) {
+			IStructuredSelection sselection = (IStructuredSelection)selection;
+			if(sselection.size() > 0) {
+				Object selectObject = sselection.getFirstElement();
+				if(selectObject instanceof EBProcEditPart) {
+					EBProcEditPart ebPart = (EBProcEditPart)selectObject;
+					EBProcImpl ebpi = (EBProcImpl)((View)ebPart.getModel()).getElement();
+					EBProc ebp =  (EBProc)mc.getMapObject(ebpi.hashCode());
+					if(ebp != null) {
+						lrsb.setEBProc(ebp);
+						refresh();
+					}
+				}
+			} 
+		}	
+	}
+	
+	@Override
+	public void dispose() {
+		//remove this listener
+		IEditorPart editor = MainUtil.getEditor(BpwmeDiagramEditor.ID);
+		if(editor != null) {
+			editor.getEditorSite().getSelectionProvider().removeSelectionChangedListener(this);
+		}
+		super.dispose();
 	}
 }
 

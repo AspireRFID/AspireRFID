@@ -100,6 +100,32 @@ public class LRSpecBuilder {
 			}
 		}
 	}
+	
+	public void setEBProc(EBProc ebp) {
+		this.ebp = ebp;
+		
+		lspecList.clear();
+		rspecList.clear();	
+
+		List<String> selectLRList = getSelectedLR(ebp);
+
+		//candidates are from the clcb level
+		//search all the available ones
+		MainControl mc = MainControl.getMainControl();
+		CLCBProcEditPart clcbPart = MainUtil.getCLCBPartSelection();
+
+		if(clcbPart != null) {
+			CLCBProc clcbp = (CLCBProc)((View)clcbPart.getModel()).getElement();
+			for(org.ow2.aspirerfid.ide.bpwme.EBProc ebproc :clcbp.getEBProc()) {
+				EBProc ebpm = (EBProc)mc.getMapObject(ebproc.hashCode());
+				if(ebpm != null) {
+					addReaderToList(ebpm,lspecList,rspecList,selectLRList);
+				}
+			}
+		}
+
+		
+	}
 
 
 	private void addReaderToList(EBProc ebproc, ArrayList<Spec> candidateList, ArrayList<Spec> selectList, List<String> selectLR) {
