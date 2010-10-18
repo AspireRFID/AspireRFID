@@ -20,6 +20,7 @@ package org.ow2.aspirerfid.ide.bpwme.ecspec.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.Viewer;
 import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec;
 import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec.LogicalReaders;
@@ -27,7 +28,11 @@ import org.ow2.aspirerfid.commons.ale.model.alelr.LRProperty;
 import org.ow2.aspirerfid.commons.ale.model.alelr.LRSpec;
 import org.ow2.aspirerfid.commons.apdl.model.ApdlDataField;
 import org.ow2.aspirerfid.commons.apdl.model.EBProc;
+import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.CLCBProcEditPart;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.model.*;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
 /**
  * Hold lr specs and notify changes to observers.
@@ -35,13 +40,13 @@ import org.ow2.aspirerfid.ide.bpwme.ecspec.model.*;
  *
  */
 public class LRSpecBuilder {
-	
-	
+
+
 	ArrayList<Viewer> listeners;
 	ArrayList<Spec> lspecList;
 	ArrayList<Spec> rspecList;
 	EBProc ebp;
-	
+
 	/*for test use*/
 	public LRSpecBuilder() {
 		listeners = new ArrayList<Viewer>();
@@ -53,75 +58,84 @@ public class LRSpecBuilder {
 		lspecList.add(new LLRPSpec("456"));
 		lspecList.add(new LLRPSpec("789"));
 	}
-	
-	
+
+
 	public LRSpecBuilder(ApdlDataField adf) {
 		//lrsbList = new ArrayList<ApdlDataField>();
 		listeners = new ArrayList<Viewer>();
-//		if((lrsb = adf.getLRSpec()) == null) {
-//			
-//		}		
+		//		if((lrsb = adf.getLRSpec()) == null) {
+		//			
+		//		}		
 	}
-	
+
 	public LRSpecBuilder(EBProc ebp) {
-		//1. check if there is any existing lr spec in ebproc
-		//1.1 if there is, add them to the left list
-		//1.2 if not, just create a new left list
-		//2. meanwhile, have to check the ec spec
-		// to see if there is any selected lr spec
-		// if there is no candidate, there should be no selected.
-		
+		//get all lr spec in clcb level
+		//add them to the candidates
+		//add the ones appear in select list to select view
 		this.ebp = ebp;
-		
+
 		listeners = new ArrayList<Viewer>();
 		lspecList = new ArrayList<Spec>();
 		rspecList = new ArrayList<Spec>();	
-		
+
 		List<String> selectLRList = getSelectedLR(ebp);
-		
-		
+
+
 		boolean haveLR = haveCandidateLRSpec(ebp);
-		
-		
-		
-		if(haveLR) {
-			LRSpec tempLR;
-			
-			//get the type from readerType field
-			//add it to the left list or the right list
-			for(ApdlDataField adf:ebp.getApdlDataFields().getApdlDataField()) {
-				if((tempLR = adf.getLRSpec()) != null) {
-					String type = getType(tempLR);
-					if(type == null) {
-						//TODO for now there is no type information for HAL, we should have it later
-						HALSpec hal = Spec.createHAL(adf);
-						if(inSelect(hal.getName(), selectLRList)) {
-							rspecList.add(hal);
-						}else {
-							lspecList.add(hal);
-						}
-					}else if(type.equals("org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor")) {
-						LLRPSpec llrp = Spec.createLLRP(adf);
-						if(inSelect(llrp.getName(), selectLRList)) {
-							rspecList.add(llrp);
-						}else {
-							lspecList.add(llrp);
-						}
-					}else if(type.equals("org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor")) {
-						RPSpec rp = Spec.createRP(adf);
-						if(inSelect(rp.getName(), selectLRList)) {
-							rspecList.add(rp);
-						}else {
-							lspecList.add(rp);
-						}
-					}else {
-						System.out.println("This should not happen in LRSpecBuilder()");
-					}
+
+		LRSpec tempLR;
+
+		//candidates are from the clcb level
+		//search all the available ones
+		MainControl mc = MainControl.getMainControl();
+		CLCBProcEditPart clcbPart = MainUtil.getCLCBPartSelection();
+
+		if(clcbPart != null) {
+			CLCBProc clcbp = (CLCBProc)((View)clcbPart.getModel()).getElement();
+			for(org.ow2.aspirerfid.ide.bpwme.EBProc ebproc :clcbp.getEBProc()) {
+				EBProc ebpm = (EBProc)mc.getMapObject(ebproc.hashCode());
+				if(ebpm != null) {
+					addReaderToList(ebpm,lspecList,rspecList,selectLRList);
 				}
 			}
 		}
 	}
-	
+
+
+	private void addReaderToList(EBProc ebproc, ArrayList<Spec> candidateList, ArrayList<Spec> selectList, List<String> selectLR) {
+		for(ApdlDataField adf:ebproc.getApdlDataFields().getApdlDataField()) {
+			LRSpec tempLR;
+			if((tempLR = adf.getLRSpec()) != null) {
+				//get the type from readerType field
+				String type = getType(tempLR);
+				if(type == null) {
+					//TODO for now there is no type information for HAL, we should have it later
+					HALSpec hal = Spec.createHAL(adf);
+					candidateList.add(hal);
+					if(inSelect(hal.getName(), selectLR)) {
+						selectList.add(hal);
+					}
+				}else if(type.equals("org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor")) {
+					LLRPSpec llrp = Spec.createLLRP(adf);
+					candidateList.add(llrp);
+					if(inSelect(llrp.getName(), selectLR)) {
+						selectList.add(llrp);
+					}
+
+				}else if(type.equals("org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor")) {
+					RPSpec rp = Spec.createRP(adf);
+					candidateList.add(rp);
+					if(inSelect(rp.getName(), selectLR)) {
+						selectList.add(rp);
+					}
+
+				}else {
+					System.out.println("This should not happen in LRSpecBuilder()");
+				}
+			}
+		}
+	}
+
 	private boolean inSelect(String reader, List<String> selectList) {
 		if(selectList == null) {
 			return false;
@@ -133,7 +147,7 @@ public class LRSpecBuilder {
 		}
 		return false;
 	}
-	
+
 	private String getType(LRSpec tempLR) {
 		LRSpec.Properties properties;
 		properties = tempLR.getProperties();
@@ -144,7 +158,7 @@ public class LRSpecBuilder {
 		}
 		return null;
 	}
-	
+
 	private List<String> getSelectedLR(EBProc ebp) {
 		boolean newECSB = true;
 		ECSpec tempECSpec = null;
@@ -166,9 +180,9 @@ public class LRSpecBuilder {
 				return lr.getLogicalReader();
 			}
 		}
-		
+
 	}
-	
+
 	private boolean haveCandidateLRSpec(EBProc ebp) {
 		for(ApdlDataField adf:ebp.getApdlDataFields().getApdlDataField()) {
 			if(adf.getLRSpec() != null) {
@@ -177,33 +191,33 @@ public class LRSpecBuilder {
 		}
 		return false;
 	}
-	
-	
+
+
 	public void addLRSpec(ApdlDataField adf) {
-//		LRSpec lrsb;
-//		if((lrsb = adf.getLRSpec()) != null) {
-//			//lrsbList.add(adf);
-//		} else {
-//			System.err.println("This is not a LRSpec ApdlDataField" + adf);
-//		}
+		//		LRSpec lrsb;
+		//		if((lrsb = adf.getLRSpec()) != null) {
+		//			//lrsbList.add(adf);
+		//		} else {
+		//			System.err.println("This is not a LRSpec ApdlDataField" + adf);
+		//		}
 		ebp.getApdlDataFields().getApdlDataField().add(adf);
 	}
-	
+
 	public void removeLRSpec(ApdlDataField adf) {
 		ebp.getApdlDataFields().getApdlDataField().remove(adf);
 	}
-	
+
 	public void addListener(Viewer listener) {
 		listeners.add(listener);
 	}
-	
+
 	public void notifyListeners() {
 		for(Viewer v : listeners) {
 			//System.out.println(v);
 			v.refresh();
 		}
 	}
-	
+
 	public void addProperty(){}
 	public void changeProperty(){}
 	public void removeProperty() {}
@@ -213,5 +227,5 @@ public class LRSpecBuilder {
 	public ArrayList<Spec> getRightSpecList() {
 		return rspecList;
 	}
-	
+
 }

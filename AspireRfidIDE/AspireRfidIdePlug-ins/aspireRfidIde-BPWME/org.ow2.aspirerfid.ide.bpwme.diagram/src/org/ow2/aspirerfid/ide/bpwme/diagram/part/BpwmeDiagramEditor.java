@@ -18,6 +18,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import  org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 
 /**
  * @generated
@@ -133,6 +134,6 @@ public class BpwmeDiagramEditor extends DiagramDocumentEditor {
 			}
 		}
 		return null;
-	}
-
+	}	
+	
 }

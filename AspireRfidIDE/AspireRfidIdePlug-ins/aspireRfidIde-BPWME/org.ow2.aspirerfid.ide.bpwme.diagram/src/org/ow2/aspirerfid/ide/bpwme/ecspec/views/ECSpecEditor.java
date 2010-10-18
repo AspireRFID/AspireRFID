@@ -300,7 +300,7 @@ ITabbedPropertySheetPageContributor{
 				Iterator<?> liter = lselection.iterator();
 				while(liter.hasNext()) {
 					Spec temp = (Spec)liter.next();
-					lrsb.getLeftSpecList().remove(temp);
+					//lrsb.getLeftSpecList().remove(temp);
 					lrsb.getRightSpecList().add(temp);
 					ecsb.addLogicalReader(temp.getName());
 				}
@@ -317,7 +317,7 @@ ITabbedPropertySheetPageContributor{
 				while(liter.hasNext()) {
 					Spec temp = (Spec)liter.next();
 					lrsb.getRightSpecList().remove(temp);
-					lrsb.getLeftSpecList().add(temp);
+					//lrsb.getLeftSpecList().add(temp);
 					ecsb.removeLogicalReader(temp.getName());
 				}
 				candidateViewer.refresh(false);
