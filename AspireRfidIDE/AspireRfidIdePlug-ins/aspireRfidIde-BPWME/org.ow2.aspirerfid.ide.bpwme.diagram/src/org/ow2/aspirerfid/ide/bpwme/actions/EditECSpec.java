@@ -33,6 +33,7 @@ import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.ECSpecBuilder;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.LRSpecBuilder;
+import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECLRInput;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditorInput;
 import org.ow2.aspirerfid.ide.bpwme.impl.EBProcImpl;
@@ -69,36 +70,43 @@ implements IObjectActionDelegate {
 		//get the relevant EBProc in Apdl
 		MainControl mc = MainControl.getMainControl();
 		EBProc ebp = (EBProc)mc.getMapObject(ebi.hashCode());
+//		
+//		mc.lrsb = new LRSpecBuilder(ebp);
+//		
+//		
+//		boolean newECSB = true;
+//		for(ApdlDataField adf:ebp.getApdlDataFields().getApdlDataField()) {
+//			//if there exists one ECSpec definition
+//			if(adf.getECSpec() != null) {
+//				mc.ecsb = new ECSpecBuilder(ebp, adf.getECSpec());
+//				newECSB = false;
+//				break;
+//			}
+//		}
+//		if(newECSB) {
+//			mc.ecsb = new ECSpecBuilder(ebp);
+//		}
+//
+//		ECSpecEditorInput eei = new ECSpecEditorInput(mc.lrsb, mc.ecsb);
 		
-		mc.lrsb = new LRSpecBuilder(ebp);
-		
-		
-		boolean newECSB = true;
-		for(ApdlDataField adf:ebp.getApdlDataFields().getApdlDataField()) {
-			//if there exists one ECSpec definition
-			if(adf.getECSpec() != null) {
-				mc.ecsb = new ECSpecBuilder(ebp, adf.getECSpec());
-				newECSB = false;
-				break;
-			}
-		}
-		if(newECSB) {
-			mc.ecsb = new ECSpecBuilder(ebp);
-		}
-
-		ECSpecEditorInput eei = new ECSpecEditorInput(mc.lrsb, mc.ecsb);
-		
+		ECLRInput eli = new ECLRInput(ebp);
 		IWorkbenchPage page = PlatformUI.getWorkbench().
 		getActiveWorkbenchWindow().getActivePage();
+
 		try {
-			ECSpecEditor ese = (ECSpecEditor)page.openEditor(eei, ECSpecEditor.ID);
-			if(newECSB) {
-				ese.setDirty(true);
-			}			
-			mc.ecEditor = ese;
-		} catch (PartInitException e) {
+			ECSpecEditor ese = (ECSpecEditor)page.openEditor(eli, ECSpecEditor.ID);
+		}catch (PartInitException e) {
 			e.printStackTrace();
 		}
+//		try {
+//			ECSpecEditor ese = (ECSpecEditor)page.openEditor(eei, ECSpecEditor.ID);
+//			if(newECSB) {
+//				ese.setDirty(true);
+//			}			
+//			mc.ecEditor = ese;
+//		} catch (PartInitException e) {
+//			e.printStackTrace();
+//		}
 		
 		HashSet<String> editorIDs = new HashSet<String>();
 		editorIDs.add(ECSpecEditor.ID);

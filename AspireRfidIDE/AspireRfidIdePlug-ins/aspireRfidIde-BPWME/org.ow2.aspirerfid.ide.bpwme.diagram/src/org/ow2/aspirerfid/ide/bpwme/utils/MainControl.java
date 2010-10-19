@@ -144,8 +144,8 @@ public class MainControl {
 
 	private OLCBProc olcbProc;
 	//private EBProc selectedEbProc;
-	public LRSpecBuilder lrsb;
-	public ECSpecBuilder ecsb;
+//	public LRSpecBuilder lrsb;
+//	public ECSpecBuilder ecsb;
 	//private SimpleEditor simpleEditor;
 	public ObjectFactory objectFactory;
 	private HashMap<Integer, Object> objectMap;

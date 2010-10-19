@@ -75,8 +75,8 @@ public class Spec implements IWorkbenchAdapter, IAdaptable{
 	
 	public void setName(String name) {
 		adf.setName(name);
-		MainControl mc = MainControl.getMainControl();
-		mc.lrsb.notifyListeners();
+//		MainControl mc = MainControl.getMainControl();
+//		mc.lrsb.notifyListeners();
 	}
 	
 	public String getName() {

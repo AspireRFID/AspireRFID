@@ -85,8 +85,18 @@ public class ECSpecBuilder {
 //		iniECSB(ebproc);
 	}
 	
+	
 	//build a new ecspec builder, set the values to default
 	public ECSpecBuilder(EBProc ebproc) {
+		ECSpec ecs = getECSpec(ebproc);
+		if(ecs != null) {
+			System.out.println("have");
+			listeners = new ArrayList<Viewer>();
+			this.ebproc = ebproc;
+			this.ecspec = ecs;
+			return;
+		}
+		System.out.println("nohave");
 		MainControl mc = MainControl.getMainControl();
 		listeners = new ArrayList<Viewer>();
 		this.ebproc = ebproc;
@@ -147,8 +157,10 @@ public class ECSpecBuilder {
 		this.ebproc = ebp;
 		ECSpec ecs = getECSpec(ebp);
 		if(ecs != null) {
+			System.out.println("have");
 			this.ecspec = ecs;
 		}else {
+			System.out.println("nohave");
 			MainControl mc = MainControl.getMainControl();
 			ApdlDataField adf = mc.objectFactory.createApdlDataField();
 			adf.setECSpec(new ECSpec());
@@ -291,10 +303,10 @@ public class ECSpecBuilder {
 		for(Viewer v : listeners) {
 			v.refresh();
 		}
-		MainControl mc = MainControl.getMainControl();
-		if(mc.ecEditor != null) {
-			mc.ecEditor.setDirty(true);
-		}
+//		MainControl mc = MainControl.getMainControl();
+//		if(mc.ecEditor != null) {
+//			mc.ecEditor.setDirty(true);
+//		}
 	}
 	
 	//logical reader related

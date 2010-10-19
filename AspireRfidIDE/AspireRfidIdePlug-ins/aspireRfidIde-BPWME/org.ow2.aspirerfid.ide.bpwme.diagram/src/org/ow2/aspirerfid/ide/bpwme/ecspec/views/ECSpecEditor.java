@@ -182,7 +182,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 	}
 	
 	
-	private void createCandidateButtons(final Composite parent, final LRSpecBuilder lrsb) {
+	private void createCandidateButtons(final Composite parent) {
 		Button buttonNew = new Button(parent, SWT.PUSH);
 		buttonNew.setText("New");
 
@@ -256,7 +256,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		});
 	}
 	
-	private void createCandidateView(Composite parent, LRSpecBuilder lrsb) {
+	private void createCandidateView(Composite parent) {
 		candidateViewer = new ListViewer(parent);
 		candidateViewer.getControl().setLayoutData(
 				new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -296,7 +296,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		lrsb.addListener(candidateViewer);
 	}
 	
-	private void createFromToButtons(final Composite parent, final LRSpecBuilder lrsb) {
+	private void createFromToButtons(final Composite parent) {
 		Button buttonTo = new Button(parent, SWT.ARROW|SWT.RIGHT);
 		Button buttonFrom = new Button(parent, SWT.ARROW|SWT.LEFT);
 		buttonTo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
@@ -350,7 +350,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		cbComposite.setLayout(new GridLayout(6, false));
 		cbComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
-		createCandidateButtons(cbComposite, lrsb);
+		createCandidateButtons(cbComposite);
 
 		Composite viewComposite = new Composite(parent,0);
 		viewComposite.setLayout(new GridLayout(3, false));
@@ -363,7 +363,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		candidateGrp.setText("Candidate Readers");
 		candidateGrp.setLayout(new GridLayout());
 		
-		createCandidateView(candidateGrp, lrsb);
+		createCandidateView(candidateGrp);
 		
 		Composite toFromComposite = new Composite(viewComposite, 0);
 		toFromComposite.setLayout(new GridLayout());
@@ -371,7 +371,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		toFromData.widthHint = 40;
 		toFromComposite.setLayoutData(toFromData);
 		
-		createFromToButtons(toFromComposite, lrsb);
+		createFromToButtons(toFromComposite);
 		
 		
 		Group selectGrp = new Group(viewComposite, SWT.SHADOW_NONE);
@@ -381,7 +381,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		selectGrp.setText("Select Readers");
 		selectGrp.setLayout(new GridLayout());
 
-		createSelectView(selectGrp, lrsb);
+		createSelectView(selectGrp);
 
 		
 //		//logical list viewer configuration
@@ -457,7 +457,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 //		});
 	}
 	
-	private void createSelectView(Composite parent, LRSpecBuilder lrsb) {
+	private void createSelectView(Composite parent) {
 		selectViewer = new ListViewer(parent);
 		selectViewer.getControl().setLayoutData(
 				new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -879,8 +879,10 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
         setSite(site);       
         setInput(input);
         
-        lrsb = ((ECSpecEditorInput)input).getLRSpecBuilder();
-        ecsb = ((ECSpecEditorInput)input).getECSpecBuilder();
+//        lrsb = ((ECSpecEditorInput)input).getLRSpecBuilder();
+//        ecsb = ((ECSpecEditorInput)input).getECSpecBuilder();
+        lrsb = ((ECLRInput)input).getLRSpecBuilder();
+        ecsb = ((ECLRInput)input).getECSpecBuilder();
         spw = new SelectionProviderWrapper();
         
 		//add this listener
@@ -896,6 +898,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 	public boolean isDirty() {
 		return isdirty;
 	}
+	
 	
     public void setDirty(boolean value) {
         isdirty = value;
@@ -922,9 +925,8 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 					EBProcImpl ebpi = (EBProcImpl)((View)ebPart.getModel()).getElement();
 					EBProc ebp =  (EBProc)mc.getMapObject(ebpi.hashCode());
 					
-					if((ebp != null) && (lrsb != null) && (ecsb != null)){
-						lrsb.setEBProc(ebp);
-						ecsb.setEBProc(ebp);
+					if(ebp != null){
+						((ECLRInput)getEditorInput()).setEBProc(ebp);
 					}
 				}
 			} 
