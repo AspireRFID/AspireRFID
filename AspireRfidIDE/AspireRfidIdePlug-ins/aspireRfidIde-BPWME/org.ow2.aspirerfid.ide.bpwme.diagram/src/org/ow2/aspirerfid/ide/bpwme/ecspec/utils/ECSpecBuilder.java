@@ -143,6 +143,78 @@ public class ECSpecBuilder {
 		
 	}
 	
+	public void setEBProc(EBProc ebp) {
+		this.ebproc = ebp;
+		ECSpec ecs = getECSpec(ebp);
+		if(ecs != null) {
+			this.ecspec = ecs;
+		}else {
+			MainControl mc = MainControl.getMainControl();
+			ApdlDataField adf = mc.objectFactory.createApdlDataField();
+			adf.setECSpec(new ECSpec());
+			adf.setType("ECSpec");
+			adf.setName("Sample ECSpec");
+			ebproc.getApdlDataFields().getApdlDataField().add(adf);		
+			this.ecspec = adf.getECSpec();
+			
+			ObjectFactory of = new ObjectFactory();
+			ecspec.setLogicalReaders(of.createECSpecLogicalReaders());
+			ecspec.setReportSpecs(of.createECSpecReportSpecs());
+			ecspec.setBoundarySpec(of.createECBoundarySpec());
+			ecspec.setExtension(of.createECSpecExtension());
+			ecspec.getBoundarySpec().setExtension(of.createECBoundarySpecExtension());
+			ecspec.getBoundarySpec().getExtension().setStartTriggerList(of.createECBoundarySpecExtensionStartTriggerList());
+			ecspec.getBoundarySpec().getExtension().setStopTriggerList(of.createECBoundarySpecExtensionStopTriggerList());
+
+			setDuration(PreferenceConstants.P_DURARION);
+			setRepeatPeriod(PreferenceConstants.P_REPEAT_PERIOD);
+			setStableSetInterval(PreferenceConstants.P_STABLE_SET_INTERVAL);
+			
+			EPCISMasterDataDocumentType doc = MasterDataUtil.getEPCISMasterDataDocument(ebproc);
+			VocabularyElementType vocabularyElement = MasterDataUtil.getEBProcVocabularyElement(doc);
+			AttributeType attr = MasterDataUtil.getVocabularyElementAttribute(vocabularyElement, "urn:epcglobal:epcis:mda:event_type");
+			EventType type = EventType.createEvent(attr.getOtherAttributes().get(new QName("value")));
+			
+			if(type == null) {
+				System.out.println("Cannot find type definition in " + ebproc.getId());
+			}
+			
+			switch(type) {
+			case AGGREGATION_EVENT:
+				ecspec.getReportSpecs().getReportSpec().add(createBiz());
+				ecspec.getReportSpecs().getReportSpec().add(createTran());
+				ecspec.getReportSpecs().getReportSpec().add(createPare());
+				break;
+			case OBJECT_EVENT:
+				ecspec.getReportSpecs().getReportSpec().add(createBiz());
+				ecspec.getReportSpecs().getReportSpec().add(createTran());
+				break;
+			case QUANTITY_EVENT:
+				ecspec.getReportSpecs().getReportSpec().add(createBiz());
+				ecspec.getReportSpecs().getReportSpec().add(createTran());
+				break;
+			case TRANSACTION_EVENT:
+				ecspec.getReportSpecs().getReportSpec().add(createBizP());
+				ecspec.getReportSpecs().getReportSpec().add(createBiz());
+				ecspec.getReportSpecs().getReportSpec().add(createTran());
+				break;
+			}
+		}	
+		notifyListeners();
+	}
+	
+	private ECSpec getECSpec(EBProc ebp) {
+		if(ebp.getApdlDataFields().getApdlDataField().size() == 0) {
+			return null;
+		}
+		for(ApdlDataField apdl:ebp.getApdlDataFields().getApdlDataField()) {
+			if(apdl.getType().equals("ECSpec")) {
+				return apdl.getECSpec();
+			}
+		}
+		return null;
+	}
+	
 //	private void iniECSB(EBProc ebproc) {
 //		setDuration(4500);
 //		setRepeatPeriod(4500);

@@ -916,12 +916,15 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 			if(sselection.size() > 0) {
 				Object selectObject = sselection.getFirstElement();
 				if(selectObject instanceof EBProcEditPart) {
+					
 					EBProcEditPart ebPart = (EBProcEditPart)selectObject;
+					
 					EBProcImpl ebpi = (EBProcImpl)((View)ebPart.getModel()).getElement();
 					EBProc ebp =  (EBProc)mc.getMapObject(ebpi.hashCode());
-					if(ebp != null) {
+					
+					if((ebp != null) && (lrsb != null) && (ecsb != null)){
 						lrsb.setEBProc(ebp);
-						refresh();
+						ecsb.setEBProc(ebp);
 					}
 				}
 			} 

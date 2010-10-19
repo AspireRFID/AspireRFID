@@ -105,7 +105,7 @@ public class LRSpecBuilder {
 		this.ebp = ebp;
 		
 		lspecList.clear();
-		rspecList.clear();	
+		rspecList.clear();
 
 		List<String> selectLRList = getSelectedLR(ebp);
 
@@ -124,6 +124,7 @@ public class LRSpecBuilder {
 			}
 		}
 
+		notifyListeners();
 		
 	}
 
