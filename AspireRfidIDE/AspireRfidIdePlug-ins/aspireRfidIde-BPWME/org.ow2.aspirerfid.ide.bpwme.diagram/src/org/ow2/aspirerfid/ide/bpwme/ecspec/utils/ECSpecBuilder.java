@@ -27,6 +27,7 @@ import javax.xml.namespace.QName;
  */
 
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.ui.IEditorPart;
 import org.ow2.aspirerfid.commons.ale.model.ale.*;
 import org.ow2.aspirerfid.commons.ale.model.ale.ECFilterSpec.IncludePatterns;
 import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec.*;
@@ -38,8 +39,10 @@ import org.ow2.aspirerfid.commons.epcis.model.EPCISMasterDataDocumentType;
 import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
 import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.model.Spec;
+import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
 import org.ow2.aspirerfid.ide.bpwme.master.utils.MasterDataUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.EventType;
 
 /**
@@ -70,45 +73,46 @@ public class ECSpecBuilder {
 //	}
 	
 	//bind the existing ECSpec abd EBProc to the ecspec builder
-	public ECSpecBuilder(EBProc ebproc ,ECSpec ecspe) {
-		listeners = new ArrayList<Viewer>();
-		this.ebproc = ebproc;
-		this.ecspec = ecspe;
-//		ObjectFactory of = new ObjectFactory();
-//		ecspec.setLogicalReaders(of.createECSpecLogicalReaders());
-//		ecspec.setReportSpecs(of.createECSpecReportSpecs());
-//		ecspec.setBoundarySpec(of.createECBoundarySpec());
-//		ecspec.setExtension(of.createECSpecExtension());
-//		ecspec.getBoundarySpec().setExtension(of.createECBoundarySpecExtension());
-//		ecspec.getBoundarySpec().getExtension().setStartTriggerList(of.createECBoundarySpecExtensionStartTriggerList());
-//		ecspec.getBoundarySpec().getExtension().setStopTriggerList(of.createECBoundarySpecExtensionStopTriggerList());
-//		iniECSB(ebproc);
-	}
+//	public ECSpecBuilder(EBProc ebproc ,ECSpec ecspe) {
+//		listeners = new ArrayList<Viewer>();
+//		this.ebproc = ebproc;
+//		this.ecspec = ecspe;
+////		ObjectFactory of = new ObjectFactory();
+////		ecspec.setLogicalReaders(of.createECSpecLogicalReaders());
+////		ecspec.setReportSpecs(of.createECSpecReportSpecs());
+////		ecspec.setBoundarySpec(of.createECBoundarySpec());
+////		ecspec.setExtension(of.createECSpecExtension());
+////		ecspec.getBoundarySpec().setExtension(of.createECBoundarySpecExtension());
+////		ecspec.getBoundarySpec().getExtension().setStartTriggerList(of.createECBoundarySpecExtensionStartTriggerList());
+////		ecspec.getBoundarySpec().getExtension().setStopTriggerList(of.createECBoundarySpecExtensionStopTriggerList());
+////		iniECSB(ebproc);
+//	}
 	
 	
-	//build a new ecspec builder, set the values to default
+	//build a new ecspec builder, if ecspec field is null, set the values to default
 	public ECSpecBuilder(EBProc ebproc) {
 		ECSpec ecs = getECSpec(ebproc);
 		if(ecs != null) {
-			System.out.println("have");
-			listeners = new ArrayList<Viewer>();
+			//System.out.println("have " + ecs.getBoundarySpec());
+			this.listeners = new ArrayList<Viewer>();
 			this.ebproc = ebproc;
 			this.ecspec = ecs;
 			return;
 		}
-		System.out.println("nohave");
+		//System.out.println("nohave");
 		MainControl mc = MainControl.getMainControl();
-		listeners = new ArrayList<Viewer>();
+		this.listeners = new ArrayList<Viewer>();
 		this.ebproc = ebproc;
 		
+		ObjectFactory of = new ObjectFactory();
 		ApdlDataField adf = mc.objectFactory.createApdlDataField();
-		adf.setECSpec(new ECSpec());
+		adf.setECSpec(of.createECSpec());
 		adf.setType("ECSpec");
 		adf.setName("Sample ECSpec");
-		ebproc.getApdlDataFields().getApdlDataField().add(adf);		
+		this.ebproc.getApdlDataFields().getApdlDataField().add(adf);		
 		this.ecspec = adf.getECSpec();
 		
-		ObjectFactory of = new ObjectFactory();
+		
 		ecspec.setLogicalReaders(of.createECSpecLogicalReaders());
 		ecspec.setReportSpecs(of.createECSpecReportSpecs());
 		ecspec.setBoundarySpec(of.createECBoundarySpec());
@@ -150,17 +154,27 @@ public class ECSpecBuilder {
 			ecspec.getReportSpecs().getReportSpec().add(createTran());
 			break;
 		}
-		
+		setECEditorDirty();
+	}
+	
+	
+	public static void setECEditorDirty() {
+		IEditorPart editor = MainUtil.getEditor("org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor");
+		if(editor == null) {
+			return;
+		}
+		ECSpecEditor ese = (ECSpecEditor)editor;
+		ese.setDirty(true);
 	}
 	
 	public void setEBProc(EBProc ebp) {
 		this.ebproc = ebp;
 		ECSpec ecs = getECSpec(ebp);
 		if(ecs != null) {
-			System.out.println("have");
+			//System.out.println("set have" + ecs);
 			this.ecspec = ecs;
 		}else {
-			System.out.println("nohave");
+			//System.out.println("set nohave");
 			MainControl mc = MainControl.getMainControl();
 			ApdlDataField adf = mc.objectFactory.createApdlDataField();
 			adf.setECSpec(new ECSpec());
@@ -177,11 +191,12 @@ public class ECSpecBuilder {
 			ecspec.getBoundarySpec().setExtension(of.createECBoundarySpecExtension());
 			ecspec.getBoundarySpec().getExtension().setStartTriggerList(of.createECBoundarySpecExtensionStartTriggerList());
 			ecspec.getBoundarySpec().getExtension().setStopTriggerList(of.createECBoundarySpecExtensionStopTriggerList());
-
-			setDuration(PreferenceConstants.P_DURARION);
-			setRepeatPeriod(PreferenceConstants.P_REPEAT_PERIOD);
-			setStableSetInterval(PreferenceConstants.P_STABLE_SET_INTERVAL);
+			//System.out.println("set done1");
 			
+			setDuration(PreferenceConstants.P_DURARION,ECTimeUnit.MS);
+			setRepeatPeriod(PreferenceConstants.P_REPEAT_PERIOD,ECTimeUnit.MS);
+			setStableSetInterval(PreferenceConstants.P_STABLE_SET_INTERVAL,ECTimeUnit.MS);
+			//System.out.println("set done2");
 			EPCISMasterDataDocumentType doc = MasterDataUtil.getEPCISMasterDataDocument(ebproc);
 			VocabularyElementType vocabularyElement = MasterDataUtil.getEBProcVocabularyElement(doc);
 			AttributeType attr = MasterDataUtil.getVocabularyElementAttribute(vocabularyElement, "urn:epcglobal:epcis:mda:event_type");
@@ -210,7 +225,8 @@ public class ECSpecBuilder {
 				ecspec.getReportSpecs().getReportSpec().add(createBiz());
 				ecspec.getReportSpecs().getReportSpec().add(createTran());
 				break;
-			}
+			}			
+			setECEditorDirty();
 		}	
 		notifyListeners();
 	}
