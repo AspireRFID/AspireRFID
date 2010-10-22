@@ -207,7 +207,6 @@ public class LRSpecBuilder {
 				return lr.getLogicalReader();
 			}
 		}
-
 	}
 
 	private boolean haveCandidateLRSpec(EBProc ebp) {

@@ -31,6 +31,7 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -118,8 +119,14 @@ public class MainUtil {
 	 * @return
 	 */
 	public static IEditorPart getEditor(String editorID) {
-		IWorkbenchPage page = PlatformUI.getWorkbench().
-		getActiveWorkbenchWindow().getActivePage();
+		IWorkbench bench = PlatformUI.getWorkbench();
+		if(bench == null) {
+			return null;
+		}
+		IWorkbenchPage page = bench.getActiveWorkbenchWindow().getActivePage();
+		if(page == null) {
+			return null;
+		}
 		IEditorReference[] refs = page.getEditorReferences();
 		for(IEditorReference ref:refs) {
 			if(ref.getId().equals(editorID)) {

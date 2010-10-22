@@ -61,8 +61,6 @@ implements IObjectActionDelegate {
 			return;
 		}
 		
-
-		
 		//get the selected EBProc part
 		EBProcEditPart epe = (EBProcEditPart)getStructuredSelection().getFirstElement();		
 		EBProcImpl ebi = (EBProcImpl)((View)epe.getModel()).getElement();
@@ -70,24 +68,10 @@ implements IObjectActionDelegate {
 		//get the relevant EBProc in Apdl
 		MainControl mc = MainControl.getMainControl();
 		EBProc ebp = (EBProc)mc.getMapObject(ebi.hashCode());
-//		
-//		mc.lrsb = new LRSpecBuilder(ebp);
-//		
-//		
-//		boolean newECSB = true;
-//		for(ApdlDataField adf:ebp.getApdlDataFields().getApdlDataField()) {
-//			//if there exists one ECSpec definition
-//			if(adf.getECSpec() != null) {
-//				mc.ecsb = new ECSpecBuilder(ebp, adf.getECSpec());
-//				newECSB = false;
-//				break;
-//			}
-//		}
-//		if(newECSB) {
-//			mc.ecsb = new ECSpecBuilder(ebp);
-//		}
-//
-//		ECSpecEditorInput eei = new ECSpecEditorInput(mc.lrsb, mc.ecsb);
+		
+		if(ebp == null) {
+			return;
+		}
 		
 		ECLRInput eli = new ECLRInput(ebp);
 		IWorkbenchPage page = PlatformUI.getWorkbench().
@@ -95,18 +79,10 @@ implements IObjectActionDelegate {
 
 		try {
 			ECSpecEditor ese = (ECSpecEditor)page.openEditor(eli, ECSpecEditor.ID);
+			ese.setDirty(eli.getECSpecBuilder().isDirty());
 		}catch (PartInitException e) {
 			e.printStackTrace();
 		}
-//		try {
-//			ECSpecEditor ese = (ECSpecEditor)page.openEditor(eei, ECSpecEditor.ID);
-//			if(newECSB) {
-//				ese.setDirty(true);
-//			}			
-//			mc.ecEditor = ese;
-//		} catch (PartInitException e) {
-//			e.printStackTrace();
-//		}
 		
 		HashSet<String> editorIDs = new HashSet<String>();
 		editorIDs.add(ECSpecEditor.ID);

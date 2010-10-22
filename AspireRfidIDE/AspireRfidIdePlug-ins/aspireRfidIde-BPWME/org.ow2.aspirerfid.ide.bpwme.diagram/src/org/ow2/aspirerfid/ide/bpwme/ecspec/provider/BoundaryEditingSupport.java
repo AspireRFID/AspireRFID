@@ -39,19 +39,19 @@ public class BoundaryEditingSupport extends EditingSupport{
 	public BoundaryEditingSupport(ColumnViewer viewer) {
 		super(viewer);
 		editor = new TextCellEditor(((TableViewer) viewer).getTable());
-		editor.setValidator(new ICellEditorValidator(){
-
-			@Override
-			public String isValid(Object value) {
-				if (value instanceof String) {
-					if(MainUtil.isInteger((String)value)) {
-						MainUtil.showInStatus(null);
-						return (String)value;
-					}
-				}
-				MainUtil.showInStatus("Should be an integer");
-				return null;
-			}});
+//		editor.setValidator(new ICellEditorValidator(){
+//
+//			@Override
+//			public String isValid(Object value) {
+//				if (value instanceof String) {
+//					if(MainUtil.isInteger((String)value)) {
+//						MainUtil.showInStatus(null);
+//						return (String)value;
+//					}
+//				}
+//				MainUtil.showInStatus("Should be an integer");
+//				return null;
+//			}});
 	}
 
 	@Override
@@ -68,14 +68,13 @@ public class BoundaryEditingSupport extends EditingSupport{
 	protected Object getValue(Object element) {
 		BoundaryContent bc = (BoundaryContent)element;
 		return bc.getValue();
-		//return null;
 	}
 
 	@Override
-	protected void setValue(Object element, Object value) {
+	protected void setValue(Object element, Object value) {		
 		BoundaryContent bc = (BoundaryContent)element;
 		bc.setValue((String)value);
-		//getViewer().update(element, null);
+		getViewer().update(element, null);
 	}
 	
 }

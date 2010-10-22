@@ -97,7 +97,7 @@ public class ECSpecEditor extends EditorPart implements
 ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 	private ECSpecBuilder ecsb;
 	private LRSpecBuilder lrsb;
-	private TreeViewer treeViewer;
+	private TreeViewer reportViewer;
 	private ListViewer startListViewer;
 	private ListViewer stopListViewer;
 	private ListViewer candidateViewer;
@@ -271,6 +271,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 
 			@Override
 			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+				
 			}
 		});
 		
@@ -280,7 +281,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 				return ((Spec)element).getName();
 			}
 		});
-			
+		
 		candidateViewer.setInput(lrsb.getLeftSpecList());
 		
 		candidateViewer.getControl().addFocusListener(new FocusListener() {
@@ -508,18 +509,14 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		startListViewer.setContentProvider(new IStructuredContentProvider() {
 			@Override
 			public Object[] getElements(Object inputElement) {
-				// TODO Auto-generated method stub
 				return ((List<String>)inputElement).toArray();
 			}
 			@Override
 			public void dispose() {
-				// TODO Auto-generated method stub
 			}
 
 			@Override
 			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-				// TODO Auto-generated method stub
-				//viewer.refresh();
 			}
 		});
 		
@@ -527,7 +524,6 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 			@Override
 			public String getText(Object element) {
 				return (String)element;
-				//return super.getText(element);
 			}
 		});
 		
@@ -537,25 +533,20 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		stopListViewer.setContentProvider(new IStructuredContentProvider() {
 			@Override
 			public Object[] getElements(Object inputElement) {
-				// TODO Auto-generated method stub
 				return ((List<String>)inputElement).toArray();
 			}
 			@Override
 			public void dispose() {
-				// TODO Auto-generated method stub
 			}
 
 			@Override
 			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-				// TODO Auto-generated method stub
-				//viewer.refresh();
 			}
 		});
 		stopListViewer.setLabelProvider(new LabelProvider(){
 			@Override
 			public String getText(Object element) {
 				return (String)element;
-				//return super.getText(element);
 			}
 		});
 		stopListViewer.setInput(ecsb.getStopTriggerList());
@@ -569,8 +560,9 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 				String input = id.open();
 				if((input != null) && (!input.equals(""))) {
 					ecsb.addStartTrigger(input);
+					startListViewer.refresh();
+					setDirty(true);
 				}
-				//setDirty(true);
 			}
 		});
 		changeStart.addMouseListener(new MouseAdapter(){
@@ -582,7 +574,8 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 				id.setInput(oldStart);
 				String newStart = id.open();
 				ecsb.changeStartTrigger(oldStart, newStart);
-				//setDirty(true);
+				startListViewer.refresh();
+				setDirty(true);
 			}
 		});
 		removeStart.addMouseListener(new MouseAdapter(){
@@ -591,7 +584,8 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 				super.mouseDown(e);
 				String oldStart = (String)((IStructuredSelection)startListViewer.getSelection()).getFirstElement();
 				ecsb.removeStartTrigger(oldStart);
-				//setDirty(true);
+				startListViewer.refresh();
+				setDirty(true);
 			}
 
 		});
@@ -604,6 +598,8 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 				String input = id.open();
 				if((input != null) && (!input.equals(""))) {
 					ecsb.addStopTrigger(input);
+					stopListViewer.refresh();
+					setDirty(true);
 				}				
 			}
 		});
@@ -616,7 +612,8 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 				id.setInput(oldStop);
 				String newStop = id.open();
 				ecsb.changeStopTrigger(oldStop, newStop);
-
+				stopListViewer.refresh();
+				setDirty(true);
 			}
 		});
 		removeStop.addMouseListener(new MouseAdapter(){
@@ -625,6 +622,8 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 				super.mouseDown(e);
 				String oldStop = (String)((IStructuredSelection)stopListViewer.getSelection()).getFirstElement();
 				ecsb.removeStopTrigger(oldStop);
+				stopListViewer.refresh();
+				setDirty(true);
 			}
 		});
 		
@@ -633,7 +632,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 			public void widgetSelected(SelectionEvent e) {			
 				super.widgetSelected(e);
 				ecsb.setWhenDataAvailiable(availableButton.getSelection());
-				//setDirty(true);
+				setDirty(true);
 			}
 		});
 	}
@@ -673,9 +672,8 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		attributeTableViewer.getTable().setHeaderVisible(true);
 		
 		GridData tgd = new GridData(SWT.FILL, SWT.FILL, true, true);
-		//tgd.horizontalSpan = 4;
 		attributeTableViewer.getTable().setLayoutData(tgd);
-		ecsb.addListener(attributeTableViewer);
+		//ecsb.addListener(attributeTableViewer);
 		
 		
 		//Table table = tableViewer.getTable();
@@ -759,19 +757,6 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		
 		availableButton = new Button(boundaryGroup, SWT.CHECK);
 		availableButton.setText("When Data Available");
-		//checkButton.add
-		/*
-		checkButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
-				super.mouseDown(e);
-				//ecsb.setWhenDataAvailiable(availiable)
-				System.out.println(checkButton.getSelection());
-			}
-		});*/
-				
-
 
 	}
 	
@@ -783,52 +768,26 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		final GridLayout rgridLayout = new GridLayout();
 		reportGroup.setLayout(rgridLayout);
 		
-		/*
-		Tree tree = new Tree(reportGroup, SWT.CHECK|SWT.SINGLE|SWT.BORDER);
-		tree.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-				
-				// TODO Auto-generated method stub
-				
-				if(event.detail == SWT.CHECK) {
-					System.out.println(event.item);
-					TreeItem ti = (TreeItem)event.item;
-					if(ti.getGrayed() == true) {
-						ti.setChecked(true);
-					}
-				}
-			}});
-		//tree.set
-		for(ECReportSpec ecrspec: ecsb.getECReportSpecs()) {
-			createReportTree(tree, ecsb, ecrspec);
-		}
-		tree.setLayoutData(new GridData(300, 100));
-		//TreeItem treeItem = new TreeItem (tree, SWT.NONE);
-		//treeItem.setText("12345");
-		*/
-		
-		
-		treeViewer = new TreeViewer(reportGroup);
-		treeViewer.setContentProvider(new ReportContentProvider(ecsb.getECReportSpecs(), ecsb));
-		treeViewer.setLabelProvider(new ReportLabelProvider());
+		reportViewer = new TreeViewer(reportGroup);
+		reportViewer.setContentProvider(new ReportContentProvider(ecsb.getECReportSpecs(), ecsb));
+		reportViewer.setLabelProvider(new ReportLabelProvider());
 		ArrayList<ReportSpec> lista = new ArrayList<ReportSpec>();
 		for(ECReportSpec ecrs:ecsb.getECReportSpecs()) {
 			lista.add(new ReportSpec(ecrs, ecsb));
 		}
-		treeViewer.setInput(lista);
-		treeViewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
-		treeViewer.getControl().addFocusListener(new FocusListener() {
+		reportViewer.setInput(lista);
+		reportViewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
+		reportViewer.getControl().addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				spw.setSelectionProvider(treeViewer);
+				spw.setSelectionProvider(reportViewer);
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
 			}			
 		});
-		ecsb.addListener(treeViewer);
+		ecsb.addListener(reportViewer);
 		
 //		treeViewer.addSelectionChangedListener(new ISelectionChangedListener(){
 //
@@ -879,8 +838,6 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
         setSite(site);       
         setInput(input);
         
-//        lrsb = ((ECSpecEditorInput)input).getLRSpecBuilder();
-//        ecsb = ((ECSpecEditorInput)input).getECSpecBuilder();
         lrsb = ((ECLRInput)input).getLRSpecBuilder();
         ecsb = ((ECLRInput)input).getECSpecBuilder();
         spw = new SelectionProviderWrapper();
@@ -927,6 +884,21 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 					
 					if(ebp != null){
 						((ECLRInput)getEditorInput()).setEBProc(ebp);
+						//System.out.println(((ECLRInput)getEditorInput()).getECSpecBuilder().getStartTriggerList());
+						startListViewer.setInput(ecsb.getStartTriggerList());
+						stopListViewer.setInput(ecsb.getStopTriggerList());
+						attributeTableViewer.setInput(ecsb);
+						ArrayList<ReportSpec> lista = new ArrayList<ReportSpec>();
+						for(ECReportSpec ecrs:ecsb.getECReportSpecs()) {
+							lista.add(new ReportSpec(ecrs, ecsb));
+						}
+						reportViewer.setInput(lista);
+						availableButton.setSelection(ecsb.getWhenDataAvailable());
+						
+						startListViewer.refresh();
+						stopListViewer.refresh();
+						attributeTableViewer.refresh();
+						reportViewer.refresh();
 					}
 				}
 			} 

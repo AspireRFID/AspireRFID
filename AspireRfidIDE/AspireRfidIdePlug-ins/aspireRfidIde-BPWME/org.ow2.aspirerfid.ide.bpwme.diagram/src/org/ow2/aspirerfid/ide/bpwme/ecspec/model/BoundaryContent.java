@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.ECSpecBuilder;
+import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.ECSpecUtil;
 
 /**
  * 
@@ -45,30 +46,41 @@ public class BoundaryContent{
 		return Long.toString(value);
 	}
 	public void setValue(String value) {
+		
 		if(value == null) {
 			return;
 		}
 		
 		try{
+			this.value = Long.parseLong(value);
 			if(name.equals("Repeat Period")) {
 				ecsb.setRepeatPeriod(Long.parseLong(value));
 			} else if(name.equals("Duration")) {
 				ecsb.setDuration(Long.parseLong(value));
 			} else if(name.equals("Stable Set Interval")) {
 				ecsb.setStableSetInterval(Long.parseLong(value));
-			}
+			}			
+			ECSpecUtil.setECEditorDirty();
 		}catch(NumberFormatException e) {
-			System.out.println(value);
-			
+
 			MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
 					, SWT.ICON_ERROR | SWT.OK);
 			mb.setText("Error");
 			mb.setMessage("Value has to be a number");
 			mb.open();
 			
-			ecsb.setDuration(PreferenceConstants.P_DURARION);
-			ecsb.setRepeatPeriod(PreferenceConstants.P_REPEAT_PERIOD);
-			ecsb.setStableSetInterval(PreferenceConstants.P_STABLE_SET_INTERVAL);
+			if(name.equals("Repeat Period")) {
+				this.value = PreferenceConstants.P_REPEAT_PERIOD;
+				ecsb.setRepeatPeriod(PreferenceConstants.P_REPEAT_PERIOD);
+			} else if(name.equals("Duration")) {
+				this.value = PreferenceConstants.P_DURARION;
+				ecsb.setDuration(PreferenceConstants.P_DURARION);
+			} else if(name.equals("Stable Set Interval")) {
+				this.value = PreferenceConstants.P_STABLE_SET_INTERVAL;
+				ecsb.setStableSetInterval(PreferenceConstants.P_STABLE_SET_INTERVAL);
+			}			
+			
+			ECSpecUtil.setECEditorDirty();
 		}
 	}
 }

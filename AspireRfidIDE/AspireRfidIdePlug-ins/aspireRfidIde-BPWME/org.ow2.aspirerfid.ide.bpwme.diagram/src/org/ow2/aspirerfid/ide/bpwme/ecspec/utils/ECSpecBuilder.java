@@ -55,51 +55,18 @@ public class ECSpecBuilder {
 	private ECSpec ecspec;
 	private EBProc ebproc;
 	private List<Viewer> listeners;
-	private ArrayList<Spec> specList;
-	
-//	public ECSpecBuilder() {
-//		
-//		listeners = new ArrayList<Viewer>(); 
-//		
-//		ObjectFactory of = new ObjectFactory();
-//		ecspec = of.createECSpec();
-//		ecspec.setLogicalReaders(of.createECSpecLogicalReaders());
-//		ecspec.setReportSpecs(of.createECSpecReportSpecs());
-//		ecspec.setBoundarySpec(of.createECBoundarySpec());
-//		ecspec.setExtension(of.createECSpecExtension());
-//		ecspec.getBoundarySpec().setExtension(of.createECBoundarySpecExtension());
-//		ecspec.getBoundarySpec().getExtension().setStartTriggerList(of.createECBoundarySpecExtensionStartTriggerList());
-//		ecspec.getBoundarySpec().getExtension().setStopTriggerList(of.createECBoundarySpecExtensionStopTriggerList());
-//	}
-	
-	//bind the existing ECSpec abd EBProc to the ecspec builder
-//	public ECSpecBuilder(EBProc ebproc ,ECSpec ecspe) {
-//		listeners = new ArrayList<Viewer>();
-//		this.ebproc = ebproc;
-//		this.ecspec = ecspe;
-////		ObjectFactory of = new ObjectFactory();
-////		ecspec.setLogicalReaders(of.createECSpecLogicalReaders());
-////		ecspec.setReportSpecs(of.createECSpecReportSpecs());
-////		ecspec.setBoundarySpec(of.createECBoundarySpec());
-////		ecspec.setExtension(of.createECSpecExtension());
-////		ecspec.getBoundarySpec().setExtension(of.createECBoundarySpecExtension());
-////		ecspec.getBoundarySpec().getExtension().setStartTriggerList(of.createECBoundarySpecExtensionStartTriggerList());
-////		ecspec.getBoundarySpec().getExtension().setStopTriggerList(of.createECBoundarySpecExtensionStopTriggerList());
-////		iniECSB(ebproc);
-//	}
-	
+	private boolean isDirty;
 	
 	//build a new ecspec builder, if ecspec field is null, set the values to default
 	public ECSpecBuilder(EBProc ebproc) {
 		ECSpec ecs = getECSpec(ebproc);
 		if(ecs != null) {
-			//System.out.println("have " + ecs.getBoundarySpec());
 			this.listeners = new ArrayList<Viewer>();
 			this.ebproc = ebproc;
 			this.ecspec = ecs;
+			isDirty = false;
 			return;
 		}
-		//System.out.println("nohave");
 		MainControl mc = MainControl.getMainControl();
 		this.listeners = new ArrayList<Viewer>();
 		this.ebproc = ebproc;
@@ -120,7 +87,8 @@ public class ECSpecBuilder {
 		ecspec.getBoundarySpec().setExtension(of.createECBoundarySpecExtension());
 		ecspec.getBoundarySpec().getExtension().setStartTriggerList(of.createECBoundarySpecExtensionStartTriggerList());
 		ecspec.getBoundarySpec().getExtension().setStopTriggerList(of.createECBoundarySpecExtensionStopTriggerList());
-
+		ecspec.getBoundarySpec().getExtension().setWhenDataAvailable(false);
+		
 		setDuration(PreferenceConstants.P_DURARION);
 		setRepeatPeriod(PreferenceConstants.P_REPEAT_PERIOD);
 		setStableSetInterval(PreferenceConstants.P_STABLE_SET_INTERVAL);
@@ -154,17 +122,11 @@ public class ECSpecBuilder {
 			ecspec.getReportSpecs().getReportSpec().add(createTran());
 			break;
 		}
-		setECEditorDirty();
+		isDirty = true;
 	}
 	
-	
-	public static void setECEditorDirty() {
-		IEditorPart editor = MainUtil.getEditor("org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor");
-		if(editor == null) {
-			return;
-		}
-		ECSpecEditor ese = (ECSpecEditor)editor;
-		ese.setDirty(true);
+	public boolean isDirty() {
+		return isDirty;
 	}
 	
 	public void setEBProc(EBProc ebp) {
@@ -191,7 +153,7 @@ public class ECSpecBuilder {
 			ecspec.getBoundarySpec().setExtension(of.createECBoundarySpecExtension());
 			ecspec.getBoundarySpec().getExtension().setStartTriggerList(of.createECBoundarySpecExtensionStartTriggerList());
 			ecspec.getBoundarySpec().getExtension().setStopTriggerList(of.createECBoundarySpecExtensionStopTriggerList());
-			//System.out.println("set done1");
+			ecspec.getBoundarySpec().getExtension().setWhenDataAvailable(false);
 			
 			setDuration(PreferenceConstants.P_DURARION,ECTimeUnit.MS);
 			setRepeatPeriod(PreferenceConstants.P_REPEAT_PERIOD,ECTimeUnit.MS);
@@ -225,8 +187,8 @@ public class ECSpecBuilder {
 				ecspec.getReportSpecs().getReportSpec().add(createBiz());
 				ecspec.getReportSpecs().getReportSpec().add(createTran());
 				break;
-			}			
-			setECEditorDirty();
+			}
+			ECSpecUtil.setECEditorDirty();
 		}	
 		notifyListeners();
 	}
@@ -242,22 +204,7 @@ public class ECSpecBuilder {
 		}
 		return null;
 	}
-	
-//	private void iniECSB(EBProc ebproc) {
-//		setDuration(4500);
-//		setRepeatPeriod(4500);
-//		setStableSetInterval(0);
-//		MainControl mc = MainControl.getMainControl();
-//		EventType type = mc.ebprocMap.get(ebproc.getId());
-//		//TODO if type is null, means this is an open of exising apdl file
-//		//now the solution is to give him a default type
-//		//after master data is configured, everything will be fine
-//		//other solution is to store the type somewhere
-//		if(type == null) {
-//			type = EventType.AGGREGATION_EVENT;
-//		}	
-//	}
-	
+		
 	private ECReportSpec createBiz() {
 		ECReportSpec bizTransactionReport = new ECReportSpec();
 		bizTransactionReport.setReportOnlyOnChange(true);
@@ -316,13 +263,11 @@ public class ECSpecBuilder {
 	}
 	
 	public void notifyListeners() {
+		/*
 		for(Viewer v : listeners) {
+			System.out.println(v);
 			v.refresh();
-		}
-//		MainControl mc = MainControl.getMainControl();
-//		if(mc.ecEditor != null) {
-//			mc.ecEditor.setDirty(true);
-//		}
+		}*/
 	}
 	
 	//logical reader related
@@ -354,6 +299,11 @@ public class ECSpecBuilder {
 		ecspec.getBoundarySpec().getExtension().setWhenDataAvailable(availiable);
 		notifyListeners();
 	}
+	
+	public boolean getWhenDataAvailable() {
+		return  ecspec.getBoundarySpec().getExtension().isWhenDataAvailable();
+	}
+	
 	/*
 	public static void main(String args[]) {
 		ECSpecBuilder ecs = new ECSpecBuilder();

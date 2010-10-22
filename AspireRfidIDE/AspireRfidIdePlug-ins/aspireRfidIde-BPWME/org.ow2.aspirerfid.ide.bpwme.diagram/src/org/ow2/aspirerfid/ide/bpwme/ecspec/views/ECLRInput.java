@@ -23,7 +23,6 @@ public class ECLRInput implements IEditorInput{
 		this.ebproc = ebp;
 		this.lrsb = new LRSpecBuilder(ebp);
 		this.ecsb = new ECSpecBuilder(ebp);
-		//setEBProc(ebp);
 	}
 	
 	
