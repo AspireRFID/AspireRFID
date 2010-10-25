@@ -5,54 +5,60 @@
 </description>
 </intro>
 
-<item title="Open the BPWME Perspective">
-<description>
-<b>
-Select Window &gt; Show Perspective &gt; 
-Bpwme Perspective in the menubar at the top of the Aspire IDE. 
-This step changes the perspective to set up the Aspire IDE 
-for graphical business process editing.
-</b>
-</description>
-<command
-      required="false"
-      serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=bpwme.diagram.BpwmePerspective)"/>
-</item>
 
-<item title="Create a bpwme diagram">
+<item
+      skip="false"
+      title="Create an empty bpwme diagram">
 <description>
-<b>The first thing you will need is a bpwme diagram. If you
+The first thing you will need is a bpwme diagram. If you
 already have a diagram on your file system that you would like to use,
 you may skip this step by clicking the &quot;Click to Skip&quot; button. If not,
-select File &gt; New Diagram and give the new diagram file a proper path.
-Complete the subsequent pages as required.</b>
+select File &gt; New Diagram and give the new diagram a proper name. Then a diagram file is created automatically, with the bpwme perspective.
+Notice all diagram files are
+stored under the directory &quot;Documents and Settings\User\AspireRFID\IDE\BPWME\Specified Name&quot;.
 </description>
 </item>
 
 <item title="Create an Open Loop Composite Business Process (OLCBProc)" skip="false">
 <description>
-<b>
-You should now have a BPWME editor in your workspace. The next
-thing to do is creating an Open Loop Composite Business Process (OLCBProc). Select 
+Now you should have a BPWME editor in your workspace. The next
+thing to do is creating an Open Loop Composite Business Process (OLCBProc). By default, one OLCB Process should be already existing in the editor with the given name. If not, select 
 OLCBProc on the right side of the editor palette, move the mouse cursor to the 
 editing area and left click on the mouse. You can see an OLCB Process is created. 
-You can edit the id and name in the properties view.</b>
+You can edit the id and name in the properties view.
 </description>
 </item>
 <item title="Create a Close Loop Composite Business Process (CLCBProc)">
 <description>
-<b>
-   You can create a Close Loop Composite Business Process (CLCBProc) by choosing 
+You can create a Close Loop Composite Business Process (CLCBProc) by choosing 
    CLCBProc on the right side of the editor palette, just like creating an OLCBProc. 
-   Notice CLCBProc can only be putted inside OLCBProc.</b>
+   Notice CLCBProc can only be putted inside OLCBProc.
 </description>
 </item>
 <item
       title="Create an Elementary Business Process (EBProc)">
    <description>
-      <b>You can create an Elementary Business Process (EBProc) by choosing 
+      You can create an Elementary Business Process (EBProc) by choosing 
       EBProc on the right side of the editor palette, just like creating an 
-      OLCBProc. Notice EBProc can only be putted inside CLCBProc.</b>
+      OLCBProc. Notice EBProc can only be putted inside CLCBProc.
+   </description>
+</item>
+<item
+      title="Edit Master Data">
+   <description>
+      <b>Body</b>
+   </description>
+</item>
+<item
+      title="Edit ECSpec and LRSpec">
+   <description>
+      <b>Body</b>
+   </description>
+</item>
+<item
+      title="XML Editor">
+   <description>
+      <b>Body</b>
    </description>
 </item>
 </cheatsheet>
