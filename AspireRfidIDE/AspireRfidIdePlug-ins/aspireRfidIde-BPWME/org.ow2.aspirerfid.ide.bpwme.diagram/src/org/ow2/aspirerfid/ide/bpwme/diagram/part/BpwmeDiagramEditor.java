@@ -1,6 +1,8 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.part;
 
 
+import java.util.ArrayList;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -12,19 +14,25 @@ import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocument;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocumentProvider;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import  org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
 /**
  * @generated
  */
 public class BpwmeDiagramEditor extends DiagramDocumentEditor {
 
+	private ArrayList<ISelectionChangedListener> selectionListeners;
+	
 	/**
 	 * @generated
 	 */
@@ -42,6 +50,7 @@ public class BpwmeDiagramEditor extends DiagramDocumentEditor {
 	 */
 	public BpwmeDiagramEditor() {
 		super(true);
+		selectionListeners = new ArrayList<ISelectionChangedListener>();
 	}
 
 	/**
@@ -135,5 +144,20 @@ public class BpwmeDiagramEditor extends DiagramDocumentEditor {
 		}
 		return null;
 	}	
+	
+	public void addSelectionListener(ISelectionChangedListener listener) {
+		getEditorSite().getSelectionProvider().addSelectionChangedListener(listener);
+		selectionListeners.add(listener);
+	}
+	
+	
+	@Override
+	public void dispose() {
+		for (ISelectionChangedListener listener:selectionListeners) {
+			getEditorSite().getSelectionProvider().removeSelectionChangedListener(listener);
+		}
+		selectionListeners.clear();
+		super.dispose();
+	}
 	
 }

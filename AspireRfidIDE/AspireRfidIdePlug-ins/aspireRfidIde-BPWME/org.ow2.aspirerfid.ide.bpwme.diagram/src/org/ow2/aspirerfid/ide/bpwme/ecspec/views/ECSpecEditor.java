@@ -842,10 +842,10 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
         ecsb = ((ECLRInput)input).getECSpecBuilder();
         spw = new SelectionProviderWrapper();
         
-		//add this listener
+		//add selection listener to bpwme editor
 		IEditorPart editor = MainUtil.getEditor(BpwmeDiagramEditor.ID);
 		if(editor != null) {
-			editor.getEditorSite().getSelectionProvider().addSelectionChangedListener(this);
+			((BpwmeDiagramEditor)editor).addSelectionListener(this);
 		}
 
 		
@@ -907,12 +907,11 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 	
 	@Override
 	public void dispose() {
-		//remove this listener
-		IEditorPart editor = MainUtil.getEditor(BpwmeDiagramEditor.ID);
-		if(editor != null) {
-			editor.getEditorSite().getSelectionProvider().removeSelectionChangedListener(this);
-		}
+		//remove listeners
+		lrsb.clearListeners();
 		super.dispose();
 	}
+	
+	
 }
 

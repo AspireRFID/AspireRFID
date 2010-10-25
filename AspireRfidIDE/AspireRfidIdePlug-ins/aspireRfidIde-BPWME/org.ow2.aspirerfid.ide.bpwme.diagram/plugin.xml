@@ -504,11 +504,6 @@
             name="Open From APDL">
       </command>
       <command
-            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.ShowCheatsheets"
-            id="org.ow2.aspirerfid.ide.bpwme.actions.showCheatsheets"
-            name="Show Cheatsheets">
-      </command>
-      <command
             defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.ShowMasterDataEditor"
             id="org.ow2.aspirerfid.ide.bpwme.diagram.showMasterDataEditor"
             name="showMasterDataEditor">

@@ -123,7 +123,11 @@ public class MainUtil {
 		if(bench == null) {
 			return null;
 		}
-		IWorkbenchPage page = bench.getActiveWorkbenchWindow().getActivePage();
+		IWorkbenchWindow window = bench.getActiveWorkbenchWindow();
+		if(window == null) {
+			return null;
+		}
+		IWorkbenchPage page = window.getActivePage();
 		if(page == null) {
 			return null;
 		}

@@ -243,6 +243,10 @@ public class LRSpecBuilder {
 			v.refresh();
 		}
 	}
+	
+	public void clearListeners() {
+		listeners.clear();
+	}
 
 	public void addProperty(){}
 	public void changeProperty(){}
