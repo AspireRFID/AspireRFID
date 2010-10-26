@@ -1027,10 +1027,17 @@
 	      <cheatsheet
 	            category="org.ow2.aspirerfid.ide.bpwme.category"
 	            composite="false"
-	            contentFile="cheatsheet.xml"
-	            id="org.ow2.aspirerfid.ide.bpwme.cheatsheet"
+	            contentFile="help/create_diagram.xml"
+	            id="org.ow2.aspirerfid.ide.bpwme.cheatsheetcreate"
 	            name="Create a business process">
 	      </cheatsheet>
+       <cheatsheet
+             category="org.ow2.aspirerfid.ide.bpwme.category"
+             composite="false"
+             contentFile="help/edit_diagram.xml"
+             id="org.ow2.aspirerfid.ide.bpwme.cheatsheetedit"
+             name="Edit a business process">
+       </cheatsheet>
 	   </extension>   
 	   <extension point="org.eclipse.ui.actionSets">
 	  <actionSet

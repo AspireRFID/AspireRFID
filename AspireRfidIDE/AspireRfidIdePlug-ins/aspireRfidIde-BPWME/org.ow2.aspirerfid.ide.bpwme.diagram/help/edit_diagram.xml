@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Edit a business process diagram">
+<intro>
+<description>This tutorial guides you to edit the information in business process diagram using BPWME editor
+</description>
+</intro>
+<item
+      skip="true"
+      title="XML Editor">
+   <description>
+      As you open a BPWME diagram, an XML editor is opened automatically, showing the corresponding XML file generated from the diagram. You can also open the XML editor by selecting Window -&gt; Show View -&gt; XML Editor.
+      
+   </description>
+</item>
+<item
+      title="Edit ECSpec and LRSpec">
+   <description>
+      After creating an EBProc in the editor, you can edit the corresponding LR Spec and EC Spec of that EBProc. Select the EBProc you want to edit in the editor, right click on it, then select Edit -&gt; EC Spec from the context menu. Then one editor should show up on the up right corner of the IDE. You can start editing everything in that editor. Notice that the EC Spec editor is able to monitor your selection in the diagram. So if you create or select another EBProc in the diagram, the EC Spec editor will also update the information to that EBProc.
+      
+   </description>
+</item>
+
+<item
+      title="Edit Master Data">
+   <description>
+      In BPWME, Master Data can be modified via property tab. Select the EBProc you are interested in, you can see several property tabs are shown in the property view. Feel free to edit all of them.
+      
+   </description>
+</item>
+<item
+      title="Edit Business Location">
+   <description>
+      When you want to edit the business location of a CLCBProc or EBProc, select that process you are interested in, you can find one button on the up right corner of the property view with the tool tip &quot;Edit Business Location&quot;. Follow the instructions after you hit the button.
+      
+   </description>
+</item>
+</cheatsheet>
