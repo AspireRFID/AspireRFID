@@ -95,7 +95,7 @@ import org.ow2.aspirerfid.ide.bpwme.utils.*;
  */
 
 public class MasterEditor extends EditorPart implements 
-ITabbedPropertySheetPageContributor,ISelectionChangedListener{
+ITabbedPropertySheetPageContributor{
 	
 	private enum Type{
 		BusinessStep,
@@ -151,12 +151,11 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		MasterDataBuilder mdb = MasterDataBuilder.getInstance();
 		mdb.setMasterEditor(this);
 		
-		
-		//add selection listener to bpwme editor
-		IEditorPart editor = MainUtil.getEditor(BpwmeDiagramEditor.ID);
-		if(editor != null) {
-			((BpwmeDiagramEditor)editor).addSelectionListener(this);
-		}
+//		//add selection listener to bpwme editor
+//		IEditorPart editor = MainUtil.getEditor(BpwmeDiagramEditor.ID);
+//		if(editor != null) {
+//			((BpwmeDiagramEditor)editor).addSelectionListener(this);
+//		}
 	}
 
 	@Override
@@ -485,27 +484,33 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
         firePropertyChange(PROP_DIRTY);
      }
 
-	@Override
-	public void selectionChanged(SelectionChangedEvent event) {
-		ISelection selection = event.getSelection();
-		MainControl mc = MainControl.getMainControl();
-		if(selection instanceof IStructuredSelection) {
-			IStructuredSelection sselection = (IStructuredSelection)selection;
-			if(sselection.size() > 0) {
-				Object selectObject = sselection.getFirstElement();
-				if(selectObject instanceof CLCBProcEditPart) {
-					
-					CLCBProcEditPart clcbPart = (CLCBProcEditPart)selectObject;
-					
-					CLCBProcImpl clcbi = (CLCBProcImpl)((View)clcbPart.getModel()).getElement();
-					CLCBProc clcbp =  (CLCBProc)mc.getMapObject(clcbi.hashCode());
-					
-					if(clcbp != null){
-						System.out.println("Selected");
-					}
-				}
-			} 
-		}	
-		
-	}
+//	@Override
+//	public void selectionChanged(SelectionChangedEvent event) {
+//		ISelection selection = event.getSelection();
+//		MainControl mc = MainControl.getMainControl();
+//		if(selection instanceof IStructuredSelection) {
+//			IStructuredSelection sselection = (IStructuredSelection)selection;
+//			if(sselection.size() > 0) {
+//				Object selectObject = sselection.getFirstElement();
+//				if(selectObject instanceof CLCBProcEditPart) {
+//					
+//					CLCBProcEditPart clcbPart = (CLCBProcEditPart)selectObject;
+//					
+//					CLCBProcImpl clcbi = (CLCBProcImpl)((View)clcbPart.getModel()).getElement();
+//					CLCBProc clcbp =  (CLCBProc)mc.getMapObject(clcbi.hashCode());
+//					
+//					if(clcbp != null){
+//						MasterDataBuilder mdb = MasterDataBuilder.getInstance();
+//						mdb.setCLCBProc(clcbp);
+//						bizListViewer.refresh();
+//						dispoListViewer.refresh();
+//						tranzListViewer.refresh();
+//						//System.out.println("Selected");
+//						mc.saveObject();
+//					}
+//				}
+//			} 
+//		}	
+//		
+//	}
 }
