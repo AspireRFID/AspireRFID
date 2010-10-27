@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cheatsheet title="Edit a business process diagram">
-<intro>
-<description>This tutorial guides you to edit the information in business process diagram using BPWME editor
+<intro
+      href="http://wiki.aspire.ow2.org/xwiki/bin/view/Main/WebHome">
+<description>This tutorial guides you to edit the information in business process diagram using BPWME editor.
 </description>
 </intro>
 <item
-      skip="true"
+      skip="false"
       title="XML Editor">
    <description>
       As you open a BPWME diagram, an XML editor is opened automatically, showing the corresponding XML file generated from the diagram. You can also open the XML editor by selecting Window -&gt; Show View -&gt; XML Editor.
@@ -21,17 +22,18 @@
 </item>
 
 <item
-      title="Edit Master Data">
+         title="Edit Master Data">
    <description>
-      In BPWME, Master Data can be modified via property tab. Select the EBProc you are interested in, you can see several property tabs are shown in the property view. Feel free to edit all of them.
-      
+      In BPWME, Master Data can be modified on OLCBProc, CLCBProc and EBProc levels.
    </description>
-</item>
-<item
-      title="Edit Business Location">
-   <description>
-      When you want to edit the business location of a CLCBProc or EBProc, select that process you are interested in, you can find one button on the up right corner of the property view with the tool tip &quot;Edit Business Location&quot;. Follow the instructions after you hit the button.
-      
-   </description>
+   <subitem
+         label="OLCBProc Level. To edit the Master Data on OLCBProc level, select the OLCBProc in the editor, you can find one button on the up right corner of the property view with the tool tip &quot;Edit Master Data&quot;. Hit that button, you can see a new editor show up in the up right corner of the IDE. You can edit all the information in the editor.">
+   </subitem>
+   <subitem
+         label="CLCBProc Level. To edit the Master Data on CLCBProc level, select that process you are interested in, you can find one button on the up right corner of the property view with the tool tip &quot;Edit Business Location&quot;. Hit that button and follow the instructions afterwards.">
+   </subitem>
+   <subitem
+         label="EBProc Level. Master Data on EBProc level can be edited via property tab. Select the EBProc you are interested in, you can see several property tabs are shown in the property view. Feel free to edit any of them.">
+   </subitem>
 </item>
 </cheatsheet>

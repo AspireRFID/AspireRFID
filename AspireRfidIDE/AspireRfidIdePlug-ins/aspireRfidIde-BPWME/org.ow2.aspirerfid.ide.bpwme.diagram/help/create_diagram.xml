@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cheatsheet title="Create a business process diagram">
-<intro>
+<intro
+      href="http://wiki.aspire.ow2.org/xwiki/bin/view/Main/WebHome">
 <description>This tutorial guides you through the creation of a business process diagram using BPWME editor
 </description>
 </intro>
