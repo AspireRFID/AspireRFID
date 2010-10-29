@@ -479,11 +479,6 @@
             name="showXmlEditor">
       </command>
       <command
-            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.RefreshXMLEditor"
-            id="org.ow2.aspirerfid.ide.bpwme.actions.refreshXML"
-            name="Refresh XML">
-      </command>      
-      <command
             defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.NewDiagram"
             id="org.ow2.aspirerfid.ide.bpwme.actions.newdiagram"
             name="New Diagram">
@@ -655,11 +650,6 @@
          <menu
                id="org.ow2.aspirerfid.ide.main.editmenu"
                label="Edit">
-            <command
-                  commandId="org.ow2.aspirerfid.ide.bpwme.actions.refreshXML"
-                  label="Refresh XML"
-                  style="push">
-            </command>
             <command
                   commandId="org.ow2.aspirerfid.ide.bpwme.actions.getLocations"
                   label="Get Locations"

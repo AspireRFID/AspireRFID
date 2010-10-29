@@ -23,6 +23,7 @@ import org.eclipse.ui.PlatformUI;
 import  org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
+import org.ow2.aspirerfid.ide.bpwme.utils.EditorListener;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
@@ -158,6 +159,14 @@ public class BpwmeDiagramEditor extends DiagramDocumentEditor {
 		}
 		selectionListeners.clear();
 		super.dispose();
+	}
+	
+	@Override
+	public void init(IEditorSite site, IEditorInput input)
+			throws PartInitException {
+		super.init(site, input);
+		EditorListener listener = EditorListener.getInstance();		
+		getSite().getPage().addPartListener(listener);
 	}
 	
 }

@@ -23,12 +23,16 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.PathEditorInput;
 import org.ow2.aspirerfid.ide.bpwme.diagram.xmleditor.XMLEditor;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
 
 /**
@@ -42,6 +46,16 @@ public class ShowXMLEditor extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		
+		//if bpwme editor is closed, do nothing
+		if(!MainUtil.isEditorOpened(BpwmeDiagramEditor.ID)) {
+			MessageBox messageBox = new MessageBox(
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+			messageBox.setMessage("BPWME Editor is not open.\nPlease open it and try again.");
+			messageBox.open();
+			return null;
+		}
+		
 		MainControl mc = MainControl.getMainControl();
 		URI apdlURI = mc.getApdlURI();
 		if(apdlURI == null) {

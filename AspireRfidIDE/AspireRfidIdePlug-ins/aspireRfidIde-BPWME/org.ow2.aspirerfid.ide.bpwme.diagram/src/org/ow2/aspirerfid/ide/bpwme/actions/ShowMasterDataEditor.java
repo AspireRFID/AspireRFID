@@ -28,6 +28,15 @@ public class ShowMasterDataEditor extends AbstractHandler {
 			return null;
 		}
 		
+		//if bpwme editor is closed, do nothing
+		if(!MainUtil.isEditorOpened(BpwmeDiagramEditor.ID)) {
+			MessageBox messageBox = new MessageBox(
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+			messageBox.setMessage("BPWME Editor is not open.\nPlease open it and try again.");
+			messageBox.open();
+			return null;
+		}
+		
 		MasterEditorInput mei = new MasterEditorInput();
 		MainControl mc = MainControl.getMainControl();
 
