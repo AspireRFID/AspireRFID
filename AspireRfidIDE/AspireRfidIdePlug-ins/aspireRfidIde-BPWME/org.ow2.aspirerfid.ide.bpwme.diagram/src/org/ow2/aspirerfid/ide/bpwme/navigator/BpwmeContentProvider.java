@@ -30,8 +30,6 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -48,7 +46,6 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractContainer;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractWarehouse;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.Company;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.impl.CompanyImpl;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.edit.parts.CompanyEditPart;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.EditorHandler;
 import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
@@ -127,12 +124,10 @@ public class BpwmeContentProvider implements ITreeContentProvider {
     }
 
 	/**
-	 * Returns the children of each element of the navigator
+	 * Returns the parent of each element of the navigator
 	 */
     public Object getParent(Object element) {
-    	if (element instanceof URI)
-    		return ((Parent) element).getRoot();
-    	else if (element instanceof OLCBProc)
+    	if (element instanceof OLCBProc)
     		return ((OLCBProc) element).eContainer();
     	else if (element instanceof CLCBProc)
     		return ((CLCBProc) element).eContainer();
@@ -142,8 +137,6 @@ public class BpwmeContentProvider implements ITreeContentProvider {
             return ((AbstractContainer) element).eContainer();
         else if (element instanceof AbstractWarehouse)
             return ((AbstractWarehouse) element).eContainer();
-        else if (element instanceof Company)
-            return ((Parent) element).getRoot();
         return null;
     }
 
@@ -167,7 +160,6 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 	 */
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
        	BpwmeContentProvider.viewer = (TreeViewer) viewer;
-    	//hookListeners();
     	
     	IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
     	
@@ -214,78 +206,6 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 	}
 	
 	/**
-	 * Add listeners to the viewer
-	 */
-	protected void hookListeners() {
-		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			AbstractEditPart selectedPart = null;
-			
-			public void selectionChanged(SelectionChangedEvent event) {
-				if(event.getSelection().isEmpty()) {
-					System.out.println("no selection");
-					return;
-				}
-			
-				if(event.getSelection() instanceof IStructuredSelection) {
-					IStructuredSelection selection = (IStructuredSelection)event.getSelection();
-					
-					EObjectImpl selectedObject = (EObjectImpl) selection.getFirstElement();
-					System.out.println("selected: " + selectedObject);
-					System.out.println(getEditorForPart(selectedObject));
-					
-					//page.activate(getEditorForPart(selectedObject));
-					
-					//remove the selected edit part
-					if (selectedPart != null)
-						selectedPart.setSelected(0);
-					
-//					for (int i = 0; i < MasterDataEditParts.getAllParts().size(); i++) {
-//						EObject partsObject = (EObjectImpl) ((View) MasterDataEditParts.getAllParts().get(i).getModel()).getElement();
-//						if (partsObject.equals(selectedObject)) {
-//							MasterDataEditParts.getAllParts().get(i).setSelected(1);
-//							selectedPart = MasterDataEditParts.getAllParts().get(i);
-//							return;
-//						}
-//					}
-//					
-//					for (int i = 0; i < getAllBpwmeParts().size(); i++) {
-//						EObject partsObject = (EObjectImpl) ((View) getAllBpwmeParts().get(i).getModel()).getElement();
-//						if (partsObject.equals(selectedObject)) {
-//							getAllBpwmeParts().get(i).setSelected(1);
-//							selectedPart = getAllBpwmeParts().get(i);
-//							return;
-//						}
-//					}
-				}
-				
-
-			}
-		});
-//		viewer.addDoubleClickListener(new IDoubleClickListener() {
-//			AbstractEditPart selectedPart = null;
-//			public void doubleClick(DoubleClickEvent event) {
-//				System.out.println("double clicked");				
-//				IStructuredSelection selection = (IStructuredSelection)event.getSelection();
-//				EObjectImpl selectedObject = (EObjectImpl) selection.getFirstElement();
-//				
-//				//remove the selected edit part
-//				if (selectedPart != null)
-//					selectedPart.setSelected(0);
-//				
-//				for (int i = 0; i < MasterDataEditParts.getAllParts().size(); i++) {
-//					EObject partsObject = (EObjectImpl) ((View) MasterDataEditParts.getAllParts().get(i).getModel()).getElement();
-//					if (partsObject.equals(selectedObject)) {
-//						MasterDataEditParts.getAllParts().get(i).setSelected(1);
-//						selectedPart = MasterDataEditParts.getAllParts().get(i);
-//						break;
-//					}
-//				}
-//			}
-//		});
-	}
-	
-	/**
 	 * Get the children of each element	
 	 */
 	private Object[] getElementChildren(Object parentElement) {
@@ -314,12 +234,6 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 			IEditorPart editorPart = page.getEditorReferences()[i].getEditor(true);
 			IWorkbenchPart workbenchPart = page.getEditorReferences()[i].getEditor(true);
 			
-//			System.out.println(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPages().length);
-//			for (int n = 0; n < PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViewReferences().length; n++) {
-//				System.out.println(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViewReferences()[n].getId());
-//				//org.ow2.aspirerfid.ide.bpwme.navigator.view
-//			}
-			
 			if (editorPart.getSite().getId().equals(BpwmeDiagramEditor.ID)) { 
 				DiagramEditPart diagramEditPart = ((DiagramEditor)editorPart).getDiagramEditPart();
 	
@@ -341,7 +255,7 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 	
 	/**
 	 * Set the file URIs	
-	 */
+	 */	
 	private void setFileURIs() {
 		uriBpwmeMap.clear();
 		fileURIs = new URI[bpwmeList.size()];
@@ -350,7 +264,7 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 			fileURIs[i] = URI.createFileURI(bpwmeList.get(i).getDiagramView().getName().replaceFirst(".bpwme_diagram", ""));
 			WorkflowMap bpwme = (WorkflowMapImpl) ((View) bpwmeList.get(i).getModel()).getElement();
 
-			for (int j = 0; j < bpwme.eContents().size(); j++) { 
+			for (int j = 0; j < bpwme.eContents().size(); j++) {
 				if (bpwme.eContents().get(j) instanceof OLCBProc) {
 					OLCBProc olcbProc = (OLCBProc) bpwme.eContents().get(j);
 					uriBpwmeMap.put(fileURIs[i], olcbProc);
@@ -393,96 +307,6 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 		}
 		
 		return null;
-	}
-	
-	/**
-	 * Get the editor of an element
-	 */
-	private IWorkbenchPart getEditorForPart(EObject element) {
-		ArrayList<AbstractEditPart> allParts = new ArrayList<AbstractEditPart>();
-		EObject bpwme = null;
-	
-		for (int k = 0; k < bpwmeList.size(); k++) {
-
-			//add the olcb children of the bpwme
-			for (int i = 0; i < bpwmeList.get(k).getChildren().size(); i++) {
-				bpwme = (EObjectImpl) ((View) ((AbstractEditPart) bpwmeList.get(k).getChildren().get(i)).getModel()).getElement();
-				if (bpwme.equals(element)) {
-					return mapBpwmePart.get(bpwmeList.get(k));
-				}
-				allParts.add((AbstractEditPart) bpwmeList.get(k).getChildren().get(i));
-			}
-			
-			//add all the other children
-			for (int i = 0; i < allParts.size(); i++) {
-				for (int j = 0; j < allParts.get(i).getChildren().size(); j++) {
-					bpwme = (EObjectImpl) ((View) ((AbstractEditPart) allParts.get(i).getChildren().get(j)).getModel()).getElement();
-					if (bpwme.equals(element)) {
-						return mapBpwmePart.get(bpwmeList.get(k));
-					}
-					allParts.add((AbstractEditPart) allParts.get(i).getChildren().get(j));
-				}
-			}
-		}
-		
-		return null;
-	}
-	
-	
-	/**
-	 * Get all Bpwme parts
-	 */
-	private ArrayList<AbstractEditPart> getAllBpwmeParts() {
-		ArrayList<AbstractEditPart> allParts = new ArrayList<AbstractEditPart>();
-	
-		for (int i = 0; i < bpwmeList.size(); i++) {
-			for (int j = 0; j < bpwmeList.get(i).getChildren().size(); j++) {
-				allParts.add((AbstractEditPart) bpwmeList.get(i).getChildren().get(j));
-			}
-		}
-		
-		for (int i = 0; i < allParts.size(); i++) {
-			for (int j = 0; j < allParts.get(i).getChildren().size(); j++) {
-				allParts.add((AbstractEditPart) allParts.get(i).getChildren().get(j));
-			}
-		}
-		return allParts;
-	}
-	
-//	/**
-//	 * Get all Bpwme parts
-//	 */
-//	private IEditorPart setAllBpwmeParts(EObject element) {
-//		ArrayList<AbstractEditPart> allParts = new ArrayList<AbstractEditPart>();
-//	
-//		for (int i = 0; i < bpwmeList.size(); i++) {
-//			System.out.println(bpwmeList.get(i));
-//			for (int j = 0; j < bpwmeList.get(i).getChildren().size(); j++) {
-//				EObject bpwme = (EObjectImpl) ((View) ((AbstractEditPart) bpwmeList.get(i).getChildren().get(j)).getModel()).getElement();
-//				if (bpwme.equals(element)) {
-//					return mapBpwmePart.get(bpwmeList.get(i));
-//				}
-//				System.out.println(bpwmeList.get(i).getChildren().get(j));
-//				allParts.add((AbstractEditPart) bpwmeList.get(i).getChildren().get(j));
-//			}
-//		}
-//		
-//		for (int i = 0; i < allParts.size(); i++) {
-//			for (int j = 0; j < allParts.get(i).getChildren().size(); j++) {
-//				EObject bpwme = (EObjectImpl) ((View) ((AbstractEditPart) allParts.get(i).getChildren().get(j)).getModel()).getElement();
-//				if (bpwme.equals(element)) {
-//					return mapBpwmePart.get(bpwmeList.get(k));
-//				}
-//				System.out.println(allParts.get(i).getChildren().get(j));
-//				allParts.add((AbstractEditPart) allParts.get(i).getChildren().get(j));
-//			}
-//		}
-//		return null;
-//	}
-	
-	
-	
-	
-	
+	}	
 
 }
