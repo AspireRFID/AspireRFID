@@ -619,24 +619,26 @@ public class MasterDataGMFCreateFromFile {
 		if (companyData.containsKey("urn:epcglobal:epcis:mda:Description"))
 			company.setDescription(companyData.get("urn:epcglobal:epcis:mda:Description"));
 		
-//		Set<Entry<String, String>> set1 = companyData.entrySet();
-//		Iterator<Entry<String, String>> itr1 = set1.iterator();
-//
-//		while (itr1.hasNext()) {
-//			Entry<String, String> item1 = itr1.next();
-//		
-//			if (item1.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Address") 
-//					&& !item1.getKey().equals("urn:epcglobal:epcis:mda:City") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Country") 
-//					&& !item1.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Description")) {
-//				for (int i = 0; i < MasterDataEditParts.getNewCompanyAttr().length; i++) {
-//					if ((item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "").equals(MasterDataEditParts.getNewCompanyAttr()[i]))) {
-//						switch(i) {
-//						case 0:company.setAttr1(companyData.get(item1.getKey()));break;case 1:company.setAttr2(companyData.get(item1.getKey()));break;case 2:company.setAttr3(companyData.get(item1.getKey()));break;case 3:company.setAttr4(companyData.get(item1.getKey()));break;case 4:company.setAttr5(companyData.get(item1.getKey()));break;case 5:company.setAttr6(companyData.get(item1.getKey()));break;case 6:company.setAttr7(companyData.get(item1.getKey()));break;case 7:company.setAttr8(companyData.get(item1.getKey()));break;case 8:company.setAttr9(companyData.get(item1.getKey()));break;case 9:company.setAttr10(companyData.get(item1.getKey()));break;case 10:company.setAtt11(companyData.get(item1.getKey()));break;case 11:company.setAttr12(companyData.get(item1.getKey()));break;case 12:company.setAttr13(companyData.get(item1.getKey()));break;case 13:company.setAttr14(companyData.get(item1.getKey()));break;case 14:company.setAttr15(companyData.get(item1.getKey()));break;case 15:company.setAttr16(companyData.get(item1.getKey()));break;case 16:company.setAttr17(companyData.get(item1.getKey()));break;case 17:company.setAttr18(companyData.get(item1.getKey()));break;case 18:company.setAttr19(companyData.get(item1.getKey()));break;case 19:company.setAttr20(companyData.get(item1.getKey()));break;case 20:company.setAttr21(companyData.get(item1.getKey()));break;case 21:company.setAttr22(companyData.get(item1.getKey()));break;case 22:company.setAttr23(companyData.get(item1.getKey()));break;case 23:company.setAttr24(companyData.get(item1.getKey()));break;case 24:company.setAttr25(companyData.get(item1.getKey()));break;case 25:company.setAttr26(companyData.get(item1.getKey()));break;case 26:company.setAttr27(companyData.get(item1.getKey()));break;case 27:company.setAttr28(companyData.get(item1.getKey()));break;case 28:company.setAttr29(companyData.get(item1.getKey()));break;case 29:company.setAttr30(companyData.get(item1.getKey()));break;case 30:company.setAttr31(companyData.get(item1.getKey()));break;case 31:company.setAttr32(companyData.get(item1.getKey()));break;case 32:company.setAttr33(companyData.get(item1.getKey()));break;case 33:company.setAttr34(companyData.get(item1.getKey()));break;case 34:company.setAttr35(companyData.get(item1.getKey()));break;case 35:company.setAttr36(companyData.get(item1.getKey()));break;case 36:company.setAttr37(companyData.get(item1.getKey()));break;case 37:company.setAttr38(companyData.get(item1.getKey()));break;case 38:company.setAttr39(companyData.get(item1.getKey()));break;case 39:company.setAttr40(companyData.get(item1.getKey()));break;case 40:company.setAttr41(companyData.get(item1.getKey()));break;case 41:company.setAttr42(companyData.get(item1.getKey()));break;case 42:company.setAttr43(companyData.get(item1.getKey()));break;case 43:company.setAttr44(companyData.get(item1.getKey()));break;case 44:company.setAttr45(companyData.get(item1.getKey()));break;case 45:company.setAttr46(companyData.get(item1.getKey()));break;case 46:company.setAttr47(companyData.get(item1.getKey()));break;case 47:company.setAttr48(companyData.get(item1.getKey()));break;case 48:company.setAttr49(companyData.get(item1.getKey()));break;case 49:company.setAttr50(companyData.get(item1.getKey()));
-//						}
-//					}
-//				}
-//			}
-//		}
+		//add custom attributes
+		Set<Entry<String, String>> set1 = companyData.entrySet();
+		Iterator<Entry<String, String>> itr1 = set1.iterator();
+
+		while (itr1.hasNext()) {
+			Entry<String, String> item1 = itr1.next();
+		
+			if (item1.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Address") 
+					&& !item1.getKey().equals("urn:epcglobal:epcis:mda:City") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Country") 
+					&& !item1.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item1.getKey().equals("urn:epcglobal:epcis:mda:Description")) {
+				for (int i = 0; i < MasterDataEditParts.getNewCompanyAttr().length; i++) {
+					if (!(MasterDataEditParts.getNewCompanyAttr()[i].isEmpty() && MasterDataEditParts.getNewCompanyAttr()[i] == "")) {
+					
+						switch(i) {
+						case 0:company.setAttr1(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 1:company.setAttr2(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 2:company.setAttr3(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 3:company.setAttr4(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 4:company.setAttr5(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 5:company.setAttr6(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 6:company.setAttr7(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 7:company.setAttr8(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 8:company.setAttr9(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 9:company.setAttr10(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 10:company.setAttr11(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 11:company.setAttr12(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 12:company.setAttr13(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 13:company.setAttr14(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 14:company.setAttr15(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 15:company.setAttr16(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 16:company.setAttr17(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 17:company.setAttr18(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 18:company.setAttr19(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;case 19:company.setAttr20(item1.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+companyData.get(item1.getKey()));break;
+						}
+					}
+				}
+			}
+		}
 		
 		Set<Entry<String, String>> set = companyData.entrySet();
 		Iterator<Entry<String, String>> itr = set.iterator();
@@ -676,24 +678,27 @@ public class MasterDataGMFCreateFromFile {
 				if (warehouseData.containsKey("urn:epcglobal:epcis:mda:Type") && warehouse instanceof BizLoc)
 					warehouse.setType(warehouseData.get("urn:epcglobal:epcis:mda:Type"));
 				
-//				Set<Entry<String, String>> set2 = warehouseData.entrySet();
-//				Iterator<Entry<String, String>> itr2 = set2.iterator();
-//
-//				while (itr2.hasNext()) {
-//					Entry<String, String> item2 = itr2.next();
-//				
-//					if (item2.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Type")
-//							&& !item2.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Description")
-//							&& !item2.getKey().equals("urn:epcglobal:epcis:mda:ReadPoint")) {
-//						for (int j = 0; j < MasterDataEditParts.getNewWarehouseAttr().length; j++) {
-//							if ((item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "").equals(MasterDataEditParts.getNewWarehouseAttr()[j]))) {
-//								switch(j) {
-//								case 0:warehouse.setAttr1(warehouseData.get(item2.getKey()));break;case 1:warehouse.setAttr2(warehouseData.get(item2.getKey()));break;case 2:warehouse.setAttr3(warehouseData.get(item2.getKey()));break;case 3:warehouse.setAttr4(warehouseData.get(item2.getKey()));break;case 4:warehouse.setAttr5(warehouseData.get(item2.getKey()));break;case 5:warehouse.setAttr6(warehouseData.get(item2.getKey()));break;case 6:warehouse.setAttr7(warehouseData.get(item2.getKey()));break;case 7:warehouse.setAttr8(warehouseData.get(item2.getKey()));break;case 8:warehouse.setAttr9(warehouseData.get(item2.getKey()));break;case 9:warehouse.setAttr10(warehouseData.get(item2.getKey()));break;case 10:warehouse.setAtt11(warehouseData.get(item2.getKey()));break;case 11:warehouse.setAttr12(warehouseData.get(item2.getKey()));break;case 12:warehouse.setAttr13(warehouseData.get(item2.getKey()));break;case 13:warehouse.setAttr14(warehouseData.get(item2.getKey()));break;case 14:warehouse.setAttr15(warehouseData.get(item2.getKey()));break;case 15:warehouse.setAttr16(warehouseData.get(item2.getKey()));break;case 16:warehouse.setAttr17(warehouseData.get(item2.getKey()));break;case 17:warehouse.setAttr18(warehouseData.get(item2.getKey()));break;case 18:warehouse.setAttr19(warehouseData.get(item2.getKey()));break;case 19:warehouse.setAttr20(warehouseData.get(item2.getKey()));break;case 20:warehouse.setAttr21(warehouseData.get(item2.getKey()));break;case 21:warehouse.setAttr22(warehouseData.get(item2.getKey()));break;case 22:warehouse.setAttr23(warehouseData.get(item2.getKey()));break;case 23:warehouse.setAttr24(warehouseData.get(item2.getKey()));break;case 24:warehouse.setAttr25(warehouseData.get(item2.getKey()));break;case 25:warehouse.setAttr26(warehouseData.get(item2.getKey()));break;case 26:warehouse.setAttr27(warehouseData.get(item2.getKey()));break;case 27:warehouse.setAttr28(warehouseData.get(item2.getKey()));break;case 28:warehouse.setAttr29(warehouseData.get(item2.getKey()));break;case 29:warehouse.setAttr30(warehouseData.get(item2.getKey()));break;case 30:warehouse.setAttr31(warehouseData.get(item2.getKey()));break;case 31:warehouse.setAttr32(warehouseData.get(item2.getKey()));break;case 32:warehouse.setAttr33(warehouseData.get(item2.getKey()));break;case 33:warehouse.setAttr34(warehouseData.get(item2.getKey()));break;case 34:warehouse.setAttr35(warehouseData.get(item2.getKey()));break;case 35:warehouse.setAttr36(warehouseData.get(item2.getKey()));break;case 36:warehouse.setAttr37(warehouseData.get(item2.getKey()));break;case 37:warehouse.setAttr38(warehouseData.get(item2.getKey()));break;case 38:warehouse.setAttr39(warehouseData.get(item2.getKey()));break;case 39:warehouse.setAttr40(warehouseData.get(item2.getKey()));break;case 40:warehouse.setAttr41(warehouseData.get(item2.getKey()));break;case 41:warehouse.setAttr42(warehouseData.get(item2.getKey()));break;case 42:warehouse.setAttr43(warehouseData.get(item2.getKey()));break;case 43:warehouse.setAttr44(warehouseData.get(item2.getKey()));break;case 44:warehouse.setAttr45(warehouseData.get(item2.getKey()));break;case 45:warehouse.setAttr46(warehouseData.get(item2.getKey()));break;case 46:warehouse.setAttr47(warehouseData.get(item2.getKey()));break;case 47:warehouse.setAttr48(warehouseData.get(item2.getKey()));break;case 48:warehouse.setAttr49(warehouseData.get(item2.getKey()));break;case 49:warehouse.setAttr50(warehouseData.get(item2.getKey()));
-//								}
-//							}
-//						}
-//					}
-//				}
+				//add custom attributes
+				Set<Entry<String, String>> set2 = warehouseData.entrySet();
+				Iterator<Entry<String, String>> itr2 = set2.iterator();
+
+
+				while (itr2.hasNext()) {
+					Entry<String, String> item2 = itr2.next();
+				
+					if (item2.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Address") 
+							&& !item2.getKey().equals("urn:epcglobal:epcis:mda:City") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Country") 
+							&& !item2.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Description")) {
+						for (int k = 0; k < MasterDataEditParts.getNewWarehouseAttr().length; k++) {
+							if (!(MasterDataEditParts.getNewWarehouseAttr()[k].isEmpty() && MasterDataEditParts.getNewWarehouseAttr()[k] == "")) {
+							
+								switch(k) {
+								case 0:warehouse.setAttr1(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 1:warehouse.setAttr2(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 2:warehouse.setAttr3(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 3:warehouse.setAttr4(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 4:warehouse.setAttr5(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 5:warehouse.setAttr6(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 6:warehouse.setAttr7(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 7:warehouse.setAttr8(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 8:warehouse.setAttr9(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 9:warehouse.setAttr10(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 10:warehouse.setAttr11(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 11:warehouse.setAttr12(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 12:warehouse.setAttr13(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 13:warehouse.setAttr14(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 14:warehouse.setAttr15(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 15:warehouse.setAttr16(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 16:warehouse.setAttr17(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 17:warehouse.setAttr18(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 18:warehouse.setAttr19(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 19:warehouse.setAttr20(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;
+								}
+							}
+						}
+					}
+				}
 				
 				//add the containers
 				if (warehouseData.containsKey("urn:epcglobal:epcis:mda:ReadPoint")) {
@@ -739,23 +744,27 @@ public class MasterDataGMFCreateFromFile {
 						if (containerData.containsKey("urn:epcglobal:epcis:mda:Type") && container instanceof ReadPoint)
 							container.setDescription(containerData.get("urn:epcglobal:epcis:mda:Type"));
 						
-//						Set<Entry<String, String>> set3 = containerData.entrySet();
-//						Iterator<Entry<String, String>> itr3 = set3.iterator();
-//
-//						while (itr3.hasNext()) {
-//							Entry<String, String> item2 = itr3.next();
-//						
-//							if (item2.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Type")
-//									&& !item2.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Description")) {
-//								for (int j = 0; j < MasterDataEditParts.getNewReadPointAttr().length; j++) {
-//									if ((item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "").equals(MasterDataEditParts.getNewReadPointAttr()[j]))) {
-//										switch(j) {
-//										case 0:container.setAttr1(containerData.get(item2.getKey()));break;case 1:container.setAttr2(containerData.get(item2.getKey()));break;case 2:container.setAttr3(containerData.get(item2.getKey()));break;case 3:container.setAttr4(containerData.get(item2.getKey()));break;case 4:container.setAttr5(containerData.get(item2.getKey()));break;case 5:container.setAttr6(containerData.get(item2.getKey()));break;case 6:container.setAttr7(containerData.get(item2.getKey()));break;case 7:container.setAttr8(containerData.get(item2.getKey()));break;case 8:container.setAttr9(containerData.get(item2.getKey()));break;case 9:container.setAttr10(containerData.get(item2.getKey()));break;case 10:container.setAtt11(containerData.get(item2.getKey()));break;case 11:container.setAttr12(containerData.get(item2.getKey()));break;case 12:container.setAttr13(containerData.get(item2.getKey()));break;case 13:container.setAttr14(containerData.get(item2.getKey()));break;case 14:container.setAttr15(containerData.get(item2.getKey()));break;case 15:container.setAttr16(containerData.get(item2.getKey()));break;case 16:container.setAttr17(containerData.get(item2.getKey()));break;case 17:container.setAttr18(containerData.get(item2.getKey()));break;case 18:container.setAttr19(containerData.get(item2.getKey()));break;case 19:container.setAttr20(containerData.get(item2.getKey()));break;case 20:container.setAttr21(containerData.get(item2.getKey()));break;case 21:container.setAttr22(containerData.get(item2.getKey()));break;case 22:container.setAttr23(containerData.get(item2.getKey()));break;case 23:container.setAttr24(containerData.get(item2.getKey()));break;case 24:container.setAttr25(containerData.get(item2.getKey()));break;case 25:container.setAttr26(containerData.get(item2.getKey()));break;case 26:container.setAttr27(containerData.get(item2.getKey()));break;case 27:container.setAttr28(containerData.get(item2.getKey()));break;case 28:container.setAttr29(containerData.get(item2.getKey()));break;case 29:container.setAttr30(containerData.get(item2.getKey()));break;case 30:container.setAttr31(containerData.get(item2.getKey()));break;case 31:container.setAttr32(containerData.get(item2.getKey()));break;case 32:container.setAttr33(containerData.get(item2.getKey()));break;case 33:container.setAttr34(containerData.get(item2.getKey()));break;case 34:container.setAttr35(containerData.get(item2.getKey()));break;case 35:container.setAttr36(containerData.get(item2.getKey()));break;case 36:container.setAttr37(containerData.get(item2.getKey()));break;case 37:container.setAttr38(containerData.get(item2.getKey()));break;case 38:container.setAttr39(containerData.get(item2.getKey()));break;case 39:container.setAttr40(containerData.get(item2.getKey()));break;case 40:container.setAttr41(containerData.get(item2.getKey()));break;case 41:container.setAttr42(containerData.get(item2.getKey()));break;case 42:container.setAttr43(containerData.get(item2.getKey()));break;case 43:container.setAttr44(containerData.get(item2.getKey()));break;case 44:container.setAttr45(containerData.get(item2.getKey()));break;case 45:container.setAttr46(containerData.get(item2.getKey()));break;case 46:container.setAttr47(containerData.get(item2.getKey()));break;case 47:container.setAttr48(containerData.get(item2.getKey()));break;case 48:container.setAttr49(containerData.get(item2.getKey()));break;case 49:container.setAttr50(containerData.get(item2.getKey()));
-//										}
-//									}
-//								}
-//							}
-//						}
+						//add custom attributes
+						Set<Entry<String, String>> set3 = containerData.entrySet();
+						Iterator<Entry<String, String>> itr3 = set3.iterator();
+
+
+						while (itr3.hasNext()) {
+							Entry<String, String> item2 = itr3.next();
+						
+							if (item2.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Address") 
+									&& !item2.getKey().equals("urn:epcglobal:epcis:mda:City") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Country") 
+									&& !item2.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Description")) {
+								for (int l = 0; l < MasterDataEditParts.getNewReadPointAttr().length; l++) {
+									if (!(MasterDataEditParts.getNewReadPointAttr()[l].isEmpty() && MasterDataEditParts.getNewReadPointAttr()[l] == "")) {
+									
+										switch(l) {
+										case 0:container.setAttr1(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 1:container.setAttr2(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 2:container.setAttr3(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 3:container.setAttr4(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 4:container.setAttr5(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 5:container.setAttr6(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 6:container.setAttr7(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 7:container.setAttr8(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 8:container.setAttr9(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 9:container.setAttr10(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 10:container.setAttr11(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 11:container.setAttr12(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 12:container.setAttr13(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 13:container.setAttr14(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 14:container.setAttr15(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 15:container.setAttr16(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 16:container.setAttr17(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 17:container.setAttr18(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 18:container.setAttr19(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 19:container.setAttr20(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 				
@@ -812,24 +821,27 @@ public class MasterDataGMFCreateFromFile {
 				if (warehouseDataChild.containsKey("urn:epcglobal:epcis:mda:Type") && warehouseNew instanceof BizLoc)
 					warehouseNew.setType(warehouseDataChild.get("urn:epcglobal:epcis:mda:Type"));	
 				
-//				Set<Entry<String, String>> set2 = warehouseDataChild.entrySet();
-//				Iterator<Entry<String, String>> itr2 = set2.iterator();
-//
-//				while (itr2.hasNext()) {
-//					Entry<String, String> item2 = itr2.next();
-//				
-//					if (item2.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Type")
-//							&& !item2.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Description")
-//						&& !item2.getKey().equals("urn:epcglobal:epcis:mda:ReadPoint")) {
-//						for (int j = 0; j < MasterDataEditParts.getNewWarehouseAttr().length; j++) {
-//							if ((item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "").equals(MasterDataEditParts.getNewWarehouseAttr()[j]))) {
-//								switch(j) {
-//								case 0:warehouse.setAttr1(warehouseDataChild.get(item2.getKey()));break;case 1:warehouse.setAttr2(warehouseDataChild.get(item2.getKey()));break;case 2:warehouse.setAttr3(warehouseDataChild.get(item2.getKey()));break;case 3:warehouse.setAttr4(warehouseDataChild.get(item2.getKey()));break;case 4:warehouse.setAttr5(warehouseDataChild.get(item2.getKey()));break;case 5:warehouse.setAttr6(warehouseDataChild.get(item2.getKey()));break;case 6:warehouse.setAttr7(warehouseDataChild.get(item2.getKey()));break;case 7:warehouse.setAttr8(warehouseDataChild.get(item2.getKey()));break;case 8:warehouse.setAttr9(warehouseDataChild.get(item2.getKey()));break;case 9:warehouse.setAttr10(warehouseDataChild.get(item2.getKey()));break;case 10:warehouse.setAtt11(warehouseDataChild.get(item2.getKey()));break;case 11:warehouse.setAttr12(warehouseDataChild.get(item2.getKey()));break;case 12:warehouse.setAttr13(warehouseDataChild.get(item2.getKey()));break;case 13:warehouse.setAttr14(warehouseDataChild.get(item2.getKey()));break;case 14:warehouse.setAttr15(warehouseDataChild.get(item2.getKey()));break;case 15:warehouse.setAttr16(warehouseDataChild.get(item2.getKey()));break;case 16:warehouse.setAttr17(warehouseDataChild.get(item2.getKey()));break;case 17:warehouse.setAttr18(warehouseDataChild.get(item2.getKey()));break;case 18:warehouse.setAttr19(warehouseDataChild.get(item2.getKey()));break;case 19:warehouse.setAttr20(warehouseDataChild.get(item2.getKey()));break;case 20:warehouse.setAttr21(warehouseDataChild.get(item2.getKey()));break;case 21:warehouse.setAttr22(warehouseDataChild.get(item2.getKey()));break;case 22:warehouse.setAttr23(warehouseDataChild.get(item2.getKey()));break;case 23:warehouse.setAttr24(warehouseDataChild.get(item2.getKey()));break;case 24:warehouse.setAttr25(warehouseDataChild.get(item2.getKey()));break;case 25:warehouse.setAttr26(warehouseDataChild.get(item2.getKey()));break;case 26:warehouse.setAttr27(warehouseDataChild.get(item2.getKey()));break;case 27:warehouse.setAttr28(warehouseDataChild.get(item2.getKey()));break;case 28:warehouse.setAttr29(warehouseDataChild.get(item2.getKey()));break;case 29:warehouse.setAttr30(warehouseDataChild.get(item2.getKey()));break;case 30:warehouse.setAttr31(warehouseDataChild.get(item2.getKey()));break;case 31:warehouse.setAttr32(warehouseDataChild.get(item2.getKey()));break;case 32:warehouse.setAttr33(warehouseDataChild.get(item2.getKey()));break;case 33:warehouse.setAttr34(warehouseDataChild.get(item2.getKey()));break;case 34:warehouse.setAttr35(warehouseDataChild.get(item2.getKey()));break;case 35:warehouse.setAttr36(warehouseDataChild.get(item2.getKey()));break;case 36:warehouse.setAttr37(warehouseDataChild.get(item2.getKey()));break;case 37:warehouse.setAttr38(warehouseDataChild.get(item2.getKey()));break;case 38:warehouse.setAttr39(warehouseDataChild.get(item2.getKey()));break;case 39:warehouse.setAttr40(warehouseDataChild.get(item2.getKey()));break;case 40:warehouse.setAttr41(warehouseDataChild.get(item2.getKey()));break;case 41:warehouse.setAttr42(warehouseDataChild.get(item2.getKey()));break;case 42:warehouse.setAttr43(warehouseDataChild.get(item2.getKey()));break;case 43:warehouse.setAttr44(warehouseDataChild.get(item2.getKey()));break;case 44:warehouse.setAttr45(warehouseDataChild.get(item2.getKey()));break;case 45:warehouse.setAttr46(warehouseDataChild.get(item2.getKey()));break;case 46:warehouse.setAttr47(warehouseDataChild.get(item2.getKey()));break;case 47:warehouse.setAttr48(warehouseDataChild.get(item2.getKey()));break;case 48:warehouse.setAttr49(warehouseDataChild.get(item2.getKey()));break;case 49:warehouse.setAttr50(warehouseDataChild.get(item2.getKey()));
-//								}
-//							}
-//						}
-//					}
-//				}
+				//add custom attributes
+				Set<Entry<String, String>> set2 = warehouseData.entrySet();
+				Iterator<Entry<String, String>> itr2 = set2.iterator();
+
+
+				while (itr2.hasNext()) {
+					Entry<String, String> item2 = itr2.next();
+				
+					if (item2.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Address") 
+							&& !item2.getKey().equals("urn:epcglobal:epcis:mda:City") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Country") 
+							&& !item2.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Description")) {
+						for (int k = 0; k < MasterDataEditParts.getNewWarehouseAttr().length; k++) {
+							if (!(MasterDataEditParts.getNewWarehouseAttr()[k].isEmpty() && MasterDataEditParts.getNewWarehouseAttr()[k] == "")) {
+							
+								switch(k) {
+								case 0:warehouse.setAttr1(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 1:warehouse.setAttr2(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 2:warehouse.setAttr3(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 3:warehouse.setAttr4(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 4:warehouse.setAttr5(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 5:warehouse.setAttr6(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 6:warehouse.setAttr7(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 7:warehouse.setAttr8(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 8:warehouse.setAttr9(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 9:warehouse.setAttr10(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 10:warehouse.setAttr11(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 11:warehouse.setAttr12(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 12:warehouse.setAttr13(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 13:warehouse.setAttr14(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 14:warehouse.setAttr15(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 15:warehouse.setAttr16(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 16:warehouse.setAttr17(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 17:warehouse.setAttr18(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 18:warehouse.setAttr19(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;case 19:warehouse.setAttr20(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+warehouseData.get(item2.getKey()));break;
+								}
+							}
+						}
+					}
+				}
 	
 				//add the containers
 				if (warehouseDataChild.containsKey("urn:epcglobal:epcis:mda:ReadPoint")) {
@@ -875,23 +887,27 @@ public class MasterDataGMFCreateFromFile {
 						if (containerData.containsKey("urn:epcglobal:epcis:mda:Type") && container instanceof ReadPoint)
 							container.setDescription(containerData.get("urn:epcglobal:epcis:mda:Type"));
 						
-//						Set<Entry<String, String>> set3 = containerData.entrySet();
-//						Iterator<Entry<String, String>> itr3 = set3.iterator();
-//
-//						while (itr3.hasNext()) {
-//							Entry<String, String> item2 = itr3.next();
-//						
-//							if (item2.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Type")
-//									&& !item2.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Description")) {
-//								for (int j = 0; j < MasterDataEditParts.getNewReadPointAttr().length; j++) {
-//									if ((item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "").equals(MasterDataEditParts.getNewReadPointAttr()[j]))) {
-//										switch(j) {
-//										case 0:container.setAttr1(containerData.get(item2.getKey()));break;case 1:container.setAttr2(containerData.get(item2.getKey()));break;case 2:container.setAttr3(containerData.get(item2.getKey()));break;case 3:container.setAttr4(containerData.get(item2.getKey()));break;case 4:container.setAttr5(containerData.get(item2.getKey()));break;case 5:container.setAttr6(containerData.get(item2.getKey()));break;case 6:container.setAttr7(containerData.get(item2.getKey()));break;case 7:container.setAttr8(containerData.get(item2.getKey()));break;case 8:container.setAttr9(containerData.get(item2.getKey()));break;case 9:container.setAttr10(containerData.get(item2.getKey()));break;case 10:container.setAtt11(containerData.get(item2.getKey()));break;case 11:container.setAttr12(containerData.get(item2.getKey()));break;case 12:container.setAttr13(containerData.get(item2.getKey()));break;case 13:container.setAttr14(containerData.get(item2.getKey()));break;case 14:container.setAttr15(containerData.get(item2.getKey()));break;case 15:container.setAttr16(containerData.get(item2.getKey()));break;case 16:container.setAttr17(containerData.get(item2.getKey()));break;case 17:container.setAttr18(containerData.get(item2.getKey()));break;case 18:container.setAttr19(containerData.get(item2.getKey()));break;case 19:container.setAttr20(containerData.get(item2.getKey()));break;case 20:container.setAttr21(containerData.get(item2.getKey()));break;case 21:container.setAttr22(containerData.get(item2.getKey()));break;case 22:container.setAttr23(containerData.get(item2.getKey()));break;case 23:container.setAttr24(containerData.get(item2.getKey()));break;case 24:container.setAttr25(containerData.get(item2.getKey()));break;case 25:container.setAttr26(containerData.get(item2.getKey()));break;case 26:container.setAttr27(containerData.get(item2.getKey()));break;case 27:container.setAttr28(containerData.get(item2.getKey()));break;case 28:container.setAttr29(containerData.get(item2.getKey()));break;case 29:container.setAttr30(containerData.get(item2.getKey()));break;case 30:container.setAttr31(containerData.get(item2.getKey()));break;case 31:container.setAttr32(containerData.get(item2.getKey()));break;case 32:container.setAttr33(containerData.get(item2.getKey()));break;case 33:container.setAttr34(containerData.get(item2.getKey()));break;case 34:container.setAttr35(containerData.get(item2.getKey()));break;case 35:container.setAttr36(containerData.get(item2.getKey()));break;case 36:container.setAttr37(containerData.get(item2.getKey()));break;case 37:container.setAttr38(containerData.get(item2.getKey()));break;case 38:container.setAttr39(containerData.get(item2.getKey()));break;case 39:container.setAttr40(containerData.get(item2.getKey()));break;case 40:container.setAttr41(containerData.get(item2.getKey()));break;case 41:container.setAttr42(containerData.get(item2.getKey()));break;case 42:container.setAttr43(containerData.get(item2.getKey()));break;case 43:container.setAttr44(containerData.get(item2.getKey()));break;case 44:container.setAttr45(containerData.get(item2.getKey()));break;case 45:container.setAttr46(containerData.get(item2.getKey()));break;case 46:container.setAttr47(containerData.get(item2.getKey()));break;case 47:container.setAttr48(containerData.get(item2.getKey()));break;case 48:container.setAttr49(containerData.get(item2.getKey()));break;case 49:container.setAttr50(containerData.get(item2.getKey()));
-//										}
-//									}
-//								}
-//							}
-//						}
+						//add custom attributes
+						Set<Entry<String, String>> set3 = containerData.entrySet();
+						Iterator<Entry<String, String>> itr3 = set3.iterator();
+
+
+						while (itr3.hasNext()) {
+							Entry<String, String> item2 = itr3.next();
+						
+							if (item2.getKey().startsWith("urn:epcglobal:epcis:mda:") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Address") 
+									&& !item2.getKey().equals("urn:epcglobal:epcis:mda:City") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Country") 
+									&& !item2.getKey().equals("urn:epcglobal:epcis:mda:Name") && !item2.getKey().equals("urn:epcglobal:epcis:mda:Description")) {
+								for (int l = 0; l < MasterDataEditParts.getNewReadPointAttr().length; l++) {
+									if (!(MasterDataEditParts.getNewReadPointAttr()[l].isEmpty() && MasterDataEditParts.getNewReadPointAttr()[l] == "")) {
+									
+										switch(l) {
+										case 0:container.setAttr1(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 1:container.setAttr2(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 2:container.setAttr3(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 3:container.setAttr4(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 4:container.setAttr5(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 5:container.setAttr6(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 6:container.setAttr7(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 7:container.setAttr8(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 8:container.setAttr9(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 9:container.setAttr10(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 10:container.setAttr11(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 11:container.setAttr12(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 12:container.setAttr13(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 13:container.setAttr14(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 14:container.setAttr15(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 15:container.setAttr16(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 16:container.setAttr17(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 17:container.setAttr18(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 18:container.setAttr19(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;case 19:container.setAttr20(item2.getKey().replaceFirst("urn:epcglobal:epcis:mda:", "")+"_"+containerData.get(item2.getKey()));break;
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 				
