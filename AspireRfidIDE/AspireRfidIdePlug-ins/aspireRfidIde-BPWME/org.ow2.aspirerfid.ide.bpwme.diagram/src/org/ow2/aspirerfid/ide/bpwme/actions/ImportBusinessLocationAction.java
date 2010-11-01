@@ -1,9 +1,14 @@
 package org.ow2.aspirerfid.ide.bpwme.actions;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.Action;
@@ -94,10 +99,21 @@ public class ImportBusinessLocationAction extends Action{
 		
 		
 		String lFileName = getLocationFile(newDir);
-		
-		//System.out.println(lFileName);
 		//if it is, open the file
 		if(lFileName != null) {
+			//test
+			ResourceSet resourceSet = new ResourceSetImpl();
+			Resource locationDiagram = resourceSet.createResource(URI.createFileURI(lFileName));
+			System.out.println(locationDiagram);
+			try {
+				locationDiagram.load(null);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			for(EObject eobject:locationDiagram.getContents()) {
+				System.out.println(eobject.getClass());
+			}			
+			//test done
 			MasterDataFileUtil.openMasterDataFile(lFileName);
 			MasterDataBuilder mdb = MasterDataBuilder.getInstance();
 			
