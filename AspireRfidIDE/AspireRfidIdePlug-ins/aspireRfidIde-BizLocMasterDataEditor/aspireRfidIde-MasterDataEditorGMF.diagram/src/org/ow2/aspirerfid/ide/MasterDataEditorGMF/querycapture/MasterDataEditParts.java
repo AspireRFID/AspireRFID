@@ -1043,7 +1043,7 @@ public class MasterDataEditParts {
 	/**
 	 * Sort the HashMap based on its keys
 	 */
-	private static HashMap sortByKey(HashMap map) {
+	public static HashMap sortByKey(HashMap map) {
 		List list = new LinkedList(map.entrySet());
 		Collections.sort(list, new Comparator() {
 			public int compare(Object o1, Object o2) {
