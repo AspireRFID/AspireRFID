@@ -236,6 +236,8 @@ public class BpwmeActionProvider extends CommonActionProvider
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		
 		for (int i = 0; i < page.getEditorReferences().length; i++) {
+			allParts.clear();
+			
 			IEditorPart editorPart = page.getEditorReferences()[i].getEditor(true);
 			
 			if (editorPart.getSite().getId().equals(MasterDataEditorGMFDiagramEditor.ID)) {
@@ -252,10 +254,6 @@ public class BpwmeActionProvider extends CommonActionProvider
 						allParts.add((AbstractEditPart) companyPart.getChildren().get(j));
 						
 						if (MasterDataEditParts.isWarehouse((AbstractEditPart) companyPart.getChildren().get(j))) {
-							EObject element = (EObjectImpl) ((View) ((AbstractEditPart) companyPart.getChildren().get(j)).getModel()).getElement();
-							mapMasterDataElementWithFileName.put(element, part);
-						}
-						else if (MasterDataEditParts.isContainer((AbstractEditPart) companyPart.getChildren().get(j))) {
 							EObject element = (EObjectImpl) ((View) ((AbstractEditPart) companyPart.getChildren().get(j)).getModel()).getElement();
 							mapMasterDataElementWithFileName.put(element, part);
 						}
