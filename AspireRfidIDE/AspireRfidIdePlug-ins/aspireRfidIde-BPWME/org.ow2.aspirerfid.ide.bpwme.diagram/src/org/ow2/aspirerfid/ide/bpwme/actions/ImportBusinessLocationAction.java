@@ -101,34 +101,22 @@ public class ImportBusinessLocationAction extends Action{
 		String lFileName = getLocationFile(newDir);
 		//if it is, open the file
 		if(lFileName != null) {
-			//test
-			ResourceSet resourceSet = new ResourceSetImpl();
-			Resource locationDiagram = resourceSet.createResource(URI.createFileURI(lFileName));
-			System.out.println(locationDiagram);
-			try {
-				locationDiagram.load(null);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			for(EObject eobject:locationDiagram.getContents()) {
-				System.out.println(eobject.getClass());
-			}			
-			//test done
-			MasterDataFileUtil.openMasterDataFile(lFileName);
-			MasterDataBuilder mdb = MasterDataBuilder.getInstance();
-			
+			MasterDataBuilder mdb = MasterDataBuilder.getInstance();			
 			mdb.setCLCBProc(clcb);
 			
-			HashMap<String, HashMap<String, String>> companyMap = 
-				MasterDataContentsProvider.getCompanyUriAttributesValues();
-			HashMap<String, HashMap<String, String>> warehouseMap = 
-				MasterDataContentsProvider.getWarehouseUriAttributesValues();
-			HashMap<String, HashMap<String, String>> readpointMap = 
-				MasterDataContentsProvider.getReadPointUriAttributesValues();
+			MasterDataContentsProvider mcp = new MasterDataContentsProvider();
+			mcp.setCompany(lFileName);
 			
+			
+			HashMap<String, HashMap<String, String>> companyMap = 
+				mcp.getCompanyModelUriAttributesValues();
+			HashMap<String, HashMap<String, String>> warehouseMap = 
+				mcp.getWarehouseModelUriAttributesValuesBpwme();
+			HashMap<String, HashMap<String, String>> readpointMap = 
+				mcp.getReadPointModelUriAttributesValuesBpwme();
+
 			mdb.setBusinessStepReadPoint(companyMap, warehouseMap, readpointMap);
 			
-			MainUtil.activateEditor(BpwmeDiagramEditor.ID);
 		}else {//else create a new one			
 			MainUtil.executeCommand("org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMF.command");
 		}
