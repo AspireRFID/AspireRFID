@@ -138,7 +138,7 @@ public class MasterDataBuilder {
 		VocabularyElementType companyElement = createCompanyElement(companyMap);
 		blist.getVocabularyElement().add(companyElement);
 		
-		List<VocabularyElementType> wlist = createWarehouseList(warehouseMap);
+		List<VocabularyElementType> wlist = createWarehouseList(companyMap,warehouseMap);
 		for(VocabularyElementType element : wlist) {
 			blist.getVocabularyElement().add(element);
 		}
@@ -153,29 +153,21 @@ public class MasterDataBuilder {
 
 		MainControl mc = MainControl.getMainControl();
 		mc.saveObject();
-
-		
-//		if(masterEditor != null) {
-//			masterEditor.setDirty(true);
-//		}else {
-//			MainControl mc = MainControl.getMainControl();
-//			mc.saveObject();
-//		}
-//		notifyListeners();
 	}
 	
 	private VocabularyElementType createCompanyElement(
 			HashMap<String, HashMap<String, String>> companyMap) {
 		String prefix = "urn:epcglobal:epcis:mda:";
 		VocabularyElementType companyElement = new VocabularyElementType();
+		//should be only one company for every bizloc diagram
 		if(companyMap.keySet().size() != 1) {
-			System.out.println("Error Company Map");
+			System.out.println("Error Company Map, More than one company");
 			return null;
 		}
 		
 		for(String key : companyMap.keySet()) {
 			MasterDataUtil.setVocabularyElementID(companyElement, key);
-
+			//set the attributes if it is not WarehouseChildren
 			HashMap<String, String> attrs = companyMap.get(key);
 			for(String attr : attrs.keySet()) {
 				String value = attrs.get(attr);
@@ -188,13 +180,22 @@ public class MasterDataBuilder {
 	}
 	
 	private List<VocabularyElementType> createWarehouseList(
+			HashMap<String, HashMap<String, String>> companyMap,
 			HashMap<String, HashMap<String, String>> warehouseMap) {
+		HashMap<String, String> nameMap = prepare(companyMap, warehouseMap);
+		
 		String prefix = "urn:epcglobal:epcis:mda:";
 		ArrayList<VocabularyElementType> warehouseList = new ArrayList<VocabularyElementType>();
 		VocabularyElementType warehouseElement;
 		for(String key : warehouseMap.keySet()) {
-			warehouseElement = new VocabularyElementType();			
-			MasterDataUtil.setVocabularyElementID(warehouseElement, key);
+			warehouseElement = new VocabularyElementType();
+			String realName = nameMap.get(key);
+			if(realName != null) {
+				MasterDataUtil.setVocabularyElementID(warehouseElement, realName);
+			}else {
+				MasterDataUtil.setVocabularyElementID(warehouseElement, key);
+			}
+			
 			HashMap<String, String> attrs = warehouseMap.get(key);
 			for(String attr : attrs.keySet()) {
 				String value = attrs.get(attr);
@@ -203,9 +204,54 @@ public class MasterDataBuilder {
 				}
 			}			
 			warehouseList.add(warehouseElement);
-		}		
+		}
 		return warehouseList;
 	}
+	
+	//prepare the name mapping from simple id to cancatinate id
+	private HashMap<String, String> prepare(			
+			HashMap<String, HashMap<String, String>> companyMap,
+			HashMap<String, HashMap<String, String>> warehouseMap) {
+		HashMap<String, String> nameMap = new HashMap<String, String>();
+		for (String key: companyMap.keySet()) {
+			HashMap<String, String> attrs = companyMap.get(key);
+			String children = attrs.get("WarehouseChildren");
+			if(children != null) {
+				String childs[] = children.split(",");
+				for(String child:childs) {
+					nameMap.put(child, key + "," +child);
+				}
+			}
+		}		
+		for (String key: warehouseMap.keySet()) {
+			HashMap<String, String> attrs = warehouseMap.get(key);
+			String children = attrs.get("WarehouseChildren");
+			if(children != null) {
+				String childs[] = children.split(",");
+				for(String child:childs) {
+					String realName = nameMap.get(key);
+					if(realName != null) {
+						nameMap.put(child, realName + "," +child);
+						for(String fakeName:nameMap.keySet()) {
+							String fakeValue = nameMap.get(fakeName);
+							if(fakeValue.startsWith(child)) {
+								fakeValue = realName + "," + fakeValue;
+								nameMap.put(fakeName, fakeValue);
+							}
+						}
+					}else {
+						nameMap.put(child, key + "," +child);
+					}					
+				}
+			}
+		}
+//		for(String key:nameMap.keySet()) {
+//			System.out.println(key + "->" +nameMap.get(key));
+//		}
+		
+		return nameMap;
+	}
+	
 	
 	private List<VocabularyElementType> createReadpointList(
 			HashMap<String, HashMap<String, String>> warehouseMap,

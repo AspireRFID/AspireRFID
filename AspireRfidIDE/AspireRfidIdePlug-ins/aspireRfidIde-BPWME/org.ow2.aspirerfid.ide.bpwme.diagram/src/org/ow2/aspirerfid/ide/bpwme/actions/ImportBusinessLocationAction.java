@@ -113,8 +113,8 @@ public class ImportBusinessLocationAction extends Action{
 			HashMap<String, HashMap<String, String>> warehouseMap = 
 				mcp.getWarehouseModelUriAttributesValuesBpwme();
 			HashMap<String, HashMap<String, String>> readpointMap = 
-				mcp.getReadPointModelUriAttributesValuesBpwme();
-
+				mcp.getReadPointModelUriAttributesValuesBpwme();			
+			
 			mdb.setBusinessStepReadPoint(companyMap, warehouseMap, readpointMap);
 			
 		}else {//else create a new one			
