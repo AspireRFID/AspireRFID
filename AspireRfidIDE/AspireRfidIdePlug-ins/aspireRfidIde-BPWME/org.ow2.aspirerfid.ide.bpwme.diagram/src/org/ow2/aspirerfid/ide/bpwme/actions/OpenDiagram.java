@@ -70,6 +70,7 @@ public class OpenDiagram extends AbstractHandler{
 			} catch (PartInitException e) {
 				e.printStackTrace();
 			}
+			mc.setBpwmeURI(fileURI);
 			mc.setAPDLFileName(fileURI);	
 			mc.rebuild();
 			mc.mapModels();

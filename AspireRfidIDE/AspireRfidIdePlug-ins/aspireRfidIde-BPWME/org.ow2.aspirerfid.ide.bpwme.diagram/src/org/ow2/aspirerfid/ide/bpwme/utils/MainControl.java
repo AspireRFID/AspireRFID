@@ -137,6 +137,7 @@ public class MainControl {
 //		+"APDLs"+fileSeparator;
 	//apdl file uri
 	private URI apdlURI;
+	private URI bpwmeURI;
 	//assistant file path. assistant file now is to record
 	//the event type of each ebproc
 	//private String assistantPath; 
@@ -200,6 +201,14 @@ public class MainControl {
 		return objectMap;
 	}
 
+	public void setBpwmeURI(URI bpwmeURI) {
+		this.bpwmeURI = bpwmeURI;
+	}
+	
+	public URI getBpwmeURI() {
+		return bpwmeURI;
+	}
+	
 	/**
 	 * From diagram URI get Apdl URI.
 	 * Also create the assistant file under the same directory.

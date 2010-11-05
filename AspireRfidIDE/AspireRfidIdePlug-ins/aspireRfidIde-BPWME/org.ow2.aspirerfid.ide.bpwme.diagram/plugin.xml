@@ -58,6 +58,13 @@
             id="org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor"
             name="EC Spec Editor">
       </editor>
+      <editor
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.neweditor.NewEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            extensions="xml"
+            id="bpwme.diagram.xmleditor.NewEditor"
+            name="New Editor">
+      </editor>
    </extension>
    
    <extension point="org.eclipse.ui.contexts" id="ui-context">

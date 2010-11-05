@@ -190,6 +190,7 @@ public class BpwmeDiagramEditorUtil {
 		//yluo add
 		MainControl mc = MainControl.getMainControl();
 		mc.setAPDLFileName(diagramURI);
+		mc.setBpwmeURI(diagramURI);
 		//yluo add done
 
 		

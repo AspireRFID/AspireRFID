@@ -22,12 +22,15 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.ow2.aspirerfid.ide.bpwme.diagram.neweditor.NewEditor;
+import org.ow2.aspirerfid.ide.bpwme.diagram.neweditor.NewInput;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.PathEditorInput;
 import org.ow2.aspirerfid.ide.bpwme.diagram.xmleditor.XMLEditor;
@@ -63,10 +66,16 @@ public class ShowXMLEditor extends AbstractHandler {
 			return null;
 		}
 		IPath location= new Path(apdlURI.toFileString());
-		PathEditorInput input= new PathEditorInput(location);
+		PathEditorInput pathInput= new PathEditorInput(location);
+		
+		NewInput ni = new NewInput();
+		ni.setPei(pathInput);
+		ni.setUei(new URIEditorInput(mc.getBpwmeURI()));
+		
 		IWorkbenchPage page = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage();
 		try {
-			page.openEditor(input, XMLEditor.ID, false);
+			//page.openEditor(input, XMLEditor.ID, false);
+			page.openEditor(ni, NewEditor.ID, false);			
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
