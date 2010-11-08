@@ -1,4 +1,4 @@
-package org.ow2.aspirerfid.ide.bpwme.diagram.neweditor;
+package org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IPageChangedListener;
@@ -11,19 +11,26 @@ import org.eclipse.ui.part.MultiPageEditorPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.xmleditor.XMLEditor;
 
-public class NewEditor extends MultiPageEditorPart{
+
+/**
+ * Combo editor is a multipage editor that combines BPWME editor and XML editor
+ * 
+ * @author yluo
+ *
+ */
+
+public class ComboEditor extends MultiPageEditorPart{
 	
-	public static final String ID = "bpwme.diagram.xmleditor.NewEditor";
+	public static final String ID = "bpwme.diagram.comboeditor.ComboEditor";
 
 	private XMLEditor xmlEditor;
 	private BpwmeDiagramEditor bpwmeEditor;
 	private PageChangeListener listener;
 	
-	
 	private void createXMLPage() {
 		xmlEditor = new XMLEditor();
 		try {
-			int index = addPage(xmlEditor, ((NewInput)getEditorInput()).getPei());
+			int index = addPage(xmlEditor, ((ComboInput)getEditorInput()).getPei());
 			setPageText(index, "XML Editor");			
 		} catch (PartInitException e) {
 			e.printStackTrace();
@@ -33,11 +40,15 @@ public class NewEditor extends MultiPageEditorPart{
 	private void createBPWMEPage() {
 		bpwmeEditor = new BpwmeDiagramEditor();
 		try {
-			int index = addPage(bpwmeEditor, ((NewInput)getEditorInput()).getUei());
+			int index = addPage(bpwmeEditor, ((ComboInput)getEditorInput()).getUei());
 			setPageText(index, "BPWME Editor");
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public BpwmeDiagramEditor getBpwmeEditor() {
+		return bpwmeEditor;
 	}
 	
 	@Override
@@ -65,7 +76,6 @@ public class NewEditor extends MultiPageEditorPart{
 		bpwmeEditor.doSave(monitor);
 	}
 	
-
 	@Override
 	public void doSaveAs() {
 	}
@@ -80,7 +90,6 @@ public class NewEditor extends MultiPageEditorPart{
 		@Override
 		public void pageChanged(PageChangedEvent event) {
 			if(event.getSelectedPage() instanceof XMLEditor) {
-				System.out.println("yes");
 				((XMLEditor)event.getSelectedPage()).refresh();
 			}
 		}

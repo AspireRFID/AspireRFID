@@ -13,8 +13,8 @@ import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.CLCBProcEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
-public class EditMasterDataAction extends Action {
-	public EditMasterDataAction() {
+public class PropertyActionEditMasterData extends Action {
+	public PropertyActionEditMasterData() {
 		super("Edit Master Data", IAction.AS_PUSH_BUTTON);
 		setId("EditMasterDataAction");
 		setToolTipText("Edit Master Data");

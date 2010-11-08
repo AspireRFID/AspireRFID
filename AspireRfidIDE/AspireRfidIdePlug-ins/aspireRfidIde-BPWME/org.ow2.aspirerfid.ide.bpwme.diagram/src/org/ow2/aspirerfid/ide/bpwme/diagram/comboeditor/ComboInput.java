@@ -1,4 +1,4 @@
-package org.ow2.aspirerfid.ide.bpwme.diagram.neweditor;
+package org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor;
 
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -6,12 +6,12 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.PathEditorInput;
 
-public class NewInput implements IEditorInput{
+public class ComboInput implements IEditorInput{
 
 	private PathEditorInput pei;
 	private URIEditorInput uei;
 	
-	public NewInput() {
+	public ComboInput() {
 	}
 	
 	public void setPei(PathEditorInput pei) {
@@ -55,8 +55,7 @@ public class NewInput implements IEditorInput{
 	}
 
 	@Override
-	public String getToolTipText() {
-		
+	public String getToolTipText() {	
 		return "Combine Two Editors";
 	}
 

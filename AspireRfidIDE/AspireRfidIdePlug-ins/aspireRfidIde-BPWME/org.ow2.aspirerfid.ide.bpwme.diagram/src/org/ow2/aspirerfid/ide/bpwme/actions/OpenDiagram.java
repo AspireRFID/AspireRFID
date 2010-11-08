@@ -21,6 +21,8 @@ import java.io.File;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -31,9 +33,12 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboInput;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
+import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.PathEditorInput;
 import org.ow2.aspirerfid.ide.bpwme.utils.EditorListener;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
@@ -63,22 +68,48 @@ public class OpenDiagram extends AbstractHandler{
 		fileDialog.open();
 		if (fileDialog.getFileName() != null
 				&& fileDialog.getFileName().length() > 0) {
-			URI fileURI = URI.createFileURI(fileDialog.getFilterPath()
+			URI diagramURI = URI.createFileURI(fileDialog.getFilterPath()
 					+ File.separator + fileDialog.getFileName());
+			URIEditorInput uei = new URIEditorInput(diagramURI);
+			mc.setBpwmeURI(diagramURI);
+			mc.setAPDLFileName(diagramURI);
+			
+			IPath location= new Path(mc.getApdlURI().toFileString());
+			PathEditorInput pathInput= new PathEditorInput(location);
+
+			ComboInput ni = new ComboInput();
+			ni.setPei(pathInput);
+			ni.setUei(uei);
+
 			try {
-				page.openEditor(new URIEditorInput(fileURI), BpwmeDiagramEditor.ID);
+				page.openEditor(ni, ComboEditor.ID);
 			} catch (PartInitException e) {
 				e.printStackTrace();
 			}
-			mc.setBpwmeURI(fileURI);
-			mc.setAPDLFileName(fileURI);	
+			
 			mc.rebuild();
 			mc.mapModels();
-			
-			MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");
-			MainUtil.bringToTop(BpwmeDiagramEditor.ID);
 			MainUtil.setPerspective("bpwme.diagram.BpwmePerspective");
-		}
+		}		
+		
+//		if (fileDialog.getFileName() != null
+//				&& fileDialog.getFileName().length() > 0) {
+//			URI fileURI = URI.createFileURI(fileDialog.getFilterPath()
+//					+ File.separator + fileDialog.getFileName());
+//			try {
+//				page.openEditor(new URIEditorInput(fileURI), BpwmeDiagramEditor.ID);
+//			} catch (PartInitException e) {
+//				e.printStackTrace();
+//			}
+//			mc.setBpwmeURI(fileURI);
+//			mc.setAPDLFileName(fileURI);	
+//			mc.rebuild();
+//			mc.mapModels();
+//			
+//			MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");
+//			MainUtil.bringToTop(BpwmeDiagramEditor.ID);
+//			MainUtil.setPerspective("bpwme.diagram.BpwmePerspective");
+//		}
 		return null;
 	}
 }

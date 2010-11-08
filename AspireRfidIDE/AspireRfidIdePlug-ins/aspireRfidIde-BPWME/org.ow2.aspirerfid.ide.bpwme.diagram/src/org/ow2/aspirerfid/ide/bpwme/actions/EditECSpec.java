@@ -29,6 +29,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.commons.apdl.model.ApdlDataField;
 import org.ow2.aspirerfid.commons.apdl.model.EBProc;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.ECSpecBuilder;
@@ -88,7 +89,7 @@ implements IObjectActionDelegate {
 		editorIDs.add(ECSpecEditor.ID);
 		editorIDs.add(MasterEditor.ID);
 		
-		MainUtil.splitEditorArea(BpwmeDiagramEditor.ID,editorIDs);
+		MainUtil.splitEditorArea(ComboEditor.ID,editorIDs);
 		
 	}
 }

@@ -53,6 +53,7 @@ import org.ow2.aspirerfid.commons.apdl.model.EBProc;
 import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
 import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.CLCBProcEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
@@ -136,6 +137,37 @@ public class MainUtil {
 			if(ref.getId().equals(editorID)) {
 				IEditorPart editor = ref.getEditor(false);
 				return editor;
+			}
+		}
+		return null;
+	}
+	
+	/*
+	 * Get BPWME editor no matter it is an editor
+	 * or a subeditor.
+	 */
+	
+	public static BpwmeDiagramEditor getBPWMEEditor() {
+		IWorkbench bench = PlatformUI.getWorkbench();
+		if(bench == null) {
+			return null;
+		}
+		IWorkbenchWindow window = bench.getActiveWorkbenchWindow();
+		if(window == null) {
+			return null;
+		}
+		IWorkbenchPage page = window.getActivePage();
+		if(page == null) {
+			return null;
+		}
+		IEditorReference[] refs = page.getEditorReferences();
+		for(IEditorReference ref:refs) {
+			if(ref.getId().equals(BpwmeDiagramEditor.ID)) {
+				IEditorPart editor = ref.getEditor(false);
+				return (BpwmeDiagramEditor)editor;
+			}else if(ref.getId().equals(ComboEditor.ID)) {
+				ComboEditor editor = (ComboEditor)ref.getEditor(false);
+				return editor.getBpwmeEditor();
 			}
 		}
 		return null;

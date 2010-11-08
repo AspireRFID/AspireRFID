@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
 import org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor;
@@ -29,10 +30,10 @@ public class ShowMasterDataEditor extends AbstractHandler {
 		}
 		
 		//if bpwme editor is closed, do nothing
-		if(!MainUtil.isEditorOpened(BpwmeDiagramEditor.ID)) {
+		if(!MainUtil.isEditorOpened(ComboEditor.ID)) {
 			MessageBox messageBox = new MessageBox(
 					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-			messageBox.setMessage("BPWME Editor is not open.\nPlease open it and try again.");
+			messageBox.setMessage("Combo Editor is not open.\nPlease open it and try again.");
 			messageBox.open();
 			return null;
 		}
@@ -53,7 +54,7 @@ public class ShowMasterDataEditor extends AbstractHandler {
 		editorIDs.add(ECSpecEditor.ID);
 		editorIDs.add(MasterEditor.ID);
 		
-		MainUtil.splitEditorArea(BpwmeDiagramEditor.ID,editorIDs);
+		MainUtil.splitEditorArea(ComboEditor.ID,editorIDs);
 		return null;
 	}
 

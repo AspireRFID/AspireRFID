@@ -59,11 +59,10 @@
             name="EC Spec Editor">
       </editor>
       <editor
-            class="org.ow2.aspirerfid.ide.bpwme.diagram.neweditor.NewEditor"
+            class="org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
-            extensions="xml"
-            id="bpwme.diagram.xmleditor.NewEditor"
-            name="New Editor">
+            id="bpwme.diagram.comboeditor.ComboEditor"
+            name="Combo Editor">
       </editor>
    </extension>
    
@@ -481,11 +480,6 @@
             categoryId="org.eclipse.ui.category.file"
             id="org.ow2.aspirerfid.ide.bpwme.diagram.OpenCommand"/>
       <command
-            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.ShowXMLEditor"
-            id="org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor"
-            name="showXmlEditor">
-      </command>
-      <command
             defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.NewDiagram"
             id="org.ow2.aspirerfid.ide.bpwme.actions.newdiagram"
             name="New Diagram">
@@ -494,11 +488,6 @@
             defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.OpenDiagram"
             id="org.ow2.aspirerfid.ide.bpwme.actions.opendiagram"
             name="Open Diagram">
-      </command>
-      <command
-            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.GetLocations"
-            id="org.ow2.aspirerfid.ide.bpwme.actions.getLocations"
-            name="Get Locations">
       </command>
       <command
             defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.OpenFromAPDL"
@@ -657,11 +646,6 @@
          <menu
                id="org.ow2.aspirerfid.ide.main.editmenu"
                label="Edit">
-            <command
-                  commandId="org.ow2.aspirerfid.ide.bpwme.actions.getLocations"
-                  label="Get Locations"
-                  style="push">
-            </command>
          </menu>
          <menu
                id="org.ow2.aspirerfid.ide.main.windowmenu"
@@ -709,11 +693,6 @@
             <menu
                   id="org.ow2.aspirerfid.ide.main.windowmenu.showeditormenu"
                   label="Show Editor">
-               <command
-                     commandId="org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor"
-                     label="XML Editor"
-                     style="push">
-               </command>
                <command
                      commandId="org.ow2.aspirerfid.ide.bpwme.diagram.showMasterDataEditor"
                      label="MasterData Editor"

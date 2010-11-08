@@ -163,13 +163,14 @@ public class BpwmeCreationWizard extends Wizard implements INewWizard {
 				
 				if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
 					try {
-						BpwmeDiagramEditorUtil.openDiagram(diagram);
+						//BpwmeDiagramEditorUtil.openDiagram(diagram);
+						BpwmeDiagramEditorUtil.openMultipageDiagram(diagram);
 						
-						IEditorPart editor = MainUtil.getEditor(BpwmeDiagramEditor.ID);
-						if(editor != null) {
+						BpwmeDiagramEditor beditor = MainUtil.getBPWMEEditor();
+						if(beditor != null) {
 							//mainly from http://wiki.eclipse.org/index.php/GMF_Tips
 							//notice modifications are done via commands
-							BpwmeDiagramEditor beditor = (BpwmeDiagramEditor)editor;
+							
 							WorkflowMapEditPart wPart = (WorkflowMapEditPart)beditor.getDiagramEditPart();
 							WorkflowMapImpl wmp = (WorkflowMapImpl)((View)wPart.getModel()).getElement();
 							//prepare the command

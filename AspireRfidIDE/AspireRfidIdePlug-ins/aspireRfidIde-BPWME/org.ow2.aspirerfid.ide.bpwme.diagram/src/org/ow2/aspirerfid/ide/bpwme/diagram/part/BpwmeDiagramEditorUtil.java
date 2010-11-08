@@ -54,7 +54,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gmf.runtime.emf.core.resources.GMFResource;
 import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
 import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboInput;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
+import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.PathEditorInput;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 /**
  * @generated
@@ -85,6 +88,24 @@ public class BpwmeDiagramEditorUtil {
 		return true;
 	}
 
+	
+	public static boolean openMultipageDiagram(Resource diagram)
+		throws PartInitException {
+		IWorkbenchPage page = PlatformUI.getWorkbench()
+			.getActiveWorkbenchWindow().getActivePage();
+		URIEditorInput uei = new URIEditorInput(diagram.getURI());
+		MainControl mc = MainControl.getMainControl();
+		IPath location= new Path(mc.getApdlURI().toFileString());
+		PathEditorInput pathInput= new PathEditorInput(location);
+
+		ComboInput ni = new ComboInput();
+		ni.setPei(pathInput);
+		ni.setUei(uei);
+
+		page.openEditor(ni, ComboEditor.ID);
+		return true;
+	}
+	
 	/**
 	 * @generated
 	 */

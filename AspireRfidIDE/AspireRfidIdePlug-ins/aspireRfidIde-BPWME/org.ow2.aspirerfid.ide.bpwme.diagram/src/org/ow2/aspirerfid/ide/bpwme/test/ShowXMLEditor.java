@@ -15,7 +15,7 @@
  * for the specific language governing rights and limitations.
  */
 
-package org.ow2.aspirerfid.ide.bpwme.actions;
+package org.ow2.aspirerfid.ide.bpwme.test;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -29,8 +29,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.ow2.aspirerfid.ide.bpwme.diagram.neweditor.NewEditor;
-import org.ow2.aspirerfid.ide.bpwme.diagram.neweditor.NewInput;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboInput;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.PathEditorInput;
 import org.ow2.aspirerfid.ide.bpwme.diagram.xmleditor.XMLEditor;
@@ -49,36 +49,35 @@ public class ShowXMLEditor extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		
-		//if bpwme editor is closed, do nothing
-		if(!MainUtil.isEditorOpened(BpwmeDiagramEditor.ID)) {
-			MessageBox messageBox = new MessageBox(
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-			messageBox.setMessage("BPWME Editor is not open.\nPlease open it and try again.");
-			messageBox.open();
-			return null;
-		}
-		
-		MainControl mc = MainControl.getMainControl();
-		URI apdlURI = mc.getApdlURI();
-		if(apdlURI == null) {
-			System.out.println("No Path For Opening XML Editor");
-			return null;
-		}
-		IPath location= new Path(apdlURI.toFileString());
-		PathEditorInput pathInput= new PathEditorInput(location);
-		
-		NewInput ni = new NewInput();
-		ni.setPei(pathInput);
-		ni.setUei(new URIEditorInput(mc.getBpwmeURI()));
-		
-		IWorkbenchPage page = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage();
-		try {
-			//page.openEditor(input, XMLEditor.ID, false);
-			page.openEditor(ni, NewEditor.ID, false);			
-		} catch (PartInitException e) {
-			e.printStackTrace();
-		}
+//		//if bpwme editor is closed, do nothing
+//		if(!MainUtil.isEditorOpened(BpwmeDiagramEditor.ID)) {
+//			MessageBox messageBox = new MessageBox(
+//					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+//			messageBox.setMessage("BPWME Editor is not open.\nPlease open it and try again.");
+//			messageBox.open();
+//			return null;
+//		}
+//		
+//		MainControl mc = MainControl.getMainControl();
+//		URI apdlURI = mc.getApdlURI();
+//		if(apdlURI == null) {
+//			System.out.println("No Path For Opening XML Editor");
+//			return null;
+//		}
+//		IPath location= new Path(apdlURI.toFileString());
+//		PathEditorInput pathInput= new PathEditorInput(location);
+//		
+//		ComboInput ni = new ComboInput();
+//		ni.setPei(pathInput);
+//		ni.setUei(new URIEditorInput(mc.getBpwmeURI()));
+//		
+//		IWorkbenchPage page = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage();
+//		try {
+//			//page.openEditor(input, XMLEditor.ID, false);
+//			page.openEditor(ni, ComboEditor.ID, false);			
+//		} catch (PartInitException e) {
+//			e.printStackTrace();
+//		}
 		return null;
 	}
 	

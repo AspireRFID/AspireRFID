@@ -13,6 +13,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.commons.apdl.model.EBProc;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECLRInput;
@@ -35,15 +36,15 @@ public class ShowECSpecEditor extends AbstractHandler {
 			return null;
 		}
 		//if bpwme editor is closed, do nothing
-		if(!MainUtil.isEditorOpened(BpwmeDiagramEditor.ID)) {
+		if(!MainUtil.isEditorOpened(ComboEditor.ID)) {
 			MessageBox messageBox = new MessageBox(
 					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-			messageBox.setMessage("BPWME Editor is not open.\nPlease open it and try again.");
+			messageBox.setMessage("Combo Editor is not open.\nPlease open it and try again.");
 			messageBox.open();
 			return null;
 		}
 		//get bpwme editor selection
-		BpwmeDiagramEditor bpwme = (BpwmeDiagramEditor)MainUtil.getEditor(BpwmeDiagramEditor.ID);
+		BpwmeDiagramEditor bpwme = MainUtil.getBPWMEEditor();
 		ISelection iselection = bpwme.getEditorSite().getSelectionProvider().getSelection();
 		//get the selected EBProc part
 		EBProcEditPart epe = null;
@@ -85,7 +86,7 @@ public class ShowECSpecEditor extends AbstractHandler {
 		editorIDs.add(ECSpecEditor.ID);
 		editorIDs.add(MasterEditor.ID);
 		
-		MainUtil.splitEditorArea(BpwmeDiagramEditor.ID,editorIDs);
+		MainUtil.splitEditorArea(ComboEditor.ID,editorIDs);
 		return null;
 	}
 

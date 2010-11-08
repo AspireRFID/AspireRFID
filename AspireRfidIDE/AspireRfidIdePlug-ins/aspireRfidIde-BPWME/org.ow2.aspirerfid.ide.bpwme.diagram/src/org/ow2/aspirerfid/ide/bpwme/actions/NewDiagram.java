@@ -48,8 +48,7 @@ public class NewDiagram extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		//at this time the url is not initiallized yet
-		
+		//at this time the url is not initiallized yet		
 		MainControl mc = MainControl.getMainControl();
 		mc.setFileAction(FileAction.NewAction);
 		BpwmeCreationWizard wizard = new BpwmeCreationWizard();
@@ -60,8 +59,8 @@ public class NewDiagram extends AbstractHandler {
 		int result = wizardDialog.open();
 		
 		if(result == Window.OK) {
-			MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");			
-			MainUtil.bringToTop(BpwmeDiagramEditor.ID);
+//			MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");			
+//			MainUtil.bringToTop(BpwmeDiagramEditor.ID);
 			MainUtil.setPerspective("bpwme.diagram.BpwmePerspective");
 		}
 		return null;
