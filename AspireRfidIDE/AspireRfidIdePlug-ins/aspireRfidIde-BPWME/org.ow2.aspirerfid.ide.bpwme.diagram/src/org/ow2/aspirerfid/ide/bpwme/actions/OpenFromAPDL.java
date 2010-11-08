@@ -5,6 +5,7 @@ import java.io.File;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -60,9 +61,28 @@ public class OpenFromAPDL extends AbstractHandler{
 		if (fileDialog.getFilterPath() != null) {
 			fileName = fileDialog.getFilterPath() + File.separator + fileName;
 		}
+		Path path1 = new Path(fileDialog.getFilterPath());
+		Path path2 = new Path(filterPath);
+		
+		String projectNames[] = fileDialog.getFileName().split("\\.");
+		String projectName;
+		if(projectNames.length == 0) {
+			projectName = fileDialog.getFileName();
+		}else {
+			StringBuffer sb = new StringBuffer();
+			for(int i = 0; i < projectNames.length - 1; i++) {
+				sb.append(projectNames[i]);
+			}
+			projectName = sb.toString();
+		}
+		
+		//create a new, unique apdl file anyway
+		String newApdlName = BpwmeDiagramEditorUtil.getUniqueFileName(path1, projectName, "xml");
+		MainUtil.copyFile(fileName, path2.append(newApdlName).toOSString());
+		String newApdlFile = path2.append(newApdlName).toOSString();
 		//read the file into memory, get the model
 		MainControl mc = MainControl.getMainControl();
-		mc.setAPDLURI(fileName);
+		mc.setAPDLURI(newApdlFile);
 		mc.rebuild();
 		OLCBProc olcb = mc.getOLCBProc();
 		

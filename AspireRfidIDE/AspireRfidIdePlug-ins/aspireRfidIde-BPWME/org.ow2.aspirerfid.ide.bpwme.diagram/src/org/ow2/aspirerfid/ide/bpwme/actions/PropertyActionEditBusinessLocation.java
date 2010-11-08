@@ -40,7 +40,7 @@ public class PropertyActionEditBusinessLocation extends Action{
 	@Override
 	public void run() {
 		//get the editpart
-		IEditorPart editor = MainUtil.getEditor(BpwmeDiagramEditor.ID);
+		IEditorPart editor = MainUtil.getBPWMEEditor();
 		if(editor == null) {
 			return;
 		}

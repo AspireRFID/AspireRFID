@@ -2,6 +2,7 @@ package org.ow2.aspirerfid.ide.bpwme.utils;
 
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPartReference;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 
 public class EditorListener implements IPartListener2{
@@ -30,6 +31,8 @@ public class EditorListener implements IPartListener2{
 	public void partClosed(IWorkbenchPartReference partRef) {
 		if(partRef.getId().equals(BpwmeDiagramEditor.ID)) {
 			//close the other editors with it
+			partRef.getPage().closeAllEditors(true);
+		}else if(partRef.getId().equals(ComboEditor.ID)){
 			partRef.getPage().closeAllEditors(true);
 		}
 	}

@@ -843,9 +843,9 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
         spw = new SelectionProviderWrapper();
         
 		//add selection listener to bpwme editor
-		IEditorPart editor = MainUtil.getEditor(BpwmeDiagramEditor.ID);
+        BpwmeDiagramEditor editor = MainUtil.getBPWMEEditor();
 		if(editor != null) {
-			((BpwmeDiagramEditor)editor).addSelectionListener(this);
+			editor.addSelectionListener(this);
 		}
 
 		

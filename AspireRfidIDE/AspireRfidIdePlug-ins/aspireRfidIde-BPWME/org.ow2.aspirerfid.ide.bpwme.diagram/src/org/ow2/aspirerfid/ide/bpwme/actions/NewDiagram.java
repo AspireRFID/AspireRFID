@@ -59,8 +59,6 @@ public class NewDiagram extends AbstractHandler {
 		int result = wizardDialog.open();
 		
 		if(result == Window.OK) {
-//			MainUtil.executeCommand("org.ow2.aspirerfid.ide.bpwme.diagram.showXmlEditor");			
-//			MainUtil.bringToTop(BpwmeDiagramEditor.ID);
 			MainUtil.setPerspective("bpwme.diagram.BpwmePerspective");
 		}
 		return null;
