@@ -12,6 +12,14 @@ rxtx binary
 rxtx iowrapper org.ow2.aspirerfid.bundle.rxtx.cmd.HexWrapper
 
 
+echo My Sparkfun Geiger counter (http://www.sparkfun.com/commerce/product_info.php?products_id=9298)
+echo receives a 0 or 1 character each time a alpha/beta/gamma particle hits the Geiger-Muller tube)
+rxtx ascii
+rxtx open COM24 9600 None None 8 1 None
+wait 100
+rxtx close
+
+
 wait 10
 
 echo My internal modem
