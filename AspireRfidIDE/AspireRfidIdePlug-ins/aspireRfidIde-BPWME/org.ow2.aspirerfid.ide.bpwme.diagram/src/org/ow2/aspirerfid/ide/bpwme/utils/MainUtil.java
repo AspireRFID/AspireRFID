@@ -180,6 +180,38 @@ public class MainUtil {
 	}
 	
 	/**
+	 * Return a list of bpwme references.
+	 * Maybe an empty list.
+	 * @return
+	 */
+	public static List<BpwmeDiagramEditor> getBPWMEEditors() {
+		IWorkbench bench = PlatformUI.getWorkbench();
+		if(bench == null) {
+			return null;
+		}
+		IWorkbenchWindow window = bench.getActiveWorkbenchWindow();
+		if(window == null) {
+			return null;
+		}
+		IWorkbenchPage page = window.getActivePage();
+		if(page == null) {
+			return null;
+		}
+		List<BpwmeDiagramEditor> editors = new ArrayList<BpwmeDiagramEditor>();
+		IEditorReference[] refs = page.getEditorReferences();
+		for(IEditorReference ref:refs) {
+			if(ref.getId().equals(BpwmeDiagramEditor.ID)) {
+				IEditorPart editor = ref.getEditor(false);
+				editors.add((BpwmeDiagramEditor)editor);
+			}else if(ref.getId().equals(ComboEditor.ID)) {
+				ComboEditor editor = (ComboEditor)ref.getEditor(false);
+				editors.add(editor.getBpwmeEditor());
+			}
+		}
+		return editors;
+	}
+	
+	/**
 	 * Copy and transfer the model in APDL file to the model in GMF Diagram
 	 * @param olcb
 	 * @param workflowMap
