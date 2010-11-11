@@ -1,0 +1,11 @@
+simpleMasterDataAlter --> alterVocElem 
+simpleMasterDataInsert --> insertVocElem 
+simpleMasterDataMassInsert --> massInsertVocElem 
+simpleMasterDataSingleDelete --> deleteVocElem 
+simpleMasterDataMassDelete --> massDeleteVocElem 
+simpleMasterDataDeleteWithDescendants --> deleteWithDescendantsVocElem 
+simpleMasterDataMassDeleteWithDescendants -->massDeleteWithDescendantsVocElem 
+simpleMasterDataAndMassAttributeInsertOrAlter --> massInsertOrAlterVocElemAttr 
+simpleMasterDataAndAttributeInsertOrAlter --> insertOrAlterVocElemAttr 
+simpleMasterDataAttributeMassDelete --> massDeleteVocElemAttr 
+simpleMasterDataAttributeDelete -->deleteVocElemAttr 
