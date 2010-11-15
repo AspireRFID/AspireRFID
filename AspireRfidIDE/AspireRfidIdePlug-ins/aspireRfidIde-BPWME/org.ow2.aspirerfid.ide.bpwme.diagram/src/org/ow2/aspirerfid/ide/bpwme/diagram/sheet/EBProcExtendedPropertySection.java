@@ -22,7 +22,6 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
-import org.ow2.aspirerfid.ide.bpwme.actions.PropertyActionEditMasterData;
 
 
 public class EBProcExtendedPropertySection extends AdvancedPropertySection implements

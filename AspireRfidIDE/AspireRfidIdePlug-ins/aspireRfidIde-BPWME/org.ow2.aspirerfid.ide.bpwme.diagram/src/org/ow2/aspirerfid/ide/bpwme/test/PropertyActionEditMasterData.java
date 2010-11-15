@@ -1,4 +1,4 @@
-package org.ow2.aspirerfid.ide.bpwme.actions;
+package org.ow2.aspirerfid.ide.bpwme.test;
 
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.jface.action.Action;

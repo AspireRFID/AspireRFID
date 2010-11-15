@@ -1,4 +1,4 @@
-package org.ow2.aspirerfid.ide.bpwme.actions;
+package org.ow2.aspirerfid.ide.bpwme.test;
 
 import java.util.HashSet;
 

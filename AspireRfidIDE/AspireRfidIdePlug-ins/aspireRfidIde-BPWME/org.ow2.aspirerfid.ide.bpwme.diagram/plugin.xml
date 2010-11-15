@@ -495,11 +495,6 @@
             name="Open From APDL">
       </command>
       <command
-            defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.ShowMasterDataEditor"
-            id="org.ow2.aspirerfid.ide.bpwme.diagram.showMasterDataEditor"
-            name="showMasterDataEditor">
-      </command>
-      <command
             defaultHandler="org.ow2.aspirerfid.ide.bpwme.actions.ShowECSpecEditor"
             id="org.ow2.aspirerfid.ide.bpwme.diagram.showECSpecEditor"
             name="showECSpecEditor">
@@ -693,11 +688,6 @@
             <menu
                   id="org.ow2.aspirerfid.ide.main.windowmenu.showeditormenu"
                   label="Show Editor">
-               <command
-                     commandId="org.ow2.aspirerfid.ide.bpwme.diagram.showMasterDataEditor"
-                     label="MasterData Editor"
-                     style="push">
-               </command>
                <command
                      commandId="org.ow2.aspirerfid.ide.bpwme.diagram.showECSpecEditor"
                      label="ECSpec Editor"
