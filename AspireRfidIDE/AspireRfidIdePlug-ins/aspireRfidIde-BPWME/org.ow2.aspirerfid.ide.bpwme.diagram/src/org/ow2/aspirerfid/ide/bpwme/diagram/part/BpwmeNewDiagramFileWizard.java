@@ -31,6 +31,8 @@ import org.eclipse.ui.PartInitException;
 import org.ow2.aspirerfid.ide.bpwme.diagram.application.WizardNewFileCreationPage;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
 
 /**
@@ -148,7 +150,12 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 			OperationHistoryFactory.getOperationHistory().execute(command,
 					new NullProgressMonitor(), null);
 			diagramResource.save(BpwmeDiagramEditorUtil.getSaveOptions());
-			BpwmeDiagramEditorUtil.openDiagram(diagramResource);
+			//BpwmeDiagramEditorUtil.openDiagram(diagramResource);
+			BpwmeDiagramEditorUtil.openMultipageDiagram(diagramResource);
+			MainUtil.setPerspective("bpwme.diagram.BpwmePerspective");
+			MainControl mc = MainControl.getMainControl();
+			
+			//mc.mapModels();
 		} catch (ExecutionException e) {
 			BpwmeDiagramEditorPlugin.getInstance().logError(
 					"Unable to create model and diagram", e); //$NON-NLS-1$

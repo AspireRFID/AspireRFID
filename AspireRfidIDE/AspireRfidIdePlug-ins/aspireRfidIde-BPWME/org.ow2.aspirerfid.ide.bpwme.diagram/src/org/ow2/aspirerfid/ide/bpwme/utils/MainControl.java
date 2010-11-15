@@ -84,7 +84,7 @@ public class MainControl {
 	 * If it's create a new file, don't do these things.
 	 */
 	public enum FileAction{
-		NewAction, OpenAction, Restart
+		NewAction, OpenAction, Restart, OpenFromAction
 	}
 	
 	/**

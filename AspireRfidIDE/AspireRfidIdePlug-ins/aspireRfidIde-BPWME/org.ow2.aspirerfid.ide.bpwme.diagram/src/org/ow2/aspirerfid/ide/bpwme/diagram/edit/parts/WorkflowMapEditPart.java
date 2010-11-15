@@ -67,11 +67,15 @@ public class WorkflowMapEditPart extends DiagramEditPart {
 	@Override
 	protected void addChild(EditPart child, int index) {
 		//Yongming add
+		
 		MainControl mc = MainControl.getMainControl();
 		if(mc.getFileAction() == FileAction.OpenAction) {
 			mc.olcbep = (OLCBProcEditPart) child;
 		}else if(mc.getFileAction() == FileAction.Restart) {
 			mc.rebuild();
+			mc.olcbep = (OLCBProcEditPart) child;
+			mc.mapModels();
+		}else if(mc.getFileAction() == FileAction.OpenFromAction) {
 			mc.olcbep = (OLCBProcEditPart) child;
 			mc.mapModels();
 		}

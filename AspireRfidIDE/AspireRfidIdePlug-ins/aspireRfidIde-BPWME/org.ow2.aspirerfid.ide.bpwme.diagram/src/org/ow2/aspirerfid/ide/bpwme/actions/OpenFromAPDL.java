@@ -35,11 +35,14 @@ import org.ow2.aspirerfid.ide.bpwme.diagram.part.Messages;
 import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.FileAction;
 
 public class OpenFromAPDL extends AbstractHandler{
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		MainControl mc = MainControl.getMainControl();
+		mc.setFileAction(FileAction.OpenFromAction);
 		
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
@@ -81,7 +84,6 @@ public class OpenFromAPDL extends AbstractHandler{
 		MainUtil.copyFile(fileName, path2.append(newApdlName).toOSString());
 		String newApdlFile = path2.append(newApdlName).toOSString();
 		//read the file into memory, get the model
-		MainControl mc = MainControl.getMainControl();
 		mc.setAPDLURI(newApdlFile);
 		mc.rebuild();
 		OLCBProc olcb = mc.getOLCBProc();
