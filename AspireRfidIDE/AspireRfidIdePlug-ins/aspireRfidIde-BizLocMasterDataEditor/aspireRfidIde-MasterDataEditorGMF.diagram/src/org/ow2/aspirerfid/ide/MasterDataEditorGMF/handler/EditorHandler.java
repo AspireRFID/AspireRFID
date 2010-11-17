@@ -18,16 +18,18 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorG
 import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.impl.WorkflowMapImpl;
+import org.ow2.aspirerfid.ide.bpwme.utils.*;
 
 /**
  * @author Eleftherios Karageorgiou (elka) e-mail: elka@ait.edu.gr
  *
  */
 public class EditorHandler {
-	
+	 
 	/**
 	 * Map the CLCBProc elements with the file they reside
 	 */
@@ -122,6 +124,16 @@ public class EditorHandler {
 					workflowMaps.add(workflowMapDomain);
 				}
 			}
+			else if (editorPart.getSite().getId().equals(ComboEditor.ID)) {
+				BpwmeDiagramEditor bpwmeDiagramEditor = ((ComboEditor)editorPart).getBpwmeEditor();
+				DiagramEditPart diagramEditPart = bpwmeDiagramEditor.getDiagramEditPart();
+				
+				if (diagramEditPart instanceof WorkflowMapEditPart) {
+					WorkflowMapEditPart workflowMap = (WorkflowMapEditPart) diagramEditPart;
+					WorkflowMap  workflowMapDomain = (WorkflowMapImpl) ((View) workflowMap.getModel()).getElement();
+					workflowMaps.add(workflowMapDomain);
+				}
+			}
 		}
 		
 		for (int i = 0; i < workflowMaps.size(); i++) {
@@ -161,11 +173,29 @@ public class EditorHandler {
 					WorkflowMapEditPart workflowMap = (WorkflowMapEditPart) diagramEditPart;
 					WorkflowMap  workflowMapDomain = (WorkflowMapImpl) ((View) workflowMap.getModel()).getElement();
 					
-					
 					for (int k = 0; k < workflowMapDomain.eContents().size(); k++) {
 						for (int j = 0; j < clcbProcs.size(); j++) {
 							if (workflowMapDomain.eContents().get(k).eContents().contains(clcbProcs.get(j))) {
 								URIEditorInput uri = (URIEditorInput)editorPart.getEditorInput();
+								File file = new File(uri.getURI().toFileString());
+								clcbFileName.put(clcbProcs.get(j), new Path(uri.getURI().toFileString().replaceFirst(file.getName(), "")));
+							}
+						}
+					}
+				}
+			}
+			else if (editorPart.getSite().getId().equals(ComboEditor.ID)) {
+				BpwmeDiagramEditor bpwmeDiagramEditor = ((ComboEditor)editorPart).getBpwmeEditor();
+				DiagramEditPart diagramEditPart = bpwmeDiagramEditor.getDiagramEditPart();
+				
+				if (diagramEditPart instanceof WorkflowMapEditPart) {
+					WorkflowMapEditPart workflowMap = (WorkflowMapEditPart) diagramEditPart;
+					WorkflowMap  workflowMapDomain = (WorkflowMapImpl) ((View) workflowMap.getModel()).getElement();
+					
+					for (int k = 0; k < workflowMapDomain.eContents().size(); k++) {
+						for (int j = 0; j < clcbProcs.size(); j++) {
+							if (workflowMapDomain.eContents().get(k).eContents().contains(clcbProcs.get(j))) {
+								URIEditorInput uri = (URIEditorInput)bpwmeDiagramEditor.getEditorInput();
 								File file = new File(uri.getURI().toFileString());
 								clcbFileName.put(clcbProcs.get(j), new Path(uri.getURI().toFileString().replaceFirst(file.getName(), "")));
 							}
