@@ -57,6 +57,7 @@ import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.EBProc;
 import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.impl.WorkflowMapImpl;
@@ -276,6 +277,43 @@ public class BpwmeActionProvider extends CommonActionProvider
 					}
 				}
 			}
+			else if (editorPart.getSite().getId().equals(ComboEditor.ID)) {
+				BpwmeDiagramEditor bpwmeDiagramEditor = ((ComboEditor)editorPart).getBpwmeEditor();
+				DiagramEditPart diagramEditPart = bpwmeDiagramEditor.getDiagramEditPart();
+				IWorkbenchPart part = page.getEditorReferences()[i].getPart(true);
+
+				if (diagramEditPart instanceof CompanyEditPart) {
+					CompanyEditPart companyPart = (CompanyEditPart) diagramEditPart;
+					Company company = (CompanyImpl) ((View) companyPart.getModel()).getElement();
+					mapMasterDataElementWithFileName.put(company, part);
+					
+					//add the warehouse children of the company
+					for (int j = 0; j < companyPart.getChildren().size(); j++) {
+						allParts.add((AbstractEditPart) companyPart.getChildren().get(j));
+						
+						if (MasterDataEditParts.isWarehouse((AbstractEditPart) companyPart.getChildren().get(j))) {
+							EObject element = (EObjectImpl) ((View) ((AbstractEditPart) companyPart.getChildren().get(j)).getModel()).getElement();
+							mapMasterDataElementWithFileName.put(element, part);
+						}
+					}
+					
+					//add all the other children
+					for (int k = 0; k < allParts.size(); k++) {
+						for (int l = 0; l < allParts.get(k).getChildren().size(); l++) {
+							allParts.add((AbstractEditPart) allParts.get(k).getChildren().get(l));
+							
+							if (MasterDataEditParts.isWarehouse((AbstractEditPart) allParts.get(k).getChildren().get(l))) {
+								EObject element = (EObjectImpl) ((View) ((AbstractEditPart) allParts.get(k).getChildren().get(l)).getModel()).getElement();
+								mapMasterDataElementWithFileName.put(element, part);
+							}
+							else if (MasterDataEditParts.isContainer((AbstractEditPart) allParts.get(k).getChildren().get(l))) {
+								EObject element = (EObjectImpl) ((View) ((AbstractEditPart) allParts.get(k).getChildren().get(l)).getModel()).getElement();
+								mapMasterDataElementWithFileName.put(element, part);
+							}
+						}
+					}
+				}
+			}
 		}
 				
 		return mapMasterDataElementWithFileName;
@@ -292,6 +330,11 @@ public class BpwmeActionProvider extends CommonActionProvider
 			URIEditorInput uri = (URIEditorInput)editorPart.getEditorInput();
 			
 			if (editorPart.getSite().getId().equals(BpwmeDiagramEditor.ID)) {
+				IWorkbenchPart part = page.getEditorReferences()[i].getPart(true);
+				File file = new File(uri.getURI().toFileString());
+				mapUriPart.put(file.getName().replaceFirst(".bpwme_diagram", ""), part);
+			}
+			else if (editorPart.getSite().getId().equals(ComboEditor.ID)) {
 				IWorkbenchPart part = page.getEditorReferences()[i].getPart(true);
 				File file = new File(uri.getURI().toFileString());
 				mapUriPart.put(file.getName().replaceFirst(".bpwme_diagram", ""), part);

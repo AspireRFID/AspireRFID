@@ -8,10 +8,12 @@ Bundle-ClassPath: .,
 Bundle-Activator: org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts,
+Export-Package: org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor,
+ org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts,
  org.ow2.aspirerfid.ide.bpwme.diagram.part,
  org.ow2.aspirerfid.ide.bpwme.diagram.preferences,
- org.ow2.aspirerfid.ide.bpwme.diagram.providers
+ org.ow2.aspirerfid.ide.bpwme.diagram.providers,
+ org.ow2.aspirerfid.ide.bpwme.utils
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface,
  org.eclipse.ui.views,

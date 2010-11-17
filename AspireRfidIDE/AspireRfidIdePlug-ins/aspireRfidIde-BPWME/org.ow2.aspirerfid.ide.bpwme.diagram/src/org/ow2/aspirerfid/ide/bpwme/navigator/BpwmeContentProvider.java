@@ -52,6 +52,7 @@ import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.EBProc;
 import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.impl.WorkflowMapImpl;
@@ -237,6 +238,16 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 			if (editorPart.getSite().getId().equals(BpwmeDiagramEditor.ID)) { 
 				DiagramEditPart diagramEditPart = ((DiagramEditor)editorPart).getDiagramEditPart();
 	
+				if (diagramEditPart instanceof WorkflowMapEditPart) {
+					WorkflowMapEditPart bpwmeEditPart = (WorkflowMapEditPart) diagramEditPart;
+					bpwmeList.add(bpwmeEditPart);
+					mapBpwmePart.put(bpwmeEditPart, workbenchPart);
+				}
+			}
+			else if (editorPart.getSite().getId().equals(ComboEditor.ID)) {
+				BpwmeDiagramEditor bpwmeDiagramEditor = ((ComboEditor)editorPart).getBpwmeEditor();
+				DiagramEditPart diagramEditPart = bpwmeDiagramEditor.getDiagramEditPart();
+				
 				if (diagramEditPart instanceof WorkflowMapEditPart) {
 					WorkflowMapEditPart bpwmeEditPart = (WorkflowMapEditPart) diagramEditPart;
 					bpwmeList.add(bpwmeEditPart);
