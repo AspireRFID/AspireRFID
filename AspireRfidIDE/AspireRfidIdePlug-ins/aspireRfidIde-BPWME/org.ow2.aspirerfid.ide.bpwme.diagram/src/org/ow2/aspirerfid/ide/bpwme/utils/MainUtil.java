@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.viewers.ISelection;
@@ -483,8 +484,16 @@ public class MainUtil {
 	
 	public static boolean copyFile(String from, String to) {
 	    try{
+	    	URI folder = URI.createFileURI(to).trimSegments(1);
+	    	File ffolder = new File(folder.toFileString());
+	    	ffolder.mkdirs();
+	    	//System.out.println(folderPath);
 	        File f1 = new File(from);
 	        File f2 = new File(to);
+//	        if(f2.exists() == false) {
+//	        	f2.mkdirs();
+//	        	//f2.createNewFile();	        	
+//	        }
 	        InputStream in = new FileInputStream(f1);
 	        OutputStream out = new FileOutputStream(f2);
 
@@ -496,14 +505,9 @@ public class MainUtil {
 	        in.close();
 	        out.close();
 	        return true;
-	      }
-	      catch(FileNotFoundException ex){
-	        System.out.println(ex.getMessage() + " in the specified directory.");
-	        return false;
-	      }
-	      catch(IOException e){
-	        System.out.println(e.getMessage());
-	        return false;
+	      }catch(Exception e) {
+	    	  e.printStackTrace();
+	    	  return false;
 	      }
 	}
 }

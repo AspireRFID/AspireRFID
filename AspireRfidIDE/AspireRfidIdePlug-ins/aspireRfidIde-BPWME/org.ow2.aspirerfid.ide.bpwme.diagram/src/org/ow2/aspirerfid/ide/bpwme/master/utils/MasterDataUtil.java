@@ -42,8 +42,6 @@ public class MasterDataUtil {
 	public static EPCISMasterDataDocumentType getEPCISMasterDataDocument(EBProc ebproc) {
 		EPCISMasterDataDocumentType doc;
 		boolean newDoc = true;
-		System.out.println("EBProc:" + ebproc);
-		System.out.println(ebproc.getApdlDataFields());
 		for(ApdlDataField adf: ebproc.getApdlDataFields().getApdlDataField()) {
 			if((doc = adf.getEPCISMasterDataDocument()) != null) {
 				newDoc = false;

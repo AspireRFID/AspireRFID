@@ -72,7 +72,7 @@ public class ComboEditor extends MultiPageEditorPart{
 	
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		xmlEditor.doSave(monitor);
+		//xmlEditor.doSave(monitor);
 		bpwmeEditor.doSave(monitor);
 	}
 	

@@ -1,6 +1,7 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.xmleditor;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.SimpleEditor;
 
 /**
@@ -22,6 +23,11 @@ public class XMLEditor extends SimpleEditor {
 	public void dispose() {
 		colorManager.dispose();
 		super.dispose();
+	}
+	
+	@Override
+	public void doSave(IProgressMonitor progressMonitor) {
+		super.doSave(progressMonitor);
 	}
 	
 	

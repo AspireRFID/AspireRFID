@@ -302,7 +302,6 @@ public class MasterDataBuilder {
 		buildDispositionItemList();
 		buildBusinessItemList();
 		buildTransactionItemList();
-		//System.out.println(businessStepVocabulary);
 	}
 	
 	public static MasterDataBuilder getInstance() {

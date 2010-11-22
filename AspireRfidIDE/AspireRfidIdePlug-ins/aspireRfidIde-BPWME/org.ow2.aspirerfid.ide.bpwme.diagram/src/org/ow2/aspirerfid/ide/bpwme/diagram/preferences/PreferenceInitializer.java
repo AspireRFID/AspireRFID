@@ -38,12 +38,12 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(PreferenceConstants.P_BPWME_DIR, System.getProperty("user.home") + 
 				File.separator + "AspireRFID" +
 				File.separator + "IDE" +				
-				File.separator + "BPWME" + File.separator);
+				File.separator + "BPWME");
 		
-		store.setDefault(PreferenceConstants.P_APDL_DIR, System.getProperty("user.home") + 
-				File.separator + "AspireRFID" +
-				File.separator + "IDE" +				
-				File.separator + "APDLs" + File.separator);
+//		store.setDefault(PreferenceConstants.P_APDL_DIR, System.getProperty("user.home") + 
+//				File.separator + "AspireRFID" +
+//				File.separator + "IDE" +				
+//				File.separator + "APDLs" + File.separator);
 		
 		//Extended Attribute
 		PreferenceConstants.P_EXTEND.put("ECSpecSubscriptionURI","http://localhost:9999");

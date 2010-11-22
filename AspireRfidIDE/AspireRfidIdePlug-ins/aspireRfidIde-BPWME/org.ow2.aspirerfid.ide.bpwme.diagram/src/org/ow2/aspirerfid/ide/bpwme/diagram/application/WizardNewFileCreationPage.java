@@ -177,6 +177,7 @@ public class WizardNewFileCreationPage extends WizardPage {
 		fileNameEditor = new Text(plate, SWT.SINGLE | SWT.BORDER);
 		fileNameEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false));
+		fileNameEditor.setEditable(false);
 		Button button = new Button(plate, SWT.PUSH);
 		button.setText(Messages.WizardNewFileCreationPage_BrowseButton);
 		button.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,

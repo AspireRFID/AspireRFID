@@ -208,11 +208,6 @@ public class BpwmeDiagramEditorUtil {
 				.createResource(diagramURI);
 		final String diagramName = diagramURI.lastSegment();
 		
-		//yluo add
-		MainControl mc = MainControl.getMainControl();
-		mc.setAPDLFileName(diagramURI);
-		mc.setBpwmeURI(diagramURI);
-		//yluo add done
 
 		
 		AbstractTransactionalCommand command = new AbstractTransactionalCommand(
@@ -256,6 +251,12 @@ public class BpwmeDiagramEditorUtil {
 			BpwmeDiagramEditorPlugin.getInstance().logError(
 							"Unable to create model and diagram", e); //$NON-NLS-1$
 		}
+		
+		//yluo add
+		MainControl mc = MainControl.getMainControl();
+		mc.setBpwmeURI(diagramURI);
+		mc.setAPDLFileName(diagramURI);		
+		//yluo add done
 		
 		return diagramResource;
 	}

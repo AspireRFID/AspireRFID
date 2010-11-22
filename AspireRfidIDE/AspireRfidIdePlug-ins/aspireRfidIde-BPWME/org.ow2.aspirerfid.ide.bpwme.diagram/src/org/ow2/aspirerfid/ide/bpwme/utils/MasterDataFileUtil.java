@@ -25,7 +25,7 @@ public class MasterDataFileUtil {
 	public static DiagramEditPart getDiagramEditPart(String fileName) {
 		URI diagramModelFilename = URI.createFileURI(fileName);
 		GMFResource locationDiagram = new GMFResource(diagramModelFilename);
-		System.out.println(locationDiagram);
+//		System.out.println(locationDiagram);
 //		CopyToImageUtil copyToImageUtil = new CopyToImageUtil();
 //		copyToImageUtil.createDiagramEditPart((Diagram) locationDiagram, null, null);
 		return null;

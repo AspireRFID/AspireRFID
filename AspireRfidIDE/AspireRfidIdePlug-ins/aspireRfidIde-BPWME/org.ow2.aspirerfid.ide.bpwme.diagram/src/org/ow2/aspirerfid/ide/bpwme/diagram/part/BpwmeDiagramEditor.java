@@ -144,7 +144,7 @@ public class BpwmeDiagramEditor extends DiagramDocumentEditor {
 			}
 		}
 		return null;
-	}	
+	}
 	
 	public void addSelectionListener(ISelectionChangedListener listener) {
 		getEditorSite().getSelectionProvider().addSelectionChangedListener(listener);
@@ -167,6 +167,11 @@ public class BpwmeDiagramEditor extends DiagramDocumentEditor {
 		super.init(site, input);
 		EditorListener listener = EditorListener.getInstance();		
 		getSite().getPage().addPartListener(listener);
+	}
+	
+	@Override
+	public void doSave(IProgressMonitor progressMonitor) {
+		super.doSave(progressMonitor);
 	}
 	
 }

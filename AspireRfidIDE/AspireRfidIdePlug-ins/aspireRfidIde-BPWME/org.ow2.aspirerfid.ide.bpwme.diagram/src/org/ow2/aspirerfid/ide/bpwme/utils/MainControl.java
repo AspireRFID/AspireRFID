@@ -19,39 +19,35 @@ package org.ow2.aspirerfid.ide.bpwme.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.namespace.QName;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.FileURIHandlerImpl;
+import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.ow2.aspirerfid.commons.apdl.model.ApdlDataField;
 import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
 import org.ow2.aspirerfid.commons.apdl.model.ObjectFactory;
-import org.ow2.aspirerfid.commons.apdl.utils.DeserializerUtil;
 import org.ow2.aspirerfid.commons.apdl.utils.Serializer;
-import org.ow2.aspirerfid.commons.epcis.model.AttributeType;
-import org.ow2.aspirerfid.commons.epcis.model.EPCISMasterDataBodyType;
-import org.ow2.aspirerfid.commons.epcis.model.EPCISMasterDataDocumentType;
-import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementListType;
-import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
-import org.ow2.aspirerfid.commons.epcis.model.VocabularyListType;
-import org.ow2.aspirerfid.commons.epcis.model.VocabularyType;
 import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.EBProc;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.OLCBProcEditPart;
@@ -61,12 +57,9 @@ import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.PathEditorInput;
 import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.SimpleEditor;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.model.ExtraProperty;
-import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.ECSpecBuilder;
-import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.LRSpecBuilder;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
 import org.ow2.aspirerfid.ide.bpwme.impl.OLCBProcImpl;
 import org.ow2.aspirerfid.ide.bpwme.master.utils.MasterDataBuilder;
-import org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor;
 
 /**
  * Basic hack class do the dirty work.
@@ -144,7 +137,7 @@ public class MainControl {
 	private FileAction fa;
 
 	private OLCBProc olcbProc;
-	//private EBProc selectedEbProc;
+	
 //	public LRSpecBuilder lrsb;
 //	public ECSpecBuilder ecsb;
 	//private SimpleEditor simpleEditor;
@@ -163,10 +156,10 @@ public class MainControl {
 	public MainControl() throws Exception {
 		//create apdl file directory if it's not exist
 		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
-		File directory = new File(store.getString(PreferenceConstants.P_APDL_DIR));
-		if(!directory.exists()) {
-			directory.mkdirs();
-		}
+//		File directory = new File(store.getString(PreferenceConstants.P_APDL_DIR));
+//		if(!directory.exists()) {
+//			directory.mkdirs();
+//		}
 		
 		String apdlFileString = store.getString(PreferenceConstants.P_APDL_FILE);
 		if(!apdlFileString.equals("")) {
@@ -174,7 +167,6 @@ public class MainControl {
 			fa = FileAction.Restart;
 			setAPDLURI(apdlFileString);
 		}
-		
 		
 		//initialization for some objects
 		objectFactory = new ObjectFactory();
@@ -211,7 +203,7 @@ public class MainControl {
 	
 	/**
 	 * From diagram URI get Apdl URI.
-	 * Also create the assistant file under the same directory.
+	 * set it to private field.
 	 * @param diagramFileURI
 	 */
 	public void setAPDLFileName(URI diagramFileURI) {
@@ -219,11 +211,14 @@ public class MainControl {
 		String dot = "\\.";
 		String[] names = diagramFileURI.lastSegment().split(dot);
 		if(names.length == 2) {
-			apdlURI = URI.createFileURI(store.getString(PreferenceConstants.P_APDL_DIR)+names[0]+".xml");
+			apdlURI = diagramFileURI.trimFileExtension().appendFileExtension("xml");
+			//apdlURI = URI.createFileURI(store.getString(PreferenceConstants.P_APDL_DIR)+names[0]+".xml");
 			store.setValue(PreferenceConstants.P_APDL_FILE, apdlURI.toFileString());
-			File f = new File(apdlURI.toFileString());		
+			
+			File f = new File(apdlURI.toFileString());
 			if(!f.exists()) {
-				try {
+				
+				try {					
 					f.createNewFile();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -234,9 +229,6 @@ public class MainControl {
 			PathEditorInput input= new PathEditorInput(location);
 			SimpleEditor.setEditorInput(input);
 			
-			//URI apdlAssistant = URI.createFileURI(P_PE_ApdlFilesPath+names[0]+".assistant.xml");
-			//assistantPath = apdlAssistant.toFileString();
-			//System.out.println("assistant:" + assistantPath);
 		} else {
 			System.err.println("Error in MainControl.getFileName");
 		}
@@ -248,7 +240,8 @@ public class MainControl {
 	 */
 	public void setAPDLURI(String apdlFileName) {
 		apdlURI = URI.createFileURI(apdlFileName);
-		
+		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
+		store.setValue(PreferenceConstants.P_APDL_FILE, apdlURI.toFileString());
 	}
 	
 	/**
@@ -260,7 +253,6 @@ public class MainControl {
 		try {
 			inputStream = new FileInputStream(apdlURI.toFileString());
 			olcbProc = deserializeOLCBProc(inputStream);
-			//System.out.println(mc.olcbProc);
 			inputStream.close();
 			
 			MasterDataBuilder mdb = MasterDataBuilder.getInstance();
@@ -413,7 +405,19 @@ public class MainControl {
 	 * Let the program work in parallel.
 	 */
 	public void saveObject() {
-		new WriteToFile(olcbProc).start();
+//		PrintWriter pw;
+//		
+//		try {
+//			pw = new PrintWriter(System.out);
+//			Serializer.serializeOLCBProc(olcbProc, pw);
+//			pw.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		WriteToFile wtf = new WriteToFile();
+		wtf.setOlcbProc(olcbProc);
+		wtf.setApdlPath(apdlURI);
+		wtf.start();
 	}
 
 	/**
@@ -508,16 +512,7 @@ public class MainControl {
 		return apdlURI;
 	}
 	
-//	public void saveAssistantFile() {
-//		try {
-//			FileOutputStream fout = new FileOutputStream(assistantPath);
-//			ObjectOutputStream oos = new ObjectOutputStream(fout);
-//			oos.writeObject(ebprocMap);
-//			oos.close();
-//		}
-//		catch (Exception e) { e.printStackTrace();
-//		}
-//	}
+
 //	
 //	@SuppressWarnings("unchecked")
 //	public void loadAssistantFile() {
@@ -545,26 +540,74 @@ public class MainControl {
 
 /**
  * A new thread to write the OLCB Process to file.
- * It's needed because it may take some time.
+ * It's needed because serialization may take some time.
  * @author Yongming Luo
  *
  */
 class WriteToFile extends Thread {
 	OLCBProc olcbProc;
-	public WriteToFile(OLCBProc olcbProc) {
+	FileWriter fw;
+	OutputStream output;
+	
+	public WriteToFile() {
+	}
+	
+	public void setApdlPath(URI apdlPath) {
+		try {
+			fw = new FileWriter(apdlPath.toFileString(),false);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setOlcbProc(OLCBProc olcbProc) {
 		this.olcbProc = olcbProc;
 	}
+
 	@Override
 	public void run() {
-		super.run();
-		FileWriter fw;
 		try {
-			MainControl mc = MainControl.getMainControl();
-			fw = new FileWriter(mc.getApdlURI().toFileString());
 			Serializer.serializeOLCBProc(olcbProc, fw);
 			fw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}	
+		//System.out.println("Finish---");
+	}
+
+}
+
+
+class FileURIHandler extends URIHandlerImpl{
+	
+	public FileURIHandler() {
+	}
+	
+	public OutputStream createOutputStream(URI uri) throws IOException{
+		String filePath = uri.toFileString();
+		final File file = new File(filePath);
+		String parent = file.getParent();
+		if (parent != null)
+		{
+			new File(parent).mkdirs();
 		}
+
+		OutputStream outputStream;
+
+		outputStream = new FileOutputStream(file)
+		{
+			@Override
+			public void close() throws IOException
+			{
+				try
+				{
+					super.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+
+		return outputStream;
 	}
 }

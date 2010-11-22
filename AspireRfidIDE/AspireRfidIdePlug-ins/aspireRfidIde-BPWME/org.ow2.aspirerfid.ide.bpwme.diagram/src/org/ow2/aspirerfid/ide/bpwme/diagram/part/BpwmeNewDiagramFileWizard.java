@@ -98,6 +98,38 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 		myEditingDomain = editingDomain;
 	}
 
+	
+	/**
+	 * add by yluo
+	 */
+	public BpwmeNewDiagramFileWizard(EObject diagramRoot,
+			TransactionalEditingDomain editingDomain, String uniqueProjectName) {
+		assert diagramRoot != null : "Doagram root element must be specified"; //$NON-NLS-1$
+		assert editingDomain != null : "Editing domain must be specified"; //$NON-NLS-1$
+		bpwmeURI = null;
+
+		myFileCreationPage = new WizardNewFileCreationPage(
+				Messages.BpwmeNewDiagramFileWizard_CreationPageName,
+				StructuredSelection.EMPTY);
+		myFileCreationPage
+		.setTitle(Messages.BpwmeNewDiagramFileWizard_CreationPageTitle);
+		myFileCreationPage.setDescription(NLS.bind(
+				Messages.BpwmeNewDiagramFileWizard_CreationPageDescription,
+				WorkflowMapEditPart.MODEL_ID));
+		IPath filePath;
+
+		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
+		String path = store.getString(PreferenceConstants.P_BPWME_DIR);
+		filePath = new Path(path+File.separator+uniqueProjectName);
+
+		myFileCreationPage.setContainerFullPath(filePath);
+		myFileCreationPage.setFileName(BpwmeDiagramEditorUtil
+				.getUniqueFileName(filePath, uniqueProjectName, "bpwme_diagram")); //$NON-NLS-1$
+
+		root = diagramRoot;
+		myEditingDomain = editingDomain;
+	}
+
 	/**
 	 * @generated
 	 */
@@ -146,6 +178,15 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 				return CommandResult.newOKCommandResult();
 			}
 		};
+		
+		//copy the xml file to new location
+		MainControl mc = MainControl.getMainControl();
+		String from = mc.getApdlURI().toFileString();
+		String to = diagramModelURI.trimFileExtension().appendFileExtension("xml").toFileString();
+		MainUtil.copyFile(from,to);
+		mc.setAPDLURI(to);
+		
+		
 		try {
 			OperationHistoryFactory.getOperationHistory().execute(command,
 					new NullProgressMonitor(), null);
@@ -153,7 +194,7 @@ public class BpwmeNewDiagramFileWizard extends Wizard {
 			//BpwmeDiagramEditorUtil.openDiagram(diagramResource);
 			BpwmeDiagramEditorUtil.openMultipageDiagram(diagramResource);
 			MainUtil.setPerspective("bpwme.diagram.BpwmePerspective");
-			MainControl mc = MainControl.getMainControl();
+			
 			
 			//mc.mapModels();
 		} catch (ExecutionException e) {

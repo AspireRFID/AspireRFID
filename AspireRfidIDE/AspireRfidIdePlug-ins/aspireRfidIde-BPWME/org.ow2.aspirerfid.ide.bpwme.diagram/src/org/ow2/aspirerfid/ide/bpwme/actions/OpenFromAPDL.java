@@ -51,7 +51,7 @@ public class OpenFromAPDL extends AbstractHandler{
 		//select the apdl file
 		FileDialog fileDialog = new FileDialog(shell, SWT.OPEN);
 		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();		
-		String filterPath = store.getString(PreferenceConstants.P_APDL_DIR);
+		String filterPath = store.getString(PreferenceConstants.P_BPWME_DIR);
 		String[] extensions = new String[]{"*.xml"};
 		fileDialog.setFilterExtensions(extensions);
 		fileDialog.setFilterPath(filterPath);		
@@ -64,9 +64,8 @@ public class OpenFromAPDL extends AbstractHandler{
 		if (fileDialog.getFilterPath() != null) {
 			fileName = fileDialog.getFilterPath() + File.separator + fileName;
 		}
-		Path path1 = new Path(fileDialog.getFilterPath());
-		Path path2 = new Path(filterPath);
 		
+		//get the project name from the selected xml file
 		String projectNames[] = fileDialog.getFileName().split("\\.");
 		String projectName;
 		if(projectNames.length == 0) {
@@ -78,26 +77,26 @@ public class OpenFromAPDL extends AbstractHandler{
 			}
 			projectName = sb.toString();
 		}
+		//get a unique project name
+		Path projectPath = new Path(store.getString(PreferenceConstants.P_BPWME_DIR));
+		String newProjectName = BpwmeDiagramEditorUtil.getUniqueFileName(projectPath, projectName, null);
 		
-		//create a new, unique apdl file anyway
-		String newApdlName = BpwmeDiagramEditorUtil.getUniqueFileName(path1, projectName, "xml");
-		MainUtil.copyFile(fileName, path2.append(newApdlName).toOSString());
-		String newApdlFile = path2.append(newApdlName).toOSString();
-		//read the file into memory, get the model
-		mc.setAPDLURI(newApdlFile);
+		//read the existing xml file into memory
+		mc.setAPDLURI(fileName);
 		mc.rebuild();
+		//get the model
 		OLCBProc olcb = mc.getOLCBProc();
-		
 		//transfer the model to a GMF model
 		WorkflowMap workflowMap = BpwmeFactory.eINSTANCE.createWorkflowMap();
 		MainUtil.copyToDiagramModel(olcb, workflowMap);
-		
+
 		//use the gmf model to get the whole diagram
-		BpwmeNewDiagramFileWizard wizard = new BpwmeNewDiagramFileWizard(mc.getApdlURI(),
-				(EObject)workflowMap, editingDomain);
+		BpwmeNewDiagramFileWizard wizard = new BpwmeNewDiagramFileWizard
+			((EObject)workflowMap, editingDomain,newProjectName);
 		wizard.setWindowTitle(NLS.bind(Messages.InitDiagramFile_WizardTitle,
 				WorkflowMapEditPart.MODEL_ID));
 		BpwmeDiagramEditorUtil.runWizard(shell, wizard, "InitDiagramFile"); //$NON-NLS-1$
+		
 		
 		//Modified by elka
 		boolean result = MessageDialog.openQuestion(shell, "Question", 

@@ -38,7 +38,7 @@ public class PreferenceConstants {
 	
 	public static final String P_BPWME_DIR = "bpwmeDirPath";//directory path
 	
-	public static final String P_APDL_DIR = "apdlDirPath";//directory path
+	//public static final String P_APDL_DIR = "apdlDirPath";//directory path
 	
 	public static final String P_APDL_FILE = "apdlFilePath";
 	
