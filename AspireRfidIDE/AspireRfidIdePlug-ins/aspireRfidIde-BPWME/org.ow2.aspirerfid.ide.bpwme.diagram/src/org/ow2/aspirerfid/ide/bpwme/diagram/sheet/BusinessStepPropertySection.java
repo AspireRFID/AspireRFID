@@ -206,33 +206,39 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 				propertyButtonNew.addSelectionListener(new SelectionAdapter(){
 					@Override
 					public void widgetSelected(SelectionEvent e) {
-						ComboDialog cd = new ComboDialog(parent.getShell());
-						cd.setText("Choose Dialog");
 						
-//						IStructuredSelection select = 
-//							(IStructuredSelection)listViewerMain.getSelection();
-//						if(select == null)
-//							return;
+						//create new attribute item
+						AttributeType attr = new AttributeType();
+						attr.setId("urn:epcglobal:epcis:mda:");
+						attr.getOtherAttributes().put(new QName("value"), "Default Value");
+						//set the dialog and open
+						EditVocabularyAttributeDialog ed = new EditVocabularyAttributeDialog(parent.getShell(),attr);						
+						
 						DispositionItem input = (DispositionItem)propertyViewer.getInput();
 						if(input == null) {
 							return;
 						}
 						
 						String id = input.getID();
+						
 						if(id.startsWith("urn:epcglobal:fmcg:bizstep:")) {
-							cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_BS));
+							ed.setOptions(PreferenceUtil.getAttributes(PreferenceConstants.P_BS));
 						}else if(id.startsWith("urn:epcglobal:fmcg:disp:")) {
-							cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_DI));
+							ed.setOptions(PreferenceUtil.getAttributes(PreferenceConstants.P_DI));
 						}else if(id.startsWith("urn:epcglobal:fmcg:btt:")) {
-							cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_BT));
+							ed.setOptions(PreferenceUtil.getAttributes(PreferenceConstants.P_BT));
 						}
-						String selection = cd.open();
-						//add a new attribute pair
-						MasterDataBuilder mdb = MasterDataBuilder.getInstance();
-						MainControl mc = MainControl.getMainControl();
-						mdb.addItemAttribute(input, selection, "");				
-						propertyViewer.refresh(false);
-						mc.saveObject();
+						
+						attr = ed.start();
+						//if return a null, means user press cancel, do nothing
+						if(attr == null) {							
+							
+						}else {//if not, means to add a new attribute item
+							input.getVocabularyElement().getAttribute().add(attr);
+							MainControl mc = MainControl.getMainControl();
+							propertyViewer.refresh(false);
+							mc.saveObject();
+						}
 					}
 				});
 				
@@ -254,6 +260,21 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 						}
 						AttributeType attr = (AttributeType) selection.getFirstElement();
 						EditVocabularyAttributeDialog ed = new EditVocabularyAttributeDialog(parent.getShell(),attr);
+						
+						DispositionItem input = (DispositionItem)propertyViewer.getInput();
+						if(input == null) {
+							return;
+						}
+						
+						String id = input.getID();
+						if(id.startsWith("urn:epcglobal:fmcg:bizstep:")) {
+							ed.setOptions(PreferenceUtil.getAttributes(PreferenceConstants.P_BS));
+						}else if(id.startsWith("urn:epcglobal:fmcg:disp:")) {
+							ed.setOptions(PreferenceUtil.getAttributes(PreferenceConstants.P_DI));
+						}else if(id.startsWith("urn:epcglobal:fmcg:btt:")) {
+							ed.setOptions(PreferenceUtil.getAttributes(PreferenceConstants.P_BT));
+						}
+						
 						ed.start();
 						propertyViewer.refresh();
 						MainControl mc = MainControl.getMainControl();

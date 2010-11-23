@@ -109,11 +109,10 @@ public class ComboDialog extends Dialog{
 	    
 	    GridData data = new GridData();
 	    data.horizontalSpan = 2;
-	    label.setLayoutData(data);
-		
+	    label.setLayoutData(data);		
 		
 		chooseBox = new Combo(shell, SWT.DROP_DOWN | SWT.READ_ONLY);
-		chooseBox.setItems(options);
+	    chooseBox.setItems(options);
 	    //chooseBox.setSize(200, 100);
 		data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 	    data.horizontalSpan = 2;

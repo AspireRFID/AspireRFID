@@ -11,6 +11,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -34,6 +35,8 @@ public class EditVocabularyAttributeDialog extends Dialog {
     private String nameMessage;
     
     private String attributeMessage;
+    
+    private String[] options;
 
     /**
      * The input value; the empty string by default.
@@ -55,7 +58,7 @@ public class EditVocabularyAttributeDialog extends Dialog {
     /**
      * Input text widget.
      */
-    private Text nameText;
+    private Combo nameText;
     
     private Text attributeText;
 
@@ -167,7 +170,7 @@ public class EditVocabularyAttributeDialog extends Dialog {
         nameText.setFocus();
         if (nameValue != null) {
             nameText.setText(nameValue);
-            nameText.selectAll();
+            //nameText.selectAll();
         }
         
         if (attributeValue != null) {
@@ -192,9 +195,11 @@ public class EditVocabularyAttributeDialog extends Dialog {
             label.setLayoutData(data);
             label.setFont(parent.getFont());
         }
-        nameText = new Text(composite, getInputTextStyle());
+        //nameText = new Text(composite, getInputTextStyle());
+        nameText = new Combo(composite, SWT.DROP_DOWN);
         nameText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL
                 | GridData.HORIZONTAL_ALIGN_FILL));
+        nameText.setItems(options);
         nameText.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
                 validateInput();
@@ -243,10 +248,14 @@ public class EditVocabularyAttributeDialog extends Dialog {
      * 
      * @return the text area
      */
-    protected Text getText() {
-        return nameText;
-    }
+//    protected Text getText() {
+//        return nameText;
+//    }
 
+    public void setOptions(String[] options) {
+    	this.options = options;    	
+    }
+    
     /**
      * Returns the validator.
      * 
@@ -342,10 +351,11 @@ public class EditVocabularyAttributeDialog extends Dialog {
         		attr.getOtherAttributes().clear();
         		attr.getOtherAttributes().put(new QName("value"), attributeValue);
         	}
+        	return attr;
     	}else if(code == CANCEL) {
-
+    		return null;
     	}
-    	return attr;
+    	return null;
     }
     
     

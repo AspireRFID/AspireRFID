@@ -90,7 +90,6 @@ public class PropertyActionEditBusinessLocation extends Action{
 			clcbName + File.separator;
 		//check if the corresponding file exists
 		
-		System.out.println(newDir);
 		String lFileName = getLocationFile(newDir);
 		
 		//System.out.println(lFileName);
