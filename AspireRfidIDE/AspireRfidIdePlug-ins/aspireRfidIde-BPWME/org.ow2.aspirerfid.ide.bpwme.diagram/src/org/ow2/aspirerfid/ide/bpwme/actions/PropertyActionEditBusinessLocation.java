@@ -85,12 +85,12 @@ public class PropertyActionEditBusinessLocation extends Action{
 		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
 		String dir = store.getString(PreferenceConstants.P_BPWME_DIR);
 				
-		String newDir = dir +  
+		String newDir = dir + File.separator + 
 			projectName + File.separator + 
 			clcbName + File.separator;
 		//check if the corresponding file exists
 		
-		
+		System.out.println(newDir);
 		String lFileName = getLocationFile(newDir);
 		
 		//System.out.println(lFileName);
