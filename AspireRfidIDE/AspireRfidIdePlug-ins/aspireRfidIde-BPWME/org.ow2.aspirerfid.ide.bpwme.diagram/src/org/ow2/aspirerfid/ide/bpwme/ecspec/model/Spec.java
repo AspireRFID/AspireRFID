@@ -18,6 +18,8 @@
 package org.ow2.aspirerfid.ide.bpwme.ecspec.model;
 
 
+import java.util.Iterator;
+
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
@@ -37,25 +39,6 @@ public class Spec implements IWorkbenchAdapter, IAdaptable{
 	public enum Type{LLRP, RP, HAL}
 	protected ApdlDataField adf;
 	protected Type type;
-//	public Spec() {
-//		//this.name = "default spec";
-//		//this.description = "no description";
-//		
-//		propertyTable = new Hashtable<String, String>();
-//		//propertyTable.put("Name", name);
-//		//propertyTable.put("Description", description);
-//	}
-	/*
-	public Spec(String name) {
-		//this.name = name;
-		//this.description = "no description";
-		propertyTable = new Hashtable<String, String>();
-		propertyTable.put("Name", name);
-		//propertyTable.put("Description", description);
-	}*/
-//	public Spec(Type type) {
-//		this.type = type;
-//	}
 	
 	public Spec() {
 		this.adf = new ApdlDataField();
@@ -88,9 +71,11 @@ public class Spec implements IWorkbenchAdapter, IAdaptable{
 	}
 	
 	public void removeProperty(String name) {
-		for(LRProperty lrp:adf.getLRSpec().getProperties().getProperty()) {
+		Iterator<LRProperty> iter = adf.getLRSpec().getProperties().getProperty().iterator();
+		while(iter.hasNext()) {
+			LRProperty lrp = (LRProperty) iter.next();
 			if(lrp.getName().equals(name)) {
-				adf.getLRSpec().getProperties().getProperty().remove(lrp);
+				iter.remove();
 			}
 		}
 	}

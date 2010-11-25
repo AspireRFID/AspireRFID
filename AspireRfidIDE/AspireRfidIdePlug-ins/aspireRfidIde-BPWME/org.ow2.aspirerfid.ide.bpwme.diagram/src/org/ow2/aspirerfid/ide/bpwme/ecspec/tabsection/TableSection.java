@@ -52,6 +52,7 @@ import org.ow2.aspirerfid.commons.ale.model.alelr.LRProperty;
 import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceUtil;
 import org.ow2.aspirerfid.ide.bpwme.dialog.ComboDialog;
+import org.ow2.aspirerfid.ide.bpwme.dialog.EditLRAttributeDialog;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.model.*;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.TableSheetPage;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
@@ -87,11 +88,7 @@ public class TableSection extends AbstractPropertySection {
 		
 		Composite tableComposite = getWidgetFactory().createFlatFormComposite(mainComposite);
 		tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		//newProperty = new Button(buttonComposite, SWT.NONE);
-		//newProperty.setText("Test");
-		//newProperty.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
-		
+				
 		newProperty = getWidgetFactory().createButton(buttonComposite,
 	            "New", SWT.PUSH);
 		newProperty.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
@@ -104,32 +101,31 @@ public class TableSection extends AbstractPropertySection {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				super.mouseDown(e);
-				ComboDialog cd = new ComboDialog(buttonComposite.getShell());
-				cd.setText("Choose Dialog");
-				MainControl mc = MainControl.getMainControl();
+				
+				LRProperty lrp = new LRProperty();
+				EditLRAttributeDialog eld = new EditLRAttributeDialog(buttonComposite.getShell(), lrp);
+				
 				if(input instanceof LLRPSpec) {
-					cd.setMessage("Choose LLRP Property");
-					//cd.setOption(mc.extraLLRPProperty);
-					cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_LLRP));
+					eld.setTitle("Choose LLRP Property");
+					eld.setOptions(PreferenceUtil.getAttributes(PreferenceConstants.P_LLRP));
 				}else if(input instanceof RPSpec) {
-					cd.setMessage("Choose RP Property");
-					//cd.setOption(mc.extraRPProperty);
-					cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_RP));
+					eld.setTitle("Choose RP Property");
+					eld.setOptions(PreferenceUtil.getAttributes(PreferenceConstants.P_RP));
 				}else if(input instanceof HALSpec) {
-					cd.setMessage("Choose HAL Property");
-					//cd.setOption(mc.extraHALProperty);
-					cd.setOption(PreferenceUtil.getAttributes(PreferenceConstants.P_HAL));
+					eld.setTitle("Choose HAL Property");
+					eld.setOptions(PreferenceUtil.getAttributes(PreferenceConstants.P_HAL));
 				}
 				
-				String selection = cd.open();
-				if(selection.equals("")) {
+				lrp = eld.start();
+				
+				if(lrp == null) {
 					return;
+				}else {
+					input.addProperty(lrp);
+					MainControl mc = MainControl.getMainControl();
+					mc.saveObject();
+					refresh();
 				}
-				LRProperty lrp = new LRProperty();
-				lrp.setName(selection);
-				lrp.setValue("");
-				input.addProperty(lrp);
-				page.refresh();
 			}
 		});
 		
@@ -138,41 +134,16 @@ public class TableSection extends AbstractPropertySection {
 			public void mouseDown(MouseEvent e) {
 				super.mouseDown(e);
 				String property = page.getSelectProperty();
-				if(property == null || property.equals(""))
+				if(property == null) {
 					return;
-				input.removeProperty(property);
-				page.refresh();
+				}
+				input.removeProperty(property);				
+				MainControl mc = MainControl.getMainControl();
+				mc.saveObject();
+				refresh();
 			}
 		});
 		
-//		FormData mainData = new FormData();
-//		mainData.left = new FormAttachment(0, 0);
-//		mainData.right = new FormAttachment(100, 0);
-//		mainData.top = new FormAttachment(0, 0);
-//		mainData.bottom = new FormAttachment(100, 0);
-		//mainComposite.setLayoutData(new FillData());
-
-		
-//		Composite buttonComposite = getWidgetFactory().createFlatFormComposite(mainComposite);
-//		FormData buttonData = new FormData();
-//		buttonData.left = new FormAttachment(0, 10);
-//		buttonData.right = new FormAttachment(0, 50);
-//		buttonData.top = new FormAttachment(0, 10);
-//		buttonData.bottom = new FormAttachment(0, 60);
-//		buttonComposite.setLayoutData(buttonData);
-//		
-//		Composite tableComposite = getWidgetFactory().createFlatFormComposite(mainComposite);
-//		FormData tableData = new FormData();
-//		tableData.left = new FormAttachment(0, 60);
-//		tableData.right = new FormAttachment(100, 0);
-//		tableData.top = new FormAttachment(0, 10);
-//		tableData.bottom = new FormAttachment(100, 0);
-//		tableComposite.setLayoutData(tableData);
-//		
-		
-		
-//		Composite composite = getWidgetFactory()
-//			.createFlatFormComposite(tableComposite);
 		page = new TableSheetPage();
 		page.createControl(tableComposite);
 		FormData data = new FormData();
@@ -183,13 +154,11 @@ public class TableSection extends AbstractPropertySection {
 		page.getControl().setLayoutData(data);
 		
 		page.getControl().addControlListener(new ControlAdapter() {
-
 			public void controlResized(ControlEvent e) {
 				atabbedPropertySheetPage.resizeScrolledComposite();
 			}
 		});
 		
-		//LRSpecView.getLRSpecView().bindTableSection(this);
 	}
 
 	/**
@@ -216,8 +185,10 @@ public class TableSection extends AbstractPropertySection {
 
 	/**
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#refresh()
-	 */
+	 */	
+	@Override
 	public void refresh() {
+		super.refresh();
 		page.refresh();
 	}
 
