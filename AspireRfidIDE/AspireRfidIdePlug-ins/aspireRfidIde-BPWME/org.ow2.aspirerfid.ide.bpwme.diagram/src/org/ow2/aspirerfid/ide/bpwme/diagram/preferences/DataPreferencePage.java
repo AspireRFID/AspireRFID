@@ -1,6 +1,7 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.preferences;
 
 import org.eclipse.jface.preference.*;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
@@ -26,7 +27,7 @@ public class DataPreferencePage
 	public DataPreferencePage() {
 		super(GRID);
 		setPreferenceStore(BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore());
-		setDescription("A demonstration of a preference page implementation");
+		setDescription("BPWME Data Preference");
 	}
 	
 	/**
@@ -36,6 +37,10 @@ public class DataPreferencePage
 	 * restore itself.
 	 */
 	public void createFieldEditors() {
+		
+		addField(new DirectoryFieldEditor(PreferenceConstants.P_BPWME_DIR,
+					"BPWME Project Folder",
+					getFieldEditorParent()));
 //		addField(new DirectoryFieldEditor(PreferenceConstants.P_PATH, 
 //				"&Directory preference:", getFieldEditorParent()));
 //		addField(
