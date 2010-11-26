@@ -125,6 +125,14 @@ public class TableSection extends AbstractPropertySection {
 					MainControl mc = MainControl.getMainControl();
 					mc.saveObject();
 					refresh();
+					
+					if(input instanceof LLRPSpec) {
+						PreferenceUtil.addAttribute(PreferenceConstants.P_LLRP, lrp.getName());
+					}else if(input instanceof RPSpec) {
+						PreferenceUtil.addAttribute(PreferenceConstants.P_RP, lrp.getName());
+					}else if(input instanceof HALSpec) {
+						PreferenceUtil.addAttribute(PreferenceConstants.P_HAL, lrp.getName());
+					}
 				}
 			}
 		});

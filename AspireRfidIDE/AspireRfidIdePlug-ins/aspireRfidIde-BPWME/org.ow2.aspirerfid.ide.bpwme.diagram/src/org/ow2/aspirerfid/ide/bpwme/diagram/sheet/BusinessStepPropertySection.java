@@ -238,6 +238,14 @@ public class BusinessStepPropertySection extends AbstractPropertySection{
 							MainControl mc = MainControl.getMainControl();
 							propertyViewer.refresh(false);
 							mc.saveObject();
+
+							if(id.startsWith("urn:epcglobal:fmcg:bizstep:")) {
+								PreferenceUtil.addAttribute(PreferenceConstants.P_BS, attr.getId());
+							}else if(id.startsWith("urn:epcglobal:fmcg:disp:")) {
+								PreferenceUtil.addAttribute(PreferenceConstants.P_DI, attr.getId());
+							}else if(id.startsWith("urn:epcglobal:fmcg:btt:")) {
+								PreferenceUtil.addAttribute(PreferenceConstants.P_BT, attr.getId());
+							}
 						}
 					}
 				});

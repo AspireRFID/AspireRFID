@@ -1,6 +1,7 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.preferences;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -22,5 +23,34 @@ public class PreferenceUtil {
 			v.add((String) st.nextElement());
 		}
 		return (String[]) v.toArray(new String[v.size()]);
+	}
+	
+	/**
+	 * Add attribute to a given preference name. If the attribute already
+	 * exist, add nothing.
+	 * @param preferenceName
+	 * @param attributeName
+	 */
+	public static void addAttribute(String preferenceName, String attributeName) {
+		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
+		String stringList = store.getString(preferenceName);
+		StringTokenizer st = new StringTokenizer(stringList, "," + "\n\r");
+		HashSet<String> h = new HashSet<String>();
+		while (st.hasMoreElements()) {
+			h.add((String) st.nextElement());
+		}
+		//if this is not new attribute
+		if(h.contains(attributeName)) {
+			return;
+		}else {
+			h.add(attributeName);
+			StringBuffer sb = new StringBuffer();
+			for(String attr:h) {
+				sb.append(attr);
+				sb.append(",");
+			}
+			store.setValue(preferenceName, sb.toString());
+		}
+
 	}
 }
