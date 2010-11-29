@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  this component provides a WireAdmin producer for an USB-connected Geiger counter (http://www.sparkfun.com/products/9298) -->
+<ipojo>
+<!-- <ipojo xmlns:jmx="org.apache.felix.ipojo.handlers.jmx"> -->
+	<component 	classname="org.ow2.aspirerfid.sparkfungeiger.producer.GeigerProducer"
+				name ="geigerproducer"
+				architecture="true"
+      			immediate="true">
+
+		<requires  field="m_logService" optional="true"/>
+
+		<callback transition="validate" method="activate"/>
+		<callback transition="invalidate" method="deactivate"/>
+
+		<properties>
+			<property name="pid" field="m_PID"/>	
+			<property name="portName" field="m_portName"/> 
+			<property name="period" field="m_period"/> 
+		</properties>
+<!-- 
+		<jmx:config objectName="org.ow2.aspirerfid:type=sensor,name=Geiger">
+				- Not necessary:  preRegister="preRegister" -
+			<jmx:property field="m_lastMeasurementMap" name="lastMeasurement" rights="r" notification="true"/>
+			<jmx:property field="m_lastMeasurementValue" name="lastMeasurementValue" rights="r" notification="true"/>
+			<jmx:property field="m_lastMeasurementError" name="lastMeasurementError" rights="r" notification="true"/>
+			<jmx:property field="m_lastMeasurementTime" name="lastMeasurementTime" rights="r" notification="true"/>
+			<jmx:property field="m_lastMeasurementUnit" name="lastMeasurementUnit" rights="r" notification="true"/>
+			<jmx:property field="m_lastMeasurementComposite" name="lastMeasurementComposite" rights="r" notification="true"/>
+		</jmx:config>			
+ -->					
+	</component>
+
+	<instance component="geigerproducer" name="geigerproducer-inst">
+		<property name="pid" value="org.ow2.aspirerfid.sparkfungeigerproducer"/>
+		<property name="period" value="1000"/>
+		<property name="portName" value="COM24"/>
+	</instance>
+</ipojo>

@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.ow2.aspirerfid</groupId>
+	<artifactId>org.ow2.aspirerfid.sparkfungeigerproducer</artifactId>
+
+	<packaging>bundle</packaging>
+	<version>0.1.0-SNAPSHOT</version>
+
+	<name>OW2 :: Aspire RFID :: Sparkfun Geiger Counter Producer</name>
+
+	<properties>
+		<description>provides a Measurement producer from the Sparkfun' Geiger counter http://www.sparkfun.com/products/9298 </description>
+	</properties>
+
+	<description>${description}</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi_R4_core</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi_R4_compendium</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.rxtx</groupId>
+			<artifactId>rxtx</artifactId>
+			<version>2.1.7</version>
+			<scope>provided</scope>
+		</dependency>
+
+<!-- 
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.ipojo.handler.jmx</artifactId>
+			<version>1.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>mx4j</groupId>
+			<artifactId>mx4j</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+-->
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+						<Bundle-Description>${description}</Bundle-Description>
+						<!--  <Import-Package>gnu.io, org.osgi.*,javax.management.*</Import-Package> -->
+						<Import-Package>gnu.io, org.osgi.*</Import-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-ipojo-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>ipojo-bundle</goal>
+						</goals>
+						<configuration>
+							<metadata>IPOJO-INF/metadata.xml</metadata>
+							<ignoreAnnotations>true</ignoreAnnotations>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
