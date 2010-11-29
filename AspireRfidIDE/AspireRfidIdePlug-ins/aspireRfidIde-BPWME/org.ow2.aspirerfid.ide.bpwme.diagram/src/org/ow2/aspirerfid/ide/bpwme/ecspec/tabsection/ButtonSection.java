@@ -33,6 +33,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.model.*;
+import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 
 /**
  * 
@@ -40,8 +42,6 @@ import org.ow2.aspirerfid.ide.bpwme.ecspec.model.*;
  *
  */
 public class ButtonSection extends AbstractPropertySection {
-	private Button addProperty;
-	private Button delProperty;
 	private Spec input;
 	private Text text;
 	
@@ -49,7 +49,6 @@ public class ButtonSection extends AbstractPropertySection {
 	public void setInput(IWorkbenchPart part, ISelection selection) {
 		// TODO Auto-generated method stub
 		super.setInput(part, selection);
-		//System.out.println(part);
 		this.input = (Spec)((IStructuredSelection) selection).getFirstElement();
 		if(input != null){		
 			this.text.setText(input.getName());
@@ -60,7 +59,6 @@ public class ButtonSection extends AbstractPropertySection {
 	@Override
 	public void createControls(final Composite parent,
 			TabbedPropertySheetPage aTabbedPropertySheetPage) {
-		// TODO Auto-generated method stub
 		super.createControls(parent, aTabbedPropertySheetPage);
 		
 		Composite mainComposite = getWidgetFactory().createFlatFormComposite(parent);
@@ -77,95 +75,12 @@ public class ButtonSection extends AbstractPropertySection {
 			public void mouseDown(MouseEvent e) {
 				super.mouseDown(e);
 				input.setName(text.getText());
+				ECSpecEditor editor = (ECSpecEditor) MainUtil.getEditor(ECSpecEditor.ID);
+				if(editor != null) {
+					editor.getLrsb().notifyListeners();
+				}
 			}
 		});
-//        Composite composite = getWidgetFactory()
-//        .createFlatFormComposite(parent);
-//        composite.setLayout(new RowLayout(SWT.HORIZONTAL));
-//		addProperty = getWidgetFactory().createButton(composite,
-//	            "New", SWT.PUSH);
-//		addProperty.addMouseListener(new MouseAdapter(){
-//			@Override
-//			public void mouseDown(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				//System.out.println("Click");
-//				//input.propertyTable.put("Else", "Something");
-//				//System.out.println(
-//				//PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView("AdvancedTab")
-//				//);
-//				//IViewPart[] kk = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViews();
-//				//HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().
-//				//System.out.println(sv.ts.page.handleEntrySelection(selection).getSelection());
-//				
-
-//				//input.propertyTable.put(selection, "");
-//				sv.refreshSampleView();
-//				sv.refreshProperty();
-//
-//				/*
-//				InputDialog id = new InputDialog(parent.getShell());
-//				id.setMessage("Input the property name");
-//				String pn = id.open();
-//				input.propertyTable.put(pn, "");
-//				sv.refreshSampleView();
-//				sv.refreshProperty();
-//				*/
-//				
-//				//input.name = "test";
-//				//input.propertyTable.put("Name", input.name);
-//				/*
-//				try {
-//					IViewPart ppview = PlatformUI.getWorkbench().getActiveWorkbenchWindow().
-//					getActivePage().showView("org.eclipse.ui.views.properties.PropertySheet");
-//					
-//				} catch (PartInitException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}*/
-//			}
-//		});
-//		
-//		delProperty = getWidgetFactory().createButton(composite,
-//	            "Remove", SWT.PUSH);
-////		delProperty.addMouseListener(new MouseAdapter(){
-////			//TODO make the loops smaller, may change the extra property data structure.
-////			@Override
-////			public void mouseDown(MouseEvent e) {
-////				String property = sv.ts.page.getSelectProperty();
-////				if(input instanceof LLRPSpec) {
-////					for(int i = 0; i < sv.extraLLRPProperty.size(); i++) {
-////						if(sv.extraLLRPProperty.get(i).toString().equals(property)) {
-////							input.propertyTable.remove(sv.ts.page.getSelectProperty());
-////							break;
-////						}
-////					}
-////				}else if(input instanceof RPSpec) {
-////					for(int i = 0; i < sv.extraRPProperty.size(); i++) {
-////						if(sv.extraRPProperty.get(i).toString().equals(property)) {
-////							input.propertyTable.remove(sv.ts.page.getSelectProperty());	
-////							break;
-////						}
-////					}
-////				}else if(input instanceof HALSpec) {
-////					for(int i = 0; i < sv.extraHALProperty.size(); i++) {
-////						if(sv.extraHALProperty.get(i).toString().equals(property)) {
-////							input.propertyTable.remove(sv.ts.page.getSelectProperty());
-////							break;
-////						}
-////					}
-////				}		
-////				sv.refreshSampleView();
-////				sv.refreshProperty();
-////			}			
-////			}
-////		);
-////		sv = LRSpecView.getLRSpecView();
-////		/*
-////		if(sv != null) {
-////			//System.out.println(sv);
-////			sv.bindButtonSection(this);
-////		}
-////		*/
 	}
 
 }

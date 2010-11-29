@@ -167,6 +167,10 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		return null;
 	}
 	
+	public LRSpecBuilder getLrsb() {
+		return lrsb;
+	}
+	
 	@Override
 	public void setFocus() {
 		//treeViewer.getControl().setFocus();
