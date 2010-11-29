@@ -51,7 +51,9 @@ import org.osgi.util.measurement.Unit;
 
 
 /**
- * provides a WireAdmin producer for a connected Geiger counter (http://www.sparkfun.com/products/9298)
+ * provides a WireAdmin producer for a USB-connected Geiger counter (http://www.sparkfun.com/products/9298).
+ * This geiger counter send 0 or 1 characters to the USB-serial port each time it detects an ionizing particle (alpha, beta and gamma).
+ * The producer counts the detected particles and pushes the counter to the consumers thru the wires every period (generally 1000 millisec).
  * @author Didier Donsez
  *
  */
@@ -107,8 +109,7 @@ public class GeigerProducer implements Producer, Runnable, SerialPortEventListen
 	// TODO resizable buffer
 	byte[] readBuffer = new byte[256];
 
-	private static final Class[] m_flavors = new Class[] { Measurement.class,
-			Double.class, Float.class, String.class };
+	private static final Class[] m_flavors = new Class[] { Measurement.class, Double.class, Float.class, String.class };
 
 	private BundleContext m_bundleContext;
 
@@ -318,7 +319,7 @@ public class GeigerProducer implements Producer, Runnable, SerialPortEventListen
 
 						synchronized (this) {
 							detectedParticleCounter+=numBytes;
-							totalDetectedParticleCounter+=detectedParticleCounter;
+							totalDetectedParticleCounter+=numBytes;
 						}						
 
 						/*
