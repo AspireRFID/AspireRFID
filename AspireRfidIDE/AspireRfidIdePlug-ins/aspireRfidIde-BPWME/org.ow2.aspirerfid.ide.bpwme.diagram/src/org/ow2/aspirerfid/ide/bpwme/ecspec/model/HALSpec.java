@@ -43,6 +43,27 @@ public class HALSpec extends Spec{
 		lrp.setName("Description");
 		lrp.setValue("A HAL Description");
 		adf.getLRSpec().getProperties().getProperty().add(lrp);
+		
+		lrp = new LRProperty();
+		lrp.setName("ConnectionPointPort");
+		lrp.setValue("5084");
+		adf.getLRSpec().getProperties().getProperty().add(lrp);
+		
+		lrp = new LRProperty();
+		lrp.setName("PhysicalReaderSource");
+		lrp.setValue("1,2,3");
+		adf.getLRSpec().getProperties().getProperty().add(lrp);
+		
+		lrp = new LRProperty();
+		lrp.setName("RoSpecID");
+		lrp.setValue("1");
+		adf.getLRSpec().getProperties().getProperty().add(lrp);
+
+		lrp = new LRProperty();
+		lrp.setName("ConnectionPointAddress");
+		lrp.setValue("1.1.1.1");
+		adf.getLRSpec().getProperties().getProperty().add(lrp);
+
 	}
 	
 	public HALSpec getClone() {

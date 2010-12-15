@@ -43,10 +43,32 @@ public class RPSpec extends Spec{
 		lrp.setName("Description");
 		lrp.setValue("This Logical Reader consists of shelf 1,2,3,4 of the physical reader named AccadaRPSimulator");
 		adf.getLRSpec().getProperties().getProperty().add(lrp);
+		
 		lrp = new LRProperty();
 		lrp.setName("ReaderType");
 		lrp.setValue("org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor");
 		adf.getLRSpec().getProperties().getProperty().add(lrp);
+		
+		lrp = new LRProperty();
+		lrp.setName("ConnectionPointPort");
+		lrp.setValue("5084");
+		adf.getLRSpec().getProperties().getProperty().add(lrp);
+		
+		lrp = new LRProperty();
+		lrp.setName("PhysicalReaderSource");
+		lrp.setValue("1,2,3");
+		adf.getLRSpec().getProperties().getProperty().add(lrp);
+		
+		lrp = new LRProperty();
+		lrp.setName("RoSpecID");
+		lrp.setValue("1");
+		adf.getLRSpec().getProperties().getProperty().add(lrp);
+
+		lrp = new LRProperty();
+		lrp.setName("ConnectionPointAddress");
+		lrp.setValue("1.1.1.1");
+		adf.getLRSpec().getProperties().getProperty().add(lrp);
+
 	}
 
 	public RPSpec getClone() {
