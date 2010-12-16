@@ -53,6 +53,5 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		apiStore.setValue(IWorkbenchPreferenceConstants.DOCK_PERSPECTIVE_BAR,
 				"TOP_LEFT");
         configurer.setTitle("ASPIRE RFID IDE");
-
     }
 }
