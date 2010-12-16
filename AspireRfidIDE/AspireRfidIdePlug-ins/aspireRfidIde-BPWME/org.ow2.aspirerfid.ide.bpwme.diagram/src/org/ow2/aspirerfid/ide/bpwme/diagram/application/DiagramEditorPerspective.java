@@ -20,14 +20,13 @@ public class DiagramEditorPerspective implements IPerspectiveFactory {
 				"bottomLeft", IPageLayout.BOTTOM, 0.6f, layout.getEditorArea()); //$NON-NLS-1$	 //$NON-NLS-2$
 		buttomLeft.addView(IPageLayout.ID_PROP_SHEET);
 		
+		IFolderLayout buttomMiddle = layout.createFolder(
+				"bottomMiddle", IPageLayout.RIGHT, 0.6f, IPageLayout.ID_PROP_SHEET); //$NON-NLS-1$	 //$NON-NLS-2$
+		buttomMiddle.addView("org.ow2.aspirerfid.ide.bpwme.navigator.view");		
+		
 		IFolderLayout bottomRight = layout.createFolder(
-				"bottomRight", IPageLayout.RIGHT, 0.7f, IPageLayout.ID_PROP_SHEET); //$NON-NLS-1$	 //$NON-NLS-2$
-		bottomRight.addView(IPageLayout.ID_OUTLINE);
-		
-		
-//		IFolderLayout right = layout.createFolder(
-//				"right", IPageLayout.RIGHT, 0.6f, layout.getEditorArea()); //$NON-NLS-1$
-		
+		"bottomRight", IPageLayout.RIGHT, 0.5f, "org.ow2.aspirerfid.ide.bpwme.navigator.view"); //$NON-NLS-1$	 //$NON-NLS-2$
+		bottomRight.addView(IPageLayout.ID_OUTLINE);		
 
 	}
 }
