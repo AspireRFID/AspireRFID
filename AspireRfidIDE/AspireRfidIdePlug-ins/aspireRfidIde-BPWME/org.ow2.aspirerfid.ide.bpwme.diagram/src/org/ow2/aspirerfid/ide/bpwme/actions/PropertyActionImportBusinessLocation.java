@@ -123,7 +123,7 @@ public class PropertyActionImportBusinessLocation extends Action{
 	}
 
 	//get the diagram file name from the directory
-	private String getLocationFile(String locationFileDirectory) {
+	public static String getLocationFile(String locationFileDirectory) {
 		File dir = new File(locationFileDirectory);		
 		if(!dir.exists()) {
 			return null;

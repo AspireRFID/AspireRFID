@@ -58,6 +58,11 @@ public class ShowECSpecEditor extends AbstractHandler {
 				return null;
 			}
 			epe = (EBProcEditPart)select;
+			if(epe == null) {
+				return null;
+			}
+		}else {
+			return null;
 		}
 
 		EBProcImpl ebi = (EBProcImpl)((View)epe.getModel()).getElement();

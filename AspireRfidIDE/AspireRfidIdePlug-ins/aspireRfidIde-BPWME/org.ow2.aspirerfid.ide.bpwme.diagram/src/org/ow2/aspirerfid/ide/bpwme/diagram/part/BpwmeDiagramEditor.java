@@ -1,14 +1,18 @@
 package org.ow2.aspirerfid.ide.bpwme.diagram.part;
 
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.gmf.runtime.diagram.ui.actions.ActionIds;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocument;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocumentProvider;
@@ -21,8 +25,20 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import  org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
+import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.ow2.aspirerfid.commons.apdl.model.CLCBProc;
+import org.ow2.aspirerfid.ide.MasterDataEditorGMF.bpwmeintegration.MasterDataContentsProvider;
+import org.ow2.aspirerfid.ide.bpwme.actions.PropertyActionImportBusinessLocation;
+import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.CLCBProcEditPart;
+import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
+import org.ow2.aspirerfid.ide.bpwme.impl.CLCBProcImpl;
+import org.ow2.aspirerfid.ide.bpwme.master.utils.MasterDataBuilder;
 import org.ow2.aspirerfid.ide.bpwme.utils.EditorListener;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
@@ -173,5 +189,86 @@ public class BpwmeDiagramEditor extends DiagramDocumentEditor {
 	public void doSave(IProgressMonitor progressMonitor) {
 		super.doSave(progressMonitor);
 	}
+	
+	
+	/**
+	 * Whenever change focus back to bpwme editor,
+	 * try to import the data from business location editor
+	 * to the selected clcb object
+	 */
+	@Override
+	public void setFocus() {
+		ISelection selection = getSite().getSelectionProvider().getSelection();
+
+		GraphicalEditPart selectedEditPart = null;
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+			if (structuredSelection.size() != 1) {
+				return;
+			}
+			selectedEditPart = (GraphicalEditPart) structuredSelection.getFirstElement();
+		}
+		
+		CLCBProcEditPart clcbPart = null;
+		String clcbName;
+		
+		if(selectedEditPart instanceof CLCBProcEditPart) {
+			clcbPart = ((CLCBProcEditPart)selectedEditPart);
+			//if it is ebproc, get the parent	
+		}else if(selectedEditPart instanceof EBProcEditPart){
+			clcbPart = (CLCBProcEditPart)((EBProcEditPart)selectedEditPart).getParent().getParent();
+		}else {
+			return;
+		}
+		
+		if(clcbPart == null) {
+			System.out.println("CLCBProcPart is null, no selection found");
+			return;
+		}
+		
+		MainControl mc = MainControl.getMainControl();
+		
+		CLCBProcImpl clcbi = (CLCBProcImpl)((View)clcbPart.getModel()).getElement();
+		CLCBProc clcb = (CLCBProc) mc.getMapObject(clcbi.hashCode());
+
+		clcbName = clcb.getName();
+
+		URI uri = mc.getApdlURI();
+		
+		String projectName = MainUtil.getProjectName(uri.toFileString());
+
+		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
+		String dir = store.getString(PreferenceConstants.P_BPWME_DIR);
+				
+		String newDir = dir +  File.separator + 
+			projectName + File.separator + 
+			clcbName + File.separator;
+		//check if the corresponding file exists
+		
+		
+		String lFileName = PropertyActionImportBusinessLocation.getLocationFile(newDir);
+		//if it is, open the file
+		if(lFileName != null) {
+			MasterDataBuilder mdb = MasterDataBuilder.getInstance();			
+			mdb.setCLCBProc(clcb);
+			
+			MasterDataContentsProvider mcp = new MasterDataContentsProvider();
+			mcp.setCompany(lFileName);
+						
+			HashMap<String, HashMap<String, String>> companyMap = 
+				mcp.getCompanyModelUriAttributesValues();
+			HashMap<String, HashMap<String, String>> warehouseMap = 
+				mcp.getWarehouseModelUriAttributesValuesBpwme();
+			HashMap<String, HashMap<String, String>> readpointMap = 
+				mcp.getReadPointModelUriAttributesValuesBpwme();			
+			
+			mdb.setBusinessStepReadPoint(companyMap, warehouseMap, readpointMap);
+			
+		}else {//else create a new one			
+			MainUtil.executeCommand("org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMF.command");
+		}
+		super.setFocus();
+	}
+	
 	
 }
