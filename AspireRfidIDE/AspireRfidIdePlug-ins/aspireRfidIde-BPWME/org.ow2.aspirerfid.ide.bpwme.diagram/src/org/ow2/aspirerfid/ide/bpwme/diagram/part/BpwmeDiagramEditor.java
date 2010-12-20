@@ -195,6 +195,7 @@ public class BpwmeDiagramEditor extends DiagramDocumentEditor {
 	 * Whenever change focus back to bpwme editor,
 	 * try to import the data from business location editor
 	 * to the selected clcb object
+	 * TODO reload all clcb data from the diagrams.
 	 */
 	@Override
 	public void setFocus() {
