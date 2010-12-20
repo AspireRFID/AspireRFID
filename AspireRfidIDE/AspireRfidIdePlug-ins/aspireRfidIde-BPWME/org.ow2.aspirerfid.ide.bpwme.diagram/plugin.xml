@@ -741,30 +741,12 @@
             adaptable="false"
             id="org.ow2.aspirerfid.ide.bpwme.diagram.objectContribution.EBProcEditPart"
             objectClass="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart">
-         <!--
-         <menu
-               id="EBEdit"
-               label="Edit"
-               path="additions">
-            <separator
-                  name="editGroup">
-            </separator>
-         </menu>
-         -->
          <action
                class="org.ow2.aspirerfid.ide.bpwme.actions.EditECSpec"
                id="org.ow2.aspirerfid.ide.bpwme.actions.EditECSpec"
                label="EC Spec"
                menubarPath="editMenu/editGroup">
          </action>
-         <!--
-         <action
-               class="org.ow2.aspirerfid.ide.bpwme.actions.EditMasterData"
-               id="org.ow2.aspirerfid.ide.bpwme.actions.EditMasterData"
-               label="Master Data"
-               menubarPath="editMenu/editGroup">
-         </action>
-         -->
       </objectContribution>
    </extension>
    <!--
@@ -899,19 +881,7 @@
                   type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.HALSpec">
             </input>
          </propertySection>
-         
-         
-         <!--
-         <propertySection
-               class="org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection.LRAdvancedSection"
-               id="AdvanceSection"
-               tab="AdvancedTab">
-            <input
-                  type="org.ow2.aspirerfid.ide.bpwme.ecspec.model.Spec">
-            </input>
-         </propertySection>
-         -->
-      </propertySections>
+  	  </propertySections>
    </extension>
 
     <!--about the ecspec report editing-->

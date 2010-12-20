@@ -197,79 +197,79 @@ public class BpwmeDiagramEditor extends DiagramDocumentEditor {
 	 * to the selected clcb object
 	 * TODO reload all clcb data from the diagrams.
 	 */
-	@Override
-	public void setFocus() {
-		ISelection selection = getSite().getSelectionProvider().getSelection();
-
-		GraphicalEditPart selectedEditPart = null;
-		if (selection instanceof IStructuredSelection) {
-			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-			if (structuredSelection.size() != 1) {
-				return;
-			}
-			selectedEditPart = (GraphicalEditPart) structuredSelection.getFirstElement();
-		}
-		
-		CLCBProcEditPart clcbPart = null;
-		String clcbName;
-		
-		if(selectedEditPart instanceof CLCBProcEditPart) {
-			clcbPart = ((CLCBProcEditPart)selectedEditPart);
-			//if it is ebproc, get the parent	
-		}else if(selectedEditPart instanceof EBProcEditPart){
-			clcbPart = (CLCBProcEditPart)((EBProcEditPart)selectedEditPart).getParent().getParent();
-		}else {
-			return;
-		}
-		
-		if(clcbPart == null) {
-			System.out.println("CLCBProcPart is null, no selection found");
-			return;
-		}
-		
-		MainControl mc = MainControl.getMainControl();
-		
-		CLCBProcImpl clcbi = (CLCBProcImpl)((View)clcbPart.getModel()).getElement();
-		CLCBProc clcb = (CLCBProc) mc.getMapObject(clcbi.hashCode());
-
-		clcbName = clcb.getName();
-
-		URI uri = mc.getApdlURI();
-		
-		String projectName = MainUtil.getProjectName(uri.toFileString());
-
-		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
-		String dir = store.getString(PreferenceConstants.P_BPWME_DIR);
-				
-		String newDir = dir +  File.separator + 
-			projectName + File.separator + 
-			clcbName + File.separator;
-		//check if the corresponding file exists
-		
-		
-		String lFileName = PropertyActionImportBusinessLocation.getLocationFile(newDir);
-		//if it is, open the file
-		if(lFileName != null) {
-			MasterDataBuilder mdb = MasterDataBuilder.getInstance();			
-			mdb.setCLCBProc(clcb);
-			
-			MasterDataContentsProvider mcp = new MasterDataContentsProvider();
-			mcp.setCompany(lFileName);
-						
-			HashMap<String, HashMap<String, String>> companyMap = 
-				mcp.getCompanyModelUriAttributesValues();
-			HashMap<String, HashMap<String, String>> warehouseMap = 
-				mcp.getWarehouseModelUriAttributesValuesBpwme();
-			HashMap<String, HashMap<String, String>> readpointMap = 
-				mcp.getReadPointModelUriAttributesValuesBpwme();			
-			
-			mdb.setBusinessStepReadPoint(companyMap, warehouseMap, readpointMap);
-			
-		}else {//else create a new one			
-			MainUtil.executeCommand("org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMF.command");
-		}
-		super.setFocus();
-	}
+//	@Override
+//	public void setFocus() {
+//		ISelection selection = getSite().getSelectionProvider().getSelection();
+//
+//		GraphicalEditPart selectedEditPart = null;
+//		if (selection instanceof IStructuredSelection) {
+//			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+//			if (structuredSelection.size() != 1) {
+//				return;
+//			}
+//			selectedEditPart = (GraphicalEditPart) structuredSelection.getFirstElement();
+//		}
+//		
+//		CLCBProcEditPart clcbPart = null;
+//		String clcbName;
+//		
+//		if(selectedEditPart instanceof CLCBProcEditPart) {
+//			clcbPart = ((CLCBProcEditPart)selectedEditPart);
+//			//if it is ebproc, get the parent	
+//		}else if(selectedEditPart instanceof EBProcEditPart){
+//			clcbPart = (CLCBProcEditPart)((EBProcEditPart)selectedEditPart).getParent().getParent();
+//		}else {
+//			return;
+//		}
+//		
+//		if(clcbPart == null) {
+//			System.out.println("CLCBProcPart is null, no selection found");
+//			return;
+//		}
+//		
+//		MainControl mc = MainControl.getMainControl();
+//		
+//		CLCBProcImpl clcbi = (CLCBProcImpl)((View)clcbPart.getModel()).getElement();
+//		CLCBProc clcb = (CLCBProc) mc.getMapObject(clcbi.hashCode());
+//
+//		clcbName = clcb.getName();
+//
+//		URI uri = mc.getApdlURI();
+//		
+//		String projectName = MainUtil.getProjectName(uri.toFileString());
+//
+//		IPreferenceStore store = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
+//		String dir = store.getString(PreferenceConstants.P_BPWME_DIR);
+//				
+//		String newDir = dir +  File.separator + 
+//			projectName + File.separator + 
+//			clcbName + File.separator;
+//		//check if the corresponding file exists
+//		
+//		
+//		String lFileName = PropertyActionImportBusinessLocation.getLocationFile(newDir);
+//		//if it is, open the file
+//		if(lFileName != null) {
+//			MasterDataBuilder mdb = MasterDataBuilder.getInstance();			
+//			mdb.setCLCBProc(clcb);
+//			
+//			MasterDataContentsProvider mcp = new MasterDataContentsProvider();
+//			mcp.setCompany(lFileName);
+//						
+//			HashMap<String, HashMap<String, String>> companyMap = 
+//				mcp.getCompanyModelUriAttributesValues();
+//			HashMap<String, HashMap<String, String>> warehouseMap = 
+//				mcp.getWarehouseModelUriAttributesValuesBpwme();
+//			HashMap<String, HashMap<String, String>> readpointMap = 
+//				mcp.getReadPointModelUriAttributesValuesBpwme();			
+//			
+//			mdb.setBusinessStepReadPoint(companyMap, warehouseMap, readpointMap);
+//			
+//		}else {//else create a new one			
+//			MainUtil.executeCommand("org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMF.command");
+//		}
+//		super.setFocus();
+//	}
 	
 	
 }

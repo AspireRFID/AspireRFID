@@ -28,6 +28,7 @@ import org.ow2.aspirerfid.commons.ale.model.alelr.LRProperty;
 import org.ow2.aspirerfid.commons.ale.model.alelr.LRSpec;
 import org.ow2.aspirerfid.commons.ale.model.alelr.LRSpec.Properties;
 import org.ow2.aspirerfid.commons.apdl.model.ApdlDataField;
+import org.ow2.aspirerfid.commons.apdl.model.EBProc;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 
 /**
@@ -39,6 +40,8 @@ public class Spec implements IWorkbenchAdapter, IAdaptable{
 	public enum Type{LLRP, RP, HAL}
 	protected ApdlDataField adf;
 	protected Type type;
+	
+	private EBProc belongTo;
 	
 	public Spec() {
 		this.adf = new ApdlDataField();
@@ -66,6 +69,14 @@ public class Spec implements IWorkbenchAdapter, IAdaptable{
 		return adf.getName();
 	}
 	
+	public void setBelongTo(EBProc belongTo) {
+		this.belongTo = belongTo;
+	}
+	
+	public EBProc getBelongTo() {
+		return belongTo;
+	}
+	
 	public void addProperty(LRProperty property) {
 		adf.getLRSpec().getProperties().getProperty().add(property);
 	}
@@ -85,6 +96,8 @@ public class Spec implements IWorkbenchAdapter, IAdaptable{
 		for(LRProperty lrp:adf.getLRSpec().getProperties().getProperty()) {
 			newSpec.adf.getLRSpec().getProperties().getProperty().add(lrp);
 		}
+		newSpec.setBelongTo(getBelongTo());
+		newSpec.setName("Dup_"+getName());
 		return newSpec;
 	}
 	

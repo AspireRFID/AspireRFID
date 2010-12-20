@@ -77,6 +77,8 @@ public class RPSpec extends Spec{
 		for(LRProperty lrp:adf.getLRSpec().getProperties().getProperty()) {
 			newSpec.adf.getLRSpec().getProperties().getProperty().add(cloneLRProperty(lrp));
 		}
+		newSpec.setBelongTo(getBelongTo());
+		newSpec.setName("Dup_"+getName());
 		return newSpec;
 	}
 

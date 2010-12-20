@@ -146,6 +146,10 @@ public class InputDialog extends Dialog {
 	    final Text text = new Text(shell, SWT.BORDER);
 	    data = new GridData(GridData.FILL_HORIZONTAL);
 	    data.horizontalSpan = 2;
+	    //make the dialog box wider
+	    data.grabExcessHorizontalSpace = true;
+	    data.minimumWidth = 200;
+	    //wider done
 	    text.setLayoutData(data);
 	    text.setText(input);
 	    

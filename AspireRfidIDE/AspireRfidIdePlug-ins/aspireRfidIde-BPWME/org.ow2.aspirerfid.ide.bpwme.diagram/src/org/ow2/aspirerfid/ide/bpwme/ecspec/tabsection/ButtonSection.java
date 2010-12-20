@@ -47,7 +47,6 @@ public class ButtonSection extends AbstractPropertySection {
 	
 	@Override
 	public void setInput(IWorkbenchPart part, ISelection selection) {
-		// TODO Auto-generated method stub
 		super.setInput(part, selection);
 		this.input = (Spec)((IStructuredSelection) selection).getFirstElement();
 		if(input != null){		
@@ -74,10 +73,11 @@ public class ButtonSection extends AbstractPropertySection {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				super.mouseDown(e);
-				input.setName(text.getText());
+				//input.setName(text.getText());
 				ECSpecEditor editor = (ECSpecEditor) MainUtil.getEditor(ECSpecEditor.ID);
 				if(editor != null) {
-					editor.getLrsb().notifyListeners();
+					editor.changeName(input, input.getName(), text.getText());
+					//editor.getLrsb().notifyListeners();
 				}
 			}
 		});

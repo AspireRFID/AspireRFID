@@ -100,6 +100,7 @@ public class ECSpecBuilder {
 		
 		if(type == null) {
 			System.out.println("Cannot find type definition in " + ebproc.getId());
+			return;
 		}
 		
 		switch(type) {
@@ -166,6 +167,7 @@ public class ECSpecBuilder {
 			
 			if(type == null) {
 				System.out.println("Cannot find type definition in " + ebproc.getId());
+				return;
 			}
 			
 			switch(type) {
@@ -262,20 +264,27 @@ public class ECSpecBuilder {
 		listeners.add(listener);
 	}
 	
-	public void notifyListeners() {
-		/*
+	//TODO check the whole process
+	public void notifyListeners() {		
 		for(Viewer v : listeners) {
-			System.out.println(v);
+			//System.out.println(v);
 			v.refresh();
-		}*/
+		}
 	}
 	
 	//logical reader related
 	public boolean addLogicalReader(String id) {
 		boolean result = ecspec.getLogicalReaders().getLogicalReader().add(id);
 		notifyListeners();
-		return result;
-		
+		return result;		
+	}
+	
+	public void changeLogicalReaderName(String oldName, String newName) {
+		boolean result = ecspec.getLogicalReaders().getLogicalReader().remove(oldName);
+		if(result) {
+			ecspec.getLogicalReaders().getLogicalReader().add(newName);			
+		}
+		notifyListeners();
 	}
 
 	public void setLogicalReaders(List<String> list) {

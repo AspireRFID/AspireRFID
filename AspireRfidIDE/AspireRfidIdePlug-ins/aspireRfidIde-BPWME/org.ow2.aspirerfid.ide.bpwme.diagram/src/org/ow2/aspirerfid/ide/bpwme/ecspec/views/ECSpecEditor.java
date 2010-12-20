@@ -97,6 +97,8 @@ public class ECSpecEditor extends EditorPart implements
 ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 	private ECSpecBuilder ecsb;
 	private LRSpecBuilder lrsb;
+	private EBProc ebproc;
+	
 	private TreeViewer reportViewer;
 	private ListViewer startListViewer;
 	private ListViewer stopListViewer;
@@ -115,7 +117,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 	protected boolean isdirty = false;
 	
 	public static final String ID = "org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor";
-	private ListViewer logicalListViewer;
+	//private ListViewer logicalListViewer;
 	@Override
 	public void createPartControl(Composite parent) {
 		
@@ -180,9 +182,20 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 
 	
 	public void refresh() {
-		logicalListViewer.refresh();
+		//logicalListViewer.refresh();
 		candidateViewer.refresh();
 		selectViewer.refresh();
+	}
+	
+	
+	public void changeName(Spec spec, String oldName, String newName) {
+		spec.setName(newName);
+		//delete the ecsb part if exists
+		ecsb.changeLogicalReaderName(oldName, newName);
+		
+		candidateViewer.refresh(false);
+		selectViewer.refresh(false);		
+		setDirty(true);
 	}
 	
 	
@@ -203,6 +216,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 				cd.setMessage("Choose Reader Type");
 				
 				Spec item = cd.open();
+				item.setBelongTo(ebproc);
 				
 				if(item instanceof LLRPSpec) {
 					LLRPSpec newItem = ((LLRPSpec)item);
@@ -242,7 +256,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 					lrsb.addLRSpec(newItem.getApdl());
 				}
 				candidateViewer.refresh(false);
-
+				setDirty(true);
 			}
 		});
 
@@ -254,8 +268,13 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 					System.out.println("Remove Nothing");
 				}
 				lrsb.removeLRSpec(s.getApdl());
-								
-				candidateViewer.refresh(false);				
+				
+				lrsb.getRightSpecList().remove(s);
+				ecsb.removeLogicalReader(s.getName());
+				
+				candidateViewer.refresh(false);
+				selectViewer.refresh(false);
+				setDirty(true);
 			}
 		});
 	}
@@ -282,7 +301,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		candidateViewer.setLabelProvider(new LabelProvider(){
 			@Override
 			public String getText(Object element) {
-				return ((Spec)element).getName();
+				return ((Spec)element).getName()+"@"+((Spec)element).getBelongTo().getId();
 			}
 		});
 		
@@ -317,12 +336,22 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 				Iterator<?> liter = lselection.iterator();
 				while(liter.hasNext()) {
 					Spec temp = (Spec)liter.next();
+					//if not belongs to the current selection
+					//copy it to the current ebproc
+					if(temp.getBelongTo() != ebproc) {
+						Spec newItem = temp.getClone();
+						newItem.setBelongTo(ebproc);
+						lrsb.getLeftSpecList().add(newItem);
+						lrsb.addLRSpec(newItem.getApdl());
+						temp = newItem;
+					}
 					//lrsb.getLeftSpecList().remove(temp);
 					lrsb.getRightSpecList().add(temp);
 					ecsb.addLogicalReader(temp.getName());
 				}
 				candidateViewer.refresh(false);
 				selectViewer.refresh(false);
+				setDirty(true);
 			}
 		});
 		
@@ -339,6 +368,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 				}
 				candidateViewer.refresh(false);
 				selectViewer.refresh(false);
+				setDirty(true);
 			}
 		});
 	}
@@ -845,6 +875,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
         lrsb = ((ECLRInput)input).getLRSpecBuilder();
         ecsb = ((ECLRInput)input).getECSpecBuilder();
         spw = new SelectionProviderWrapper();
+        ebproc = ((ECLRInput)input).getEbproc();
         
 		//add selection listener to bpwme editor
         BpwmeDiagramEditor editor = MainUtil.getBPWMEEditor();
@@ -873,6 +904,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 
 	@Override
 	public void selectionChanged(SelectionChangedEvent event) {
+		//System.out.println(event);
 		ISelection selection = event.getSelection();
 		MainControl mc = MainControl.getMainControl();
 		if(selection instanceof IStructuredSelection) {
@@ -888,6 +920,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 					
 					if(ebp != null){
 						((ECLRInput)getEditorInput()).setEBProc(ebp);
+						ebproc = ebp;
 						//System.out.println(((ECLRInput)getEditorInput()).getECSpecBuilder().getStartTriggerList());
 						startListViewer.setInput(ecsb.getStartTriggerList());
 						stopListViewer.setInput(ecsb.getStopTriggerList());

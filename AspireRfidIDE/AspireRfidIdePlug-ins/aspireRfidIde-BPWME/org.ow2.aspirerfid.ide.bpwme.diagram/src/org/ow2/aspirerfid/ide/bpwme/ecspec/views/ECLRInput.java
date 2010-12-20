@@ -62,6 +62,10 @@ public class ECLRInput implements IEditorInput{
 	
 	public ECSpecBuilder getECSpecBuilder() {
 		return ecsb;
-	} 
+	}
+	
+	public EBProc getEbproc() {
+		return ebproc;
+	}
 
 }

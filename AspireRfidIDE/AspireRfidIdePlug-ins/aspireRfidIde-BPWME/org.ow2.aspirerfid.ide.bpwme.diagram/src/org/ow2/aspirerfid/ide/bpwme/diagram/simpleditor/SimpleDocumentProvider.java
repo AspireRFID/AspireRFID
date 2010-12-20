@@ -132,14 +132,13 @@ public class SimpleDocumentProvider extends AbstractDocumentProvider {
 			File file= path.toFile();
 			
 			try {
-				file.createNewFile();
+				boolean result = file.createNewFile();
 
-				if (file.exists()) {
+				if (result == false) {//file exist
 					if (file.canWrite()) {
 						Writer writer= new FileWriter(file);
 						writeDocumentContent(document, writer, monitor);
 					} else {
-						// XXX prompt to SaveAs
 						throw new CoreException(new Status(IStatus.ERROR, "org.eclipse.ui.examples.rcp.texteditor", IStatus.OK, "file is read-only", null)); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				} else {

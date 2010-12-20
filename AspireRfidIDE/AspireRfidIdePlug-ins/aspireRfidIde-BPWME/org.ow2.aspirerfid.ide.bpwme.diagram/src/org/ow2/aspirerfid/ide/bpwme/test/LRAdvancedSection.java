@@ -15,7 +15,7 @@
  * for the specific language governing rights and limitations.
  */
 
-package org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection;
+package org.ow2.aspirerfid.ide.bpwme.test;
 
 
 import org.eclipse.jface.viewers.IStructuredSelection;

@@ -98,7 +98,7 @@ public class ComplexDialog extends Dialog{
 	        display.sleep();
 	      }
 	    }
-	    if((choice == null) | (choice.equals(""))) {
+	    if((choice == null) || (choice.equals(""))) {
 	    	return null;
 	    }
 	    if(choice.equals("LLRP Spec")) {

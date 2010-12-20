@@ -99,7 +99,7 @@ public class ReportTypeDialog extends Dialog{
 				display.sleep();
 			}
 		}
-		if((choice == null) | (choice.equals(""))) {
+		if((choice == null) || (choice.equals(""))) {
 			return null;
 		} else if(choice.equals("Object Event")) {
 			return EventType.OBJECT_EVENT;

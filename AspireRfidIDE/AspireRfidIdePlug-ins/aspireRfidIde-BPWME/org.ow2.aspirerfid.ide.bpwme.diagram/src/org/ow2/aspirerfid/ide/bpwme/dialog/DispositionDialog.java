@@ -103,7 +103,7 @@ public class DispositionDialog extends Dialog{
 				display.sleep();
 			}
 		}
-		if((uri == null) && (name == null)) {
+		if((uri == null) || (name == null)) {
 			return null;
 		}
 		

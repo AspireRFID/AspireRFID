@@ -138,12 +138,14 @@ public class LRSpecBuilder {
 				if(type == null) {
 					//TODO for now there is no type information for HAL, we should have it later
 					HALSpec hal = Spec.createHAL(adf);
+					hal.setBelongTo(ebproc);
 					candidateList.add(hal);
 					if(inSelect(hal.getName(), selectLR)) {
 						selectList.add(hal);
 					}
 				}else if(type.equals("org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor")) {
 					LLRPSpec llrp = Spec.createLLRP(adf);
+					llrp.setBelongTo(ebproc);
 					candidateList.add(llrp);
 					if(inSelect(llrp.getName(), selectLR)) {
 						selectList.add(llrp);
@@ -151,6 +153,7 @@ public class LRSpecBuilder {
 
 				}else if(type.equals("org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor")) {
 					RPSpec rp = Spec.createRP(adf);
+					rp.setBelongTo(ebproc);
 					candidateList.add(rp);
 					if(inSelect(rp.getName(), selectLR)) {
 						selectList.add(rp);
