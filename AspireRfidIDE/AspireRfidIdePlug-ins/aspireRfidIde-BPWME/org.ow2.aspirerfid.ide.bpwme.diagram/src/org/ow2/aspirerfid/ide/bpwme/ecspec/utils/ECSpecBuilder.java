@@ -500,4 +500,9 @@ public class ECSpecBuilder {
 		notifyListeners();
 	}
 	
+	public void setReportName(String value, ECReportSpec reportSpec) {
+		reportSpec.setReportName(value);
+		notifyListeners();
+	}
+	
 }

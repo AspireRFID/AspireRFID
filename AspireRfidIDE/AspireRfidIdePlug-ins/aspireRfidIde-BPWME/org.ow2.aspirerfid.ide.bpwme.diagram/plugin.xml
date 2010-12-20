@@ -914,7 +914,7 @@
             </propertySection>
             
             <propertySection
-                  class="org.eclipse.ui.views.properties.tabbed.AdvancedPropertySection"
+                  class="org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection.ECNormalSection"
                   id="EC.NormalSection"
                   tab="EC.AdvancedTab">
                <input

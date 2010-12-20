@@ -18,40 +18,30 @@
 package org.ow2.aspirerfid.ide.bpwme.ecspec.tabsection;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.ow2.aspirerfid.ide.bpwme.dialog.InputDialog;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.model.ReportSpec;
-import org.ow2.aspirerfid.ide.bpwme.ecspec.model.ReportSpecProperties;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.provider.ReportPropertyContentProvider;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.provider.ReportPropertyLabelProvider;
+import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 
 /**
  * 
@@ -102,7 +92,6 @@ public class ECAdvancedSection extends AbstractPropertySection {
 		super.createControls(parent, aTabbedPropertySheetPage);
         Composite composite = getWidgetFactory().createFlatFormComposite(parent);
         composite.setLayout(new GridLayout());
-        composite.setBackground(null);
         createEditPart(composite);
         createEditLogic(composite);
 	}
@@ -112,17 +101,19 @@ public class ECAdvancedSection extends AbstractPropertySection {
 		list.setContentProvider(new ReportPropertyContentProvider());
 		list.setLabelProvider(new ReportPropertyLabelProvider());		
 		
+		final MainControl mc = MainControl.getMainControl();
 		
 		newB.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseDown(MouseEvent e) {
 				super.mouseDown(e);
 				InputDialog id = new InputDialog(parent.getShell());
-				id.setInput("urn:epc:pat:");
+				id.setInput("urn:epc:pat:*");
 				String input = id.open();
 				if((input != null) && (!input.equals(""))) {
 					rs.addFilter(input);
 					list.refresh();
+					mc.saveObject();			
 				}
 			}
 		});
@@ -135,8 +126,11 @@ public class ECAdvancedSection extends AbstractPropertySection {
 				String oldFilter = (String)((IStructuredSelection)list.getSelection()).getFirstElement();
 				id.setInput(oldFilter);
 				String newFilter = id.open();
-				rs.changeFilter(oldFilter, newFilter);
-				list.refresh();
+				if((newFilter != null) && (!newFilter.equals(""))) {
+					rs.changeFilter(oldFilter, newFilter);
+					list.refresh();
+					mc.saveObject();
+				}
 			}
 		});
 		
@@ -147,6 +141,7 @@ public class ECAdvancedSection extends AbstractPropertySection {
 				String oldFilter = (String)((IStructuredSelection)list.getSelection()).getFirstElement();
 				rs.removeFilter(oldFilter);
 				list.refresh();
+				mc.saveObject();
 			}
 		});
 		
@@ -155,6 +150,7 @@ public class ECAdvancedSection extends AbstractPropertySection {
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
 				rs.setReportIfEmpty(checkIfEmpty.getSelection());
+				mc.saveObject();
 			}
 		});
 		
@@ -163,6 +159,7 @@ public class ECAdvancedSection extends AbstractPropertySection {
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
 				rs.setReportOnChange(checkOnChange.getSelection());
+				mc.saveObject();
 			}
 		});
 	}
@@ -171,15 +168,13 @@ public class ECAdvancedSection extends AbstractPropertySection {
 		Composite filterComposite = getWidgetFactory()
         .createFlatFormComposite(parent);
 		filterComposite.setLayout(new RowLayout());
-		filterComposite.setBackground(null);
-		Group grp2 = new Group(filterComposite, SWT.NONE);
-		grp2.setLayout(new RowLayout(SWT.HORIZONTAL));
-		grp2.setText("Include Patterns");
 		
-		Group grp1 = new Group(filterComposite, SWT.NONE);
+		Group grp2 = getWidgetFactory().createGroup(filterComposite, "Include Patterns");
+		grp2.setLayout(new RowLayout(SWT.HORIZONTAL));
+		
+		Group grp1 = getWidgetFactory().createGroup(filterComposite, "Edit");
 		GridLayout g1Layout = new GridLayout(1, false);
 		grp1.setLayout(g1Layout);
-		grp1.setText("Edit");
 
 		list = new ListViewer(grp2, SWT.SINGLE | SWT.V_SCROLL | SWT.BORDER);
 		list.getControl().setLayoutData(new RowData(200, 100));
@@ -189,7 +184,7 @@ public class ECAdvancedSection extends AbstractPropertySection {
 		newB.setLayoutData(data);
 		
 		data = new GridData(GridData.FILL_BOTH);
-		changeB = getWidgetFactory().createButton(grp1, "Change", SWT.PUSH);
+		changeB = getWidgetFactory().createButton(grp1, "Edit", SWT.PUSH);
 		changeB.setLayoutData(data);
 		
 		data = new GridData(GridData.FILL_BOTH);
@@ -198,8 +193,6 @@ public class ECAdvancedSection extends AbstractPropertySection {
 		
 		new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
 		checkIfEmpty = getWidgetFactory().createButton(parent, "Report If Empty", SWT.CHECK);
-		checkIfEmpty.setBackground(null);
 		checkOnChange = getWidgetFactory().createButton(parent, "Report On Change", SWT.CHECK);
-		checkOnChange.setBackground(null);
 	}
 }

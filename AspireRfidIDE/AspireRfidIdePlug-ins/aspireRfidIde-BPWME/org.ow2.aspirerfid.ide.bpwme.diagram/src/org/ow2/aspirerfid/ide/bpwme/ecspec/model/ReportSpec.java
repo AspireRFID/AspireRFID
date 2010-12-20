@@ -59,13 +59,11 @@ public class ReportSpec implements IWorkbenchAdapter, IAdaptable{
 
 	@Override
 	public String getLabel(Object o) {
-		// TODO Auto-generated method stub
 		return ecrspec.getReportName();
 	}
 
 	@Override
 	public Object getParent(Object o) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -80,6 +78,10 @@ public class ReportSpec implements IWorkbenchAdapter, IAdaptable{
 	
 	public String getName() {
 		return ecrspec.getReportName();
+	}
+	
+	public void setName(String value) {
+		ecsb.setReportName(value, ecrspec);
 	}
 	
 	public boolean addFilter(String filter) {
