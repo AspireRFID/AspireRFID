@@ -882,8 +882,6 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		if(editor != null) {
 			editor.addSelectionListener(this);
 		}
-
-		
 	}
 
 	@Override
@@ -904,13 +902,14 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 
 	@Override
 	public void selectionChanged(SelectionChangedEvent event) {
-		//System.out.println(event);
+		
 		ISelection selection = event.getSelection();
 		MainControl mc = MainControl.getMainControl();
 		if(selection instanceof IStructuredSelection) {
 			IStructuredSelection sselection = (IStructuredSelection)selection;
 			if(sselection.size() > 0) {
 				Object selectObject = sselection.getFirstElement();
+				
 				if(selectObject instanceof EBProcEditPart) {
 					
 					EBProcEditPart ebPart = (EBProcEditPart)selectObject;
@@ -919,13 +918,22 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 					EBProc ebp =  (EBProc)mc.getMapObject(ebpi.hashCode());
 					
 					if(ebp != null){
-						((ECLRInput)getEditorInput()).setEBProc(ebp);
+						//((ECLRInput)getEditorInput()).setEBProc(ebp);
 						ebproc = ebp;
+						ecsb.setEBProc(ebp);// = ((ECLRInput)getEditorInput()).getECSpecBuilder();
+						lrsb.setEBProc(ebp);// = ((ECLRInput)getEditorInput()).getLRSpecBuilder();
+						
+						System.out.println(ecsb.getStartTriggerList());
 						//System.out.println(((ECLRInput)getEditorInput()).getECSpecBuilder().getStartTriggerList());
 						startListViewer.setInput(ecsb.getStartTriggerList());
+						System.out.println(ecsb.getStartTriggerList());
 						stopListViewer.setInput(ecsb.getStopTriggerList());
+						
+						
+						
 						attributeTableViewer.setInput(ecsb);
 						ArrayList<ReportSpec> lista = new ArrayList<ReportSpec>();
+						
 						for(ECReportSpec ecrs:ecsb.getECReportSpecs()) {
 							lista.add(new ReportSpec(ecrs, ecsb));
 						}
@@ -946,6 +954,7 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 	public void dispose() {
 		//remove listeners
 		lrsb.clearListeners();
+		ecsb.clearListeners();
 		super.dispose();
 	}
 	

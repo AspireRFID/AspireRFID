@@ -57,6 +57,12 @@ public class ECSpecBuilder {
 	private List<Viewer> listeners;
 	private boolean isDirty;
 	
+	
+	public ECSpecBuilder() {
+		listeners = new ArrayList<Viewer>();
+		isDirty = false;
+	}
+	
 	//build a new ecspec builder, if ecspec field is null, set the values to default
 	public ECSpecBuilder(EBProc ebproc) {
 		ECSpec ecs = getECSpec(ebproc);
@@ -134,7 +140,6 @@ public class ECSpecBuilder {
 		this.ebproc = ebp;
 		ECSpec ecs = getECSpec(ebp);
 		if(ecs != null) {
-			//System.out.println("set have" + ecs);
 			this.ecspec = ecs;
 		}else {
 			//System.out.println("set nohave");
@@ -191,8 +196,9 @@ public class ECSpecBuilder {
 				break;
 			}
 			ECSpecUtil.setECEditorDirty();
-		}	
+		}
 		notifyListeners();
+		
 	}
 	
 	private ECSpec getECSpec(EBProc ebp) {
@@ -295,7 +301,11 @@ public class ECSpecBuilder {
 	
 
 	public List<String> getLogicalReaders() {
-		return ecspec.getLogicalReaders().getLogicalReader();
+		if(ecspec != null) {
+			return ecspec.getLogicalReaders().getLogicalReader();	
+		}else {
+			return new ArrayList<String>();
+		}
 	}
 
 	public boolean removeLogicalReader(String id) {
@@ -310,7 +320,11 @@ public class ECSpecBuilder {
 	}
 	
 	public boolean getWhenDataAvailable() {
-		return  ecspec.getBoundarySpec().getExtension().isWhenDataAvailable();
+		if(ecspec != null) {
+			return  ecspec.getBoundarySpec().getExtension().isWhenDataAvailable();
+		}else {
+			return false;
+		}
 	}
 	
 	/*
@@ -324,17 +338,22 @@ public class ECSpecBuilder {
 		notifyListeners();
 	}
 	
-	private void setRepeatPeriod(long time, String timeUnit)
-	{
-		ECTime ectime = new ECTime();
-		ectime.setValue(time);
-		ectime.setUnit(timeUnit);
-		ecspec.getBoundarySpec().setRepeatPeriod(ectime);
+	private void setRepeatPeriod(long time, String timeUnit){
+		if(ecspec != null) {
+			ECTime ectime = new ECTime();
+			ectime.setValue(time);
+			ectime.setUnit(timeUnit);
+			ecspec.getBoundarySpec().setRepeatPeriod(ectime);
+		}
 	}
 	
 	public long getRepeatPeriod()
 	{
-		return ecspec.getBoundarySpec().getRepeatPeriod().getValue();
+		if(ecspec != null) {
+			return ecspec.getBoundarySpec().getRepeatPeriod().getValue();
+		}else {
+			return 0;
+		}
 	}
 	
 	public void setDuration(long time)
@@ -353,7 +372,11 @@ public class ECSpecBuilder {
 	
 	public long getDuration()
 	{
-		return ecspec.getBoundarySpec().getDuration().getValue();
+		if(ecspec != null) {
+			return ecspec.getBoundarySpec().getDuration().getValue();
+		}else {
+			return 0;
+		}
 	}
 	
 	public void setStableSetInterval(long time)
@@ -372,12 +395,21 @@ public class ECSpecBuilder {
 	
 	public long getStableSetInterval()
 	{
-		return ecspec.getBoundarySpec().getStableSetInterval().getValue();
+		if(ecspec != null) {
+			return ecspec.getBoundarySpec().getStableSetInterval().getValue();
+		}else {
+			return 0;
+		}
+		
 	}
 	
 	public List<String> getStartTriggerList()
 	{
-		return ecspec.getBoundarySpec().getExtension().getStartTriggerList().getStartTrigger();
+		if(ecspec != null) {
+			return ecspec.getBoundarySpec().getExtension().getStartTriggerList().getStartTrigger();
+		} else {
+			return new ArrayList<String>();
+		}
 	}
 	
 	public void addStartTrigger(String newStart) {
@@ -428,7 +460,12 @@ public class ECSpecBuilder {
 	
 	public List<String> getStopTriggerList()
 	{
-		return ecspec.getBoundarySpec().getExtension().getStopTriggerList().getStopTrigger();
+		if(ecspec != null) {
+			return ecspec.getBoundarySpec().getExtension().getStopTriggerList().getStopTrigger();
+		}else {
+			return new ArrayList<String>();
+		}
+		
 	}
 	
 	public void setStopTriggerList(List<String> list) {
@@ -446,7 +483,11 @@ public class ECSpecBuilder {
 	}
 
 	public List<ECReportSpec> getECReportSpecs() {
-		return ecspec.getReportSpecs().getReportSpec();
+		if(ecspec != null) {
+			return ecspec.getReportSpecs().getReportSpec();
+		}else {
+			return new ArrayList<ECReportSpec>();
+		}		
 	}
 
 	public boolean removeECReportSpec(ECReportSpec reportSpec) {
@@ -503,6 +544,10 @@ public class ECSpecBuilder {
 	public void setReportName(String value, ECReportSpec reportSpec) {
 		reportSpec.setReportName(value);
 		notifyListeners();
+	}
+
+	public void clearListeners() {
+		listeners.clear();		
 	}
 	
 }

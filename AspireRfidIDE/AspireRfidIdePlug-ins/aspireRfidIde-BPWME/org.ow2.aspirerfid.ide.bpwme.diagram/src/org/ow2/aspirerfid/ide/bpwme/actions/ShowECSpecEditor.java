@@ -43,6 +43,7 @@ public class ShowECSpecEditor extends AbstractHandler {
 			messageBox.open();
 			return null;
 		}
+/*
 		//get bpwme editor selection
 		BpwmeDiagramEditor bpwme = MainUtil.getBPWMEEditor();
 		ISelection iselection = bpwme.getEditorSite().getSelectionProvider().getSelection();
@@ -80,6 +81,17 @@ public class ShowECSpecEditor extends AbstractHandler {
 
 		ECLRInput eli = new ECLRInput(ebp);
 
+		try {
+			ECSpecEditor ese = (ECSpecEditor)page.openEditor(eli, ECSpecEditor.ID);
+			ese.setDirty(eli.getECSpecBuilder().isDirty());
+		}catch (PartInitException e) {
+			e.printStackTrace();
+		}
+		*/
+		IWorkbenchPage page = PlatformUI.getWorkbench().
+		getActiveWorkbenchWindow().getActivePage();
+
+		ECLRInput eli = new ECLRInput();
 		try {
 			ECSpecEditor ese = (ECSpecEditor)page.openEditor(eli, ECSpecEditor.ID);
 			ese.setDirty(eli.getECSpecBuilder().isDirty());

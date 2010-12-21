@@ -25,6 +25,11 @@ public class ECLRInput implements IEditorInput{
 		this.ecsb = new ECSpecBuilder(ebp);
 	}
 	
+	public ECLRInput() {
+		this.lrsb = new LRSpecBuilder();
+		this.ecsb = new ECSpecBuilder();
+	}
+	
 	
 	@Override
 	public boolean exists() {
