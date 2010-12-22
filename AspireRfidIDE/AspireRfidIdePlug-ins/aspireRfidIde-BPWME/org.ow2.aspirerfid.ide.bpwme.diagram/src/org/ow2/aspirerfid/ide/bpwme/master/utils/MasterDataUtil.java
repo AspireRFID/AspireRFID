@@ -203,11 +203,114 @@ public class MasterDataUtil {
 			}
 		}
 		
+		//create the new one
 		vocabulary = new VocabularyType();
 		vocabulary.setType(type);
 		vocabularyList.getVocabulary().add(vocabulary);
+		//set some default values
+		VocabularyElementListType vocabularyElementList = getVocabularyElementList(vocabulary);
+		if(type.equals("urn:epcglobal:epcis:vtype:BusinessStep")) {
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:receiving",
+					"urn:epcglobal:epcis:mda:Name", "Receiving");
+			
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:picking",
+					"urn:epcglobal:epcis:mda:Name", "Picking");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:shipping",
+					"urn:epcglobal:epcis:mda:Name", "Shipping");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:shipment",
+					"urn:epcglobal:epcis:mda:Name", "Shipment");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:accepting",
+					"urn:epcglobal:epcis:mda:Name", "Accepting");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:inspecting",
+					"urn:epcglobal:epcis:mda:Name", "Inspecting");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:storing",
+					"urn:epcglobal:epcis:mda:Name", "Storing");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:packing",
+					"urn:epcglobal:epcis:mda:Name", "Packing");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:loading",
+					"urn:epcglobal:epcis:mda:Name", "Loading");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:commissioning",
+					"urn:epcglobal:epcis:mda:Name", "Commissioning");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:decommissioning",
+					"urn:epcglobal:epcis:mda:Name", "Decommissioning");
+			
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:bizstep:destroying",
+					"urn:epcglobal:epcis:mda:Name", "Destroying");
+			
+		}else if(type.equals("urn:epcglobal:epcis:vtype:Disposition")) {
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:disp:active",
+					"urn:epcglobal:epcis:mda:Name", "Active");
+			
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:disp:inactive",
+					"urn:epcglobal:epcis:mda:Name", "Inactive");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:disp:reserved",
+					"urn:epcglobal:epcis:mda:Name", "Reserved");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:disp:encoded",
+					"urn:epcglobal:epcis:mda:Name", "Encoded");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:disp:in_transit",
+					"urn:epcglobal:epcis:mda:Name", "In_transit");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:disp:non_sellable",
+					"urn:epcglobal:epcis:mda:Name", "Non_sellable");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:disp:in_progress",
+					"urn:epcglobal:epcis:mda:Name", "In_progress");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:disp:sold",
+					"urn:epcglobal:epcis:mda:Name", "Sold");
+			
+		}else if(type.equals("urn:epcglobal:epcis:vtype:BusinessTransactionType")) {
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:btt:shipping",
+					"urn:epcglobal:epcis:mda:Name", "Shipping");
+
+			createVocabularyElement(vocabularyElementList,
+					"urn:epcglobal:fmcg:btt:receiving",
+					"urn:epcglobal:epcis:mda:Name", "Receiving");
+		}
+		
 		return vocabulary;
-	}	
+	}
+	
+	private static void createVocabularyElement(VocabularyElementListType vocabularyElementList, String id, String name, String value) {
+		VocabularyElementType vocabularyElement = new VocabularyElementType();
+		vocabularyElement.setId(id);
+		setVocabularyElementAttribute(vocabularyElement, name, value);
+		vocabularyElementList.getVocabularyElement().add(vocabularyElement);		
+	}
+	
 	
 	/**
 	 * Vocabulary can only be the following

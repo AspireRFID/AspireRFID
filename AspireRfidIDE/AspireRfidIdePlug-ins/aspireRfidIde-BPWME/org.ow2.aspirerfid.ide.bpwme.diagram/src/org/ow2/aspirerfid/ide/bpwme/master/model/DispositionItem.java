@@ -48,7 +48,7 @@ public class DispositionItem implements IWorkbenchAdapter, IAdaptable{
 	}
 	
 	public String getLabel() {
-		return "ID:" + vocabularyElement.getId();
+		return vocabularyElement.getId();
 	}
 	
 	public void setName(String name) {
