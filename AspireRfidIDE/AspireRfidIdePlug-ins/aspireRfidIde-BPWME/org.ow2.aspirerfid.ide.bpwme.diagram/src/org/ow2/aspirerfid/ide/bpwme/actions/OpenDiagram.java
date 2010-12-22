@@ -18,6 +18,8 @@
 package org.ow2.aspirerfid.ide.bpwme.actions;
 
 import java.io.File;
+import java.util.HashSet;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -32,6 +34,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboInput;
@@ -39,6 +42,9 @@ import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.diagram.simpleditor.PathEditorInput;
+import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECLRInput;
+import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
+import org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor;
 import org.ow2.aspirerfid.ide.bpwme.utils.EditorListener;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
@@ -90,6 +96,25 @@ public class OpenDiagram extends AbstractHandler{
 			mc.rebuild();
 			mc.mapModels();
 			MainUtil.setPerspective("bpwme.diagram.BpwmePerspective");
+			
+			
+			//open ecspec editor
+			ECLRInput eli = new ECLRInput();
+			
+			try {
+				ECSpecEditor ese = (ECSpecEditor)page.openEditor(eli, ECSpecEditor.ID);
+				ese.setDirty(eli.getECSpecBuilder().isDirty());
+			}catch (PartInitException e) {
+				e.printStackTrace();
+			}
+			
+			HashSet<String> editorIDs = new HashSet<String>();
+			editorIDs.add(ECSpecEditor.ID);
+			editorIDs.add(MasterEditor.ID);
+			
+			MainUtil.splitEditorArea(ComboEditor.ID,editorIDs);
+			//open done
+
 		}		
 		
 //		if (fileDialog.getFileName() != null

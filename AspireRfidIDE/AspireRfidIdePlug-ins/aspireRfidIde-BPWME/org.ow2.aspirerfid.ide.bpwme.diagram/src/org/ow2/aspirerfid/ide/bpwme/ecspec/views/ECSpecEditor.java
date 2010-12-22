@@ -958,6 +958,5 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 		super.dispose();
 	}
 	
-	
 }
 

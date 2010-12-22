@@ -1,6 +1,7 @@
 package org.ow2.aspirerfid.ide.bpwme.actions;
 
 import java.io.File;
+import java.util.HashSet;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -19,7 +20,9 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
@@ -27,12 +30,16 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.OpenMasterDataEditorGM
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFCreateFromFile;
 import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
 import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
+import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorUtil;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeNewDiagramFileWizard;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.Messages;
 import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
+import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECLRInput;
+import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
+import org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.FileAction;
@@ -96,6 +103,25 @@ public class OpenFromAPDL extends AbstractHandler{
 		wizard.setWindowTitle(NLS.bind(Messages.InitDiagramFile_WizardTitle,
 				WorkflowMapEditPart.MODEL_ID));
 		BpwmeDiagramEditorUtil.runWizard(shell, wizard, "InitDiagramFile"); //$NON-NLS-1$
+		
+		//open ecspec editor
+		IWorkbenchPage page = PlatformUI.getWorkbench().
+		getActiveWorkbenchWindow().getActivePage();
+		ECLRInput eli = new ECLRInput();
+		
+		try {
+			ECSpecEditor ese = (ECSpecEditor)page.openEditor(eli, ECSpecEditor.ID);
+			ese.setDirty(eli.getECSpecBuilder().isDirty());
+		}catch (PartInitException e) {
+			e.printStackTrace();
+		}
+		
+		HashSet<String> editorIDs = new HashSet<String>();
+		editorIDs.add(ECSpecEditor.ID);
+		editorIDs.add(MasterEditor.ID);
+		
+		MainUtil.splitEditorArea(ComboEditor.ID,editorIDs);
+		//open done
 		
 		
 		//Modified by elka
