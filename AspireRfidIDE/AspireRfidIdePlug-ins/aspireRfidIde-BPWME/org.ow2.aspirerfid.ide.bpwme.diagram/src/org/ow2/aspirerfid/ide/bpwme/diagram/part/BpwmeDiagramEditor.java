@@ -167,6 +167,11 @@ public class BpwmeDiagramEditor extends DiagramDocumentEditor {
 		selectionListeners.add(listener);
 	}
 	
+	public void removeSelectionListener(ISelectionChangedListener listener) {
+		getEditorSite().getSelectionProvider().removeSelectionChangedListener(listener);
+		selectionListeners.remove(listener);
+	}
+	
 	
 	@Override
 	public void dispose() {

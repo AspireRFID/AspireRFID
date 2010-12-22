@@ -922,14 +922,9 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 						ebproc = ebp;
 						ecsb.setEBProc(ebp);// = ((ECLRInput)getEditorInput()).getECSpecBuilder();
 						lrsb.setEBProc(ebp);// = ((ECLRInput)getEditorInput()).getLRSpecBuilder();
-						
-						System.out.println(ecsb.getStartTriggerList());
-						//System.out.println(((ECLRInput)getEditorInput()).getECSpecBuilder().getStartTriggerList());
+										
 						startListViewer.setInput(ecsb.getStartTriggerList());
-						System.out.println(ecsb.getStartTriggerList());
 						stopListViewer.setInput(ecsb.getStopTriggerList());
-						
-						
 						
 						attributeTableViewer.setInput(ecsb);
 						ArrayList<ReportSpec> lista = new ArrayList<ReportSpec>();
@@ -953,6 +948,11 @@ ITabbedPropertySheetPageContributor,ISelectionChangedListener{
 	@Override
 	public void dispose() {
 		//remove listeners
+		
+		BpwmeDiagramEditor editor = MainUtil.getBPWMEEditor();
+		if(editor != null) {
+			editor.removeSelectionListener(this);
+		}		
 		lrsb.clearListeners();
 		ecsb.clearListeners();
 		super.dispose();
