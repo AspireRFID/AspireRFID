@@ -39,35 +39,38 @@ import java.util.Enumeration;
 import java.util.TooManyListenersException;
 
 import org.ow2.aspirerfid.rxtx.cmd.IOWrapper;
-import org.ow2.aspirerfid.rxtx.cmd.wrapper.HexWrapper;
+import org.ow2.aspirerfid.rxtx.cmd.wrapper.AsciiWrapper;
 
 
 /**
  * Standalone Serial Console 
  * @author Didier Donsez
  * TODO add a shutdown hook to close properly the port when Ctrl-C
+ * TODO send System.in to the serial port 
  */
 public class SerialConsole implements SerialPortEventListener {
 
-	SerialPort serialPort = null;
+	private SerialPort serialPort = null;
 
-	OutputStream outputStream = null;
+	private OutputStream outputStream = null;
 
-	InputStream inputStream = null;
+	private InputStream inputStream = null;
 
-	String logFileName = null;
-	OutputStream logOutputStream = null;
+	private String logFileName = null;
 
-	IOWrapper currentWrapper = new HexWrapper();
+	private OutputStream logOutputStream = null;
+
+	private IOWrapper currentWrapper = new AsciiWrapper();
 
 	// TODO resizable buffer
-	byte[] readBuffer = new byte[256];
+	private byte[] readBuffer = new byte[1024];
 	
 	
-	PrintStream out;
-	PrintStream err;
+	private PrintStream out;
+	private PrintStream err;
 	
-	String[] args;
+	private String[] args;
+	
 	public SerialConsole(String[] args) {
 		this.args=args;
 	}
@@ -91,9 +94,19 @@ public class SerialConsole implements SerialPortEventListener {
 			stop();
 		}
 	}
+
+	private void printUsage() {
+		err.println("SerialConsole <portname> <baudrate>");
+	}
 	
 	private void open() {
 
+		
+		if(args.length<3) {
+			printUsage();
+			return;
+		}
+		
 		CommPortIdentifier portId = null;
 		try {
 			portId = CommPortIdentifier.getPortIdentifier(args[0]);
@@ -152,34 +165,34 @@ public class SerialConsole implements SerialPortEventListener {
 	}
 	
 	private void close() {
-			if (outputStream != null) {
-				try {
-					outputStream.close();
-				} catch (IOException e) {
-					err.println(e);
-					return;
-				}
-				outputStream = null;
+		if (outputStream != null) {
+			try {
+				outputStream.close();
+			} catch (IOException e) {
+				err.println(e);
+				return;
 			}
+			outputStream = null;
+		}
 
-			if (inputStream != null) {
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-					err.println(e);
-					return;
-				}
-				inputStream = null;
+		if (inputStream != null) {
+			try {
+				inputStream.close();
+			} catch (IOException e) {
+				err.println(e);
+				return;
 			}
+			inputStream = null;
+		}
 
-			if (serialPort != null) {
-				serialPort.removeEventListener();
-				serialPort.close();
-				serialPort = null;
-			}
+		if (serialPort != null) {
+			serialPort.removeEventListener();
+			serialPort.close();
+			serialPort = null;
+		}
 	}
 
-	public void listPorts(PrintStream out, PrintStream err) {
+	public static void listPorts(PrintStream out, PrintStream err) {
 		out.println("List of ports from RXTX");
 		Enumeration ports = CommPortIdentifier.getPortIdentifiers();
 		while (ports.hasMoreElements()) {
@@ -225,7 +238,7 @@ public class SerialConsole implements SerialPortEventListener {
 					while ((numBytesAvailables=inputStream.available()) > 0) {
 						numBytes = inputStream.read(readBuffer);
 
-						System.out.print("SerialConsole:" + "(" + numBytes + " bytes received):\n");
+						//err.print("SerialConsole:" + "(" + numBytes + " bytes received):\n");
 
 						try {
 							System.out.println(currentWrapper.format(readBuffer, 0, numBytes));
@@ -235,13 +248,13 @@ public class SerialConsole implements SerialPortEventListener {
 								logOutputStream.flush();
 							}
 						} catch (ParseException e) {
-							System.err.println(e);
+							err.println(e);
 							return;
 						}
 					}
 				}
 			} catch (IOException e) {
-				System.err.print("SerialConsole" + ":" + e);
+				err.print("SerialConsole" + ":" + e);
 			}
 			break;
 		}
