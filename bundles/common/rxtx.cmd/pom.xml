@@ -107,7 +107,7 @@
 						</Bundle-Activator>
 
 						<Export-Service>org.apache.felix.shell.Command</Export-Service>
-
+						<Main-Class>org.ow2.aspirerfid.rxtx.cmd.console.SerialConsole</Main-Class>
 					</instructions>
 				</configuration>
 			</plugin>
