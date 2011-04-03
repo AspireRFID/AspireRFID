@@ -43,7 +43,7 @@ public interface ProgrammEngineOLCBProcControlInterface {
 
 	@WebMethod()
 	@WebResult(name = "unregisterStatus")
-	public HashMap<String, String> unregister(@WebParam(name = "openLoopCBProcID") String openLoopCBProcID)
+	public HashMap<String, String> unregister(@WebParam(name = "openLoopCBProc") OLCBProc openLoopCBProc)
 			throws NoSuchOLCBProcIdException;
 
 	@WebMethod()
@@ -53,12 +53,12 @@ public interface ProgrammEngineOLCBProcControlInterface {
 
 	@WebMethod()
 	@WebResult(name = "startStatus")
-	public HashMap<String, String> start(@WebParam(name = "openLoopCBProcID") String openLoopCBProcID)
+	public HashMap<String, String> start(@WebParam(name = "openLoopCBProc") OLCBProc openLoopCBProc)
 			throws NoSuchOLCBProcIdException;
 
 	@WebMethod()
 	@WebResult(name = "stopStatus")
-	public HashMap<String, String> stop(@WebParam(name = "openLoopCBProcID") String openLoopCBProcID)
+	public HashMap<String, String> stop(@WebParam(name = "openLoopCBProc") OLCBProc openLoopCBProc)
 			throws NoSuchOLCBProcIdException;
 
 	@WebMethod()

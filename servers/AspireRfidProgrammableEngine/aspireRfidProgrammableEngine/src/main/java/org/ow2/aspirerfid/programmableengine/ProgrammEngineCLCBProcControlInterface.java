@@ -43,7 +43,7 @@ public interface ProgrammEngineCLCBProcControlInterface {
 
 	@WebMethod()
 	@WebResult(name = "unregisterStatus")
-	public HashMap<String, String> unregister(@WebParam(name = "closeLoopCBProcID") String closeLoopCBProcID)
+	public HashMap<String, String> unregister(@WebParam(name = "closeLoopCBProc") CLCBProc closeLoopCBProc)
 			throws NoSuchCLCBProcIdException;
 
 	@WebMethod()
@@ -53,12 +53,12 @@ public interface ProgrammEngineCLCBProcControlInterface {
 
 	@WebMethod()
 	@WebResult(name = "startStatus")
-	public HashMap<String, String> start(@WebParam(name = "closeLoopCBProcID") String closeLoopCBProcID)
+	public HashMap<String, String> start(@WebParam(name = "closeLoopCBProc") CLCBProc closeLoopCBProc)
 			throws NoSuchCLCBProcIdException;
 
 	@WebMethod()
 	@WebResult(name = "stopStatus")
-	public HashMap<String, String> stop(@WebParam(name = "closeLoopCBProcID") String closeLoopCBProcID)
+	public HashMap<String, String> stop(@WebParam(name = "closeLoopCBProc") CLCBProc closeLoopCBProc)
 			throws NoSuchCLCBProcIdException;
 
 	@WebMethod()

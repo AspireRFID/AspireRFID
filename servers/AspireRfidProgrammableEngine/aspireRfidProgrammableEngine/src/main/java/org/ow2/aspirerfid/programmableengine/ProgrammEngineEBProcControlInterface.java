@@ -43,7 +43,7 @@ public interface ProgrammEngineEBProcControlInterface {
 
 	@WebMethod()
 	@WebResult(name = "unregisterStatus")
-	public HashMap<String, String> unregister(@WebParam(name = "elementaryBProcID") String elementaryBProcID)
+	public HashMap<String, String> unregister(@WebParam(name = "elementaryBProc") EBProc elementaryBProc)
 			throws NoSuchEBProcIdException;
 
 	@WebMethod()
@@ -53,12 +53,12 @@ public interface ProgrammEngineEBProcControlInterface {
 
 	@WebMethod()
 	@WebResult(name = "startStatus")
-	public HashMap<String, String> start(@WebParam(name = "elementaryBProcID") String elementaryBProcID)
+	public HashMap<String, String> start(@WebParam(name = "elementaryBProc") EBProc elementaryBProc)
 			throws NoSuchEBProcIdException;
 
 	@WebMethod()
 	@WebResult(name = "stopStatus")
-	public HashMap<String, String> stop(@WebParam(name = "elementaryBProcID") String elementaryBProcID)
+	public HashMap<String, String> stop(@WebParam(name = "elementaryBProc") EBProc elementaryBProcD)
 			throws NoSuchEBProcIdException;
 
 	@WebMethod()
