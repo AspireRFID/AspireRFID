@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 13 ??? 2010 8:25:25 ?? by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="org.ow2.aspirerfid.commons.tracking.db.RemoteUri" table="remote_uri" catalog="epcis_tracking">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="uri" type="string">
+            <column name="uri" length="100" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="100" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="100" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="100" />
+        </property>
+        <property name="country" type="string">
+            <column name="country" length="100" />
+        </property>
+        <property name="region" type="string">
+            <column name="region" length="100" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="100" />
+        </property>
+        <property name="tel" type="string">
+            <column name="tel" length="100" />
+        </property>
+        <property name="fax" type="string">
+            <column name="fax" length="100" />
+        </property>
+        <set name="epcidForeignDatas" table="epcid_foreign_data" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="uri" not-null="true" />
+            </key>
+            <one-to-many class="org.ow2.aspirerfid.commons.tracking.db.EpcidForeignData" />
+        </set>
+    </class>
+</hibernate-mapping>
