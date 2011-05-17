@@ -3,10 +3,10 @@ package org.ow2.aspirerfid.programmableengine.ebproccontrol;
 import java.util.HashMap;
 
 import org.ow2.aspirerfid.commons.apdl.model.EBProc;
-import org.ow2.aspirerfid.programmableengine.ProgrammEngineEBProcControlInterface;
-import org.ow2.aspirerfid.programmableengine.exceptions.EBProcValidationException;
-import org.ow2.aspirerfid.programmableengine.exceptions.NoSuchEBProcIdException;
-import org.ow2.aspirerfid.programmableengine.exceptions.NotCompletedExecutionException;
+import org.ow2.aspirerfid.commons.pe.interfaces.ProgrammEngineEBProcControlInterface;
+import org.ow2.aspirerfid.commons.pe.exceptions.EBProcValidationException;
+import org.ow2.aspirerfid.commons.pe.exceptions.NoSuchEBProcIdException;
+import org.ow2.aspirerfid.commons.pe.exceptions.NotCompletedExecutionException;
 
 public class ProgrammEngineEBProcControlInterfaceImpl implements
 		ProgrammEngineEBProcControlInterface {

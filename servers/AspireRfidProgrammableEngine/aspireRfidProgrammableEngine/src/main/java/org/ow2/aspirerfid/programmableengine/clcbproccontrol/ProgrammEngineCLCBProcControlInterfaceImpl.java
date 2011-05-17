@@ -3,10 +3,10 @@ package org.ow2.aspirerfid.programmableengine.clcbproccontrol;
 import java.util.HashMap;
 
 import org.ow2.aspirerfid.commons.apdl.model.CLCBProc;
-import org.ow2.aspirerfid.programmableengine.ProgrammEngineCLCBProcControlInterface;
-import org.ow2.aspirerfid.programmableengine.exceptions.CLCBProcValidationException;
-import org.ow2.aspirerfid.programmableengine.exceptions.NoSuchCLCBProcIdException;
-import org.ow2.aspirerfid.programmableengine.exceptions.NotCompletedExecutionException;
+import org.ow2.aspirerfid.commons.pe.interfaces.ProgrammEngineCLCBProcControlInterface;
+import org.ow2.aspirerfid.commons.pe.exceptions.CLCBProcValidationException;
+import org.ow2.aspirerfid.commons.pe.exceptions.NoSuchCLCBProcIdException;
+import org.ow2.aspirerfid.commons.pe.exceptions.NotCompletedExecutionException;
 
 public class ProgrammEngineCLCBProcControlInterfaceImpl implements
 		ProgrammEngineCLCBProcControlInterface {

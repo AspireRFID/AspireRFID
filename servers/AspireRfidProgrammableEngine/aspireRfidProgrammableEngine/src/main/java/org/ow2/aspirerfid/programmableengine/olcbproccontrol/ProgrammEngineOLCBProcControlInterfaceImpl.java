@@ -5,10 +5,10 @@ import java.util.HashMap;
 import javax.jws.WebService;
 
 import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
-import org.ow2.aspirerfid.programmableengine.ProgrammEngineOLCBProcControlInterface;
-import org.ow2.aspirerfid.programmableengine.exceptions.NoSuchOLCBProcIdException;
-import org.ow2.aspirerfid.programmableengine.exceptions.NotCompletedExecutionException;
-import org.ow2.aspirerfid.programmableengine.exceptions.OLCBProcValidationException;
+import org.ow2.aspirerfid.commons.pe.interfaces.ProgrammEngineOLCBProcControlInterface;
+import org.ow2.aspirerfid.commons.pe.exceptions.NoSuchOLCBProcIdException;
+import org.ow2.aspirerfid.commons.pe.exceptions.NotCompletedExecutionException;
+import org.ow2.aspirerfid.commons.pe.exceptions.OLCBProcValidationException;
 
 @WebService(endpointInterface="org.ow2.aspirerfid.commons.pe.interfaces.ProgrammEngineOLCBProcControlInterface")
 public class ProgrammEngineOLCBProcControlInterfaceImpl implements
