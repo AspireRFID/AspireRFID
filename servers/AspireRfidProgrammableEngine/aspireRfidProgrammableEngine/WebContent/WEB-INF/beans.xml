@@ -9,11 +9,17 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
 	<bean id="programmableEngineEncoder" class="org.ow2.aspirerfid.programmableengine.encode.ProgrammableEngineEncoderInterfaceImpl" />
-
 	<bean id="programmableEngineDecoder" class="org.ow2.aspirerfid.programmableengine.decode.ProgrammableEngineDecoderInterfaceImpl" />
-
 
 	<jaxws:endpoint id="encoder" implementor="#programmableEngineEncoder" address="/encoder" />
 	<jaxws:endpoint id="decoder" implementor="#programmableEngineDecoder" address="/decoder" />
+
+    <bean id="programmEngineOLCBProcControl" class="org.ow2.aspirerfid.programmableengine.olcbproccontrol.ProgrammEngineOLCBProcControlInterfaceImpl" />
+    <bean id="programmEngineCLCBProcControl" class="org.ow2.aspirerfid.programmableengine.clcbproccontrol.ProgrammEngineCLCBProcControlInterfaceImpl" />
+    <bean id="programmEngineEBProcControl" class="org.ow2.aspirerfid.programmableengine.ebproccontrol.ProgrammEngineEBProcControlInterfaceImpl" />
+
+    <jaxws:endpoint id="olcbproccontrol" implementor="#programmEngineOLCBProcControl" address="/olcbproccontrol" />
+    <jaxws:endpoint id="clcbproccontrol" implementor="#programmEngineCLCBProcControl" address="/clcbproccontrol" />
+    <jaxws:endpoint id="ebproccontrol" implementor="#programmEngineEBProcControl" address="/ebproccontrol" />
 
 </beans>
