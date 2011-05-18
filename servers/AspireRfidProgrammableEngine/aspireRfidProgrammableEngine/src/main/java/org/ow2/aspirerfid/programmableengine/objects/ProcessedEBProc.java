@@ -16,7 +16,7 @@
  */
 
 
-package org.ow2.aspirerfid.programmableengine.encode;
+package org.ow2.aspirerfid.programmableengine.objects;
 
 import java.util.ArrayList;
 import java.util.Hashtable;

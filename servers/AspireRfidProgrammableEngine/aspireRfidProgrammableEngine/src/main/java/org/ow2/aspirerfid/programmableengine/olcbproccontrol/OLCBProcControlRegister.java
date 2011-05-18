@@ -1,73 +1,45 @@
-/*
- * Copyright (C) 2008-2010, Aspire
- * 
- * Aspire is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License version 2.1 as published by
- * the Free Software Foundation (the "LGPL").
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library in the file COPYING-LGPL-2.1; if not, write to the
- * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- * 
- * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
- * KIND, either express or implied. See the GNU Lesser General Public License
- * for the specific language governing rights and limitations.
- */
+package org.ow2.aspirerfid.programmableengine.olcbproccontrol;
 
-package org.ow2.aspirerfid.programmableengine.encode;
-
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 
-import javax.xml.bind.JAXBException;
-
 import org.apache.log4j.Logger;
-import org.ow2.aspirerfid.programmableengine.aleclient.AleClientUtil;
-import org.ow2.aspirerfid.programmableengine.aleclient.AleLrClientUtil;
-import org.ow2.aspirerfid.programmableengine.begclient.BegEngineClient;
-
-import org.ow2.aspirerfid.programmableengine.epcisclient.EpcisConstants;
-import org.ow2.aspirerfid.programmableengine.epcisclient.MasterDataCaptureClient;
-import org.ow2.aspirerfid.programmableengine.epcisclient.MasterDataCaptureUtils;
-import org.ow2.aspirerfid.programmableengine.objects.ProcessedEBProc;
-
-import org.ow2.aspirerfid.commons.epcis.model.AttributeType;
-import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementListType;
-import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
-import org.ow2.aspirerfid.commons.epcis.model.VocabularyType;
-import org.ow2.aspirerfid.commons.epcis.model.EPCISMasterDataDocumentType;
-
+import org.ow2.aspirerfid.commons.ale.model.ale.ECReportSpec;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec;
+import org.ow2.aspirerfid.commons.ale.model.alelr.LRSpec;
 import org.ow2.aspirerfid.commons.apdl.model.ApdlDataField;
 import org.ow2.aspirerfid.commons.apdl.model.ApdlDataFields;
 import org.ow2.aspirerfid.commons.apdl.model.CLCBProc;
 import org.ow2.aspirerfid.commons.apdl.model.EBProc;
 import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
+import org.ow2.aspirerfid.commons.epcis.model.EPCISMasterDataDocumentType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementListType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyElementType;
+import org.ow2.aspirerfid.commons.epcis.model.VocabularyType;
+import org.ow2.aspirerfid.commons.pe.exceptions.NotCompletedExecutionException;
+import org.ow2.aspirerfid.commons.pe.exceptions.OLCBProcValidationException;
 import org.ow2.aspirerfid.commons.xpdl.model.ExtendedAttribute;
+import org.ow2.aspirerfid.programmableengine.aleclient.AleClientUtil;
+import org.ow2.aspirerfid.programmableengine.aleclient.AleLrClientUtil;
+import org.ow2.aspirerfid.programmableengine.begclient.BegEngineClient;
+import org.ow2.aspirerfid.programmableengine.encode.EncodeImplementation;
+import org.ow2.aspirerfid.programmableengine.epcisclient.EpcisConstants;
+import org.ow2.aspirerfid.programmableengine.epcisclient.MasterDataCaptureClient;
+import org.ow2.aspirerfid.programmableengine.epcisclient.MasterDataCaptureUtils;
+import org.ow2.aspirerfid.programmableengine.objects.ProcessedEBProc;
 
-import org.ow2.aspirerfid.commons.ale.model.ale.ECReportSpec;
-import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec;
-import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec.ReportSpecs;
-
-import org.ow2.aspirerfid.commons.ale.model.alelr.LRSpec;
-
-import org.w3c.dom.Element;
-
-/**
- * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- * 
- */
-public class EncodeImplementation {
+public class OLCBProcControlRegister {
 
 	/** logger. */
 	public static final Logger LOG = Logger.getLogger(EncodeImplementation.class);
 
 	/**
-	 * if the encode is successful the reply ID will be 400 if not the reply ID
-	 * will be 425. The default value is 425
+	 * The Object where the various steps success or not feedback will be stored
 	 */
-	private Integer replyID = 425;
+	HashMap<String, String> olcbProcControlRegisterStepsFeedback;
+
+	// private Integer replyID = 425;
 
 	private OLCBProc openLoopCBPro = null;
 
@@ -75,37 +47,23 @@ public class EncodeImplementation {
 
 	private String openLoopCBProcID = "";
 
-	public EncodeImplementation(OLCBProc openLoopCBProc) {
-
+	public OLCBProcControlRegister(OLCBProc openLoopCBProc) throws OLCBProcValidationException,
+			NotCompletedExecutionException {
 		this.openLoopCBPro = openLoopCBProc;
 		openLoopCBProcID = openLoopCBProc.getId();
 
 		LOG.debug("Recieved OpenLoopCBProc ID for Encode: " + openLoopCBProc.getId());
 		LOG.debug("Recieved OpenLoopCBProc Name for Encode: " + openLoopCBProc.getName());
 
-		encode();
-
-		// if (openLoopCBProc != null) {
-		// System.out.println("Recieved OpenLoopCBProc ID for Encode: " +
-		// openLoopCBProc.getId());
-		// System.out.println("Recieved OpenLoopCBProc Name for Encode: " +
-		// openLoopCBProc.getName());
-		// replyID = 400;
-		// return;
-		// }
-		// System.out.println("The openLoopCBProc was Null");
-		//
-		// replyID = 425;
+		register();
 	}
 
-	private void encode() {
+	private void register() {
 
 		ArrayList<CLCBProc> clCBProcesses = new ArrayList<CLCBProc>();
 		clCBProcesses = (ArrayList<CLCBProc>) openLoopCBPro.getCLCBProc();
 
 		for (CLCBProc clCBProc : clCBProcesses) {
-
-
 
 			clCBProc.getDescription();
 			ArrayList<EBProc> ebProcesses = new ArrayList<EBProc>();
@@ -121,19 +79,22 @@ public class EncodeImplementation {
 						setUpAleLR(processedEBProc.getAleLrClientEndPoint(), processedEBProc.getLrSpecs());
 
 						// DefineECSpec
-						defineECSpec(processedEBProc.getAleClientEndPoint(), processedEBProc.getId(), processedEBProc.getDefinedECSpecName(),processedEBProc.getEcSpec());
+						defineECSpec(processedEBProc.getAleClientEndPoint(), processedEBProc.getId(), processedEBProc
+								.getDefinedECSpecName(), processedEBProc.getEcSpec());
 
 						// SetUp MasterData
-						setUpEPCIS(processedEBProc.getEpcisClientCaptureEndPoint(), clCBProc, processedEBProc.getEpcisMasterDataDocument());
+						setUpEPCIS(processedEBProc.getEpcisClientCaptureEndPoint(), clCBProc, processedEBProc
+								.getEpcisMasterDataDocument());
 
-						//SetUp BEG
-						setUpBEG(processedEBProc.getEpcisMasterDataDocument(), processedEBProc.getBegEngineEndpoint(), processedEBProc.getEpcisClientCaptureEndPoint(),processedEBProc.getEcSpecSubscriptionURI());
-						
+						// SetUp BEG
+						setUpBEG(processedEBProc.getEpcisMasterDataDocument(), processedEBProc.getBegEngineEndpoint(),
+								processedEBProc.getEpcisClientCaptureEndPoint(), processedEBProc.getEcSpecSubscriptionURI());
+
 						// SubscribeECSpec
-						subscribeECSpec(processedEBProc.getAleClientEndPoint(),processedEBProc.getDefinedECSpecName(),processedEBProc.getEcSpecSubscriptionURI());
-					
-						
-						replyID = 400;
+						subscribeECSpec(processedEBProc.getAleClientEndPoint(), processedEBProc.getDefinedECSpecName(),
+								processedEBProc.getEcSpecSubscriptionURI());
+
+//						replyID = 400;
 					}
 				}
 			}
@@ -176,7 +137,8 @@ public class EncodeImplementation {
 		aleClientUtil.subscribeECSpec(definedECSpecName, ecSpecSubscriptionURI);
 	}
 
-	private void setUpEPCIS(String epcisClientCaptureEndPoint, CLCBProc clCBProc, EPCISMasterDataDocumentType epcisMasterDataDocument) {
+	private void setUpEPCIS(String epcisClientCaptureEndPoint, CLCBProc clCBProc,
+			EPCISMasterDataDocumentType epcisMasterDataDocument) {
 
 		String clCBProcID = clCBProc.getId();
 		String clCBProcName = clCBProc.getName();
@@ -186,24 +148,22 @@ public class EncodeImplementation {
 		MasterDataCaptureClient masterDataCaptureClient = new MasterDataCaptureClient(epcisClientCaptureEndPoint);
 
 		// Save openLoopCBProcID
-		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataAndAttributeInsertOrAlter(EpcisConstants.BUSINESS_TRANSACTION_ID,
-				openLoopCBProcID, "Name", openLoopCBPro.getName());
+		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataAndAttributeInsertOrAlter(
+				EpcisConstants.BUSINESS_TRANSACTION_ID, openLoopCBProcID, "Name", openLoopCBPro.getName());
 		if (simpleMasterDataCaptureSucceeded) {
 			LOG.debug("Master Data " + openLoopCBProcID + " saccesfuly saved!");
 			simpleMasterDataCaptureSucceeded = false;
-		}
-		else {
+		} else {
 			LOG.debug("The Master Data " + openLoopCBProcID + " could NOT be captured!");
 		}
 
 		// Save clCBProcID
-		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataAndAttributeInsertOrAlter(EpcisConstants.BUSINESS_TRANSACTION_ID,
-				openLoopCBProcID + "," + clCBProcID, "Name", clCBProcName);
+		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataAndAttributeInsertOrAlter(
+				EpcisConstants.BUSINESS_TRANSACTION_ID, openLoopCBProcID + "," + clCBProcID, "Name", clCBProcName);
 		if (simpleMasterDataCaptureSucceeded) {
 			LOG.debug("Master Data " + openLoopCBProcID + "," + clCBProcID + " saccesfuly saved!");
 			simpleMasterDataCaptureSucceeded = false;
-		}
-		else {
+		} else {
 			LOG.debug("The Master Data " + openLoopCBProcID + "," + clCBProcID + " could NOT be captured!");
 		}
 
@@ -218,19 +178,21 @@ public class EncodeImplementation {
 
 		// Save the hole Transaction Event from the given
 		// epcisMasterDataDocument
-		masterDataCaptureUtils.saveTransactionEvent(epcisMasterDataDocument, masterDataCaptureClient, openLoopCBProcID + "," + clCBProcID);
+		masterDataCaptureUtils.saveTransactionEvent(epcisMasterDataDocument, masterDataCaptureClient, openLoopCBProcID
+				+ "," + clCBProcID);
 
 	}
 
-	private void setUpBEG(EPCISMasterDataDocumentType epcisMasterDataDocument,String begEngineEndpoint, String repositoryCaptureURL, String ecSpecSubscriptionURI) {
+	private void setUpBEG(EPCISMasterDataDocumentType epcisMasterDataDocument, String begEngineEndpoint,
+			String repositoryCaptureURL, String ecSpecSubscriptionURI) {
 
 		String[] ecSpecSubscriptionURISplited = ecSpecSubscriptionURI.split(":");
-		String begListeningPort = ecSpecSubscriptionURISplited[ecSpecSubscriptionURISplited.length-1];
-		
+		String begListeningPort = ecSpecSubscriptionURISplited[ecSpecSubscriptionURISplited.length - 1];
+
 		BegEngineClient begEngineClient = new BegEngineClient(begEngineEndpoint);
-		
-		ArrayList<VocabularyType> vocabularyTypeList = (ArrayList<VocabularyType>) epcisMasterDataDocument.getEPCISBody().getVocabularyList()
-				.getVocabulary();
+
+		ArrayList<VocabularyType> vocabularyTypeList = (ArrayList<VocabularyType>) epcisMasterDataDocument.getEPCISBody()
+				.getVocabularyList().getVocabulary();
 
 		for (VocabularyType vocabularyType : vocabularyTypeList) {
 			VocabularyElementListType vocabularyElementList = vocabularyType.getVocabularyElementList();
@@ -264,13 +226,11 @@ public class EncodeImplementation {
 			if (apdlDataField.getType().equals("EPCISMasterDataDocument")) {
 				epcisMasterDataDocument = apdlDataField.getEPCISMasterDataDocument();
 				processedEBProc.setEpcisMasterDataDocument(epcisMasterDataDocument);
-			}
-			else if (apdlDataField.getType().equals("ECSpec")) {
+			} else if (apdlDataField.getType().equals("ECSpec")) {
 				ecSpec = apdlDataField.getECSpec();
 				processedEBProc.setEcSpec(ecSpec);
 				processedEBProc.setDefinedECSpecName(apdlDataField.getName());
-			}
-			else if (apdlDataField.getType().equals("LRSpec")) {
+			} else if (apdlDataField.getType().equals("LRSpec")) {
 				lrSpecs.put(apdlDataField.getName(), apdlDataField.getLRSpec());
 			}
 		}
@@ -281,20 +241,15 @@ public class EncodeImplementation {
 
 			if (extendedAttribute.getName().equals("ECSpecSubscriptionURI")) {
 				processedEBProc.setEcSpecSubscriptionURI(extendedAttribute.getValue());
-			}
-			else if (extendedAttribute.getName().equals("AleClientEndPoint")) {
+			} else if (extendedAttribute.getName().equals("AleClientEndPoint")) {
 				processedEBProc.setAleClientEndPoint(extendedAttribute.getValue());
-			}
-			else if (extendedAttribute.getName().equals("AleLrClientEndPoint")) {
+			} else if (extendedAttribute.getName().equals("AleLrClientEndPoint")) {
 				processedEBProc.setAleLrClientEndPoint(extendedAttribute.getValue());
-			}
-			else if (extendedAttribute.getName().equals("EpcisClientCaptureEndPoint")) {
+			} else if (extendedAttribute.getName().equals("EpcisClientCaptureEndPoint")) {
 				processedEBProc.setEpcisClientCaptureEndPoint(extendedAttribute.getValue());
-			}
-			else if (extendedAttribute.getName().equals("EpcisClientQueryEndPoint")) {
+			} else if (extendedAttribute.getName().equals("EpcisClientQueryEndPoint")) {
 				processedEBProc.setEpcisClientQueryEndPoint(extendedAttribute.getValue());
-			}
-			else if (extendedAttribute.getName().equals("BegEngineEndpoint")) {
+			} else if (extendedAttribute.getName().equals("BegEngineEndpoint")) {
 				processedEBProc.setBegEngineEndpoint(extendedAttribute.getValue());
 			}
 
@@ -302,8 +257,8 @@ public class EncodeImplementation {
 		return processedEBProc;
 	}
 
-	public Integer getReplyID() {
-		return replyID;
+	public HashMap<String, String> getOLCBProcControlRegisterStepsFeedback() {
+		return olcbProcControlRegisterStepsFeedback;
 	}
 
 }

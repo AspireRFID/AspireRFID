@@ -17,43 +17,49 @@ public class ProgrammEngineOLCBProcControlInterfaceImpl implements
 	@Override
 	public OLCBProc getOLCBProc(String openLoopCBProcID,
 			HashMap<String, String> endPoints) throws NoSuchOLCBProcIdException {
-		// TODO Auto-generated method stub
-		return null;
+		OLCBProcControlGetOLCBProc olcbProcControlGetOLCBProc = new OLCBProcControlGetOLCBProc(openLoopCBProcID, endPoints);
+		return olcbProcControlGetOLCBProc.getRetievedOLCBProc();
 	}
 
 	@Override
 	public HashMap<String, String> register(OLCBProc openLoopCBProc)
 			throws OLCBProcValidationException, NotCompletedExecutionException {
-		// TODO Auto-generated method stub
-		return null;
+		OLCBProcControlRegister olcbProcControlRegister = new OLCBProcControlRegister(openLoopCBProc);
+		return olcbProcControlRegister.getOLCBProcControlRegisterStepsFeedback();
 	}
 
 	@Override
 	public HashMap<String, String> start(OLCBProc openLoopCBProc)
 			throws NoSuchOLCBProcIdException {
-		// TODO Auto-generated method stub
-		return null;
+
+		OLCBProcControlStart olcbProcControlStart = new OLCBProcControlStart(openLoopCBProc);
+				
+		return olcbProcControlStart.getOlcbProcControlStartStepsFeedback();
 	}
 
 	@Override
 	public HashMap<String, String> stop(OLCBProc openLoopCBProc)
 			throws NoSuchOLCBProcIdException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		OLCBProcControlStop olcbProcControlStop = new OLCBProcControlStop(openLoopCBProc);
+		
+		return olcbProcControlStop.getOlcbProcControlStopStepsFeedback();
 	}
 
 	@Override
 	public HashMap<String, String> unregister(OLCBProc openLoopCBProc)
 			throws NoSuchOLCBProcIdException {
-		// TODO Auto-generated method stub
-		return null;
+		OLCBProcControlUnregister olcbBProcControlUnregister = new OLCBProcControlUnregister(openLoopCBProc);
+		
+		return olcbBProcControlUnregister.getOlcbProcControlUnregisterStepsFeedback();
 	}
 
 	@Override
 	public HashMap<String, String> update(OLCBProc openLoopCBProc)
 			throws OLCBProcValidationException, NotCompletedExecutionException {
-		// TODO Auto-generated method stub
-		return null;
+		OLCBProcControlUpdate olcbProcControlUpdate = new OLCBProcControlUpdate(openLoopCBProc);
+		
+		return olcbProcControlUpdate.getOlcbProcControlUpdateStepsFeedback();
 	}
 
 }
