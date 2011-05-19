@@ -97,7 +97,7 @@ public class PropertyActionEditBusinessLocation extends Action{
 		if(lFileName != null) {
 			MasterDataFileUtil.openMasterDataFile(lFileName);
 		}else {//else create a new one			
-			MainUtil.executeCommand("org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMF.command");
+			MainUtil.executeCommand("org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMFBpwme.command");
 		}
 		super.run();
 	}

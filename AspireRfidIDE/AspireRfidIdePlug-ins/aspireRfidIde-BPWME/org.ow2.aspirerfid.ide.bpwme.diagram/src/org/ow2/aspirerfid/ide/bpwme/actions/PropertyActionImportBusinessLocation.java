@@ -20,6 +20,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.internal.IWorkbenchGraphicConstants;
 import org.eclipse.ui.internal.WorkbenchImages;
 import org.ow2.aspirerfid.commons.apdl.model.CLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.MasterDataEditorGMF.handler.*;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.CLCBProcEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditor;
@@ -31,7 +32,6 @@ import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MasterDataFileUtil;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.bpwmeintegration.MasterDataContentsProvider;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.*;
 
 public class PropertyActionImportBusinessLocation extends Action{
 	
@@ -117,7 +117,7 @@ public class PropertyActionImportBusinessLocation extends Action{
 			mdb.setBusinessStepReadPoint(companyMap, warehouseMap, readpointMap);
 			
 		}else {//else create a new one			
-			MainUtil.executeCommand("org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMF.command");
+			MainUtil.executeCommand("org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMFBpwme.command");
 		}
 		super.run();
 	}

@@ -26,10 +26,10 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromBpwmeApdlWizard;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFCreateFromFile;
 import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
 import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
+import org.ow2.aspirerfid.ide.bpwme.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromBpwmeApdlWizard;
 import org.ow2.aspirerfid.ide.bpwme.diagram.comboeditor.ComboEditor;
 import org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.WorkflowMapEditPart;
 import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
@@ -131,7 +131,7 @@ public class OpenFromAPDL extends AbstractHandler{
 		if (result) {
 			URI masterDataURI = URI.createURI(fileDialog.getFilterPath() + File.separator + fileDialog.getFileName());
 			//open APDL file and set the CLCBProc names
-			MasterDataGMFCreateFromFile.openApdlFile(masterDataURI);
+			MasterDataGMFCreateFromFile.openApdlFile(masterDataURI.toString());
 			MasterDataGMFCreateFromFile.setClcbProcNamesWithMasterDataFromApdl();
 			
 			if (MasterDataGMFCreateFromFile.getClcProcNames().size() == 0) {

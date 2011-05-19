@@ -612,6 +612,51 @@
                id="org.ow2.aspirerfid.ide.bpwme.diagram.edit.parts.EBProcEditPart">
          </object>
       </editpolicyProvider>
+    </extension>
+  	<extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.MasterDataEditorGMF.handler.NewMasterDataEditorGMFViewHandler"
+            description="New Master Data Editor GMF Diagram"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMFBpwme.command"
+            name="New Master Data Editor GMF Diagram">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromFileViewHandler"
+            description="Open Master Data Editor GMF From File"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromFileBpwme.command"
+            name="Open Master Data Editor GMF From File">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromApdlViewHandler"
+            description="Open Master Data Editor GMF From Apdl"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromApdl.command"
+            name="Open Master Data Editor GMF From Apdl">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromEpcisViewHandler"
+            description="Open Master Data Editor GMF From Epcis"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromEpcisBpwme.command"
+            name="Open Master Data Editor GMF From Epcis">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.MasterDataEditorGMF.handler.InsertMasterDataEditorGMFIntoEpcisViewHandler"
+            description="Insert Master Data Editor GMF Into Epcis"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.insertMasterDataEditorGMFEpcisBpwme.command"
+            name="Insert Master Data Editor GMF Into Epcis">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.MasterDataEditorGMF.handler.CorrelateMasterDataEditorGMFWithClcbViewHandler"
+            description="Correlate Master Data Editor GMF Diagram With Clcb"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.correlateMasterDataEditorGMFwithClcb.command"
+            name="Correlate Master Data Editor GMF Diagram With Clcb">
+      </command>
+      <command
+            defaultHandler="org.ow2.aspirerfid.ide.bpwme.MasterDataEditorGMF.handler.ImportMasterDataEditorGMFViewHandler"
+            description="Import Master Data Editor GMF Diagram"
+            id="org.ow2.aspirerfid.ide.MasterDataEditorGMF.importMasterDataEditorGMF.command"
+            name="Import Master Data Editor GMF Diagram">
+      </command>
    </extension>
    <extension
          id="org.ow2.aspirerfid.ide.main.menu"
@@ -637,6 +682,44 @@
                   label="Open From APDL"
                   style="push">
             </command>
+        	<menu
+              id="org.ow2.aspirerfid.ide.main.filemenu.masterdataeditorgmfdiagram"
+              label="MasterDataEditorGMF">
+	        	<menu
+	              id="org.ow2.aspirerfid.ide.main.filemenu.masterdataeditorgmfdiagrambpwme"
+	              label="MasterDataEditorGMF Bpwme-specific">
+	               <command
+	                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.newMasterDataEditorGMFBpwme.command"
+	                     label="New MasterDataEditorGMF Diagram"
+	                     style="push">
+	               </command>
+	               <command
+	                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromFileBpwme.command"
+	                     label="Open MasterDataEditorGMF Diagram From File"
+	                     style="push">
+	               </command>
+	               <command
+	                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromApdl.command"
+	                     label="Open MasterDataEditorGMF Diagram From Apdl"
+	                     style="push">
+	               </command>
+	               <command
+	                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.openMasterDataEditorGMFFromEpcisBpwme.command"
+	                     label="Open MasterDataEditorGMF Diagram From Epcis"
+	                     style="push">
+	               </command>
+	               <command
+	                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.insertMasterDataEditorGMFEpcisBpwme.command"
+	                     label="Insert MasterDataEditorGMF Diagram Into Epcis"
+	                     style="push">
+	               </command>
+	               <command
+	                     commandId="org.ow2.aspirerfid.ide.MasterDataEditorGMF.correlateMasterDataEditorGMFwithClcb.command"
+	                     label="Correlate MasterDataEditorGMF Diagram With Clcb"
+	                     style="push">
+	               </command>
+	            </menu>
+            </menu>
          </menu>
          <menu
                id="org.ow2.aspirerfid.ide.main.editmenu"
