@@ -111,9 +111,8 @@ public class MasterDataGMFCreateFromFile {
 	/**
 	 * Open the APDL xml file
 	 */
-	public static void openApdlFile(URI fileURI) {
+	public static void openApdlFile(String URI) {
 		try {
-			String URI = fileURI.toString();
 			File file = new File(URI);
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();

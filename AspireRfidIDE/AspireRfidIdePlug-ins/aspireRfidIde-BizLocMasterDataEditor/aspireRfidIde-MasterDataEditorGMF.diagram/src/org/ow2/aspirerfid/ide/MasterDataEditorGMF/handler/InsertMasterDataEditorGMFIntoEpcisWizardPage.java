@@ -39,7 +39,7 @@ public class InsertMasterDataEditorGMFIntoEpcisWizardPage extends WizardPage {
 	/**
 	 * Editor handler
 	 */
-	 EditorHandler editorHandler = new EditorHandler();
+	 MasterDataEditorGMFHandler editorHandler = new MasterDataEditorGMFHandler();
 
 	/**
 	 * IStructuredSelection

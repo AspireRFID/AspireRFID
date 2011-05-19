@@ -66,8 +66,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.MasterDataEditorGMFFactory;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromApdlWizard;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromBpwmeApdlWizard;
+//import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromApdlWizard;
+//import org.ow2.aspirerfid.ide.MasterDataEditorGMF.handler.OpenMasterDataEditorGMFFromBpwmeApdlWizard;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFCreateFromFile;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFQuery;
@@ -77,6 +77,16 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataGMFQuer
  */
 public class MasterDataEditorGMFDiagramEditorUtil {
 
+	/**
+	 * Apdl Clcb count
+	 */
+	public static int apdlClcbCount;
+	
+	/**
+	 * Apdl Bpwme Clcb count
+	 */
+	public static int apdlBpwmeClcbCount;
+	
 	/**
 	 * @generated
 	 */
@@ -267,10 +277,10 @@ public class MasterDataEditorGMFDiagramEditorUtil {
 			return MasterDataGMFQuery.createEpcisModel(MasterDataGMFQuery.getSelectedCompany());
 		else if (MasterDataGMFCreateFromFile.isFromApdl())
 			return MasterDataGMFCreateFromFile.createApdlModel(MasterDataGMFCreateFromFile.getClcProcNames()
-					.get(OpenMasterDataEditorGMFFromApdlWizard.getCount()));
+					.get(apdlClcbCount));
 		else if (MasterDataGMFCreateFromFile.isFromBpwmeApdl())
 			return MasterDataGMFCreateFromFile.createApdlModel(MasterDataGMFCreateFromFile.getClcProcNames()
-					.get(OpenMasterDataEditorGMFFromBpwmeApdlWizard.getCount()));
+					.get(apdlBpwmeClcbCount));
 		else
 			return MasterDataEditorGMFFactory.eINSTANCE.createCompany();
 	}

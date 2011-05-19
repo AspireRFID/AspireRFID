@@ -38,7 +38,6 @@ import org.ow2.aspirerfid.ide.MasterDataEditorGMF.BizLoc;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.Company;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.MasterDataEditorGMFFactory;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.ReadPoint;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.part.MasterDataEditorGMFDiagramEditorPlugin;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.diagram.preferences.DiagramConfiguratorPreferenceConstants;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.tools.EpcisConstants;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.tools.QueryClientGuiHelper;
