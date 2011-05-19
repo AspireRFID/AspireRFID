@@ -39,7 +39,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractContainer;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.MasterDataEditorGMFPackage;
-import org.ow2.aspirerfid.ide.MasterDataEditorGMF.querycapture.MasterDataEditParts;
 
 /**
  * This is the item provider adapter for a {@link org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractContainer} object.
