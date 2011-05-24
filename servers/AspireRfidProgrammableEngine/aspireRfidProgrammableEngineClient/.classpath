@@ -41,6 +41,6 @@
 	<classpathentry kind="lib" path="lib/commons-jxpath-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-api-1.0.4.jar"/>
-	<classpathentry kind="lib" path="lib/aspirerfid-commons-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/aspirerfid-commons-1.4.jar" sourcepath="/aspireRfidCommons"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -37,7 +37,7 @@ public class OLCBProcControlRegister {
 	/**
 	 * The Object where the various steps success or not feedback will be stored
 	 */
-	HashMap<String, String> olcbProcControlRegisterStepsFeedback;
+	private HashMap<String, String> olcbProcControlRegisterStepsFeedback = null;
 
 	// private Integer replyID = 425;
 

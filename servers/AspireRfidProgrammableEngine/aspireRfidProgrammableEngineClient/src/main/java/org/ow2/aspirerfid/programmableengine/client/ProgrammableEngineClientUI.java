@@ -19,6 +19,7 @@ package org.ow2.aspirerfid.programmableengine.client;
 
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -34,6 +35,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
 import org.ow2.aspirerfid.commons.apdl.utils.DeserializerUtil;
+import org.ow2.aspirerfid.commons.pe.exceptions.NotCompletedExecutionException;
+import org.ow2.aspirerfid.commons.pe.exceptions.OLCBProcValidationException;
 
 
 import org.eclipse.swt.graphics.Image;
@@ -60,7 +63,7 @@ public class ProgrammableEngineClientUI {
 
 	protected Shell shell;
 	
-	ProgrammableEngineClient peClient = new ProgrammableEngineClient("http://localhost:8080/aspireRfidProgrammableEngine/");
+	PEOLCBProcControlClient peClient = new PEOLCBProcControlClient();
 
 	/**
 	 * Launch the application
@@ -128,7 +131,6 @@ public class ProgrammableEngineClientUI {
 		public void mouseDown(final MouseEvent arg0) {
 			
 			OLCBProc openLoopCBProc = new OLCBProc();
-			int responceID;
 			
 			try {
 				openLoopCBProc = DeserializerUtil.deserializeOLCBProcFile(apdlFilePathText.getText());
@@ -142,20 +144,19 @@ public class ProgrammableEngineClientUI {
 				e.printStackTrace();
 			}
 
+			try {
+				peClient.register(openLoopCBProc);
+			} catch (OLCBProcValidationException e) {
+				LOG.debug("OLCBProc Validation Exception");
+				e.printStackTrace();
+			} catch (NotCompletedExecutionException e) {
+				LOG.debug("Not Completed Execution Exception");
+				e.printStackTrace();
+			}
+			LOG.debug("The OLCBProc was registered successfully");
 			
 
-			
-//			openLoopCBProc.setId("urn:epc:id:send1");
-//			openLoopCBProc.setName("TheFirstOpenLoopCompositeBusinessProcess");
-						
-			responceID = peClient.encodeAspireRFID(openLoopCBProc);
-			
-			LOG.debug("******************Encode*******************");
-			LOG.debug("The Responce ID is: "+responceID);
-			
-			LOG.debug("******************Decode*******************");
-			
-			peClient.decodeAspireRFID("urn:epc:id:returned1");
+
 			
 		}
 	}

@@ -58,7 +58,7 @@ public interface ProgrammEngineEBProcControlInterface {
 
 	@WebMethod()
 	@WebResult(name = "stopStatus")
-	public HashMap<String, String> stop(@WebParam(name = "elementaryBProc") EBProc elementaryBProcD)
+	public HashMap<String, String> stop(@WebParam(name = "elementaryBProc") EBProc elementaryBProc)
 			throws NoSuchEBProcIdException;
 
 	@WebMethod()
