@@ -1125,6 +1125,10 @@
                class="org.ow2.aspirerfid.ide.bpwme.navigator.BpwmeActionProvider"
                id="openChildProvider">
          </actionProvider>
+          <actionProvider
+               class="org.ow2.aspirerfid.ide.bpwme.navigator.ManageActionProvider"
+               id="manageProvider">
+         </actionProvider>
          <enablement>
             <or>
                <instanceof
