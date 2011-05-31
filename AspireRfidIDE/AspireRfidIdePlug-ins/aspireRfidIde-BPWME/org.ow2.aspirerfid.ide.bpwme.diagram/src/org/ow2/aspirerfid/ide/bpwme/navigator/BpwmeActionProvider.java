@@ -92,9 +92,6 @@ public class BpwmeActionProvider extends CommonActionProvider
         }
     }
     
-    
-    
-
     @Override
     public void restoreState(IMemento memento)
     {
@@ -127,9 +124,7 @@ public class BpwmeActionProvider extends CommonActionProvider
 
     
     /**
-     * 
-     * 
-     * 
+     * Open Action
      */
     class OpenChildAction extends Action
     {
@@ -149,16 +144,16 @@ public class BpwmeActionProvider extends CommonActionProvider
             if (data != null) {
             	IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
             	
-            	if (data instanceof URI) {
-            		URI uri = (URI) data;
-            		page.activate(getUriPart().get(uri.toString()));
-            	}
+//            	if (data instanceof URI) {
+//            		URI uri = (URI) data;
+//            		page.activate(getUriPart().get(uri.toString()));
+//            	}
             	if (data instanceof CLCBProc || data instanceof OLCBProc || data instanceof EBProc)
             		page.activate(getEditorForBpwme().get(data));
             	else if (data instanceof Company || data instanceof AbstractWarehouse || data instanceof AbstractContainer)
             		page.activate(getEditorForMasterData().get(data));
             		
-            } 
+            }
             super.run();
         }
 
@@ -177,8 +172,6 @@ public class BpwmeActionProvider extends CommonActionProvider
             }
             return false;
         }
-
-           
     }
     
 	/**
@@ -194,6 +187,37 @@ public class BpwmeActionProvider extends CommonActionProvider
 			
 			if (editorPart.getSite().getId().equals(BpwmeDiagramEditor.ID)) {
 				DiagramEditPart diagramEditPart = ((DiagramEditor)editorPart).getDiagramEditPart();
+				IWorkbenchPart part = page.getEditorReferences()[i].getPart(true);
+
+				if (diagramEditPart instanceof WorkflowMapEditPart) {
+					WorkflowMapEditPart workflowMap = (WorkflowMapEditPart) diagramEditPart;
+					WorkflowMap  workflowProc = (WorkflowMapImpl) ((View) workflowMap.getModel()).getElement();
+					
+					for (int j = 0; j < workflowProc.eContents().size(); j++) {
+						if (workflowProc.eContents().get(j) instanceof OLCBProc) {
+							OLCBProc olcbProc = (OLCBProc) workflowProc.eContents().get(j);
+							mapBpwmeElementWithFileName.put(olcbProc, part);
+							
+							for (int k = 0; k < olcbProc.eContents().size(); k++) {
+								if (olcbProc.eContents().get(k) instanceof CLCBProc) {
+									CLCBProc clcbProc = (CLCBProc) olcbProc.eContents().get(k);
+									mapBpwmeElementWithFileName.put(clcbProc, part);
+									
+									for (int l = 0; l < clcbProc.eContents().size(); l++) {
+										if (clcbProc.eContents().get(l) instanceof EBProc) {
+											EBProc ebProc = (EBProc) clcbProc.eContents().get(l);
+											mapBpwmeElementWithFileName.put(ebProc, part);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			else if (editorPart.getSite().getId().equals(ComboEditor.ID)) {
+				BpwmeDiagramEditor bpwmeDiagramEditor = ((ComboEditor)editorPart).getBpwmeEditor();
+				DiagramEditPart diagramEditPart = bpwmeDiagramEditor.getDiagramEditPart();
 				IWorkbenchPart part = page.getEditorReferences()[i].getPart(true);
 
 				if (diagramEditPart instanceof WorkflowMapEditPart) {
@@ -340,7 +364,7 @@ public class BpwmeActionProvider extends CommonActionProvider
 				mapUriPart.put(file.getName().replaceFirst(".bpwme_diagram", ""), part);
 			}
 		}
-		
+		System.out.println(mapUriPart);
 		return mapUriPart;
 	}
 

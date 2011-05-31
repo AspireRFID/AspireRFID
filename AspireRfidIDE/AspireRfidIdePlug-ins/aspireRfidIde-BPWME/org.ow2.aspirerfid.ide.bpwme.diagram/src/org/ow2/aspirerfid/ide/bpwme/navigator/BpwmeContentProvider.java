@@ -200,7 +200,6 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 		refreshViewer = new Action("Refresh") {
 			public void run() {
 				viewer.refresh();
-				System.out.println("refresh");;
 			}			
 		};
 		
