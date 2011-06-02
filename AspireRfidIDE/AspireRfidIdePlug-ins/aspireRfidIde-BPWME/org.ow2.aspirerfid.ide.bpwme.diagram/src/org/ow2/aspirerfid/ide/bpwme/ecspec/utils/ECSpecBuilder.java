@@ -81,10 +81,13 @@ public class ECSpecBuilder {
 		ApdlDataField adf = mc.objectFactory.createApdlDataField();
 		adf.setECSpec(of.createECSpec());
 		adf.setType("ECSpec");
-		adf.setName("Sample ECSpec");
+		//nkef
+		adf.setName(ebproc.getId());
 		this.ebproc.getApdlDataFields().getApdlDataField().add(adf);		
 		this.ecspec = adf.getECSpec();
 		
+		//nkef
+		ecspec.setIncludeSpecInReports(false);
 		
 		ecspec.setLogicalReaders(of.createECSpecLogicalReaders());
 		ecspec.setReportSpecs(of.createECSpecReportSpecs());
@@ -147,11 +150,18 @@ public class ECSpecBuilder {
 			ApdlDataField adf = mc.objectFactory.createApdlDataField();
 			adf.setECSpec(new ECSpec());
 			adf.setType("ECSpec");
-			adf.setName("Sample ECSpec");
+			
+			//nkef
+			adf.setName(ebproc.getId());
+			
 			ebproc.getApdlDataFields().getApdlDataField().add(adf);		
 			this.ecspec = adf.getECSpec();
 			
 			ObjectFactory of = new ObjectFactory();
+			
+			//nkef
+			ecspec.setIncludeSpecInReports(false);
+			
 			ecspec.setLogicalReaders(of.createECSpecLogicalReaders());
 			ecspec.setReportSpecs(of.createECSpecReportSpecs());
 			ecspec.setBoundarySpec(of.createECBoundarySpec());
@@ -216,48 +226,128 @@ public class ECSpecBuilder {
 	private ECReportSpec createBiz() {
 		ECReportSpec bizTransactionReport = new ECReportSpec();
 		bizTransactionReport.setReportOnlyOnChange(true);
+		
+		//nkef
+		bizTransactionReport.setReportIfEmpty(false);
+		
 		bizTransactionReport.setReportName("bizTransactionIDs");
+		
+		//nkef
+		ECReportSetSpec bizTransReportECReportSetSpec = new ECReportSetSpec();
+		bizTransReportECReportSetSpec.setSet("CURRENT");
+		bizTransactionReport.setReportSet(bizTransReportECReportSetSpec);
+		
 		bizTransactionReport.setFilterSpec(new ECFilterSpec());
 		bizTransactionReport.setGroupSpec(new ECGroupSpec());
 		IncludePatterns ip = new IncludePatterns();
 		//ip.getIncludePattern().add("urn:epc:pat:gid-96:145.12.*");
 		bizTransactionReport.getFilterSpec().setIncludePatterns(ip);
+		
+		//nkef
+		ECReportOutputSpec bizTransReportECReportOutputSpec = new ECReportOutputSpec();
+		bizTransReportECReportOutputSpec.setIncludeCount(true);
+		bizTransReportECReportOutputSpec.setIncludeEPC(true);
+		bizTransReportECReportOutputSpec.setIncludeRawDecimal(true);
+		bizTransReportECReportOutputSpec.setIncludeRawHex(true);
+		bizTransReportECReportOutputSpec.setIncludeTag(true);
+		bizTransactionReport.setOutput(bizTransReportECReportOutputSpec);
+		
 		return bizTransactionReport;
 	}
 	
 	private ECReportSpec createBizP() {
 		ECReportSpec bizTransactionParentReport = new ECReportSpec();
 		bizTransactionParentReport.setReportOnlyOnChange(true);
+		
+		//nkef
+		bizTransactionParentReport.setReportIfEmpty(false);
+		
 		bizTransactionParentReport.setReportName("bizTransactionParentIDs");
+		
+		//nkef
+		ECReportSetSpec bizTransReportECReportSetSpec = new ECReportSetSpec();
+		bizTransReportECReportSetSpec.setSet("CURRENT");
+		bizTransactionParentReport.setReportSet(bizTransReportECReportSetSpec);		
+		
 		bizTransactionParentReport.setFilterSpec(new ECFilterSpec());
 		bizTransactionParentReport.setGroupSpec(new ECGroupSpec());
 		IncludePatterns ip = new IncludePatterns();
 		//ip.getIncludePattern().add("urn:epc:pat:gid-96:145.19.*");
 		bizTransactionParentReport.getFilterSpec().setIncludePatterns(ip);
+		
+		//nkef
+		ECReportOutputSpec bizTransReportECReportOutputSpec = new ECReportOutputSpec();
+		bizTransReportECReportOutputSpec.setIncludeCount(true);
+		bizTransReportECReportOutputSpec.setIncludeEPC(true);
+		bizTransReportECReportOutputSpec.setIncludeRawDecimal(true);
+		bizTransReportECReportOutputSpec.setIncludeRawHex(true);
+		bizTransReportECReportOutputSpec.setIncludeTag(true);
+		bizTransactionParentReport.setOutput(bizTransReportECReportOutputSpec);
+		
 		return bizTransactionParentReport;
 	}
 	
 	private ECReportSpec createTran() {
 		ECReportSpec transactionItemReport = new ECReportSpec();
 		transactionItemReport.setReportOnlyOnChange(true);
+		
+		//nkef
+		transactionItemReport.setReportIfEmpty(false);
+		
 		transactionItemReport.setReportName("transactionItems");
+		
+		//nkef
+		ECReportSetSpec bizTransReportECReportSetSpec = new ECReportSetSpec();
+		bizTransReportECReportSetSpec.setSet("ADDITIONS");
+		transactionItemReport.setReportSet(bizTransReportECReportSetSpec);
+		
 		transactionItemReport.setFilterSpec(new ECFilterSpec());
 		transactionItemReport.setGroupSpec(new ECGroupSpec());
 		IncludePatterns ip = new IncludePatterns();
 		//ip.getIncludePattern().add("urn:epc:pat:gid-96:145.223.*");
 		transactionItemReport.getFilterSpec().setIncludePatterns(ip);
+		
+		//nkef
+		ECReportOutputSpec bizTransReportECReportOutputSpec = new ECReportOutputSpec();
+		bizTransReportECReportOutputSpec.setIncludeCount(true);
+		bizTransReportECReportOutputSpec.setIncludeEPC(true);
+		bizTransReportECReportOutputSpec.setIncludeRawDecimal(true);
+		bizTransReportECReportOutputSpec.setIncludeRawHex(true);
+		bizTransReportECReportOutputSpec.setIncludeTag(true);
+		transactionItemReport.setOutput(bizTransReportECReportOutputSpec);
+		
 		return transactionItemReport;
 	}
 	
 	private ECReportSpec createPare() {
 		ECReportSpec parentObjectReport = new ECReportSpec();
 		parentObjectReport.setReportOnlyOnChange(true);
+		
+		//nkef
+		parentObjectReport.setReportIfEmpty(false);
+		
 		parentObjectReport.setReportName("parentObjects");
+		
+		//nkef
+		ECReportSetSpec bizTransReportECReportSetSpec = new ECReportSetSpec();
+		bizTransReportECReportSetSpec.setSet("ADDITIONS");
+		parentObjectReport.setReportSet(bizTransReportECReportSetSpec);		
+		
 		parentObjectReport.setFilterSpec(new ECFilterSpec());
 		parentObjectReport.setGroupSpec(new ECGroupSpec());
 		IncludePatterns ip = new IncludePatterns();
 		//ip.getIncludePattern().add("urn:epc:pat:gid-96:145.56.*");
 		parentObjectReport.getFilterSpec().setIncludePatterns(ip);
+		
+		//nkef
+		ECReportOutputSpec bizTransReportECReportOutputSpec = new ECReportOutputSpec();
+		bizTransReportECReportOutputSpec.setIncludeCount(true);
+		bizTransReportECReportOutputSpec.setIncludeEPC(true);
+		bizTransReportECReportOutputSpec.setIncludeRawDecimal(true);
+		bizTransReportECReportOutputSpec.setIncludeRawHex(true);
+		bizTransReportECReportOutputSpec.setIncludeTag(true);
+		parentObjectReport.setOutput(bizTransReportECReportOutputSpec);
+		
 		return parentObjectReport;
 	}
 	

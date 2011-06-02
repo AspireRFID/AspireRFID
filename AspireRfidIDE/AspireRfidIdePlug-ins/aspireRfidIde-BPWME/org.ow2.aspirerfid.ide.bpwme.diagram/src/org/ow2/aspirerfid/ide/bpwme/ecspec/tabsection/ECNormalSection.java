@@ -42,7 +42,8 @@ public class ECNormalSection extends AbstractPropertySection {
 		Composite mainComposite = getWidgetFactory().createFlatFormComposite(parent);
 		mainComposite.setLayout(new GridLayout(3, false));
 		
-		final Label label = getWidgetFactory().createLabel(mainComposite, "Reader Name");
+		//nkef (Changed from "Reader Name" to "Report Name")
+		final Label label = getWidgetFactory().createLabel(mainComposite, "Report Name");
 		//label.setLayoutData(new GridData(36, SWT.DEFAULT));
 		//label.setText("Reader Name");
 		text = getWidgetFactory().createText(mainComposite, "");
