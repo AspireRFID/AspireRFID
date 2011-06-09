@@ -1126,6 +1126,26 @@
                 id="peRegisterProcessActionProvider">
           </actionProvider>
           <actionProvider
+                class="org.ow2.aspirerfid.ide.bpwme.navigator.PeUnregisterProcessActionProvider"
+                id="peUnregisterProcessActionProvider">
+          </actionProvider>
+          <actionProvider
+                class="org.ow2.aspirerfid.ide.bpwme.navigator.PeUpdateProcessActionProvider"
+                id="peUpdateProcessActionProvider">
+          </actionProvider>
+          <actionProvider
+                class="org.ow2.aspirerfid.ide.bpwme.navigator.PeStopProcessActionProvider"
+                id="peStopProcessActionProvider">
+          </actionProvider>
+          <actionProvider
+                class="org.ow2.aspirerfid.ide.bpwme.navigator.PeGetProcessActionProvider"
+                id="peGetProcessActionProvider">
+          </actionProvider>
+          <actionProvider
+                class="org.ow2.aspirerfid.ide.bpwme.navigator.PeStartProcessActionProvider"
+                id="peStartProcessActionProvider">
+          </actionProvider>
+          <actionProvider
                class="org.ow2.aspirerfid.ide.bpwme.navigator.ManageActionProvider"
                id="manageProvider">
          </actionProvider>
