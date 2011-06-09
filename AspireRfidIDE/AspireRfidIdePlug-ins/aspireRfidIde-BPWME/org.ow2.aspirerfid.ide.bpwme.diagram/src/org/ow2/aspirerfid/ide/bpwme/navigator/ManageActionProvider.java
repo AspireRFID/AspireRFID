@@ -31,6 +31,9 @@ import org.eclipse.ui.navigator.ICommonActionExtensionSite;
 import org.eclipse.ui.navigator.ICommonMenuConstants;
 import org.eclipse.ui.navigator.ICommonViewerSite;
 import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
+import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.EBProc;
+import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
 
 /**
  * Manage provider for the navigator
@@ -96,6 +99,7 @@ public class ManageActionProvider extends CommonActionProvider
     {
         private ISelectionProvider provider;
         private Object data;
+        private EBProc ebProcForPE = null;
 
         public ManageAction(IWorkbenchPage workbenchPage, ISelectionProvider selectionProvider)
         {
@@ -108,6 +112,14 @@ public class ManageActionProvider extends CommonActionProvider
         public void run() {
             
             if (data != null) {
+            	
+            	if (data instanceof EBProc){
+            		ebProcForPE = (EBProc)data;
+            		
+            		System.out.println("OLE! i have the ID:"+ebProcForPE.getId());
+            	}
+            	
+            	System.out.println("New");
             	//edw epistrefeis ta properties tou object pou kaneis click
             	System.out.println(data);
             		
