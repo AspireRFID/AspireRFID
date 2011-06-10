@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<parameters>
+	
+  <PeEndPoint>http://localhost:8080/aspireRfidProgrammableEngine/</PeEndPoint>
+
+</parameters>
