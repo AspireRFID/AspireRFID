@@ -98,8 +98,6 @@ public class PeRegisterProcessActionProvider extends CommonActionProvider {
 				}
 
 
-				// edw epistrefeis ta properties tou object pou kaneis click
-				System.out.println(data);
 
 			}
 			super.run();
