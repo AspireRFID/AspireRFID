@@ -25,7 +25,7 @@ public class PeEBProcControlClient implements ProgrammEngineEBProcControlInterfa
 	private ProgrammEngineEBProcControlInterface ebProcControlClient = null;
 	
 	/** logger. */
-	public static final Logger LOG = Logger.getLogger(ProgrammableEngineClient.class);
+	public static final Logger LOG = Logger.getLogger(PeEBProcControlClient.class);
 
 	/**
 	 * The configuration

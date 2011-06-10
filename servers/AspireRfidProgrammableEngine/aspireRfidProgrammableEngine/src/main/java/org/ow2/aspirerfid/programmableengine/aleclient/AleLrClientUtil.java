@@ -91,7 +91,9 @@ public class AleLrClientUtil {
 			return;
 		}
 
-
+		//By default the readers Described in an APDL and defined at the PE are not Composite. 
+		lrSpec.setIsComposite(false);
+		
 		org.ow2.aspirerfid.commons.ale.wsdl.alelr.Define defineParms = new org.ow2.aspirerfid.commons.ale.wsdl.alelr.Define();
 		defineParms.setName(logicalReadeName);
 		defineParms.setSpec(lrSpec);

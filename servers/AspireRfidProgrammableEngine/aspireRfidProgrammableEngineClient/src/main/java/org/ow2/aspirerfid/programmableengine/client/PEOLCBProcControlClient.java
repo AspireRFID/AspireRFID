@@ -23,7 +23,7 @@ public class PEOLCBProcControlClient implements ProgrammEngineOLCBProcControlInt
 	private ProgrammEngineOLCBProcControlInterface olcbProcControlClient = null;
 
 	/** logger. */
-	public static final Logger LOG = Logger.getLogger(ProgrammableEngineClient.class);
+	public static final Logger LOG = Logger.getLogger(PEOLCBProcControlClient.class);
 
 	/**
 	 * The configuration
@@ -119,11 +119,12 @@ public class PEOLCBProcControlClient implements ProgrammEngineOLCBProcControlInt
 		olcbProcControlFeedback = null;
 		olcbProcControlFeedback = olcbProcControlClient.register(openLoopCBProc);
 
-		for (String olcbProcControlFeedbackKey : olcbProcControlFeedback.keySet()) {
-			LOG.debug("For feedback ID: " + olcbProcControlFeedbackKey + " the feddback value is: "
-					+ olcbProcControlFeedback.get(olcbProcControlFeedbackKey));
+		if (olcbProcControlFeedback != null ) {
+			for (String olcbProcControlFeedbackKey : olcbProcControlFeedback.keySet()) {
+				LOG.debug("For feedback ID: " + olcbProcControlFeedbackKey + " the feddback value is: "
+						+ olcbProcControlFeedback.get(olcbProcControlFeedbackKey));
+			}
 		}
-
 		return olcbProcControlFeedback;
 	}
 
@@ -171,7 +172,7 @@ public class PEOLCBProcControlClient implements ProgrammEngineOLCBProcControlInt
 			NotCompletedExecutionException {
 		olcbProcControlFeedback = null;
 		olcbProcControlFeedback = olcbProcControlClient.update(openLoopCBProc);
-		
+
 		for (String olcbProcControlFeedbackKey : olcbProcControlFeedback.keySet()) {
 			LOG.debug("For feedback ID: " + olcbProcControlFeedbackKey + " the feddback value is: "
 					+ olcbProcControlFeedback.get(olcbProcControlFeedbackKey));

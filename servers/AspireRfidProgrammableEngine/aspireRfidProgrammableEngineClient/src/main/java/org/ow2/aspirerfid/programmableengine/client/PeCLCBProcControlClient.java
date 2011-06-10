@@ -24,7 +24,7 @@ public class PeCLCBProcControlClient implements ProgrammEngineCLCBProcControlInt
 	
 	
 	/** logger. */
-	public static final Logger LOG = Logger.getLogger(ProgrammableEngineClient.class);
+	public static final Logger LOG = Logger.getLogger(PeCLCBProcControlClient.class);
 
 	/**
 	 * The configuration
