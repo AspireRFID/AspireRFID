@@ -38,9 +38,11 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractContainer;
 import org.ow2.aspirerfid.ide.MasterDataEditorGMF.AbstractWarehouse;
@@ -76,10 +78,10 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 	/**
 	 * Returns the children of the navigator
 	 */
-    public Object[] getChildren(Object parentElement) {  
+    public Object[] getChildren(Object parentElement) {
     	setBpwmeEditors();
     	setFileURIs();
-
+    	
     	if (parentElement instanceof Root)
     		return fileURIs;
     	else if (parentElement instanceof URI) {
@@ -161,30 +163,6 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 	 */
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
        	BpwmeContentProvider.viewer = (TreeViewer) viewer;
-    	
-    	IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-    	
-		page.addPartListener(new IPartListener2(){
-	        public void partActivated( IWorkbenchPartReference partRef ) {
-	        	if (partRef.getId().equals("org.ow2.aspirerfid.ide.bpwme.navigator.view")) {
-	        		BpwmeContentProvider.viewer.refresh();
-	        	}
-	        }
-	
-	        public void partBroughtToTop( IWorkbenchPartReference partRef ) {}
-	
-	        public void partClosed( IWorkbenchPartReference partRef ) {}
-	
-	        public void partDeactivated( IWorkbenchPartReference partRef ) {}
-	
-	        public void partOpened( IWorkbenchPartReference partRef ) {}
-	        
-	        public void partHidden( IWorkbenchPartReference partRef ) {}
-	
-	        public void partVisible( IWorkbenchPartReference partRef ) {}
-	
-	        public void partInputChanged( IWorkbenchPartReference partRef ) {}
-	    });
     }
 
 	/**
@@ -228,38 +206,41 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 		mapBpwmePart.clear();
 		
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		
 		WorkflowMap[] bpwmeEditors;
 		
-		for (int i = 0; i < page.getEditorReferences().length; i++) {
-			IEditorPart editorPart = page.getEditorReferences()[i].getEditor(true);
-			IWorkbenchPart workbenchPart = page.getEditorReferences()[i].getEditor(true);
-			
-			if (editorPart.getSite().getId().equals(BpwmeDiagramEditor.ID)) { 
-				DiagramEditPart diagramEditPart = ((DiagramEditor)editorPart).getDiagramEditPart();
-	
-				if (diagramEditPart instanceof WorkflowMapEditPart) {
-					WorkflowMapEditPart bpwmeEditPart = (WorkflowMapEditPart) diagramEditPart;
-					bpwmeList.add(bpwmeEditPart);
-					mapBpwmePart.put(bpwmeEditPart, workbenchPart);
-				}
-			}
-			else if (editorPart.getSite().getId().equals(ComboEditor.ID)) {
-				BpwmeDiagramEditor bpwmeDiagramEditor = ((ComboEditor)editorPart).getBpwmeEditor();
-				DiagramEditPart diagramEditPart = bpwmeDiagramEditor.getDiagramEditPart();
+		if (page.getEditorReferences() != null) {
+			for (int i = 0; i < page.getEditorReferences().length; i++) {
+				IEditorPart editorPart = page.getEditorReferences()[i].getEditor(true);
+				IWorkbenchPart workbenchPart = page.getEditorReferences()[i].getEditor(true);
 				
-				if (diagramEditPart instanceof WorkflowMapEditPart) {
-					WorkflowMapEditPart bpwmeEditPart = (WorkflowMapEditPart) diagramEditPart;
-					bpwmeList.add(bpwmeEditPart);
-					mapBpwmePart.put(bpwmeEditPart, workbenchPart);
+				if (editorPart.getSite().getId().equals(BpwmeDiagramEditor.ID)) { 
+					DiagramEditPart diagramEditPart = ((DiagramEditor)editorPart).getDiagramEditPart();
+		
+					if (diagramEditPart instanceof WorkflowMapEditPart) {
+						WorkflowMapEditPart bpwmeEditPart = (WorkflowMapEditPart) diagramEditPart;
+						bpwmeList.add(bpwmeEditPart);
+						mapBpwmePart.put(bpwmeEditPart, workbenchPart);
+					}
+				}
+				else if (editorPart.getSite().getId().equals(ComboEditor.ID)) {
+					BpwmeDiagramEditor bpwmeDiagramEditor = ((ComboEditor)editorPart).getBpwmeEditor();
+					DiagramEditPart diagramEditPart = bpwmeDiagramEditor.getDiagramEditPart();
+					
+					if (diagramEditPart instanceof WorkflowMapEditPart) {
+						WorkflowMapEditPart bpwmeEditPart = (WorkflowMapEditPart) diagramEditPart;
+						bpwmeList.add(bpwmeEditPart);
+						mapBpwmePart.put(bpwmeEditPart, workbenchPart);
+					}
 				}
 			}
-		}
 		
-		bpwmeEditors = new WorkflowMap[bpwmeList.size()];
-		
-		for (int i = 0; i < bpwmeList.size(); i++) {
-			WorkflowMap bpwmes = (WorkflowMapImpl) ((View) bpwmeList.get(i).getModel()).getElement();
-			bpwmeEditors[i] = bpwmes;
+			bpwmeEditors = new WorkflowMap[bpwmeList.size()];
+			
+			for (int i = 0; i < bpwmeList.size(); i++) {
+				WorkflowMap bpwmes = (WorkflowMapImpl) ((View) bpwmeList.get(i).getModel()).getElement();
+				bpwmeEditors[i] = bpwmes;
+			}
 		}
 	}
 	
