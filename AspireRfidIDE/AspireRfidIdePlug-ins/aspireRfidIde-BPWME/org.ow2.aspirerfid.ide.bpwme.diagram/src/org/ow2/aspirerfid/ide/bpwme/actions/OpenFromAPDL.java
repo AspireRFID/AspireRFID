@@ -20,7 +20,9 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -40,6 +42,7 @@ import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECLRInput;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
 import org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor;
+import org.ow2.aspirerfid.ide.bpwme.navigator.BpwmeContentProvider;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.FileAction;
@@ -150,6 +153,42 @@ public class OpenFromAPDL extends AbstractHandler{
 					window.getShell(), wizard1);
 			wizardDialog.open();
 		}
+		
+		//Modified by elka
+		//In order to fix known issue with common navigator where metadata are not reset
+		BpwmeContentProvider.viewer.refresh();
+		
+		page.addPartListener(new IPartListener2(){
+	        public void partActivated( IWorkbenchPartReference partRef ) {
+	        	if (partRef.getId().equals("org.ow2.aspirerfid.ide.bpwme.navigator.view")) {
+	        		BpwmeContentProvider.viewer.refresh();
+	        	}
+	        }
+	
+	        public void partBroughtToTop( IWorkbenchPartReference partRef ) {
+	        }
+	
+	        public void partClosed( IWorkbenchPartReference partRef ) {
+	        	BpwmeContentProvider.viewer.refresh();
+	        }
+	
+	        public void partDeactivated( IWorkbenchPartReference partRef ) {
+	        }
+	
+	        public void partOpened( IWorkbenchPartReference partRef ) {System.out.println("opened");
+	        	BpwmeContentProvider.viewer.refresh();
+	        }
+	        
+	        public void partHidden( IWorkbenchPartReference partRef ) {
+	        }
+	
+	        public void partVisible( IWorkbenchPartReference partRef ) {
+	        }
+	
+	        public void partInputChanged( IWorkbenchPartReference partRef ) {
+	        	BpwmeContentProvider.viewer.refresh();
+	        }
+	    });
 		
 		return null;
 		
