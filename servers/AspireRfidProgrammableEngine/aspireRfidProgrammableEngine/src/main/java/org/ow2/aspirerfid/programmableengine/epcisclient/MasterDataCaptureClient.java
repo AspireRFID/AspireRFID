@@ -169,7 +169,7 @@ public class MasterDataCaptureClient {
 	 * @param newVocabularyElementURI
 	 * @return true if the method Succeeds false otherwise
 	 */
-	public boolean simpleMasterDataAlter(String vocabularyType, String oldVocabularyElementURI, String newVocabularyElementURI) {
+	public boolean alterVocElem (String vocabularyType, String oldVocabularyElementURI, String newVocabularyElementURI) {
 		try {
 
 			VocabularyType vocabulary = new VocabularyType();
@@ -224,7 +224,7 @@ public class MasterDataCaptureClient {
 	 * @param vocabularyElementURI
 	 * @return true if the method Succeeds false otherwise
 	 */
-	public boolean simpleMasterDataInsert(String vocabularyType, String vocabularyElementURI) {
+	public boolean insertVocElem(String vocabularyType, String vocabularyElementURI) {
 		try {
 
 			VocabularyType vocabulary = new VocabularyType();
@@ -280,7 +280,7 @@ public class MasterDataCaptureClient {
 	 *            ArrayList<String>
 	 * @return true if the method Succeeds false otherwise
 	 */
-	public boolean simpleMasterDataMassInsert(String vocabularyType, ArrayList<String> vocabularyElementURIs) {
+	public boolean massInsertVocElem (String vocabularyType, ArrayList<String> vocabularyElementURIs) {
 		try {
 
 			VocabularyType vocabulary = new VocabularyType();
@@ -337,7 +337,7 @@ public class MasterDataCaptureClient {
 	 * @param vocabularyElementURI
 	 * @return true if the method Succeeds false otherwise
 	 */
-	public boolean simpleMasterDataSingleDelete(String vocabularyType, String vocabularyElementURI) {
+	public boolean deleteVocElem (String vocabularyType, String vocabularyElementURI) {
 		try {
 
 			VocabularyType vocabulary = new VocabularyType();
@@ -394,7 +394,7 @@ public class MasterDataCaptureClient {
 	 *            ArrayList<String>
 	 * @return true if the method Succeeds false otherwise
 	 */
-	public boolean simpleMasterDataMassDelete(String vocabularyType, ArrayList<String> vocabularyElementURIs) {
+	public boolean massDeleteVocElem(String vocabularyType, ArrayList<String> vocabularyElementURIs) {
 		try {
 
 			VocabularyType vocabulary = new VocabularyType();
@@ -451,7 +451,7 @@ public class MasterDataCaptureClient {
 	 * @param vocabularyElementURI
 	 * @return true if the method Succeeds false otherwise
 	 */
-	public boolean simpleMasterDataDeleteWithDescendants(String vocabularyType, String vocabularyElementURI) {
+	public boolean deleteWithDescendantsVocElem(String vocabularyType, String vocabularyElementURI) {
 		try {
 
 			VocabularyType vocabulary = new VocabularyType();
@@ -508,7 +508,7 @@ public class MasterDataCaptureClient {
 	 * @param vocabularyElementURIs ArrayList<String>
 	 * @return true if the method Succeeds false otherwise
 	 */
-	public boolean simpleMasterDataMassDeleteWithDescendants(String vocabularyType, ArrayList<String> vocabularyElementURIs) {
+	public boolean massDeleteWithDescendantsVocElem (String vocabularyType, ArrayList<String> vocabularyElementURIs) {
 		try {
 
 			VocabularyType vocabulary = new VocabularyType();
@@ -631,12 +631,12 @@ public class MasterDataCaptureClient {
 	 * be changed to the vocabularyAttribute entered or simply rewrite it.
 	 * 
 	 * @param vocabularyType
-	 * @param vocabularyURI
-	 * @param vocAttributes
+	 * @param vocabularyElementURI
+	 * @param vocabularyAttributes
 	 *            <vocabularyAttributeID,vocabularyAttributeValue>
 	 * @return true if the method Succeeds false otherwise
 	 */
-	public boolean simpleMasterDataAndMassAttributeInsertOrAlter(String vocabularyType, String vocabularyURI, HashMap<String, String> vocAttributes) {
+	public boolean massInsertOrAlterVocElemAttr (String vocabularyType, String vocabularyElementURI, HashMap<String, String> vocabularyAttributes) {
 		try {
 
 			VocabularyType vocabulary = new VocabularyType();
@@ -647,11 +647,11 @@ public class MasterDataCaptureClient {
 
 			VocabularyElementType vocabularyElement = new VocabularyElementType();
 
-			vocabularyElement.setId(vocabularyURI);
+			vocabularyElement.setId(vocabularyElementURI);
 			// vocabularyElement.getOtherAttributes().put(new QName("mode"),
 			// "1");
 
-			for (String vocabularyAttributeID : vocAttributes.keySet()) {
+			for (String vocabularyAttributeID : vocabularyAttributes.keySet()) {
 
 				AttributeType attribute = new AttributeType();
 				if (vocabularyAttributeID.startsWith("urn:epcglobal:epcis:mda:")) {
@@ -661,7 +661,7 @@ public class MasterDataCaptureClient {
 					attribute.setId("urn:epcglobal:epcis:mda:" + vocabularyAttributeID);
 				}
 
-				attribute.getOtherAttributes().put(new QName("value"), vocAttributes.get(vocabularyAttributeID));
+				attribute.getOtherAttributes().put(new QName("value"), vocabularyAttributes.get(vocabularyAttributeID));
 
 				vocabularyElement.getAttribute().add(attribute);
 			}
@@ -706,12 +706,12 @@ public class MasterDataCaptureClient {
 	 * be changed to the vocabularyAttribute entered or simply rewrite it.
 	 * 
 	 * @param vocabularyType
-	 * @param vocabularyURI
-	 * @param vocabularyAttribute
+	 * @param vocabularyElementURI
+	 * @param vocabularyAttributeName
 	 * @param vocabularyAttributeValue
 	 * @return true if the method Succeeds false otherwise
 	 */
-	public boolean simpleMasterDataAndAttributeInsertOrAlter(String vocabularyType, String vocabularyURI, String vocabularyAttribute,
+	public boolean insertOrAlterVocElemAttr (String vocabularyType, String vocabularyElementURI, String vocabularyAttributeName,
 			String vocabularyAttributeValue) {
 		try {
 
@@ -723,37 +723,15 @@ public class MasterDataCaptureClient {
 
 			VocabularyElementType vocabularyElement = new VocabularyElementType();
 
-			vocabularyElement.setId(vocabularyURI);
-			// vocabularyElement.getOtherAttributes().put(new QName("mode"),
-			// "1");
+			vocabularyElement.setId(vocabularyElementURI);
 
 			AttributeType attribute = new AttributeType();
-			if (vocabularyAttribute.startsWith("urn:epcglobal:epcis:mda:")) {
-				attribute.setId(vocabularyAttribute);
+			if (vocabularyAttributeName.startsWith("urn:epcglobal:epcis:mda:")) {
+				attribute.setId(vocabularyAttributeName);
 			}
 			else {
-				attribute.setId("urn:epcglobal:epcis:mda:" + vocabularyAttribute);
+				attribute.setId("urn:epcglobal:epcis:mda:" + vocabularyAttributeName);
 			}
-
-			// attribute.getOtherAttributes().put(new QName("mode"), mode);
-
-			// Element attributeTypeElement = null;
-			// try {
-			// DocumentBuilderFactory dbf =
-			// DocumentBuilderFactory.newInstance();
-			// DocumentBuilder db;
-			// db = dbf.newDocumentBuilder();
-			// Document document = db.newDocument();
-			// attributeTypeElement =
-			// document.createElement("attributeTypeElement");
-			// attributeTypeElement.setAttribute("attribute",
-			// vocabularyAttributeValue);
-			// }
-			// catch (ParserConfigurationException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-			// attribute.getAny().add(attributeTypeElement);
 
 			attribute.getOtherAttributes().put(new QName("value"), vocabularyAttributeValue);
 
@@ -796,18 +774,12 @@ public class MasterDataCaptureClient {
 	 * (nkef) Delete a vocabulary's Element Attribute.
 	 * 
 	 * @param vocabularyType
-	 * @param vocabularyURI
-	 * @param vocabularyAttribute
-	 * @param vocabularyAttributeValue
-	 * @return true if the method Succeeds false otherwise
-	 * 
-	 * @param vocabularyType
-	 * @param vocabularyURI
-	 * @param vocabularyAttributes
+	 * @param vocabularyElementURI
+	 * @param vocabularyAttributeNames
 	 *            ArrayList<String>
 	 * @return true if the method Succeeds false otherwise
 	 */
-	public boolean simpleMasterDataAttributeMassDelete(String vocabularyType, String vocabularyURI, ArrayList<String> vocabularyAttributeIDs) {
+	public boolean massDeleteVocElemAttr (String vocabularyType, String vocabularyElementURI, ArrayList<String> vocabularyAttributeNames) {
 		try {
 
 			VocabularyType vocabulary = new VocabularyType();
@@ -818,9 +790,9 @@ public class MasterDataCaptureClient {
 
 			VocabularyElementType vocabularyElement = new VocabularyElementType();
 
-			vocabularyElement.setId(vocabularyURI);
+			vocabularyElement.setId(vocabularyElementURI);
 
-			for (String vocabularyAttribute : vocabularyAttributeIDs) {
+			for (String vocabularyAttribute : vocabularyAttributeNames) {
 
 				AttributeType attribute = new AttributeType();
 				if (vocabularyAttribute.startsWith("urn:epcglobal:epcis:mda:")) {
@@ -873,12 +845,11 @@ public class MasterDataCaptureClient {
 	 * (nkef) Delete a vocabulary's Element Attribute.
 	 * 
 	 * @param vocabularyType
-	 * @param vocabularyURI
-	 * @param vocabularyAttribute
-	 * @param vocabularyAttributeValue
+	 * @param vocabularyElementURI
+	 * @param vocabularyAttributeNames
 	 * @return true if the method Succeeds false otherwise
 	 */
-	public boolean simpleMasterDataAttributeDelete(String vocabularyType, String vocabularyURI, String vocabularyAttribute) {
+	public boolean deleteVocElemAttr (String vocabularyType, String vocabularyElementURI, String vocabularyAttributeName) {
 		try {
 
 			VocabularyType vocabulary = new VocabularyType();
@@ -889,15 +860,15 @@ public class MasterDataCaptureClient {
 
 			VocabularyElementType vocabularyElement = new VocabularyElementType();
 
-			vocabularyElement.setId(vocabularyURI);
+			vocabularyElement.setId(vocabularyElementURI);
 
 			AttributeType attribute = new AttributeType();
 
-			if (vocabularyAttribute.startsWith("urn:epcglobal:epcis:mda:")) {
-				attribute.setId(vocabularyAttribute);
+			if (vocabularyAttributeName.startsWith("urn:epcglobal:epcis:mda:")) {
+				attribute.setId(vocabularyAttributeName);
 			}
 			else {
-				attribute.setId("urn:epcglobal:epcis:mda:" + vocabularyAttribute);
+				attribute.setId("urn:epcglobal:epcis:mda:" + vocabularyAttributeName);
 			}
 			attribute.getOtherAttributes().put(new QName("mode"), "3");
 
@@ -969,8 +940,6 @@ public class MasterDataCaptureClient {
 			VocabularyElementType vocabularyElement = new VocabularyElementType();
 
 			vocabularyElement.setId(vocabularyURI);
-			// vocabularyElement.getOtherAttributes().put(new QName("mode"),
-			// "1");
 
 			AttributeType attribute = new AttributeType();
 			if (vocabularyAttribute.startsWith("urn:epcglobal:epcis:mda:")) {
@@ -1024,7 +993,7 @@ public class MasterDataCaptureClient {
 		return true;
 	}
 
-	private XMLGregorianCalendar getCurrentTime() {
+	public XMLGregorianCalendar getCurrentTime() {
 		// get the current time and set the eventTime
 		XMLGregorianCalendar now = null;
 		try {

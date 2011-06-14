@@ -75,6 +75,8 @@ public class OLCBProcControlRegister {
 						ProcessedEBProc processedEBProc = new ProcessedEBProc();
 						processedEBProc = processEBProc(ebProc);
 
+						// SetUp openLoopCBProc (Standar Vocabulary) Epcis Master Data
+
 						// Define LRSpec
 						setUpAleLR(processedEBProc.getAleLrClientEndPoint(), processedEBProc.getLrSpecs());
 
@@ -82,7 +84,11 @@ public class OLCBProcControlRegister {
 						defineECSpec(processedEBProc.getAleClientEndPoint(), processedEBProc.getId(), processedEBProc
 								.getDefinedECSpecName(), processedEBProc.getEcSpec());
 
-						// SetUp MasterData
+						/**
+						 * SetUp EBProc (User Vocabulary) MasterData, closeLoopCBProc
+						 * (User Vocabulary) Epcis Master Data and SetUp
+						 * openLoopCBProc (Standar Vocabulary) Epcis Master Data
+						 */
 						setUpEPCIS(processedEBProc.getEpcisClientCaptureEndPoint(), clCBProc, processedEBProc
 								.getEpcisMasterDataDocument());
 
@@ -94,7 +100,7 @@ public class OLCBProcControlRegister {
 						subscribeECSpec(processedEBProc.getAleClientEndPoint(), processedEBProc.getDefinedECSpecName(),
 								processedEBProc.getEcSpecSubscriptionURI());
 
-//						replyID = 400;
+						// replyID = 400;
 					}
 				}
 			}
@@ -140,15 +146,27 @@ public class OLCBProcControlRegister {
 	private void setUpEPCIS(String epcisClientCaptureEndPoint, CLCBProc clCBProc,
 			EPCISMasterDataDocumentType epcisMasterDataDocument) {
 
+		EPCISMasterDataDocumentType openLoopCBProcEpcisMasterDataDocument = openLoopCBPro.getEPCISMasterDataDocument();
+		EPCISMasterDataDocumentType closeLoopCBProcEpcisMasterDataDocument = clCBProc.getEPCISMasterDataDocument();
+
+		MasterDataCaptureUtils masterDataCaptureUtils = new MasterDataCaptureUtils();
+		
 		String clCBProcID = clCBProc.getId();
 		String clCBProcName = clCBProc.getName();
 
 		boolean simpleMasterDataCaptureSucceeded = false;
 
 		MasterDataCaptureClient masterDataCaptureClient = new MasterDataCaptureClient(epcisClientCaptureEndPoint);
-
-		// Save openLoopCBProcID
-		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataAndAttributeInsertOrAlter(
+		
+		//Set Up openLoopCBProc (Standar Vocabulary) Epcis Master Data
+		masterDataCaptureUtils.saveMasterDataDocument(openLoopCBProcEpcisMasterDataDocument, masterDataCaptureClient);
+	
+		//SetUp closeLoopCBProc (User Vocabulary) Epcis Master Data 
+		masterDataCaptureUtils.saveMasterDataDocument(closeLoopCBProcEpcisMasterDataDocument, masterDataCaptureClient);
+		 
+		 
+		// Save openLoopCBProcID to BUSINESS_TRANSACTION_ID
+		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.insertOrAlterVocElemAttr(
 				EpcisConstants.BUSINESS_TRANSACTION_ID, openLoopCBProcID, "Name", openLoopCBPro.getName());
 		if (simpleMasterDataCaptureSucceeded) {
 			LOG.debug("Master Data " + openLoopCBProcID + " saccesfuly saved!");
@@ -157,8 +175,8 @@ public class OLCBProcControlRegister {
 			LOG.debug("The Master Data " + openLoopCBProcID + " could NOT be captured!");
 		}
 
-		// Save clCBProcID
-		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataAndAttributeInsertOrAlter(
+		// Save clCBProcID to BUSINESS_TRANSACTION_ID
+		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.insertOrAlterVocElemAttr(
 				EpcisConstants.BUSINESS_TRANSACTION_ID, openLoopCBProcID + "," + clCBProcID, "Name", clCBProcName);
 		if (simpleMasterDataCaptureSucceeded) {
 			LOG.debug("Master Data " + openLoopCBProcID + "," + clCBProcID + " saccesfuly saved!");
@@ -167,10 +185,7 @@ public class OLCBProcControlRegister {
 			LOG.debug("The Master Data " + openLoopCBProcID + "," + clCBProcID + " could NOT be captured!");
 		}
 
-		// ==== Save the Individual Attributes to their relative
-		// Vocabularies=====
-
-		MasterDataCaptureUtils masterDataCaptureUtils = new MasterDataCaptureUtils();
+		// ==== Save the Individual Attributes to their relative Vocabularies=====
 
 		masterDataCaptureUtils.saveIndividualAttr(epcisMasterDataDocument, masterDataCaptureClient);
 

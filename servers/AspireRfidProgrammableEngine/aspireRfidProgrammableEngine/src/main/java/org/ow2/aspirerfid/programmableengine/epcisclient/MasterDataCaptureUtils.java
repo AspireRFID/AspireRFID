@@ -18,6 +18,7 @@
 package org.ow2.aspirerfid.programmableengine.epcisclient;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
@@ -60,7 +61,7 @@ public class MasterDataCaptureUtils {
 
 					// Save the business_step if it doesn't already exists
 					if (attributeType.getId().equals("urn:epcglobal:epcis:mda:business_step")) {
-						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(EpcisConstants.BUSINESS_STEP_ID,
+						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.insertVocElem(EpcisConstants.BUSINESS_STEP_ID,
 								attributeType.getOtherAttributes().get(new QName("value")));
 						if (simpleMasterDataCaptureSucceeded) {
 							LOG.debug("Master Data " + attributeType.getOtherAttributes().get(new QName("value")) + " saccesfuly saved!");
@@ -74,7 +75,7 @@ public class MasterDataCaptureUtils {
 					// Save the business_location if it doesn't already exists
 					if (attributeType.getId().equals("urn:epcglobal:epcis:mda:business_location")) {
 
-						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(EpcisConstants.BUSINESS_LOCATION_ID,
+						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.insertVocElem(EpcisConstants.BUSINESS_LOCATION_ID,
 								attributeType.getOtherAttributes().get(new QName("value")));
 						if (simpleMasterDataCaptureSucceeded) {
 							LOG.debug("Master Data " + attributeType.getOtherAttributes().get(new QName("value")) + " saccesfuly saved!");
@@ -88,7 +89,7 @@ public class MasterDataCaptureUtils {
 					// Save the disposition if it doesn't already exists
 					if (attributeType.getId().equals("urn:epcglobal:epcis:mda:disposition")) {
 
-						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(EpcisConstants.DISPOSITION_ID,
+						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.insertVocElem(EpcisConstants.DISPOSITION_ID,
 								attributeType.getOtherAttributes().get(new QName("value")));
 						if (simpleMasterDataCaptureSucceeded) {
 							LOG.debug("Master Data " + attributeType.getOtherAttributes().get(new QName("value")) + " saccesfuly saved!");
@@ -102,7 +103,7 @@ public class MasterDataCaptureUtils {
 					// Save the read_point if it doesn't already exists
 					if (attributeType.getId().equals("urn:epcglobal:epcis:mda:read_point")) {
 
-						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(EpcisConstants.READ_POINT_ID, attributeType
+						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.insertVocElem(EpcisConstants.READ_POINT_ID, attributeType
 								.getOtherAttributes().get(new QName("value")));
 						if (simpleMasterDataCaptureSucceeded) {
 							LOG.debug("Master Data " + attributeType.getOtherAttributes().get(new QName("value")) + " saccesfuly saved!");
@@ -117,7 +118,7 @@ public class MasterDataCaptureUtils {
 					// Save the transaction_type if it doesn't already exists
 					if (attributeType.getId().equals("urn:epcglobal:epcis:mda:transaction_type")) {
 
-						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataInsert(
+						simpleMasterDataCaptureSucceeded = masterDataCaptureClient.insertVocElem(
 								EpcisConstants.BUSINESS_TRANSACTION_TYPE_ID, attributeType.getOtherAttributes().get(new QName("value")));
 						if (simpleMasterDataCaptureSucceeded) {
 							LOG.debug("Master Data " + attributeType.getOtherAttributes().get(new QName("value")) + " saccesfuly saved!");
@@ -209,6 +210,24 @@ public class MasterDataCaptureUtils {
 		}
 		
 		
+	}
+	
+	public void saveMasterDataDocument(EPCISMasterDataDocumentType epcisMasterDataDocument, MasterDataCaptureClient masterDataCaptureClient){
+	
+		epcisMasterDataDocument.setSchemaVersion(new BigDecimal("1.0"));
+		epcisMasterDataDocument.setCreationDate(masterDataCaptureClient.getCurrentTime());
+		
+		try {
+			masterDataCaptureClient.capture(epcisMasterDataDocument);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	
 	}
 
 }

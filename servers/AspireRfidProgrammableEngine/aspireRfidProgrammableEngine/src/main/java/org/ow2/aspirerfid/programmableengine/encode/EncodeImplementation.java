@@ -186,7 +186,7 @@ public class EncodeImplementation {
 		MasterDataCaptureClient masterDataCaptureClient = new MasterDataCaptureClient(epcisClientCaptureEndPoint);
 
 		// Save openLoopCBProcID
-		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataAndAttributeInsertOrAlter(EpcisConstants.BUSINESS_TRANSACTION_ID,
+		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.insertOrAlterVocElemAttr(EpcisConstants.BUSINESS_TRANSACTION_ID,
 				openLoopCBProcID, "Name", openLoopCBPro.getName());
 		if (simpleMasterDataCaptureSucceeded) {
 			LOG.debug("Master Data " + openLoopCBProcID + " saccesfuly saved!");
@@ -197,7 +197,7 @@ public class EncodeImplementation {
 		}
 
 		// Save clCBProcID
-		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.simpleMasterDataAndAttributeInsertOrAlter(EpcisConstants.BUSINESS_TRANSACTION_ID,
+		simpleMasterDataCaptureSucceeded = masterDataCaptureClient.insertOrAlterVocElemAttr(EpcisConstants.BUSINESS_TRANSACTION_ID,
 				openLoopCBProcID + "," + clCBProcID, "Name", clCBProcName);
 		if (simpleMasterDataCaptureSucceeded) {
 			LOG.debug("Master Data " + openLoopCBProcID + "," + clCBProcID + " saccesfuly saved!");
