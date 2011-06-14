@@ -1,9 +1,11 @@
 package org.ow2.aspirerfid.ide.bpwme.navigator;
 
+import java.io.FileNotFoundException;
 import java.util.Collection;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -16,11 +18,14 @@ import org.eclipse.ui.navigator.ICommonActionExtensionSite;
 import org.eclipse.ui.navigator.ICommonMenuConstants;
 import org.eclipse.ui.navigator.ICommonViewerSite;
 import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
+import org.ow2.aspirerfid.commons.apdl.utils.DeserializerUtil;
 import org.ow2.aspirerfid.commons.pe.exceptions.NotCompletedExecutionException;
 import org.ow2.aspirerfid.commons.pe.exceptions.OLCBProcValidationException;
 import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
 import org.ow2.aspirerfid.ide.bpwme.EBProc;
 import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.diagram.part.BpwmeDiagramEditorPlugin;
+import org.ow2.aspirerfid.ide.bpwme.diagram.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.bpwme.peclient.PEOLCBProcControlClient;
 import org.ow2.aspirerfid.ide.bpwme.utils.ConsoleWriter;
 //import org.ow2.aspirerfid.commons.apdl.model.OLCBProc;
@@ -32,6 +37,9 @@ public class PeRegisterProcessActionProvider extends CommonActionProvider {
 	ConsoleWriter consoleWriter = null;
 
 	PEOLCBProcControlClient peOLCBProcControlClient = null;
+	
+	/** Returns the preference store for this UI plug-in */
+	IPreferenceStore bpwmeConfigPreferences = BpwmeDiagramEditorPlugin.getInstance().getPreferenceStore();
 
 	public PeRegisterProcessActionProvider() {
 		// TODO Auto-generated constructor stub
@@ -78,11 +86,13 @@ public class PeRegisterProcessActionProvider extends CommonActionProvider {
 	 */
 	class PeRegisterProcessAction extends Action {
 
+		private String fileSeparator = System.getProperty("file.separator");
 		private ISelectionProvider provider;
 		private Object data;
-		private EBProc ebProcForPE = null;
-		private OLCBProc olcbProcForPE = null;
-		private CLCBProc clcbProcForPE = null;
+		private EBProc ebProcGmfModel = null;
+		private OLCBProc olcbProcGmfModel = null;
+		private CLCBProc clcbProcGmfModel = null;
+		private String apdlFilePath = "";
 
 		public PeRegisterProcessAction(IWorkbenchPage workbenchPage, ISelectionProvider selectionProvider) {
 			super("Register");
@@ -95,54 +105,64 @@ public class PeRegisterProcessActionProvider extends CommonActionProvider {
 			if (data != null) {
 
 				if (data instanceof EBProc) {
-					ebProcForPE = (EBProc) data;
+					ebProcGmfModel = (EBProc) data;
 
 					
-					olcbProcForPE = (OLCBProc)((CLCBProc)ebProcForPE.eContainer()).eContainer();
-					System.out.println("Father of All Containing Object Name:" + olcbProcForPE.getName());
+					olcbProcGmfModel = (OLCBProc)((CLCBProc)ebProcGmfModel.eContainer()).eContainer();
+					System.out.println("Father of All Containing Object Name:" + olcbProcGmfModel.getName());
 					
 					
-					System.out.println("EBProc With ID:" + ebProcForPE.getId());
+					System.out.println("EBProc With ID:" + ebProcGmfModel.getId());
 
 				} else if (data instanceof CLCBProc) {
 
-					clcbProcForPE = (CLCBProc) data;
-					System.out.println("CLCBProc With ID:" + clcbProcForPE.getId());
+					clcbProcGmfModel = (CLCBProc) data;
+					System.out.println("CLCBProc With ID:" + clcbProcGmfModel.getId());
 
 				} else if (data instanceof OLCBProc) {
 
-					olcbProcForPE = (OLCBProc) data;
+					olcbProcGmfModel = (OLCBProc) data;
 					
-					
+					org.ow2.aspirerfid.commons.apdl.model.OLCBProc olcbProcForPE = new org.ow2.aspirerfid.commons.apdl.model.OLCBProc();
 
 					if (peOLCBProcControlClient == null) {
-						consoleWriter.writeToConsole("Initializing the OLCBProcControlClient...");
+						consoleWriter.writeToConsoleln("Initializing the OLCBProcControlClient...");
 						
 						peOLCBProcControlClient = new PEOLCBProcControlClient();
-						consoleWriter.writeToConsole("OLCBProcControlClient Successfuly initialized.");
+						consoleWriter.writeToConsoleln("OLCBProcControlClient Successfuly initialized.");
 					}
-
-//					org.ow2.aspirerfid.commons.apdl.model.OLCBProc olCBProcOriginal= new org.ow2.aspirerfid.commons.apdl.model.OLCBProc();
-//					
-//					olCBProcOriginal.getCLCBProc().addAll((Collection<? extends org.ow2.aspirerfid.commons.apdl.model.CLCBProc>) olcbProcForPE.getCLCBProc());
-//					olCBProcOriginal.setId(olcbProcForPE.getId());
+					
+					apdlFilePath = bpwmeConfigPreferences.getString(PreferenceConstants.P_BPWME_DIR)+fileSeparator+olcbProcGmfModel.getName()+fileSeparator+olcbProcGmfModel.getName()+".xml";
+					consoleWriter.writeToConsoleln("APDL filepath: \"" + apdlFilePath+"\"");
+					
+					try {
+						olcbProcForPE = DeserializerUtil.deserializeOLCBProcFile(apdlFilePath);
+					}
+					catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						consoleWriter.writeErrorToConsoleln("FileNotFound Exception");
+					}
+					catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						consoleWriter.writeErrorToConsoleln("Exception");
+					}			
+					
+					try {
+						peOLCBProcControlClient.register(olcbProcForPE);
+					} catch (OLCBProcValidationException e) {
+						consoleWriter.writeErrorToConsoleln("OLCBProc Validation Exception");
+						e.printStackTrace();
+					} catch (NotCompletedExecutionException e) {
+						consoleWriter.writeErrorToConsoleln("Not Completed Execution Exception");
+						e.printStackTrace();
+					}
 					
 					
 					
-//					try {
-//						peOLCBProcControlClient.register(olcbProcForPE);
-//					} catch (OLCBProcValidationException e) {
-//						consoleWriter.writeToConsole("OLCBProc Validation Exception");
-//						e.printStackTrace();
-//					} catch (NotCompletedExecutionException e) {
-//						consoleWriter.writeToConsole("Not Completed Execution Exception");
-//						e.printStackTrace();
-//					}
 					
-					
-					
-					
-					consoleWriter.writeToConsole("OLCBProc With ID:" + olcbProcForPE.getId()
+					consoleWriter.writeToConsoleln("OLCBProc With ID:" + olcbProcGmfModel.getId()
 							+ "\nWas Sucessfully Registered");
 
 				}

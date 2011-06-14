@@ -2,6 +2,7 @@
 
 package org.ow2.aspirerfid.ide.bpwme.utils;
 
+import java.awt.Color;
 import java.io.IOException;
 
 import org.eclipse.ui.console.ConsolePlugin;
@@ -60,10 +61,23 @@ public class ConsoleWriter {
 	 * 
 	 * @param message
 	 */
-	public void writeToConsole(String message) {
+	public void writeToConsoleln(String message) {
 
 		try {
 			peControlProcessActionsOutputConsole.write(message + "\n");
+		} catch (IOException e) {
+			System.out.println("Console writing error:" + e.getMessage());
+		}
+	}
+	/**
+	 * Write to the IDE's Console
+	 * 
+	 * @param message
+	 */
+	public void writeErrorToConsoleln(String message) {
+
+		try {
+			peControlProcessActionsOutputConsole.write("Error:"+message + "\n");
 		} catch (IOException e) {
 			System.out.println("Console writing error:" + e.getMessage());
 		}
