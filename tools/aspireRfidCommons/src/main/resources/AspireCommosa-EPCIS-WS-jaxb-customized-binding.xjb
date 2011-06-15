@@ -1,38 +1,38 @@
 <jxb:bindings version="1.0" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	
-	<jxb:bindings schemaLocation="EPCglobal-epcis-1_0.xsd" node="/xs:schema">
+	<jxb:bindings schemaLocation=".\epcglobal\epcis\EPCglobal-epcis-1_0.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.ow2.aspirerfid.commons.epcis.model" />
         </jxb:schemaBindings>
     </jxb:bindings>
     
-    <jxb:bindings schemaLocation="EPCglobal-epcis-query-1_0.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation=".\epcglobal\epcis\EPCglobal-epcis-query-1_0.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.ow2.aspirerfid.commons.epcis.model" />
         </jxb:schemaBindings>
     </jxb:bindings>
     
-    <jxb:bindings schemaLocation="EPCglobal-epcis-masterdata-1_0.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation=".\epcglobal\epcis\EPCglobal-epcis-masterdata-1_0.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.ow2.aspirerfid.commons.epcis.model" />
         </jxb:schemaBindings>
     </jxb:bindings>     
     
-    <jxb:bindings schemaLocation="StandardBusinessDocumentHeader.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation=".\epcglobal\epcis\StandardBusinessDocumentHeader.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.ow2.aspirerfid.commons.epcis.model" />
         </jxb:schemaBindings>
     </jxb:bindings>  
 
-    <jxb:bindings schemaLocation="EPCglobal.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation=".\epcglobal\epcis\EPCglobal.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.ow2.aspirerfid.commons.epcglobal.commons" />
         </jxb:schemaBindings>
     </jxb:bindings>
     
     <!--
-    <jxb:bindings schemaLocation="EPCglobal-epcis-query-1_0.wsdl" node="/xs:schema">
+    <jxb:bindings schemaLocation=".\epcglobal\epcis\EPCglobal-epcis-query-1_0.wsdl" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.ow2.aspirerfid.commons.epcis.model" />
         </jxb:schemaBindings>

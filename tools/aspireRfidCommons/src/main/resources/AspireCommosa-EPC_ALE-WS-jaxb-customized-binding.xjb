@@ -1,13 +1,13 @@
 <jxb:bindings version="1.0" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-	<jxb:bindings schemaLocation="EPCglobal-ale-1_1-ale.xsd" node="/xs:schema">
+	<jxb:bindings schemaLocation=".\epcglobal\ale\EPCglobal-ale-1_1-ale.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.ow2.aspirerfid.commons.ale.model.ale" />
         </jxb:schemaBindings>
     </jxb:bindings>
 
-    <jxb:bindings schemaLocation="EPCglobal.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation=".\epcglobal\ale\EPCglobal.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="org.ow2.aspirerfid.commons.epcglobal.commons" />
         </jxb:schemaBindings>
