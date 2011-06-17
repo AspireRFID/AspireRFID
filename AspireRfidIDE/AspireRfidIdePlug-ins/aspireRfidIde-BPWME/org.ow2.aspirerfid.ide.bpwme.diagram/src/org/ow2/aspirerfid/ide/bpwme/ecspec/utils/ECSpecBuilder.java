@@ -224,6 +224,9 @@ public class ECSpecBuilder {
 	}
 		
 	private ECReportSpec createBiz() {
+		//nkef
+		ObjectFactory of = new ObjectFactory();
+		
 		ECReportSpec bizTransactionReport = new ECReportSpec();
 		bizTransactionReport.setReportOnlyOnChange(true);
 		
@@ -242,6 +245,9 @@ public class ECSpecBuilder {
 		IncludePatterns ip = new IncludePatterns();
 		//ip.getIncludePattern().add("urn:epc:pat:gid-96:145.12.*");
 		bizTransactionReport.getFilterSpec().setIncludePatterns(ip);
+				
+		//nkef
+		bizTransactionReport.getFilterSpec().setExcludePatterns(of.createECFilterSpecExcludePatterns());
 		
 		//nkef
 		ECReportOutputSpec bizTransReportECReportOutputSpec = new ECReportOutputSpec();
@@ -256,6 +262,9 @@ public class ECSpecBuilder {
 	}
 	
 	private ECReportSpec createBizP() {
+		//nkef
+		ObjectFactory of = new ObjectFactory();
+		
 		ECReportSpec bizTransactionParentReport = new ECReportSpec();
 		bizTransactionParentReport.setReportOnlyOnChange(true);
 		
@@ -276,6 +285,9 @@ public class ECSpecBuilder {
 		bizTransactionParentReport.getFilterSpec().setIncludePatterns(ip);
 		
 		//nkef
+		bizTransactionParentReport.getFilterSpec().setExcludePatterns(of.createECFilterSpecExcludePatterns());
+		
+		//nkef
 		ECReportOutputSpec bizTransReportECReportOutputSpec = new ECReportOutputSpec();
 		bizTransReportECReportOutputSpec.setIncludeCount(true);
 		bizTransReportECReportOutputSpec.setIncludeEPC(true);
@@ -288,6 +300,9 @@ public class ECSpecBuilder {
 	}
 	
 	private ECReportSpec createTran() {
+		//nkef
+		ObjectFactory of = new ObjectFactory();
+		
 		ECReportSpec transactionItemReport = new ECReportSpec();
 		transactionItemReport.setReportOnlyOnChange(true);
 		
@@ -308,6 +323,9 @@ public class ECSpecBuilder {
 		transactionItemReport.getFilterSpec().setIncludePatterns(ip);
 		
 		//nkef
+		transactionItemReport.getFilterSpec().setExcludePatterns(of.createECFilterSpecExcludePatterns());
+		
+		//nkef
 		ECReportOutputSpec bizTransReportECReportOutputSpec = new ECReportOutputSpec();
 		bizTransReportECReportOutputSpec.setIncludeCount(true);
 		bizTransReportECReportOutputSpec.setIncludeEPC(true);
@@ -320,6 +338,9 @@ public class ECSpecBuilder {
 	}
 	
 	private ECReportSpec createPare() {
+		//nkef
+		ObjectFactory of = new ObjectFactory();
+		
 		ECReportSpec parentObjectReport = new ECReportSpec();
 		parentObjectReport.setReportOnlyOnChange(true);
 		
@@ -338,6 +359,9 @@ public class ECSpecBuilder {
 		IncludePatterns ip = new IncludePatterns();
 		//ip.getIncludePattern().add("urn:epc:pat:gid-96:145.56.*");
 		parentObjectReport.getFilterSpec().setIncludePatterns(ip);
+		
+		//nkef
+		parentObjectReport.getFilterSpec().setExcludePatterns(of.createECFilterSpecExcludePatterns());
 		
 		//nkef
 		ECReportOutputSpec bizTransReportECReportOutputSpec = new ECReportOutputSpec();
