@@ -81,8 +81,11 @@ public class ECSpecBuilder {
 		ApdlDataField adf = mc.objectFactory.createApdlDataField();
 		adf.setECSpec(of.createECSpec());
 		adf.setType("ECSpec");
+		
 		//nkef
 		adf.setName(ebproc.getId());
+		System.out.println("ebproc.getId():"+ebproc.getId());
+		
 		this.ebproc.getApdlDataFields().getApdlDataField().add(adf);		
 		this.ecspec = adf.getECSpec();
 		

@@ -31,20 +31,20 @@ public class ConsoleWriter {
 	}
 	
 	/**
-	 * Initiate the Ale Server Configurator Console
+	 * Initiate the BPWME Console
 	 */
 	private void initiateConsole() {
 		manager = ConsolePlugin.getDefault().getConsoleManager();
 		consolesx = manager.getConsoles();
 		boolean exist = false;
 		for (int i = 0; i < consolesx.length; i++) {
-			if (consolesx[i].getName().equals("ALE Server Configurator"))
+			if (consolesx[i].getName().equals("BPWME"))
 				peControlProcessActionsConfiguratorConsole = (IOConsole) consolesx[i];
 			exist = true;
 		}
 		if (!exist) {
 			peControlProcessActionsConfiguratorConsole = new IOConsole(
-					"ALE Server Configurator", null);
+					"BPWME", null);
 			manager
 					.addConsoles(new IConsole[] { peControlProcessActionsConfiguratorConsole });
 		}
