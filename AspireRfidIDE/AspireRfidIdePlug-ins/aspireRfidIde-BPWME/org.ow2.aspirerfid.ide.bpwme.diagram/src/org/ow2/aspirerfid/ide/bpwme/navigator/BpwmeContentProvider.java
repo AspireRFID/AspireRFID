@@ -95,6 +95,7 @@ public class BpwmeContentProvider implements ITreeContentProvider {
     		//the children of CLCBProc are both MasterData and EBProc elements
     		CLCBProc element = (CLCBProc) parentElement;    		
     		String fileName = getLocationFile(editorHandler.getBpwmeFileNames().get(element).toString() + element.getName() + File.separator);
+    		
     		//if filename does not exist
     		if (fileName == null || fileName.isEmpty())
     			return getElementChildren(parentElement);
@@ -102,16 +103,22 @@ public class BpwmeContentProvider implements ITreeContentProvider {
     		//if filename exists but it is not open
     		if (getOpenMasterDataEditorGMF(fileName) == null)
     			return getElementChildren(parentElement);
-		
+    		
     		Company company = (CompanyImpl) ((View) getOpenMasterDataEditorGMF(fileName).getModel()).getElement();;
     		Company companies[] = new Company[1];
     		companies[0] = company;
-    		Object[] obj = new Object[companies.length + getElementChildren(parentElement).length];
+    		
+    		int leng = 0;
+    		
+    		if (getElementChildren(parentElement) != null)
+    			leng = getElementChildren(parentElement).length;
+    		
+    		Object[] obj = new Object[companies.length + leng];
     		obj[0] = companies[0];
-
-    		for (int i = 0; i < getElementChildren(parentElement).length; i++)
+    		
+    		for (int i = 0; i < leng; i++)
     			obj[i+1] = getElementChildren(parentElement)[i];
-
+    		
     		return obj;
     	}
     	else if (parentElement instanceof EBProc)
@@ -292,7 +299,7 @@ public class BpwmeContentProvider implements ITreeContentProvider {
 		for (int i = 0; i < openEditors.size(); i++) {
 			URIEditorInput uri = (URIEditorInput)openEditors.get(i).getEditorInput();
 			File fileEditorPart = new File(uri.getURI().toFileString());
-		
+			
 			if (file.equals(fileEditorPart))
 				return editorHandler.getOpenMasterDataEditorGMFForEditorPart().get(openEditors.get(i));
 		}
