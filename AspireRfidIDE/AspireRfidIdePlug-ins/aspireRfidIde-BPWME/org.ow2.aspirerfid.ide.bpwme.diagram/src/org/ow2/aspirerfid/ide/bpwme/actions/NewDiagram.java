@@ -29,7 +29,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -42,6 +44,7 @@ import org.ow2.aspirerfid.ide.bpwme.diagram.xmleditor.XMLEditor;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECLRInput;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
 import org.ow2.aspirerfid.ide.bpwme.master.views.MasterEditor;
+import org.ow2.aspirerfid.ide.bpwme.navigator.BpwmeContentProvider;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainUtil;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.FileAction;
@@ -85,6 +88,45 @@ public class NewDiagram extends AbstractHandler {
 			
 			MainUtil.splitEditorArea(ComboEditor.ID,editorIDs);
 		}
+		
+		//Modified by elka
+		//In order to fix known issue with common navigator where metadata are not reset
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		
+		BpwmeContentProvider.viewer.refresh();
+		
+		page.addPartListener(new IPartListener2(){
+	        public void partActivated( IWorkbenchPartReference partRef ) {
+	        	if (partRef.getId().equals("org.ow2.aspirerfid.ide.bpwme.navigator.view")) {
+	        		BpwmeContentProvider.viewer.refresh();
+	        	}
+	        }
+	
+	        public void partBroughtToTop( IWorkbenchPartReference partRef ) {
+	        }
+	
+	        public void partClosed( IWorkbenchPartReference partRef ) {
+	        	BpwmeContentProvider.viewer.refresh();
+	        }
+	
+	        public void partDeactivated( IWorkbenchPartReference partRef ) {
+	        }
+	
+	        public void partOpened( IWorkbenchPartReference partRef ) {
+	        	BpwmeContentProvider.viewer.refresh();
+	        }
+	        
+	        public void partHidden( IWorkbenchPartReference partRef ) {
+	        }
+	
+	        public void partVisible( IWorkbenchPartReference partRef ) {
+	        }
+	
+	        public void partInputChanged( IWorkbenchPartReference partRef ) {
+	        	BpwmeContentProvider.viewer.refresh();
+	        }
+	    });
+		
 		return null;
 	}
 }

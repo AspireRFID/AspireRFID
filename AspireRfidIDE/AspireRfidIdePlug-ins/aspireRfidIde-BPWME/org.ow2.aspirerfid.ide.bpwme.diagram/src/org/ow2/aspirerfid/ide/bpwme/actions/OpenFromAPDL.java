@@ -175,7 +175,7 @@ public class OpenFromAPDL extends AbstractHandler{
 	        public void partDeactivated( IWorkbenchPartReference partRef ) {
 	        }
 	
-	        public void partOpened( IWorkbenchPartReference partRef ) {System.out.println("opened");
+	        public void partOpened( IWorkbenchPartReference partRef ) {
 	        	BpwmeContentProvider.viewer.refresh();
 	        }
 	        
