@@ -78,10 +78,11 @@ public class AspirePluginView extends DataSourceView {
 
         //Add detail views to the component:
         dvc.addDetailsView(new DataViewComponent.DetailsView(
-                "ECSpecs", null, 10, new ECSpecPanel(model), null), DataViewComponent.TOP_RIGHT);
-        dvc.addDetailsView(new DataViewComponent.DetailsView(
-                "LRSpecs", null, 20, new LRSpecPanel(model), null), DataViewComponent.TOP_RIGHT);
+                "LRSpecs", null, 10, new LRSpecPanel(model), null), DataViewComponent.TOP_RIGHT);
 
+        dvc.addDetailsView(new DataViewComponent.DetailsView(
+                "ECSpecs", null, 20, new ECSpecPanel(model), null), DataViewComponent.TOP_RIGHT);
+        
         if (model.isSensorDataAvailable()) {
             dvc.addDetailsView(new DataViewComponent.DetailsView(
                     "Sensors", null, 30, new SensorsPanel(model), null), DataViewComponent.TOP_RIGHT);
@@ -89,5 +90,4 @@ public class AspirePluginView extends DataSourceView {
         return dvc;
 
     }
-
 }

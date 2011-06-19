@@ -12,8 +12,12 @@ package org.ow2.aspirerfid.management.views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.jfree.chart.ChartFactory;
@@ -33,7 +37,7 @@ import org.ow2.aspirerfid.management.model.SensorCacheData;
  *
  * @author Kiev
  */
-public class SensorsPanel extends javax.swing.JPanel {
+public class SensorsPanel extends javax.swing.JPanel implements PropertyChangeListener {
 
     private PluginModel pluginModel;
     private ClassLoader trick;
@@ -46,12 +50,13 @@ public class SensorsPanel extends javax.swing.JPanel {
 
     public SensorsPanel(PluginModel model) {
         this.pluginModel = model;
+        this.pluginModel.addPropertyChangeListener(this);
         initComponents();
         setModel();
         trick = Thread.currentThread().getContextClassLoader();
         valueLabel.setVisible(false);
         unitLabel.setVisible(false);
-        new Thread() {
+        new Thread("Update Sensors Info Thread") {
             public void run() {
                 while (true) {
                     try {
@@ -308,4 +313,20 @@ public class SensorsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel unitLabel;
     private javax.swing.JLabel valueLabel;
     // End of variables declaration//GEN-END:variables
+
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(PluginModel.SENSOR_PROPERTY)) {
+            if (!Arrays.deepEquals(
+                    (String[])evt.getNewValue(),
+                    (String[])evt.getOldValue())){
+            SwingUtilities.invokeLater(new Runnable() {
+             public void run() {
+
+               System.out.println("setting model");
+               setModel();
+             }
+            });
+            }
+        }
+    }
 }
