@@ -1,0 +1,304 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <!-- =========================================================== -->
+  <!-- Basics -->
+  <!-- =========================================================== -->
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.ow2.aspirerfid</groupId>
+  <artifactId>utils</artifactId>
+  <version>0.0.4</version>
+  <packaging>pom</packaging>
+  <name>Utils-Project</name>
+  <description>AspireRFID Utils Maven Project</description>
+
+
+  <!-- =========================================================== -->
+  <!-- Child Modules -->
+  <!-- =========================================================== -->
+
+  <modules>
+    <module>commons</module>
+  </modules>
+
+
+  <!-- =========================================================== -->
+  <!-- Properties -->
+  <!-- =========================================================== -->
+  <properties>
+
+    <felix.plugin.version>2.3.6</felix.plugin.version>
+  <!-- <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>  -->
+    <project.build.skipTests>true</project.build.skipTests>
+    <felix.version>4.0.2</felix.version>
+
+  </properties>
+
+
+  <!-- =========================================================== -->
+  <!-- Dependencies -->
+  <!-- =========================================================== -->
+
+  <dependencies>
+  
+  
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>maven-bundle-plugin</artifactId>
+      <version>${felix.plugin.version}</version>
+      <type>zip</type>
+      <classifier>source-release</classifier>
+      <scope>compile</scope>
+    </dependency>
+
+    <!-- Required for the OSGi bundalization of the projects -->
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.osgi.core</artifactId>
+      <version>1.2.0</version>
+      <type>bundle</type>
+    </dependency>
+    
+    <!-- 
+    <dependency> 
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.7</version>
+      <scope>test</scope>
+    </dependency> 
+    -->
+
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>maven-junit4osgi-plugin</artifactId>
+      <version>1.0.0</version>
+      <type>maven-plugin</type>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.log</artifactId>
+      <version>1.0.0</version>
+      <type>bundle</type>
+    </dependency>
+
+
+  </dependencies>
+
+
+  <!-- =========================================================== -->
+  <!-- Plugins -->
+  <!-- =========================================================== -->
+
+  <build>
+    <defaultGoal>package</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.4.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+            <executable>${JAVA_HOME}/bin/javac</executable>
+            <compilerVersion>1.7</compilerVersion>
+            <source>1.7</source>
+            <target>1.7</target>
+            <maxmem>256M</maxmem>
+            <verbose>true</verbose>
+            <fork>true</fork>
+          </configuration>
+        </plugin>
+
+        <!-- Ability to Skip the tests -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.7.2</version>
+          <configuration>
+            <skipTests>${project.build.skipTests}</skipTests>
+          </configuration>
+        </plugin>
+
+
+
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>${felix.plugin.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
+  <!-- =========================================================== -->
+  <!-- Reporting -->
+  <!-- =========================================================== -->
+  <!-- 
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <aggregate>true</aggregate>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <configuration>
+          <aggregate>true</aggregate>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <configuration>
+          <linkXref>true</linkXref>
+          <sourceEncoding>utf-8</sourceEncoding>
+          <targetJdk>1.7</targetJdk>
+          <excludes>
+            <exclude>**/*Test.java</exclude>
+            <exclude>**/soapapi/*.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>javancss-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>changes-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+        <configuration>
+          <issueLinkTemplate>http://sourceforge.net/support/tracker.php?aid=%ISSUE%</issueLinkTemplate>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+    -->
+
+  <!-- =========================================================== -->
+  <!-- Repositories -->
+  <!-- =========================================================== -->
+
+  <repositories>
+
+    <!-- for getting DCXF artifacts -->
+    <repository>
+      <id>central</id>
+      <name>Default maven repo</name>
+      <url>http://repo1.maven.org/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <repository>
+      <id>apache.snapshots</id>
+      <name>Apache Maven Snapshot Repository</name>
+      <url>http://repository.apache.org/content/groups/snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+
+
+    <!-- SpringSource Enterprise Bundle Repository -->
+    <repository>
+      <id>com.springsource.repository.bundles.release</id>
+      <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
+      <url>http://repository.springsource.com/maven/bundles/release</url>
+    </repository>
+
+    <repository>
+      <id>com.springsource.repository.bundles.external</id>
+      <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+      <url>http://repository.springsource.com/maven/bundles/external</url>
+    </repository>
+
+  </repositories>
+
+  <pluginRepositories>
+
+    <!-- for getting the tomcat-maven-plugin libraries -->
+    <pluginRepository>
+      <id>Maven Repository</id>
+      <url>http://repo1.maven.org/maven2/org/apache/maven/plugins/</url>
+      <snapshots>
+        <enabled>false</enabled>
+        <updatePolicy>daily</updatePolicy>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </releases>
+    </pluginRepository>
+
+  </pluginRepositories>
+
+
+  <!-- =========================================================== -->
+  <!-- Project Information -->
+  <!-- =========================================================== -->
+
+  <url>http://wiki.aspire.ow2.org/xwiki/bin/view/Main.Documentation/Filtering%26Collection</url>
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License (LGPL)</name>
+      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>nkef</id>
+      <name>Nikos Kefalakis</name>
+      <email>nkef at ait.edu.gr</email>
+      <url>http://www.ait.edu.gr/ait_web_site/Researcher/nkef/kefalakis.html</url>
+      <organization>Athens Information Technology</organization>
+      <roles>
+        <role>project coordinator</role>
+        <role>project lead</role>
+      </roles>
+      <organizationUrl>http://www.ait.edu.gr/</organizationUrl>
+      <timezone>+2</timezone>
+    </developer>
+  </developers>
+
+</project>

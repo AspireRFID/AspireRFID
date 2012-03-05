@@ -1,0 +1,192 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <!-- =========================================================== -->
+  <!-- Basics -->
+  <!-- =========================================================== -->
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.ow2.aspirerfid</groupId>
+  <artifactId>utils.commons</artifactId>
+  <version>0.0.6</version>
+  <packaging>bundle</packaging>
+  <name>AspireRFID-Commons</name>
+  <description>AspireRFID Common Libraries</description>
+  <url>http://wiki.aspire.ow2.org/</url>
+
+
+  <!-- =========================================================== -->
+  <!-- Properties -->
+  <!-- =========================================================== -->
+  <properties>
+
+    <bundle.import.package>org.osgi.framework, *;resolution:=optional</bundle.import.package>
+    <bundle.private.package></bundle.private.package>
+    <bundle.export.package>org.ow2.aspirerfid.commons.*</bundle.export.package> <!-- It is required to export the package where the Web Service I/F resides -->
+
+
+  </properties>
+  
+  
+  
+  
+  <!-- =========================================================== -->
+  <!-- Parent -->
+  <!-- =========================================================== -->
+
+  <parent>
+    <artifactId>utils</artifactId>
+    <groupId>org.ow2.aspirerfid</groupId>
+    <version>0.0.4</version>
+  </parent>
+
+  
+
+  <!-- =========================================================== -->
+  <!-- Dependencies -->
+  <!-- =========================================================== -->
+
+
+  <dependencies>
+
+    <!-- ======== Felix Dependencies ========== -->
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.framework</artifactId>
+      <version>${felix.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>org.osgi.foundation</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- ================ Other =============== -->
+
+
+
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
+      <version>4.2.0</version>
+      <scope>test</scope>
+    </dependency>
+
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.14</version>
+    </dependency>
+
+
+  </dependencies>
+
+
+
+  <!-- =========================================================== -->
+  <!-- Plugins -->
+  <!-- =========================================================== -->
+
+  <build>
+
+
+
+
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>${felix.plugin.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+            <Bundle-Name>${project.artifactId}</Bundle-Name>
+            <Bundle-Description>${project.description}</Bundle-Description>
+            <Bundle-Version>${project.version}</Bundle-Version>
+            <Bundle-Activator></Bundle-Activator>
+            <Private-Package>${bundle.private.package}</Private-Package>
+            <Import-Package>${bundle.import.package}</Import-Package>
+            <Export-Package>${bundle.export.package}</Export-Package>
+            <DynamicImport-Package>*</DynamicImport-Package> <!-- optional packages (equivalent to *;resolution:=optional) -->
+            <!-- <Include-Resource>resources = src/main/resources</Include-Resource> -->
+
+            <Embed-Dependency>*;scope=compile|runtime;inline=false;artifactId=!org.osgi.core</Embed-Dependency> <!-- |org.apache.felix.framework -->
+
+
+
+
+          </instructions>
+        </configuration>
+      </plugin>
+
+
+
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+
+    </plugins>
+
+    <!-- ===== M2E plugin execution not covered (http://wiki.eclipse.org/M2E_plugin_execution_not_covered)
+      Ignore the "maven-dependency-plugin (goals "copy-dependencies","unpack") is not supported
+      by m2e" Error ====== -->
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <versionRange>[2.0,)</versionRange>
+                    <goals>
+                      <goal>copy-dependencies</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+  </build>
+
+  <!-- =========================================================== -->
+  <!-- Repositories -->
+  <!-- =========================================================== -->
+
+  <repositories>
+  </repositories>
+
+  <pluginRepositories>
+  </pluginRepositories>
+
+
+
+
+
+</project>
