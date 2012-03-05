@@ -1,0 +1,342 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <!-- =========================================================== -->
+  <!-- Basics -->
+  <!-- =========================================================== -->
+
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.ow2.aspirerfid</groupId>
+  <artifactId>ale.core</artifactId>
+  <version>0.0.1</version>
+  <packaging>bundle</packaging>
+  <name>ALE-Core</name>
+  <description>AspireRFID ALE Core module</description>
+  <url>http://wiki.aspire.ow2.org/</url>
+
+
+  <!-- =========================================================== -->
+  <!-- Properties -->
+  <!-- =========================================================== -->
+
+
+  <properties>
+    <fosstrakTDT.version>0.9.0</fosstrakTDT.version>
+    <bundle.import.package>*</bundle.import.package><!-- org.osgi.framework,
+      *;resolution:=optional,org.ow2.aspirerfid.commons.* -->
+    <bundle.private.package>org.ow2.aspirerfid.ale.core.impl</bundle.private.package>
+    <bundle.export.package>org.ow2.aspirerfid.ale.core</bundle.export.package> <!-- It is required to export the package where the Web Service I/F resides -->
+  </properties>
+
+
+
+  <!-- =========================================================== -->
+  <!-- Parent -->
+  <!-- =========================================================== -->
+
+  <parent>
+    <artifactId>ale</artifactId>
+    <groupId>org.ow2.aspirerfid</groupId>
+    <version>0.0.1</version>
+  </parent>
+
+
+  <!-- =========================================================== -->
+  <!-- Dependencies -->
+  <!-- =========================================================== -->
+
+
+  <dependencies>
+    <!-- (Not required so far) 
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.framework</artifactId>
+      <version>2.0.4</version>
+    </dependency> 
+    -->
+    
+
+    <!-- ======== CXF (single bundle distribution) Distributed OSGi Dependencies (currently used)========== -->
+    <!-- 
+    <dependency>
+      <groupId>org.apache.cxf.dosgi</groupId>
+      <artifactId>cxf-dosgi-ri-singlebundle-distribution</artifactId>
+      <version>1.3</version>
+    </dependency>
+    -->
+    
+    
+    
+    <!-- ======== CXF (multi bundle distribution) Distributed OSGi Dependencies (for future use)========== -->
+    <!-- 
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-bundle-minimal</artifactId>
+      <version>2.5.2</version>
+      <type>bundle</type>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.cxf.dosgi</groupId>
+      <artifactId>cxf-dosgi-ri-discovery-local</artifactId>
+      <version>1.3</version>
+      <type>bundle</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf.dosgi</groupId>
+      <artifactId>cxf-dosgi-ri-dsw-cxf</artifactId>
+      <version>1.3</version>
+      <type>bundle</type>
+      <scope>compile</scope>
+    </dependency>
+     -->
+
+
+
+    <!-- ======== Fosstrak Dependencies ========== -->
+    <dependency>
+      <groupId>org.fosstrak.tdt</groupId>
+      <artifactId>tdt</artifactId>
+      <version>${fosstrakTDT.version}</version>
+    </dependency>
+
+    <!-- ======== ASPIRE Dependencies ========== -->
+
+    <dependency>
+      <groupId>org.ow2.aspirerfid</groupId>
+      <artifactId>utils.commons</artifactId>
+      <version>0.0.6</version>
+      <type>bundle</type>
+    </dependency>
+
+    <!-- ======== Felix Dependencies ========== -->
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.framework</artifactId>
+      <version>${felix.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>org.osgi.foundation</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+
+    <!--
+      <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.eventadmin</artifactId>
+      <version>1.2.8</version>
+      <type>bundle</type>
+      </dependency>
+    -->
+
+    <!-- ================ Other =============== -->
+
+
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
+      <version>4.2.0</version>
+      <scope>test</scope>
+    </dependency>
+  
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
+      <version>1.2.0</version>
+      <type>bundle</type>
+    </dependency>  
+    
+    
+    
+     
+
+    <!--
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>[1.5.10,1.5.9]</version>
+      </dependency>
+      
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>com.springsource.slf4j.api</artifactId>
+        <version>1.6.1</version>
+      </dependency>
+      
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>com.springsource.slf4j.nop</artifactId>
+        <version>1.6.1</version>
+      </dependency>
+    -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>com.springsource.ch.qos.logback.classic</artifactId>
+      <version>0.9.24</version>
+    </dependency>
+
+
+    <!--
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>0.9.27</version>
+      </dependency>
+    -->
+
+
+  </dependencies>
+
+
+
+  <!-- =========================================================== -->
+  <!-- Plugins -->
+  <!-- =========================================================== -->
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>${felix.plugin.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+            <Bundle-Name>${project.artifactId}</Bundle-Name>
+            <Bundle-Description>${project.description}</Bundle-Description>
+            <Bundle-Version>${project.version}</Bundle-Version>
+            <Bundle-Activator>org.ow2.aspirerfid.ale.core.Activator</Bundle-Activator>
+            <Private-Package>${bundle.private.package}</Private-Package>
+            <Import-Package>${bundle.import.package}</Import-Package>
+            <Export-Package>${bundle.export.package}</Export-Package>
+            <DynamicImport-Package>org.apache.cxf.dosgi.dsw.qos,org.apache.cxf</DynamicImport-Package> <!-- optional packages (equivalent to *;resolution:=optional) -->
+
+            <!-- embed all compile and runtime scope dependencies -->
+            <Embed-Dependency>tdt;scope=compile|runtime;inline=false;artifactId=!org.osgi.core|maven-bundle-plugin|maven-junit4osgi-plugin|commons|org.apache.felix.framework</Embed-Dependency>
+            <!-- (for future use embed the CXF single bundle distribution) cxf-bundle-minimal|cxf-dosgi-ri-discovery-local|cxf-dosgi-ri-dsw-cxf -->
+
+            <!-- <Include-Resource> @tdt-${fosstrakTDT.version}.jar!/auxiliary/**,@tdt-${fosstrakTDT.version}.jar!/schemes/**
+              </Include-Resource> -->
+
+            <!-- Package definition examples
+              org.wso2.mbp.echo org.wso2.mbp.echo.*
+              !org.wso2.mbp.echo.string,org.wso2.mbp.echo.* (correct)
+              org.wso2.mbp.echo.*,!org.wso2.mbp.echo.string (wrong)
+              ======================================================
+              <Private-Package>org.wso2.mbp.exportsample.internal.*</Private-Package>
+              <Export-Package> !org.wso2.mbp.exportsample.internal, org.wso2.mbp.exportsample.*
+              </Export-Package>
+              ======================================================
+              <Import-Package> org.osgi.framework, *;resolution:=optional </Import-Package>
+              ======================Versioning Packages==================
+              <Export-Package>org.wso2.mbp.exportsample;version="1.0.0"</Export-Package>
+              <Import-Package>org.wso2.mbp.exportsample.*;version="[1.0.0, 2.0.0)"</Import-Package>
+              ==========================================================
+              <Include-Resource>@ode-bpel-schemas-3.5.4.jar!/schemaorg_apache_xmlbeans/**, 
+              </Include-Resource>
+              =============================================================
+              <Include-Resource>src/main/resources/**</Include-Resource>
+              =======================================================
+              embed all compile and runtime scope dependencies
+              <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency> -->
+
+
+          </instructions>
+        </configuration>
+      </plugin>
+
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.felix</groupId>
+                  <artifactId>org.osgi.compendium</artifactId>
+                  <version>1.2.0</version>
+                  <type>jar</type>
+                  <outputDirectory>target/deps</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- 
+      <plugin> 
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution> 
+            <id>copy-dependencies</id> 
+            <phase>package</phase> 
+            <goals> 
+              <goal>copy-dependencies</goal>
+            </goals> 
+          </execution>
+        </executions> 
+      </plugin> 
+      -->
+
+      <!-- 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.4.2</version>
+      </plugin> 
+      -->
+
+
+
+    </plugins>
+
+    <!-- ===== M2E plugin execution not covered (http://wiki.eclipse.org/M2E_plugin_execution_not_covered)
+      Ignore the "maven-dependency-plugin (goals "copy-dependencies","unpack") is not supported
+      by m2e" Error ====== -->
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <versionRange>[2.0,)</versionRange>
+                    <goals>
+                      <goal>copy-dependencies</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+  </build>
+
+
+</project>
