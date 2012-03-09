@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: org.ow2.aspirerfid.demos.warehouse.management.UI.WarehouseManagement
-

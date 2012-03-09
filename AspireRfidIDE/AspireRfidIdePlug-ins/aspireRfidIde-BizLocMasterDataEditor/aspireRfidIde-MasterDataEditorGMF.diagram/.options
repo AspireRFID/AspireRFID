@@ -1,7 +1,0 @@
-# Tracing options for the aspireRfidIde-MasterDataEditorGMF.diagram plug-in
-
-# Common issues
-aspireRfidIde-MasterDataEditorGMF.diagram/debug=false
-
-# Visual IDs
-aspireRfidIde-MasterDataEditorGMF.diagram/debug/visualID=false
