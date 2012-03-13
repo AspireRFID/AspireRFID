@@ -23,7 +23,7 @@ import org.ow2.aspirerfid.commons.ale.wsdl.ale.Undefine;
 import org.ow2.aspirerfid.commons.ale.wsdl.ale.Unsubscribe;
 import org.ow2.aspirerfid.commons.ale.wsdl.ale.VoidHolder;
 
-public class ALEServiceImpl implements ALEServicePortType{
+public class ALEServicePortTypeImpl implements ALEServicePortType{
 
 	public VoidHolder undefine(Undefine parms)
 			throws ImplementationExceptionResponse,
@@ -70,7 +70,7 @@ public class ALEServiceImpl implements ALEServicePortType{
 	public String getVendorVersion(EmptyParms parms)
 			throws ImplementationExceptionResponse {
 		// TODO Auto-generated method stub
-		return null;
+		return "AspireRFID-ALE-OSGi-V0.6";
 	}
 
 	public ArrayOfString getSubscribers(GetSubscribers parms)

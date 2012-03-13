@@ -11,8 +11,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ALELRServicePortType;
 import org.ow2.aspirerfid.commons.ale.wsdl.ale.ALEServicePortType;
-import org.ow2.aspirerfid.ale.core.impl.ALELRServiceImpl;
-import org.ow2.aspirerfid.ale.core.impl.ALEServiceImpl;
+import org.ow2.aspirerfid.ale.core.impl.ALELRServicePortTypeImpl;
+import org.ow2.aspirerfid.ale.core.impl.ALEServicePortTypeImpl;
 //import org.slf4j.Marker;
 //import org.slf4j.MarkerFactory;
 //import org.slf4j.helpers.*;
@@ -40,6 +40,7 @@ public class Activator implements BundleActivator { // ServiceListener
 	private ServiceRegistration aleServiceRegistration;
 	private ServiceRegistration aleLrServiceRegistration;
 	
+    final private static String PROPERTY_BASE_NAME = "org.apache.cxf.ws";
 	
 
 	// public void serviceChanged(ServiceEvent serviceEvent) {
@@ -47,6 +48,18 @@ public class Activator implements BundleActivator { // ServiceListener
 	//
 	// }
 
+//    props.put("service.exported.interfaces", "sample.Helloworld");
+//    props.put("service.exported.configs", PROPERTY_BASE_NAME);
+//
+//    // If the property bellow is not used, the URL used for the web service should be: 
+//    // http://localhost:9000/sample/Helloworld
+//    props.put(PROPERTY_BASE_NAME + ".address", "http://localhost:9090/SimpleService");
+//
+//    props.put(PROPERTY_BASE_NAME + ".frontend", "jaxws");
+//    props.put(PROPERTY_BASE_NAME + ".service.ns", "http://sample/"); // service namespace 
+//    props.put(PROPERTY_BASE_NAME + ".service.name", "Helloworld"); // service name
+//    props.put(PROPERTY_BASE_NAME + ".port.name", "HelloworldSOAP11Port"); // port/endpoint name 
+//    props.put(PROPERTY_BASE_NAME + ".location", "wsdl/Helloworld.wsdl");
 
 	
 	
@@ -58,23 +71,38 @@ public class Activator implements BundleActivator { // ServiceListener
 		    LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory(); 
 		    StatusPrinter.print(lc);
 
-		
+		    
 
-		// ===================Initialize ALE and ALELR Services ===========
+		// ===================Initialize ALE Service using CXF JAX-WS frontend ===========
 		Dictionary<String, String> aleDictionaryProps = new Hashtable<String, String>();
 		String aleServiceURL = bundleContext.getProperty("org.ow2.aspirerfid.ale.core.aleServiceURL");
 
-		aleDictionaryProps.put("service.exported.interfaces", "*");
+		
+		aleDictionaryProps.put("service.exported.interfaces", "org.ow2.aspirerfid.commons.ale.wsdl.ale.ALEServicePortType");
 		aleDictionaryProps.put("service.exported.configs", "org.apache.cxf.ws");
 		aleDictionaryProps.put("org.apache.cxf.ws.address", aleServiceURL);
 		
+		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".frontend", "jaxws");
+		aleDictionaryProps.put("org.apache.cxf.ws.databinding","jaxb");
+		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".service.ns", "urn:epcglobal:ale:wsdl:1"); // service namespace 
+		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".service.name", "ALEServicePortType"); // service name
+		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".port.name", "ALEServicePortTypeSOAP11Port"); // port/endpoint name 
+		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".location", "epcglobal/ale/EPCglobal-ale-1_1-ale.wsdl");
+//		aleDictionaryProps.put("org.apache.cxf.ws.wsdl.location","epcglobal/ale/EPCglobal-ale-1_1-ale.wsdl");
+//		aleDictionaryProps.put("org.apache.cxf.ws.wsdl.service.ns","localhost");
+//		aleDictionaryProps.put("org.apache.cxf.ws.wsdl.service.name","ALEService");
+//		aleDictionaryProps.put("org.apache.cxf.ws.wsdl.port.name","9090");
+		
+		
+
+		
 
 		aleServiceRegistration = bundleContext.registerService(ALEServicePortType.class.getName(),
-				new ALEServiceImpl(), aleDictionaryProps);
+				new ALEServicePortTypeImpl(), aleDictionaryProps);
 		
 		System.out.println("#########Service listens to : "+aleServiceURL+"  #########");
 
-		// ===================Initialize ALE and ALELR Services ===========
+		// ===================Initialize ALELR Service ===========
 
 		Dictionary<String, String> aleLrDictionaryProps = new Hashtable<String, String>();
 		String aleLrServiceURL = bundleContext.getProperty("org.ow2.aspirerfid.ale.core.aleLrServiceURL");
@@ -84,13 +112,13 @@ public class Activator implements BundleActivator { // ServiceListener
 		aleLrDictionaryProps.put("org.apache.cxf.ws.address", aleLrServiceURL);
 		
 		aleLrServiceRegistration = bundleContext.registerService(ALELRServicePortType.class.getName(),
-				new ALELRServiceImpl(), aleLrDictionaryProps);
+				new ALELRServicePortTypeImpl(), aleLrDictionaryProps);
 		
 		System.out.println("#########Service listens to : "+aleLrServiceURL+"  #########");
 
 		
 		
-		// ===================Initialize ALE and ALELR Services ===========
+		// ===================Initialize Hello World (using CXF 'simple' frontend) Services ===========
 
 		Dictionary<String, String> helloWorldDictionaryProps = new Hashtable<String, String>();
 

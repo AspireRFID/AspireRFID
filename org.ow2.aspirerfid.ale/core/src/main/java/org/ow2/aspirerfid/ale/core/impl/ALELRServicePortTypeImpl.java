@@ -30,7 +30,7 @@ import org.ow2.aspirerfid.commons.ale.wsdl.alelr.Update;
 import org.ow2.aspirerfid.commons.ale.wsdl.alelr.UpdateResult;
 import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ValidationExceptionResponse;
 
-public class ALELRServiceImpl implements ALELRServicePortType{
+public class ALELRServicePortTypeImpl implements ALELRServicePortType{
 
 	public LRSpec getLRSpec(GetLRSpec parms) throws SecurityExceptionResponse,
 			ImplementationExceptionResponse, NoSuchNameExceptionResponse {
