@@ -53,13 +53,15 @@
     </dependency>
 
     <!-- Required for the OSGi bundalization of the projects -->
+ 
+ <!-- 
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.osgi.core</artifactId>
       <version>1.2.0</version>
       <type>bundle</type>
     </dependency>
-    
+ -->
     <!-- 
     <dependency> 
       <groupId>junit</groupId>
@@ -69,6 +71,7 @@
     </dependency> 
     -->
 
+            <!--  commented out for testing
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>maven-junit4osgi-plugin</artifactId>
@@ -76,7 +79,7 @@
       <type>maven-plugin</type>
       <scope>test</scope>
     </dependency>
-
+-->
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.log</artifactId>
