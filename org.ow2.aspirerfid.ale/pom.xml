@@ -33,6 +33,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.skipTests>true</project.build.skipTests>
     <felix.version>4.0.2</felix.version>
+    <cxf.version>2.2.6</cxf.version>
 
   </properties>
 
@@ -42,7 +43,7 @@
   <!-- =========================================================== -->
 
   <dependencies>
-<!--  commented out for testing  
+ 
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>maven-bundle-plugin</artifactId>
@@ -51,7 +52,7 @@
       <classifier>source-release</classifier>
       <scope>compile</scope>
     </dependency>
--->
+
     <!-- Required for the OSGi bundalization of the projects -->
 
 <!-- 
@@ -71,7 +72,6 @@
     </dependency> 
     -->
 
-<!--  commented out for testing
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>maven-junit4osgi-plugin</artifactId>
@@ -86,7 +86,39 @@
       <version>1.0.0</version>
       <type>bundle</type>
     </dependency>
--->
+
+
+    <!-- ======== CXF Dependencies ========== -->
+
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxws</artifactId>
+        <version>${cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http</artifactId>
+        <version>${cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-databinding-jaxb</artifactId>
+        <version>${cxf.version}</version>
+      </dependency>
+      
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http</artifactId>
+        <version>${cxf.version}</version>
+      </dependency>
+      
+    <!-- Jetty is needed if the CXFServlet is not used-->
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http-jetty</artifactId>
+        <version>${cxf.version}</version>
+      </dependency>
+
   </dependencies>
 
 
@@ -216,7 +248,42 @@
 
   <repositories>
 
+    <repository>
+      <!-- for getting the jta libraries -->
+      <id>sun-maven2</id>
+      <name>Sun Maven 2 Repository</name>
+      <url>http://download.java.net/maven/2</url>
+    </repository>
+    
+    <repository>
+      <!-- for getting the jaxb libraries -->
+      <id>sun-maven1</id>
+      <name>java.net Maven Repository</name>
+      <url>http://download.java.net/maven/1</url>
+      <layout>legacy</layout>
+    </repository>
+    <repository>
+      <id>ibiblio</id>
+      <name>ibiblio Maven Repository</name>
+      <url>http://www.ibiblio.org/maven</url>
+    </repository>
+    
+    <repository>
+      <!-- for getting the cxf libraries -->
+      <id>apache-incubating</id>
+      <name>Apache Incubating Repository</name>
+      <url>http://people.apache.org/repo/m2-incubating-repository</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+
     <!-- for getting DCXF artifacts -->
+    <!-- 
     <repository>
       <id>central</id>
       <name>Default maven repo</name>
@@ -228,7 +295,6 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
-
     <repository>
       <id>apache.snapshots</id>
       <name>Apache Maven Snapshot Repository</name>
@@ -240,7 +306,8 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
-
+     -->
+     
     <!-- for getting Fosstrak TDT artifact -->
     <repository>
       <releases>

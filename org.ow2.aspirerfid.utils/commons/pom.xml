@@ -116,9 +116,6 @@
 
             <Embed-Dependency>*;scope=compile|runtime;inline=false;artifactId=!org.osgi.core</Embed-Dependency> <!-- |org.apache.felix.framework -->
 
-
-
-
           </instructions>
         </configuration>
       </plugin>
