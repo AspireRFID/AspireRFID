@@ -25,7 +25,7 @@
     <fosstrakTDT.version>0.9.0</fosstrakTDT.version>
     <bundle.import.package>org.osgi.framework, org.ow2.aspirerfid.commons.*, javax.ws.*, *;resolution:=optional</bundle.import.package><!-- org.osgi.framework,
       *;resolution:=optional,org.ow2.aspirerfid.commons.* -->
-    <bundle.private.package>org.ow2.aspirerfid.ale.core.impl</bundle.private.package>
+    <bundle.private.package></bundle.private.package><!-- org.ow2.aspirerfid.ale.core.impl -->
     <bundle.export.package>org.ow2.aspirerfid.commons.ale.wsdl.ale</bundle.export.package> <!-- It is required to export the package where the Web Service I/F resides (,org.ow2.aspirerfid.commons.ale.wsdl.ale)-->
     <aspirerfid.utils.commons.version>0.0.6</aspirerfid.utils.commons.version>
   <aspirerfid.ale.bundle.activator>org.ow2.aspirerfid.ale.core.Activator</aspirerfid.ale.bundle.activator>
@@ -98,6 +98,14 @@
 
 
     <!-- ======== Fosstrak Dependencies ========== -->
+ <!--
+<dependency>
+  <groupId>org.fosstrak.tdt</groupId>
+  <artifactId>tdt</artifactId>
+  <version>0.9.0</version>
+  <classifier>with-dependencies</classifier>
+</dependency>
+-->
 
     <dependency>
       <groupId>org.fosstrak.tdt</groupId>
@@ -159,7 +167,7 @@
  -->    
     
      
-
+	<!-- ======== LogBack Dependencies ========== -->
     <!--
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -179,26 +187,32 @@
         <version>1.6.1</version>
       </dependency>
     -->
- 
+	
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>com.springsource.slf4j.api</artifactId>
+		<version>1.6.1</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>com.springsource.slf4j.nop</artifactId>
+		<version>1.6.1</version>
+	</dependency>
+	<dependency>
+		<groupId>ch.qos.logback</groupId>
+		<artifactId>com.springsource.ch.qos.logback.core</artifactId>
+		<version>0.9.28</version>
+	</dependency>
 
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>com.springsource.ch.qos.logback.classic</artifactId>
-      <version>0.9.24</version>
-    </dependency>
-
-
-    <!--
-      <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-        <version>0.9.27</version>
-      </dependency>
-    -->
-
-
+	<dependency>
+		<groupId>ch.qos.logback</groupId>
+		<artifactId>com.springsource.ch.qos.logback.classic</artifactId>
+		<version>0.9.28</version>
+	</dependency>
+  
+  
   </dependencies>
-
 
 
   <!-- =========================================================== -->
@@ -233,7 +247,7 @@
  -->
 
             <!-- (for future use embed the CXF single bundle distribution) cxf-bundle-minimal|cxf-dosgi-ri-discovery-local|cxf-dosgi-ri-dsw-cxf -->
-            <Embed-Dependency>*;scope=compile|runtime;inline=false;artifactId=!org.osgi.core|maven-bundle-plugin|maven-junit4osgi-plugin|commons|org.apache.felix.framework|com.springsource.ch.qos.logback.classic|utils.commons</Embed-Dependency>
+            <Embed-Dependency>*;scope=compile|runtime;inline=false;artifactId=!org.osgi.core|maven-bundle-plugin|maven-junit4osgi-plugin|commons|org.apache.felix.framework|com.springsource.ch.qos.logback.classic|com.springsource.ch.qos.logback.core|utils.commons|com.springsource.slf4j.nop|com.springsource.slf4j.api</Embed-Dependency>
             
             <!--<Embed-Dependency>utils.commons;scope=compile|runtime</Embed-Dependency> -->
             

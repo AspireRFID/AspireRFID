@@ -100,7 +100,7 @@ public class Activator implements BundleActivator { // ServiceListener
 //		===================================Embedded CXF  JAX-WS Frontend==========================
 		
 		
-		ALEServicePortTypeImpl aleServicePortTypeImplimentor = new ALEServicePortTypeImpl();
+		Object aleServicePortTypeImplimentor = new ALEServicePortTypeImpl();
 		JaxWsServerFactoryBean svrFactory = new JaxWsServerFactoryBean();
 		svrFactory.setServiceClass(ALEServicePortType.class);
 		svrFactory.setAddress(aleServiceURL);
