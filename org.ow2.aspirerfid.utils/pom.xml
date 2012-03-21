@@ -53,7 +53,7 @@
     </dependency>
 
     <!-- Required for the OSGi bundalization of the projects -->
- 
+
  <!-- 
     <dependency>
       <groupId>org.apache.felix</groupId>
@@ -70,6 +70,7 @@
       <scope>test</scope>
     </dependency> 
     -->
+
 
 
     <dependency>
@@ -218,6 +219,7 @@
   <repositories>
 
     <!-- for getting DCXF artifacts -->
+ <!-- 
     <repository>
       <id>central</id>
       <name>Default maven repo</name>
@@ -241,9 +243,10 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
-
+ -->
 
     <!-- SpringSource Enterprise Bundle Repository -->
+<!-- 
     <repository>
       <id>com.springsource.repository.bundles.release</id>
       <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
@@ -255,7 +258,7 @@
       <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
       <url>http://repository.springsource.com/maven/bundles/external</url>
     </repository>
-
+ -->
   </repositories>
 
   <pluginRepositories>

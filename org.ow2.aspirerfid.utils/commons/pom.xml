@@ -65,14 +65,14 @@
     <!-- ================ Other =============== -->
 
 
-
+<!-- 
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.compendium</artifactId>
       <version>4.2.0</version>
       <scope>test</scope>
     </dependency>
-
+ -->
 
     <dependency>
       <groupId>log4j</groupId>
