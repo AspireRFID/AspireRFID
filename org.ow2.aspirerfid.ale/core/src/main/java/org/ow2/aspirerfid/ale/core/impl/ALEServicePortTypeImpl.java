@@ -1,5 +1,7 @@
 package org.ow2.aspirerfid.ale.core.impl;
 
+import javax.jws.WebService;
+
 import org.ow2.aspirerfid.commons.ale.model.ale.ECReports;
 import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec;
 import org.ow2.aspirerfid.commons.ale.wsdl.ale.ALEServicePortType;
@@ -23,6 +25,9 @@ import org.ow2.aspirerfid.commons.ale.wsdl.ale.Undefine;
 import org.ow2.aspirerfid.commons.ale.wsdl.ale.Unsubscribe;
 import org.ow2.aspirerfid.commons.ale.wsdl.ale.VoidHolder;
 
+
+
+@WebService(endpointInterface = "org.ow2.aspirerfid.commons.ale.wsdl.ale.ALEServicePortType")  
 public class ALEServicePortTypeImpl implements ALEServicePortType{
 
 	public VoidHolder undefine(Undefine parms)

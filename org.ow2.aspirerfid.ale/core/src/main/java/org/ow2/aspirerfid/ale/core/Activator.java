@@ -7,6 +7,7 @@ package org.ow2.aspirerfid.ale.core;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
+import org.apache.cxf.endpoint.Endpoint;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 //import org.osgi.framework.ServiceEvent;
@@ -38,6 +39,8 @@ import ch.qos.logback.core.util.StatusPrinter;
 //import org.osgi.service.log.*;
 
 import ch.qos.logback.classic.BasicConfigurator;
+
+
 
 
 //import org.ow2.aspirerfid.commons.ale.model.ale.ECBoundarySpec;
@@ -100,17 +103,29 @@ public class Activator implements BundleActivator { // ServiceListener
 //		===================================Embedded CXF  JAX-WS Frontend==========================
 		
 		
-		Object aleServicePortTypeImplimentor = new ALEServicePortTypeImpl();
-		JaxWsServerFactoryBean svrFactory = new JaxWsServerFactoryBean();
-		svrFactory.setServiceClass(ALEServicePortType.class);
-		svrFactory.setAddress(aleServiceURL);
-		svrFactory.setServiceBean(aleServicePortTypeImplimentor);
-		svrFactory.getInInterceptors().add(new LoggingInInterceptor());
-		svrFactory.getOutInterceptors().add(new LoggingOutInterceptor());
-		svrFactory.create();
+//		Object aleServicePortTypeImplimentor = new ALEServicePortTypeImpl();
+//		JaxWsServerFactoryBean svrFactory = new JaxWsServerFactoryBean();
+//		svrFactory.setServiceClass(ALEServicePortType.class);
+//		svrFactory.setAddress(aleServiceURL);
+//		svrFactory.setServiceBean(aleServicePortTypeImplimentor);
+//		svrFactory.getInInterceptors().add(new LoggingInInterceptor());
+//		svrFactory.getOutInterceptors().add(new LoggingOutInterceptor());
+//		svrFactory.create();
+
+
+        Object implementor = new ALEServicePortTypeImpl();
+        javax.xml.ws.Endpoint.publish(aleServiceURL, implementor);
+ 
 
 		
-		
+//		javax.xml.ws.Endpoint jaxwsEndpoint = javax.xml.ws.Endpoint.publish(aleServiceURL, new ALEServicePortTypeImpl());
+//		org.apache.cxf.jaxws.EndpointImpl jaxwsEndpointImpl =  (org.apache.cxf.jaxws.EndpointImpl)jaxwsEndpoint;
+//		org.apache.cxf.endpoint.Server server = jaxwsEndpointImpl.getServer();
+//		org.apache.cxf.endpoint.Endpoint cxfEndpoint = server.getEndpoint();
+//		cxfEndpoint.getOutInterceptors().add(new LoggingOutInterceptor());
+//		org.apache.cxf.service.Service cxfService = cxfEndpoint.getService();
+//		cxfService.getOutInterceptors().add(new LoggingOutInterceptor());
+
 		
 		
 		
