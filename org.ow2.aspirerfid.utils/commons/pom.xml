@@ -6,7 +6,6 @@
   <!-- =========================================================== -->
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.ow2.aspirerfid</groupId>
   <artifactId>utils.commons</artifactId>
   <version>0.0.6</version>
   <packaging>bundle</packaging>

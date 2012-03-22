@@ -29,7 +29,7 @@
   <!-- =========================================================== -->
   <properties>
 
-    <felix.plugin.version>2.3.6</felix.plugin.version>
+    <felix.plugin.version>2.3.7</felix.plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.skipTests>true</project.build.skipTests>
     <felix.version>4.0.2</felix.version>
@@ -61,7 +61,7 @@
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.osgi.core</artifactId>
-      <version>1.2.0</version>
+      <version>1.4.0</version>
       <type>bundle</type>
     </dependency>
  
@@ -85,7 +85,7 @@
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.log</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1</version>
       <type>bundle</type>
     </dependency>
 
