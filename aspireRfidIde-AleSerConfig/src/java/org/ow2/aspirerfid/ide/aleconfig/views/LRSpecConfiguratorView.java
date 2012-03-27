@@ -29,23 +29,24 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.accada.ale.util.DeserializerUtil;
-import org.accada.ale.util.SerializerUtil;
-import org.accada.ale.wsdl.alelr.epcglobal.ALELRServicePortType;
-import org.accada.ale.wsdl.alelr.epcglobal.AddReaders;
-import org.accada.ale.wsdl.alelr.epcglobal.GetLRSpec;
-import org.accada.ale.wsdl.alelr.epcglobal.GetPropertyValue;
-import org.accada.ale.wsdl.alelr.epcglobal.ImmutableReaderExceptionResponse;
-import org.accada.ale.wsdl.alelr.epcglobal.InUseExceptionResponse;
-import org.accada.ale.wsdl.alelr.epcglobal.NonCompositeReaderExceptionResponse;
-import org.accada.ale.wsdl.alelr.epcglobal.ReaderLoopExceptionResponse;
-import org.accada.ale.wsdl.alelr.epcglobal.RemoveReaders;
-import org.accada.ale.wsdl.alelr.epcglobal.SetProperties;
-import org.accada.ale.wsdl.alelr.epcglobal.SetReaders;
-import org.accada.ale.wsdl.alelr.epcglobal.ValidationExceptionResponse;
-import org.accada.ale.xsd.ale.epcglobal.ECSpec;
-import org.accada.ale.xsd.ale.epcglobal.LRProperty;
-import org.accada.ale.xsd.ale.epcglobal.LRSpec;
+
+import org.ow2.aspirerfid.commons.ale.utils.DeserializerUtil;
+import org.ow2.aspirerfid.commons.ale.utils.SerializerUtil;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ALELRServicePortType;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.AddReaders;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.GetLRSpec;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.GetPropertyValue;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImmutableReaderExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.InUseExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.NonCompositeReaderExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ReaderLoopExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.RemoveReaders;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.SetProperties;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.SetReaders;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ValidationExceptionResponse;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec;
+import org.ow2.aspirerfid.commons.ale.model.alelr.LRProperty;
+import org.ow2.aspirerfid.commons.ale.model.alelr.LRSpec;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -524,15 +525,15 @@ public class LRSpecConfiguratorView extends ViewPart {
 				try {
 					lrSpecConfiguratorResult = alelrProxy.getLRSpec(getLRSpecParms);
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -662,15 +663,15 @@ public class LRSpecConfiguratorView extends ViewPart {
 				try {
 					lrSpecConfiguratorResult = alelrProxy.getLRSpec(getLRSpecParms);
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -766,42 +767,42 @@ public class LRSpecConfiguratorView extends ViewPart {
 										MessageDialog.openConfirm(container.getShell(), "Confirmation",
 												"[setProperties method]: Properties were successfully set!");
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: Security Exception was thrown.", e1
 												.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.InUseExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.InUseExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: In Use Exception was thrown.", e1
 												.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(),
 												"[setProperties method]: Implementation Exception was thrown.", e1.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.ImmutableReaderExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImmutableReaderExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(),
 												"[setProperties method]: Immutable Reader Exception was thrown.", e1.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: No Such Name Exception was thrown.",
 												e1.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.ValidationExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ValidationExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: Validation Exception was thrown.",
@@ -889,42 +890,42 @@ public class LRSpecConfiguratorView extends ViewPart {
 										MessageDialog.openConfirm(container.getShell(), "Confirmation",
 												"[setProperties method]: Properties were successfully set!");
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: Security Exception was thrown.", e1
 												.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.InUseExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.InUseExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: In Use Exception was thrown.", e1
 												.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(),
 												"[setProperties method]: Implementation Exception was thrown.", e1.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.ImmutableReaderExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImmutableReaderExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(),
 												"[setProperties method]: Immutable Reader Exception was thrown.", e1.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: No Such Name Exception was thrown.",
 												e1.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.ValidationExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ValidationExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: Validation Exception was thrown.",
@@ -1027,42 +1028,42 @@ public class LRSpecConfiguratorView extends ViewPart {
 										MessageDialog.openConfirm(container.getShell(), "Confirmation",
 												"[setProperties method]: Properties were successfully set!");
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: Security Exception was thrown.", e1
 												.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.InUseExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.InUseExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: In Use Exception was thrown.", e1
 												.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(),
 												"[setProperties method]: Implementation Exception was thrown.", e1.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.ImmutableReaderExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImmutableReaderExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(),
 												"[setProperties method]: Immutable Reader Exception was thrown.", e1.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: No Such Name Exception was thrown.",
 												e1.getMessage());
 										e1.printStackTrace();
 									}
-									catch (org.accada.ale.wsdl.alelr.epcglobal.ValidationExceptionResponse e1) {
+									catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ValidationExceptionResponse e1) {
 										// TODO Auto-generated catch
 										// block
 										MessageDialog.openWarning(container.getShell(), "[setProperties method]: Validation Exception was thrown.",
@@ -1350,9 +1351,9 @@ public class LRSpecConfiguratorView extends ViewPart {
 			writeToConsole((String) result);
 
 		}
-		else if (result instanceof org.accada.ale.wsdl.alelr.epcglobal.ArrayOfString) {
+		else if (result instanceof org.ow2.aspirerfid.commons.ale.wsdl.alelr.ArrayOfString) {
 			aleServerConfiguratorConsole.clearConsole();
-			org.accada.ale.wsdl.alelr.epcglobal.ArrayOfString resultStringArray = (org.accada.ale.wsdl.alelr.epcglobal.ArrayOfString) result;
+			org.ow2.aspirerfid.commons.ale.wsdl.alelr.ArrayOfString resultStringArray = (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ArrayOfString) result;
 			if (resultStringArray.getString().size() == 0) {
 				writeToConsole("No data found!");
 			}
@@ -1441,9 +1442,9 @@ public class LRSpecConfiguratorView extends ViewPart {
 		setSetPropertiesHALReaderComposite(false);
 
 		try {
-			lrSpecConfiguratorResult = alelrProxy.getVendorVersion(new org.accada.ale.wsdl.alelr.epcglobal.EmptyParms());
+			lrSpecConfiguratorResult = alelrProxy.getVendorVersion(new org.ow2.aspirerfid.commons.ale.wsdl.alelr.EmptyParms());
 		}
-		catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+		catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 			MessageDialog.openWarning(container.getShell(), "Error", "[getVendorVersion method]: Implementation Exception was thrown.");
 			e1.printStackTrace();
 		}
@@ -1465,9 +1466,9 @@ public class LRSpecConfiguratorView extends ViewPart {
 		setSetPropertiesHALReaderComposite(false);
 
 		try {
-			lrSpecConfiguratorResult = alelrProxy.getStandardVersion(new org.accada.ale.wsdl.alelr.epcglobal.EmptyParms());
+			lrSpecConfiguratorResult = alelrProxy.getStandardVersion(new org.ow2.aspirerfid.commons.ale.wsdl.alelr.EmptyParms());
 		}
-		catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+		catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 			MessageDialog.openWarning(container.getShell(), "Error", "[getStandardVersion method]: Implementation Exception was thrown.");
 			e1.printStackTrace();
 		}
@@ -1564,7 +1565,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 		List<String> lrSpecNames = null;
 
 		try {
-			lrSpecNames = alelrProxy.getLogicalReaderNames(new org.accada.ale.wsdl.alelr.epcglobal.EmptyParms()).getString();
+			lrSpecNames = alelrProxy.getLogicalReaderNames(new org.ow2.aspirerfid.commons.ale.wsdl.alelr.EmptyParms()).getString();
 		}
 		catch (Exception e) {
 			MessageDialog.openWarning(container.getShell(), "Error", e.getMessage());
@@ -1752,13 +1753,13 @@ public class LRSpecConfiguratorView extends ViewPart {
 		setSetPropertiesLLRPReaderComposite(false);
 
 		try {
-			lrSpecConfiguratorResult = alelrProxy.getLogicalReaderNames(new org.accada.ale.wsdl.alelr.epcglobal.EmptyParms());
+			lrSpecConfiguratorResult = alelrProxy.getLogicalReaderNames(new org.ow2.aspirerfid.commons.ale.wsdl.alelr.EmptyParms());
 		}
-		catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e) {
+		catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e) {
+		catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -1820,15 +1821,15 @@ public class LRSpecConfiguratorView extends ViewPart {
 				try {
 					lrSpecConfiguratorResult = alelrProxy.getLRSpec(getLRSpecParms);
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -1907,15 +1908,15 @@ public class LRSpecConfiguratorView extends ViewPart {
 				try {
 					lrSpecConfiguratorResult = alelrProxy.getLRSpec(getLRSpecParms);
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -1995,15 +1996,15 @@ public class LRSpecConfiguratorView extends ViewPart {
 				try {
 					lrSpecConfiguratorResult = alelrProxy.getLRSpec(getLRSpecParms);
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -2078,15 +2079,15 @@ public class LRSpecConfiguratorView extends ViewPart {
 				try {
 					lrSpecConfiguratorResult = alelrProxy.getLRSpec(getLRSpecParms);
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -2216,7 +2217,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 			// get lrSpec
 			LRSpec lrSpec = getLRSpecFromFile(lrDefineSelectLRSpecCombo);
 
-			org.accada.ale.wsdl.alelr.epcglobal.Define defineParms = new org.accada.ale.wsdl.alelr.epcglobal.Define();
+			org.ow2.aspirerfid.commons.ale.wsdl.alelr.Define defineParms = new org.ow2.aspirerfid.commons.ale.wsdl.alelr.Define();
 			defineParms.setName(lrDefineReaderNameCombo.getText());
 			defineParms.setSpec(lrSpec);
 
@@ -2224,17 +2225,17 @@ public class LRSpecConfiguratorView extends ViewPart {
 				lrSpecConfiguratorResult = alelrProxy.define(defineParms);
 				MessageDialog.openConfirm(container.getShell(), "Confirmation", "[Define method]: The LRSpec was successfully defined!");
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "Error", "[Define method]: Security Exception was thrown.");
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "Error", "[Define method]: Implementation Exception was thrown.");
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.DuplicateNameExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.DuplicateNameExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "Error", "[Define method]: Duplicate Name Exception was thrown.");
 				e1.printStackTrace();
@@ -2264,7 +2265,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 			// get lrSpec
 			LRSpec lrSpec = getLRSpecFromFile(lrUpdateSelectLRSpecCombo);
 
-			org.accada.ale.wsdl.alelr.epcglobal.Update updateParms = new org.accada.ale.wsdl.alelr.epcglobal.Update();
+			org.ow2.aspirerfid.commons.ale.wsdl.alelr.Update updateParms = new org.ow2.aspirerfid.commons.ale.wsdl.alelr.Update();
 			updateParms.setName(lrUpdateReaderNameCombo.getText());
 			updateParms.setSpec(lrSpec);
 
@@ -2273,37 +2274,37 @@ public class LRSpecConfiguratorView extends ViewPart {
 
 				MessageDialog.openConfirm(container.getShell(), "Confirmation", "[Update method]: The LRSpec was successfully updated!");
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.ReaderLoopExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ReaderLoopExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Update method]: Reader Loop Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Update method]: Security Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.InUseExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.InUseExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Update method]: In Use Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Update method]: Implementation Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.ImmutableReaderExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImmutableReaderExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Update method]: Immutable Reader Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Update method]: No Such Name Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.ValidationExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ValidationExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Update method]: Validation Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
@@ -2327,7 +2328,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 				return;
 			}
 
-			org.accada.ale.wsdl.alelr.epcglobal.Undefine undefineParms = new org.accada.ale.wsdl.alelr.epcglobal.Undefine();
+			org.ow2.aspirerfid.commons.ale.wsdl.alelr.Undefine undefineParms = new org.ow2.aspirerfid.commons.ale.wsdl.alelr.Undefine();
 			undefineParms.setName(lrspecName);
 
 			try {
@@ -2335,27 +2336,27 @@ public class LRSpecConfiguratorView extends ViewPart {
 
 				MessageDialog.openConfirm(container.getShell(), "Confirmation", "[Undefine method]: The LRSpec was successfully undefined!");
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Undefine method]: No Such Name Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Undefine method]: Implementation Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Undefine method]: Security Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.InUseExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.InUseExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Undefine method]: In Use Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.ImmutableReaderExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImmutableReaderExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[Undefine method]: Immutable Reader Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
@@ -2392,17 +2393,17 @@ public class LRSpecConfiguratorView extends ViewPart {
 			try {
 				lrSpecConfiguratorResult = alelrProxy.getLRSpec(getLRSpecParms);
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[getLRSpec method]: Security Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[getLRSpec method]: Implementation Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[getLRSpec method]: No Such Name Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
@@ -2446,7 +2447,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 					MessageDialog.openWarning(container.getShell(), "[addReaders method]: Non Composite Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					MessageDialog.openWarning(container.getShell(), "[addReaders method]: Security Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
@@ -2456,7 +2457,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 					MessageDialog.openWarning(container.getShell(), "[addReaders method]: In Use Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					MessageDialog.openWarning(container.getShell(), "[addReaders method]: Implementation Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
@@ -2466,7 +2467,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 					MessageDialog.openWarning(container.getShell(), "[addReaders method]: Immutable Reader Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					MessageDialog.openWarning(container.getShell(), "[addReaders method]: No Such Name Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
@@ -2516,7 +2517,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 					MessageDialog.openWarning(container.getShell(), "[setReaders method]: Non Composite Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					MessageDialog.openWarning(container.getShell(), "[setReaders method]: Security Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
@@ -2526,7 +2527,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 					MessageDialog.openWarning(container.getShell(), "[setReaders method]: In Use Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					MessageDialog.openWarning(container.getShell(), "[setReaders method]: Implementation Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
@@ -2536,7 +2537,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 					MessageDialog.openWarning(container.getShell(), "[setReaders method]: Immutable Reader Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					MessageDialog.openWarning(container.getShell(), "[setReaders method]: No Such Name Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
@@ -2581,7 +2582,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 					MessageDialog.openWarning(container.getShell(), "[removeReaders method]: Non Composite Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					MessageDialog.openWarning(container.getShell(), "[removeReaders method]: Security Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
@@ -2591,7 +2592,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 					MessageDialog.openWarning(container.getShell(), "[removeReaders method]: In Use Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					MessageDialog.openWarning(container.getShell(), "[removeReaders method]: Implementation Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
@@ -2602,7 +2603,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 							.openWarning(container.getShell(), "[removeReaders method]: Immutable Reader Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
 				}
-				catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+				catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 					// TODO Auto-generated catch block
 					MessageDialog.openWarning(container.getShell(), "[removeReaders method]: No Such Name Exception was thrown.", e1.getMessage());
 					e1.printStackTrace();
@@ -2632,17 +2633,17 @@ public class LRSpecConfiguratorView extends ViewPart {
 			try {
 				lrSpecConfiguratorResult = alelrProxy.getPropertyValue(getPropertyValueParms);
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.SecurityExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.SecurityExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[getPropertyValue method]: Security Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.ImplementationExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.ImplementationExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[getPropertyValue method]: Implementation Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();
 			}
-			catch (org.accada.ale.wsdl.alelr.epcglobal.NoSuchNameExceptionResponse e1) {
+			catch (org.ow2.aspirerfid.commons.ale.wsdl.alelr.NoSuchNameExceptionResponse e1) {
 				// TODO Auto-generated catch block
 				MessageDialog.openWarning(container.getShell(), "[getPropertyValue method]: No Such Name Exception was thrown.", e1.getMessage());
 				e1.printStackTrace();

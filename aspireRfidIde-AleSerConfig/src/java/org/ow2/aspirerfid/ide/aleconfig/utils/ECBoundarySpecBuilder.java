@@ -3,15 +3,15 @@ package org.ow2.aspirerfid.ide.aleconfig.utils;
 
 import java.util.List;
 
-import org.accada.ale.util.ECTimeUnit;
-import org.accada.ale.xsd.ale.epcglobal.ECBoundarySpecExtension;
-import org.accada.ale.xsd.ale.epcglobal.ECBoundarySpec;
-import org.accada.ale.xsd.ale.epcglobal.ECTime;
 
-import org.accada.ale.xsd.ale.epcglobal.ECBoundarySpecExtension.StartTriggerList;
-import org.accada.ale.xsd.ale.epcglobal.ECBoundarySpecExtension.StopTriggerList;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECBoundarySpecExtension;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECBoundarySpec;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECTime;
 
+import org.ow2.aspirerfid.commons.ale.model.ale.ECBoundarySpecExtension.StartTriggerList;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECBoundarySpecExtension.StopTriggerList;
 
+import org.ow2.aspirerfid.commons.ale.utils.ECTimeUnit;
 
 
 /**

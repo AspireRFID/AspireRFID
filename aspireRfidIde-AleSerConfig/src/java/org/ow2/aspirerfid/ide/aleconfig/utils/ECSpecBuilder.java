@@ -6,12 +6,12 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import org.accada.ale.xsd.ale.epcglobal.ECSpec;
-import org.accada.ale.xsd.ale.epcglobal.ECSpec.LogicalReaders;
-import org.accada.ale.xsd.ale.epcglobal.ECSpec.ReportSpecs;
-import org.accada.ale.xsd.ale.epcglobal.*;
-import org.accada.ale.util.DeserializerUtil;
-import org.accada.ale.util.SerializerUtil;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec.LogicalReaders;
+import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec.ReportSpecs;
+import org.ow2.aspirerfid.commons.ale.model.ale.*;
+import org.ow2.aspirerfid.commons.ale.utils.DeserializerUtil;
+import org.ow2.aspirerfid.commons.ale.utils.SerializerUtil;
 
 /**
  * 
