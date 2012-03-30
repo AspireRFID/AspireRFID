@@ -1,23 +1,25 @@
 package org.ow2.aspirerfid.ale.core;
 
 
-//import java.util.Dictionary;
-//import java.util.Hashtable;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
-import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
-import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
-import org.apache.cxf.endpoint.Endpoint;
+//import org.apache.cxf.interceptor.LoggingInInterceptor;
+//import org.apache.cxf.interceptor.LoggingOutInterceptor;
+//import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
+//import org.apache.cxf.endpoint.Endpoint;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 //import org.osgi.framework.ServiceEvent;
 //import org.osgi.framework.ServiceListener;
-//import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.ServiceRegistration;
 
 
 
-import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ALELRServicePortType;
+//import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ALELRServicePortType;
 import org.ow2.aspirerfid.commons.ale.wsdl.ale.ALEServicePortType;
+import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ALELRServicePortType;
+//import org.ow2.aspirerfid.ale.core.impl.ALELRServicePortTypeImpl;
 import org.ow2.aspirerfid.ale.core.impl.ALELRServicePortTypeImpl;
 import org.ow2.aspirerfid.ale.core.impl.ALEServicePortTypeImpl;
 
@@ -38,7 +40,7 @@ import ch.qos.logback.core.util.StatusPrinter;
 
 //import org.osgi.service.log.*;
 
-import ch.qos.logback.classic.BasicConfigurator;
+//import ch.qos.logback.classic.BasicConfigurator;
 
 
 
@@ -50,8 +52,8 @@ import ch.qos.logback.classic.BasicConfigurator;
 
 public class Activator implements BundleActivator { // ServiceListener
 
-//	private ServiceRegistration aleServiceRegistration;
-//	private ServiceRegistration aleLrServiceRegistration;
+	private ServiceRegistration aleServiceRegistration;
+	private ServiceRegistration aleLrServiceRegistration;
 
 	
     final private static String PROPERTY_BASE_NAME = "org.apache.cxf.ws";
@@ -77,54 +79,27 @@ public class Activator implements BundleActivator { // ServiceListener
 		    logger.debug("Hello world by Logger. From : {}",Activator.class.getName());
 
 		// ===================Initialize ALE Service using DOSGI CXF JAX-WS frontend ===========
-//		Dictionary aleDictionaryProps = new Hashtable();
+		Dictionary aleDictionaryProps = new Hashtable();
 		String aleServiceURL = bundleContext.getProperty("org.ow2.aspirerfid.ale.core.aleServiceURL");
-//
-//		
-//		aleDictionaryProps.put("service.exported.interfaces", "org.ow2.aspirerfid.commons.ale.wsdl.ale.ALEServicePortType");
-//		aleDictionaryProps.put("service.exported.configs", "org.apache.cxf.ws");
-//		aleDictionaryProps.put("org.apache.cxf.ws.address", aleServiceURL);
-//		
-//		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".frontend", "jaxws");
-//		aleDictionaryProps.put("org.apache.cxf.ws.databinding","jaxb");
-////		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".service.ns", "http://ale.wsdl.ale.commons.aspirerfid.ow2.org"); // service namespace 
-//		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".service.name", "ALEService"); // service name
-//		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".port.name", "ALEServicePort"); // port/endpoint name 
-//		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".location", "epcglobal/ale/EPCglobal-ale-1_1-ale.wsdl");
 
-//		aleServiceRegistration = bundleContext.registerService(ALEServicePortType.class.getName(),
-//				new ALEServicePortTypeImpl(), aleDictionaryProps);
+	
+		aleDictionaryProps.put("service.exported.interfaces", "org.ow2.aspirerfid.commons.ale.wsdl.ale.ALEServicePortType");
+		aleDictionaryProps.put("service.exported.configs", "org.apache.cxf.ws");
+		aleDictionaryProps.put("org.apache.cxf.ws.address", aleServiceURL);
+	
+		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".frontend", "jaxws");
+//		aleDictionaryProps.put("org.apache.cxf.ws.databinding","jaxb");
+		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".service.ns", "http://ale.wsdl.ale.commons.aspirerfid.ow2.org"); // service namespace 
+		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".service.name", "ALEService"); // service name
+		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".port.name", "ALEServicePort"); // port/endpoint name 
+		aleDictionaryProps.put(PROPERTY_BASE_NAME + ".location", "epcglobal/ale/EPCglobal-ale-1_1-ale.wsdl");
+
+		aleServiceRegistration = bundleContext.registerService(ALEServicePortType.class.getName(),
+				new ALEServicePortTypeImpl(), aleDictionaryProps);
 		
 		System.out.println("#########Service listens to : "+aleServiceURL+"  #########");
 
 		
-		
-		
-//		===================================Embedded CXF  JAX-WS Frontend==========================
-		
-		
-//		Object aleServicePortTypeImplimentor = new ALEServicePortTypeImpl();
-//		JaxWsServerFactoryBean svrFactory = new JaxWsServerFactoryBean();
-//		svrFactory.setServiceClass(ALEServicePortType.class);
-//		svrFactory.setAddress(aleServiceURL);
-//		svrFactory.setServiceBean(aleServicePortTypeImplimentor);
-//		svrFactory.getInInterceptors().add(new LoggingInInterceptor());
-//		svrFactory.getOutInterceptors().add(new LoggingOutInterceptor());
-//		svrFactory.create();
-
-
-        Object implementor = new ALEServicePortTypeImpl();
-        javax.xml.ws.Endpoint.publish(aleServiceURL, implementor);
- 
-
-		
-//		javax.xml.ws.Endpoint jaxwsEndpoint = javax.xml.ws.Endpoint.publish(aleServiceURL, new ALEServicePortTypeImpl());
-//		org.apache.cxf.jaxws.EndpointImpl jaxwsEndpointImpl =  (org.apache.cxf.jaxws.EndpointImpl)jaxwsEndpoint;
-//		org.apache.cxf.endpoint.Server server = jaxwsEndpointImpl.getServer();
-//		org.apache.cxf.endpoint.Endpoint cxfEndpoint = server.getEndpoint();
-//		cxfEndpoint.getOutInterceptors().add(new LoggingOutInterceptor());
-//		org.apache.cxf.service.Service cxfService = cxfEndpoint.getService();
-//		cxfService.getOutInterceptors().add(new LoggingOutInterceptor());
 
 		
 		
@@ -132,6 +107,29 @@ public class Activator implements BundleActivator { // ServiceListener
 		
 		// ===================Initialize ALELR Service (using CXF 'simple' frontend) ===========
 
+		Dictionary alelrDictionaryProps = new Hashtable();
+		String alelrServiceURL = bundleContext.getProperty("org.ow2.aspirerfid.ale.core.aleLrServiceURL");
+
+	
+		alelrDictionaryProps.put("service.exported.interfaces", "org.ow2.aspirerfid.commons.ale.wsdl.alelr.ALELRServicePortType");
+		alelrDictionaryProps.put("service.exported.configs", "org.apache.cxf.ws");
+		alelrDictionaryProps.put("org.apache.cxf.ws.address", alelrServiceURL);
+	
+		alelrDictionaryProps.put(PROPERTY_BASE_NAME + ".frontend", "jaxws");
+//		alelrDictionaryProps.put("org.apache.cxf.ws.databinding","jaxb");
+		alelrDictionaryProps.put(PROPERTY_BASE_NAME + ".service.ns", "http://alelr.wsdl.ale.commons.aspirerfid.ow2.org"); // service namespace 
+		alelrDictionaryProps.put(PROPERTY_BASE_NAME + ".service.name", ".ALELRService"); // service name
+		alelrDictionaryProps.put(PROPERTY_BASE_NAME + ".port.name", ".ALELRServicePort"); // port/endpoint name 
+		alelrDictionaryProps.put(PROPERTY_BASE_NAME + ".location", "epcglobal/ale/EPCglobal-ale-1_1-alelr.wsdl");
+
+		aleLrServiceRegistration = bundleContext.registerService(ALELRServicePortType.class.getName(),
+				new ALELRServicePortTypeImpl(), alelrDictionaryProps);
+		
+		System.out.println("#########Service listens to : "+alelrServiceURL+"  #########");
+		
+		
+		
+		
 //		Dictionary aleLrDictionaryProps = new Hashtable();
 //		String aleLrServiceURL = bundleContext.getProperty("org.ow2.aspirerfid.ale.core.aleLrServiceURL");
 //
@@ -154,8 +152,8 @@ public class Activator implements BundleActivator { // ServiceListener
 
 	public void stop(BundleContext arg0) throws Exception {
 		System.out.println("Goodbye World");
-//		aleServiceRegistration.unregister();
-//		aleLrServiceRegistration.unregister();
+		aleServiceRegistration.unregister();
+		aleLrServiceRegistration.unregister();
 
 
 	}

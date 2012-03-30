@@ -21,17 +21,30 @@
 
   <properties>
     <fosstrakTDT.version>0.9.0</fosstrakTDT.version>
-    <bundle.import.package>
+    <bundle.import.package>*;resolution:=optional</bundle.import.package><!-- org.osgi.framework,*;resolution:=optional,org.ow2.aspirerfid.commons.* -->
+  <!-- "bundle.import.package" really important so as to include only all the required packages and to avoid OSGi "wire" errors-->
+  
+    <!-- 
+        
     	org.osgi.framework,
     	org.ow2.aspirerfid.commons.*,
     	javax.ws.*,
-    	*;resolution:=optional
-    </bundle.import.package><!-- org.osgi.framework,
-      *;resolution:=optional,org.ow2.aspirerfid.commons.* -->
+    	org.osgi.service.log;version=1.3,
+    	org.osgi.framework,
+    	org.osgi.service.event,
+    	org.osgi.service.http,
+    	org.osgi.service.log,
+    	org.osgi.service.remoteserviceadmin,
+    	javax.servlet;version="[2.5,3)",
+    	org.osgi.util.tracker,
+    	javax.jws;version=0.0.0,
+    	*
+     -->
     <bundle.private.package></bundle.private.package><!-- org.ow2.aspirerfid.ale.core.impl -->
     <bundle.export.package>org.ow2.aspirerfid.commons.ale.wsdl.ale</bundle.export.package> <!-- It is required to export the package where the Web Service I/F resides (,org.ow2.aspirerfid.commons.ale.wsdl.ale)-->
     <aspirerfid.utils.commons.version>0.0.6</aspirerfid.utils.commons.version>
-  <aspirerfid.ale.bundle.activator>org.ow2.aspirerfid.ale.core.Activator</aspirerfid.ale.bundle.activator>
+    <aspirerfid.ale.bundle.activator>org.ow2.aspirerfid.ale.core.Activator</aspirerfid.ale.bundle.activator>
+    <cxf.version>2.5.2</cxf.version><!--2.2.6-->
   </properties>
 
 
@@ -63,18 +76,19 @@
     
 
     <!-- ======== CXF (single bundle distribution) Distributed OSGi Dependencies (currently used)========== -->
-    <!-- 
+
     <dependency>
-      <groupId>org.apache.cxf.dosgi</groupId>
-      <artifactId>cxf-dosgi-ri-singlebundle-distribution</artifactId>
-      <version>1.4-SNAPSHOT</version>
+    	<groupId>org.apache.cxf.dosgi</groupId>
+    	<artifactId>cxf-dosgi-ri-singlebundle-distribution</artifactId>
+    	<version>1.3</version>
+    	<type>bundle</type>
     </dependency>
-    -->
+
     
     
     
     <!-- ======== CXF (multi bundle distribution) Distributed OSGi Dependencies (for future use)========== -->
-    <!-- 
+<!--  
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-bundle-minimal</artifactId>
@@ -96,19 +110,11 @@
       <type>bundle</type>
       <scope>compile</scope>
     </dependency>
-     -->
+  -->
 
 
 
     <!-- ======== Fosstrak Dependencies ========== -->
- <!--
-<dependency>
-  <groupId>org.fosstrak.tdt</groupId>
-  <artifactId>tdt</artifactId>
-  <version>0.9.0</version>
-  <classifier>with-dependencies</classifier>
-</dependency>
--->
 
     <dependency>
       <groupId>org.fosstrak.tdt</groupId>
@@ -157,19 +163,8 @@
       <version>4.2.0</version>
       <scope>test</scope>
     </dependency>
-  
-  
-<!--   
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.osgi.compendium</artifactId>
-      <version>1.2.0</version>
-      <type>bundle</type>
-    </dependency>  
+
     
- -->    
-    
-     
 	<!-- ======== LogBack Dependencies ========== -->
     <!--
       <dependency>
@@ -213,8 +208,9 @@
 		<artifactId>com.springsource.ch.qos.logback.classic</artifactId>
 		<version>0.9.28</version>
 	</dependency>
-  
-  
+	
+	
+	
   </dependencies>
 
 
@@ -260,7 +256,8 @@
             	com.springsource.ch.qos.logback.classic|
             	com.springsource.ch.qos.logback.core|
             	com.springsource.slf4j.nop|
-            	com.springsource.slf4j.api
+            	com.springsource.slf4j.api|
+				cxf-dosgi-ri-singlebundle-distribution
             </Embed-Dependency><!-- |utils.commons -->
             
             <!--<Embed-Dependency>utils.commons;scope=compile|runtime</Embed-Dependency> -->
