@@ -21,6 +21,7 @@
 
   <properties>
     <fosstrakTDT.version>0.9.0</fosstrakTDT.version>
+    <aspirerfid.utils.commons.version>0.0.6</aspirerfid.utils.commons.version>
     <bundle.import.package>*;resolution:=optional</bundle.import.package><!-- org.osgi.framework,*;resolution:=optional,org.ow2.aspirerfid.commons.* -->
   <!-- "bundle.import.package" really important so as to include only all the required packages and to avoid OSGi "wire" errors-->
   
@@ -40,11 +41,9 @@
     	javax.jws;version=0.0.0,
     	*
      -->
-    <bundle.private.package></bundle.private.package><!-- org.ow2.aspirerfid.ale.core.impl -->
-    <bundle.export.package>org.ow2.aspirerfid.commons.ale.wsdl.ale</bundle.export.package> <!-- It is required to export the package where the Web Service I/F resides (,org.ow2.aspirerfid.commons.ale.wsdl.ale)-->
-    <aspirerfid.utils.commons.version>0.0.6</aspirerfid.utils.commons.version>
+    <bundle.private.package>org.ow2.aspirerfid.ale.core.impl</bundle.private.package><!-- org.ow2.aspirerfid.ale.core.impl -->
+    <bundle.export.package>org.ow2.aspirerfid.ale.core,org.ow2.aspirerfid.commons.ale.wsdl.ale,org.ow2.aspirerfid.commons.ale.wsdl.alelr</bundle.export.package> <!-- It is required to export the package where the Web Service I/F resides (org.ow2.aspirerfid.commons.ale.wsdl.ale,org.ow2.aspirerfid.commons.ale.wsdl.alelr)-->
     <aspirerfid.ale.bundle.activator>org.ow2.aspirerfid.ale.core.Activator</aspirerfid.ale.bundle.activator>
-    <cxf.version>2.5.2</cxf.version><!--2.2.6-->
   </properties>
 
 
@@ -123,14 +122,14 @@
     </dependency>
 
     <!-- ======== ASPIRE Dependencies ========== -->
-<!-- 
+
     <dependency>
       <groupId>org.ow2.aspirerfid</groupId>
       <artifactId>utils.commons</artifactId>
       <version>${aspirerfid.utils.commons.version}</version>
       <type>bundle</type>
     </dependency>
- -->
+
     <!-- ======== Felix Dependencies ========== -->
     <dependency>
       <groupId>org.apache.felix</groupId>
@@ -232,9 +231,9 @@
             <Bundle-Description>${project.description}</Bundle-Description>
             <Bundle-Version>${project.version}</Bundle-Version>
             <Bundle-Activator>${aspirerfid.ale.bundle.activator}</Bundle-Activator>
-            <!-- 
+
             <Private-Package>${bundle.private.package}</Private-Package>
- -->
+
             <Import-Package>${bundle.import.package}</Import-Package>
             <Export-Package>${bundle.export.package}</Export-Package>
 

@@ -1,5 +1,7 @@
 package org.ow2.aspirerfid.ale.core.impl;
 
+import javax.jws.WebService;
+
 import org.ow2.aspirerfid.commons.ale.model.alelr.LRSpec;
 import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ALELRServicePortType;
 import org.ow2.aspirerfid.commons.ale.wsdl.alelr.AddReaders;
@@ -30,6 +32,7 @@ import org.ow2.aspirerfid.commons.ale.wsdl.alelr.Update;
 import org.ow2.aspirerfid.commons.ale.wsdl.alelr.UpdateResult;
 import org.ow2.aspirerfid.commons.ale.wsdl.alelr.ValidationExceptionResponse;
 
+@WebService(endpointInterface = "org.ow2.aspirerfid.commons.ale.wsdl.alelr.ALELRServicePortType")
 public class ALELRServicePortTypeImpl implements ALELRServicePortType{
 
 	public LRSpec getLRSpec(GetLRSpec parms) throws SecurityExceptionResponse,
