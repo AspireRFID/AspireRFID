@@ -1,5 +1,5 @@
 /*
- * Copyright © 2008-2010, Aspire
+ * Copyright ï¿½ 2008-2010, Aspire
  * 
  * Aspire is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License version 2.1 as published by
@@ -26,7 +26,7 @@ import org.fosstrak.tdt.TDTException;
 import javax.xml.bind.JAXBException;
 
 /**
- * @author Loïc Schmidt e-mail: loic.schmidt@lifl.fr
+ * @author Loï¿½c Schmidt e-mail: loic.schmidt@lifl.fr
  *
  *	<p>This class provides methods for translating GS1 System codes
  *      between two levels of representation: LEGACY and GS1_AI_ENCODING.
@@ -58,11 +58,11 @@ public class GS1TDTEngine {
      * GS1ApplicationIdentifiers is a map of application identifer
      * to GS1ApplicationIdentifier.
      */
-	private HashMap<String,GS1ApplicationIdentifier> GS1ApplicationIdentifiers= new HashMap<String,GS1ApplicationIdentifier>();
+	public HashMap<String,GS1ApplicationIdentifier> GS1ApplicationIdentifiers= new HashMap<String,GS1ApplicationIdentifier>();
     /** 
      * GS1DataTitle is a map of data title to application identifer
      */
-	private HashMap<String,String> GS1DataTitle= new HashMap<String,String>();
+	public HashMap<String,String> GS1DataTitle= new HashMap<String,String>();
 
     /** 
      * GS1ApplicationIdentifier is an object with
@@ -158,6 +158,8 @@ public class GS1TDTEngine {
 		}
 	}
 
+	
+
     /**
      *	GS1TDTEngine - constructor for a new GS1 translation engine
      *	 
@@ -170,8 +172,9 @@ public class GS1TDTEngine {
 		 throws  IOException, JAXBException, SAXException, ParserConfigurationException
 	{
 
+		// schemes/barcode/GS1ApplicationIdentifiers.xml
 		InputStream gs1ais = this.getClass().getClassLoader().getResourceAsStream(
-				"schemes/barcode/GS1ApplicationIdentifiers.xml");
+				"GS1ApplicationIdentifiers.xml");
 
 		// lit le fichier GS1AI.xml pour trouver les infos de GS1Spec sur les AI, les Data Content et les length
       DocumentBuilderFactory fabrique = DocumentBuilderFactory.newInstance();                    

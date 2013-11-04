@@ -1,5 +1,5 @@
 /*
- * Copyright © 2008-2010, Aspire
+ * Copyright ï¿½ 2008-2010, Aspire
  * 
  * Aspire is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License version 2.1 as published by
@@ -29,7 +29,7 @@ import org.epcglobalinc.tdt.*;
 import org.fosstrak.tdt.*;
 
 /**
- * @author Loïc Schmidt e-mail: loic.schmidt@lifl.fr
+ * @author Loï¿½c Schmidt e-mail: loic.schmidt@lifl.fr
  *
  *	<p>This class provides methods for translating some codes (such as an electronic
  *	product code (EPC) or all GS1 codes) between various levels of representation

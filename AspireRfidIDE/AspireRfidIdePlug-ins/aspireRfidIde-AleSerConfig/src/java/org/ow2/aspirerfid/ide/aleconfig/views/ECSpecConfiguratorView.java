@@ -1,5 +1,5 @@
 /*
- * Copyright © 2008-2010, Aspire
+ * Copyright ï¿½ 2008-2010, Aspire
  * 
  * Aspire is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License version 2.1 as published by
@@ -137,22 +137,18 @@ public class ECSpecConfiguratorView extends ViewPart {
 		final ScrolledComposite ecspecConfiguratorScrolledComposite = new ScrolledComposite(
 				container, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 
-		ecspecConfiguratorComposite = new Composite(
-				ecspecConfiguratorScrolledComposite, SWT.NONE);
+		ecspecConfiguratorComposite = new Composite(ecspecConfiguratorScrolledComposite, SWT.NONE);
 		ecspecConfiguratorComposite.setLocation(0, 0);
-		ecspecConfiguratorComposite.setSize(674, 329);
+		ecspecConfiguratorComposite.setSize(900, 329);  ///
 
-		ecspecConfiguratorScrolledComposite
-				.setContent(ecspecConfiguratorComposite);
+		ecspecConfiguratorScrolledComposite.setContent(ecspecConfiguratorComposite);
 
-		final Group aleMethodsGroup_1 = new Group(ecspecConfiguratorComposite,
-				SWT.NONE);
+		final Group aleMethodsGroup_1 = new Group(ecspecConfiguratorComposite, SWT.NONE);
 		aleMethodsGroup_1.setText("ALE Methods");
-		aleMethodsGroup_1.setBounds(10, 0, 614, 316);
+		aleMethodsGroup_1.setBounds(10, 0, 614, 316);  ////
 
-		final ToolBar ecspecAleServerConfiguratorToolBar = new ToolBar(
-				aleMethodsGroup_1, SWT.BORDER);
-		ecspecAleServerConfiguratorToolBar.setBounds(103, 20, 511, 50);
+		final ToolBar ecspecAleServerConfiguratorToolBar = new ToolBar(aleMethodsGroup_1, SWT.BORDER);
+		ecspecAleServerConfiguratorToolBar.setBounds(103, 20, 0, 0);
 		ecspecAleServerConfiguratorToolBar.setBackground(SWTResourceManager
 				.getColor(179, 213, 186));
 
@@ -196,6 +192,8 @@ public class ECSpecConfiguratorView extends ViewPart {
 				Activator.getDefault(), "icons/img/s_really.png"));
 		getStandardVersionToolItem.setText("GetStandardVersion");
 
+		ecspecAleServerConfiguratorToolBar.setSize(ecspecAleServerConfiguratorToolBar.computeSize(SWT.DEFAULT, SWT.DEFAULT)); 
+		
 		final ToolBar toolBar = new ToolBar(aleMethodsGroup_1, SWT.VERTICAL
 				| SWT.BORDER);
 		toolBar.setBounds(10, 70, 93, 238);
@@ -509,11 +507,17 @@ public class ECSpecConfiguratorView extends ViewPart {
 		button.setImage(ResourceManager.getPluginImage(Activator.getDefault(),
 				"icons/img/desktop_icons_1.gif"));
 		button.setBounds(10, 20, 93, 50);
-
+		
+		toolBar.setSize(toolBar.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
 		createActions();
 		initializeToolBar();
 		initializeMenu();
 		initializeAleProxy();
+		
+		aleMethodsGroup_1.setSize(aleMethodsGroup_1.computeSize(SWT.DEFAULT, SWT.DEFAULT));  
+		ecspecConfiguratorComposite.setSize(ecspecConfiguratorComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));  
+		
 		// TODO Auto-generated method stub
 
 	}

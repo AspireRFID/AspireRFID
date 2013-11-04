@@ -1,5 +1,5 @@
 /*
- * Copyright © 2008-2010, Aspire
+ * Copyright ï¿½ 2008-2010, Aspire
  * 
  * Aspire is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License version 2.1 as published by
@@ -927,11 +927,12 @@ public class LogicalReaderEditorView extends ViewPart {
 		composite_2.setSize(757, 499);
 		scrolledComposite.setContent(composite_2);
 
+			
 		// initialize contents of lrspectree
 		initializeToolBar();
 		initializeMenu();
 		createActions();
-
+				
 	}
 
 	private void createActions() {

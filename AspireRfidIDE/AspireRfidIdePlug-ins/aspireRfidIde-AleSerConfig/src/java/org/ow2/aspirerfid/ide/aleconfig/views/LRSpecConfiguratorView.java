@@ -1,5 +1,5 @@
 /*
- * Copyright © 2008-2010, Aspire
+ * Copyright ï¿½ 2008-2010, Aspire
  * 
  * Aspire is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License version 2.1 as published by
@@ -169,23 +169,25 @@ public class LRSpecConfiguratorView extends ViewPart {
 
 		lrspecConfiguratorComposite = new Composite(lrspecConfiguratorScrolledComposite, SWT.NONE);
 		lrspecConfiguratorComposite.setLocation(0, 0);
-		lrspecConfiguratorComposite.setSize(709, 374);
-
+		lrspecConfiguratorComposite.setSize(900, 374);
+		
+		
 		lrspecConfiguratorScrolledComposite.setContent(lrspecConfiguratorComposite);
 
 		final Group alelrMethodsGroup_1 = new Group(lrspecConfiguratorComposite, SWT.NONE);
 		alelrMethodsGroup_1.setText("ALELR Methods");
-		alelrMethodsGroup_1.setBounds(10, 0, 689, 362);
+		alelrMethodsGroup_1.setBounds(10, 0, 0, 0);
 
 		final ToolBar toolBar = new ToolBar(alelrMethodsGroup_1, SWT.VERTICAL | SWT.BORDER);
 		toolBar.setBackground(SWTResourceManager.getColor(179, 213, 186));
-		toolBar.setBounds(10, 70, 118, 277); // If it doesnt apear set it to
+		toolBar.setBounds(10, 70, 0, 0); // If it doesnt apear set it to
 												// (10, 65, 120, 277)
 
 		final ToolItem defineToolItem = new ToolItem(toolBar, SWT.PUSH);
 		defineToolItem.addSelectionListener(new DefineToolItemSelectionListener());
 		defineToolItem.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/pencil_16.gif"));
 		defineToolItem.setText("Define");
+		defineToolItem.setToolTipText("Click this button to set the LLRP reader");
 
 		final ToolItem updateToolItem = new ToolItem(toolBar, SWT.PUSH);
 		updateToolItem.addSelectionListener(new UpdateToolItemSelectionListener());
@@ -217,24 +219,27 @@ public class LRSpecConfiguratorView extends ViewPart {
 		setPropertiesToolItem.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/b_sqldoc.png"));
 		setPropertiesToolItem.setText("SetProperties");
 
+		toolBar.setSize(toolBar.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
 		alelrMethodGroup = new Group(alelrMethodsGroup_1, SWT.NONE);
-		alelrMethodGroup.setBounds(135, 80, 550, 271);
+		alelrMethodGroup.setBounds(135, 80, 0, 0);
 		alelrMethodGroup.setVisible(false);
+		
 
 		defineLRSpecComposite = new Composite(alelrMethodGroup, SWT.NONE);
-		defineLRSpecComposite.setBounds(10, 16, 530, 105);
+		defineLRSpecComposite.setBounds(10, 16, 550, 105);
 
 		final Label readerNameLabel = new Label(defineLRSpecComposite, SWT.NONE);
 		readerNameLabel.setText("Reader name:");
-		readerNameLabel.setBounds(5, 5, 88, 21);
+		readerNameLabel.setBounds(5, 5, 95, 21);
 
 		final Label selectLrspecLabel = new Label(defineLRSpecComposite, SWT.NONE);
 		selectLrspecLabel.setText("Select LRSpec:");
-		selectLrspecLabel.setBounds(5, 35, 88, 21);
+		selectLrspecLabel.setBounds(5, 35, 95, 21);
 
 		lrDefineSelectLRSpecCombo = new Combo(defineLRSpecComposite, SWT.NONE);
 		lrDefineSelectLRSpecCombo.setBackground(SWTResourceManager.getColor(230, 230, 230));
-		lrDefineSelectLRSpecCombo.setBounds(96, 32, 424, 24);
+		lrDefineSelectLRSpecCombo.setBounds(120, 32, 424, 24);
 
 		final Label label_8 = new Label(defineLRSpecComposite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label_8.setBounds(5, 60, 515, 10);
@@ -243,11 +248,11 @@ public class LRSpecConfiguratorView extends ViewPart {
 		lrDefineExecuteButton.addMouseListener(new LrDefineExecuteButtonMouseListener());
 		lrDefineExecuteButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/services_execute.gif"));
 		lrDefineExecuteButton.setText("Execute");
-		lrDefineExecuteButton.setBounds(215, 75, 80, 24);
+		lrDefineExecuteButton.setBounds(215, 75, 90, 25);
 
 		lrDefineReaderNameCombo = new Combo(defineLRSpecComposite, SWT.NONE);
 		lrDefineReaderNameCombo.setBackground(SWTResourceManager.getColor(230, 230, 230));
-		lrDefineReaderNameCombo.setBounds(96, 2, 424, 24);
+		lrDefineReaderNameCombo.setBounds(120, 2, 424, 24);
 
 		undefineLRSpecComposite = new Composite(alelrMethodGroup, SWT.NONE);
 		undefineLRSpecComposite.setBounds(10, 16, 530, 105);
@@ -271,7 +276,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 		lrUndefineExecuteButton.setBounds(215, 75, 80, 24);
 
 		updateLRSpecComposite = new Composite(alelrMethodGroup, SWT.NONE);
-		updateLRSpecComposite.setBounds(10, 16, 530, 105);
+		updateLRSpecComposite.setBounds(10, 16, 560, 105);
 		updateLRSpecComposite.setVisible(false);
 
 		final Label readerNameLabel_2 = new Label(updateLRSpecComposite, SWT.NONE);
@@ -1099,8 +1104,9 @@ public class LRSpecConfiguratorView extends ViewPart {
 
 		final ToolBar toolBar_1 = new ToolBar(alelrMethodsGroup_1, SWT.BORDER);
 		toolBar_1.setBackground(SWTResourceManager.getColor(179, 213, 186));
-		toolBar_1.setBounds(127, 22, 560, 50);
-
+		//toolBar_1.setBounds(127, 22, 700, 50);
+		toolBar_1.setBounds(127, 22, 0, 0);	
+		
 		final ToolItem getLogicalReaderNamesToolItem = new ToolItem(toolBar_1, SWT.PUSH);
 		getLogicalReaderNamesToolItem.addSelectionListener(new GetLogicalReaderNamesToolItemSelectionListener());
 		getLogicalReaderNamesToolItem.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/b_browse.png"));
@@ -1125,13 +1131,18 @@ public class LRSpecConfiguratorView extends ViewPart {
 		getVendorVersionToolItem.addSelectionListener(new GetVendorVersionToolItemSelectionListener());
 		getVendorVersionToolItem.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/b_help.png"));
 		getVendorVersionToolItem.setText("GetVendorVersion");
-
+		
+		toolBar_1.setSize(toolBar_1.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
 		createActions();
 		initializeToolBar();
 		initializeMenu();
 		initializeAleLrProxy();
 		loadReaderNamesFromECSpecs();
-
+		
+		alelrMethodsGroup_1.setSize(alelrMethodsGroup_1.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		lrspecConfiguratorComposite.setSize(lrspecConfiguratorComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		alelrMethodGroup.setSize(alelrMethodGroup.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 
 	private File[] getECSpecsPathFolderContents() {
@@ -1497,7 +1508,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 							root = node.getNodeName();
 						}
 						else {
-							MessageDialog.openError(container.getShell(), "Error", "File not found!");
+							MessageDialog.openError(container.getShell(), "Error", "File not found1!");
 						}
 					}
 					catch (Exception exc) {
@@ -1592,7 +1603,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 				lrSpecsPath = PreferenceConstants.P_HAL_LRSpecsPATH + combo.getText();
 			}
 			else {
-				System.out.println("File not found!");
+				System.out.println("File not found2!");
 			}
 		}
 		catch (Exception exc) {
@@ -1606,7 +1617,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 				lrSpecsPath = PreferenceConstants.P_RP_LRSpecsPATH + combo.getText();
 			}
 			else {
-				System.out.println("File not found!");
+				System.out.println("File not found3!");
 			}
 		}
 		catch (Exception exc) {
@@ -1620,7 +1631,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 				lrSpecsPath = PreferenceConstants.P_LLRP_LRSpecsPATH + combo.getText();
 			}
 			else {
-				System.out.println("File not found!");
+				System.out.println("File not found4!");
 			}
 		}
 		catch (Exception exc) {
@@ -1634,7 +1645,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 				lrSpecsPath = PreferenceConstants.P_Composite_LRSpecsPATH + combo.getText();
 			}
 			else {
-				System.out.println("File not found!");
+				System.out.println("File not found5!");
 			}
 		}
 		catch (Exception exc) {
@@ -1647,7 +1658,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 		}
 		catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			MessageDialog.openWarning(container.getShell(), "Error", "File not found!");
+			MessageDialog.openWarning(container.getShell(), "Error", "File not found6!");
 			e.printStackTrace();
 		}
 		catch (Exception e) {
