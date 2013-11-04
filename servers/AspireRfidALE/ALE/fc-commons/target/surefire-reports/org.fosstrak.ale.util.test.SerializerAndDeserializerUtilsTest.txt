@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.fosstrak.ale.util.test.SerializerAndDeserializerUtilsTest
+-------------------------------------------------------------------------------
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.01 sec

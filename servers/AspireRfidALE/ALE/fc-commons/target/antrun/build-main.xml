@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <echo message="Replacing erroneous ObjectFactory by correct one"/>
+  <delete file="target/generated-sources/main/java/org/fosstrak/ale/xsd/ale/epcglobal/ObjectFactory.java"/>
+  <copy file="src/main/resources/patches/ObjectFactory.java" verbose="false" tofile="target/generated-sources/main/java/org/fosstrak/ale/xsd/ale/epcglobal/ObjectFactory.java" failonerror="true"/>
+</target>
+</project>
