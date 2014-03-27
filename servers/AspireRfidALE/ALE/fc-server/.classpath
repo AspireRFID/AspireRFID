@@ -6,7 +6,7 @@
 	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/driss/LTK/LTKJava/target/ltkjava-1.0.0.7-SNAPSHOT.jar" sourcepath="/home/driss/LTK/LTKJava/src.zip"/>
-	<classpathentry kind="lib" path="/home/driss/LTK/LTKJava/target/ltkjava-1.0.0.7-SNAPSHOT-src.jar"/>
+	<classpathentry kind="lib" path="/home/driss/aspire_repository/aspire/trunk/servers/AspireRfidALE/ALE/lib/fc-commons-1.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/driss/aspire_repository/aspire/trunk/servers/AspireRfidALE/ALE/lib/com.tagsys.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

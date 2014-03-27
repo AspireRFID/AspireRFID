@@ -151,6 +151,19 @@
 		<artifactId>cloning</artifactId>
 		<version>1.8.2</version>
 	</dependency>
+	<dependency>
+			<groupId>com.tagsys</groupId>
+			<artifactId>tagsysmedio</artifactId>
+			<version>1.0.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+        <groupId>org.rxtx</groupId>
+        <artifactId>rxtx</artifactId>
+        <version>2.1.7</version>
+        <scope>compile</scope>
+      </dependency>
   </dependencies>
 
   <!-- =========================================================== -->
