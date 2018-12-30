@@ -15,3 +15,6 @@ ASPIRE will significantly lower SME entry costs for RFID technology, through dev
 The ASPIRE middleware platform will take into account innovative European developments in the area of ubiquitous RFID-based sensing (i.e., physical quantities sensing (temperature, humidity, pressure, acceleration), mobile sensing) towards enabling novel business cases that ensure high ROI (Return on Investment).
 
 <img src="./logo/aspire-middleware.png" alt="AspireRFID middleware logo" height="200px">
+
+# Bibliography
+* Nikos Kefalakis, Nektarios Leontiadis, John K. Soldatos, Didier Donsez, Middleware Building Blocks for Architecting RFID Systems, 2009, DOI: [10.1007/978-3-642-03819-8_31](https://www.researchgate.net/publication/225194897_Middleware_Building_Blocks_for_Architecting_RFID_Systems)
