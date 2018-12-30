@@ -1,7 +1,8 @@
 # FP7-ICT Aspire RFID
-# Advanced Sensors and lightweight Programmable middleware for Innovative Rfid Enterprise applications
 
-![Aspire RFID logo](./logo/fp7-aspire.jpg =500x)
+<img src="./logo/fp7.png" alt="FP7 logo" height="200px"> <img src="./logo/fp7-aspire.jpg" alt="FP7-ICT Aspire RFID logo" height="200px">
+
+## Advanced Sensors and lightweight Programmable middleware for Innovative Rfid Enterprise applications
 
 https://cordis.europa.eu/project/rcn/85411/factsheet/en
 
@@ -13,4 +14,4 @@ ASPIRE will significantly lower SME entry costs for RFID technology, through dev
 
 The ASPIRE middleware platform will take into account innovative European developments in the area of ubiquitous RFID-based sensing (i.e., physical quantities sensing (temperature, humidity, pressure, acceleration), mobile sensing) towards enabling novel business cases that ensure high ROI (Return on Investment).
 
-![AspireRFID middleware logo](./logo/aspire-middleware.png =250x) ![FP7 logo](./logo/fp7.png =100x)
+<img src="./logo/aspire-middleware.png" alt="AspireRFID middleware logo" height="200px">
